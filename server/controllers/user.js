@@ -1,10 +1,54 @@
+import async from "async";
 import User from '../models/user/user';
+import Group from "../models/group/group";
 
 const getUsers = function (req, res, next) {
-    User.find({}, function (err, users) {
-        if (err) return next(err);
-        return res.json(users);
+    User.find({})
+        .then(users => res.json(users))
+        .catch(next)
+};
+
+const getUserByUsername = function (req, res, next) {
+    async.waterfall([
+        function(callback) {
+            User.findOne({username: req.params.username})
+                .then(user => {
+                    if (!user) {
+                        const error = new Error();
+                        error.message = 'Not Found';
+                        error.status = 404;
+                        return next(error);
+                    }
+
+                    callback(null, user)
+                })
+                .catch(next)
+        },
+        function(user, callback) {
+            Group.find({users: user.id})
+                .then(groups => {
+                    if (!groups) {
+                        const error = new Error();
+                        error.message = 'Not Found';
+                        error.status = 404;
+                        return next(error);
+                    }
+                    callback(user, groups)
+                })
+                .catch(next)
+        }
+    ], function (user, groups) {
+        return res.json({
+            user,
+            groups
+        });
     });
+};
+
+const searchUser = function (req, res, next) {
+    User.find({$text: {$search: req.params.search}})
+        .then(docs => res.json(docs))
+        .catch(next)
 };
 
 const createUser = function (req, res, next) {
@@ -14,25 +58,44 @@ const createUser = function (req, res, next) {
         lastName: req.body.lastName,
         email: req.body.email
     });
-    return user.save(function (err, newUser) {
-        if (err) return next(err);
-        return res.status(201).json(newUser);
-
-    });
+    return user.save()
+        .then(newUser => res.status(201).json(newUser))
+        .catch(next)
 };
 
-const getUserByUsername = function (req, res, next) {
-    User.findOne({username: req.params.username}, function (err, user) {
-        if (err) return next(err);
+const addUserInGroup = function (req, res, next) {
+    const {username, name} = req.params;
 
-        if (!user) {
-            const error = new Error();
-            error.message = 'Not Found';
-            error.status = 404;
-            return next(error);
+    async.waterfall([
+        function(callback) {
+            User.findOne({username})
+                .then(user => {
+                    if (!user) {
+                        const error = new Error();
+                        error.message = 'User not Found';
+                        error.status = 404;
+                        return next(error);
+                    }
+                    callback(null, user)
+                })
+                .catch(next)
+        },
+        function(user, callback) {
+            Group.findOneAndUpdate({name}, { $push: { users: user._id } }, {new: true})
+                .then(modification => {
+                    if (!modification) {
+                        const error = new Error();
+                        error.message = 'Group not Found';
+                        error.status = 404;
+                        return next(error);
+                    }
+                    callback(modification);
+                })
+                .catch(next)
         }
-        return res.json(user);
-    })
+    ], function (modification) {
+        return res.json(modification);
+    });
 };
 
 const updateUser = function (req, res, next) {
@@ -43,33 +106,38 @@ const updateUser = function (req, res, next) {
             lastName: req.body.lastName,
             email: req.body.email
         }
-    }, {new: true}, function (err, modification) {
-        if (err) return next(err);
-        return res.json({user: modification});
-    });
+    }, {new: true})
+        .then(modification => res.json({user: modification}))
+        .catch(next)
 };
 
 const removeUser = function (req, res, next) {
-    User.findOneAndRemove({username: req.params.username}, function (err, modification) {
-        if (err) return next(err);
-
-        if (!modification) {
-            const error = new Error();
-            error.message = 'User already deleted';
-            error.status = 410;
-            return next(error);
-        }
-        return res.json({
-            modification,
-            status: 'OK'
-        });
-    })
+    User.findOneAndRemove({username: req.params.username})
+        .then(user => {
+            if (!user) {
+                const error = new Error();
+                error.message = 'User already deleted';
+                error.status = 410;
+                return next(error);
+            }
+            Group.update({}, {$pull: {users: user.id}}, {multi: true})
+                .then(modification => {
+                    return res.json({
+                        modification,
+                        status: 'OK'
+                    })
+                })
+                .catch(next);
+        })
+        .catch(next)
 };
 
 export default {
     getUsers,
-    createUser,
     getUserByUsername,
+    searchUser,
+    createUser,
+    addUserInGroup,
     updateUser,
     removeUser
 }

@@ -10,8 +10,6 @@ router.post('/groups/', GroupCtrl.createGroup);
 
 router.put('/groups/:name', GroupCtrl.updateGroup);
 
-router.put('/groups/:name/adduser/:username', GroupCtrl.addUserInGroup);
-
 router.delete('/groups/:name', GroupCtrl.removeGroup);
 
 export default router;

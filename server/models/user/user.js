@@ -1,5 +1,4 @@
 import mongoose from 'mongoose';
-import Group from '../group/group';
 
 const Schema = mongoose.Schema;
 
@@ -8,7 +7,7 @@ const userSchema = new Schema({
     firstName: {type: String, required: true}, //min: 2, max: 20,
     lastName: {type: String, required: true}, //min: 2, max: 20,
     email: {type: String, required: true, unique: true}, //min: 3, max: 30,
-    groups: [{type: Schema.Types.ObjectId, ref: Group}]
 });
+userSchema.index({'$**': 'text'});
 
 export default mongoose.model('User', userSchema);
