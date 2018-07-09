@@ -8,6 +8,5 @@ const userSchema = new Schema({
     lastName: {type: String, required: true}, //min: 2, max: 20,
     email: {type: String, required: true, unique: true}, //min: 3, max: 30,
 });
-userSchema.index({'$**': 'text'});
 
 export default mongoose.model('User', userSchema);

@@ -11,6 +11,15 @@ const getGroups = function (req, res, next) {
         .catch(next)
 };
 
+const searchGroup = function (req, res, next) {
+    Group.find({'$or': [
+            {name: {$regex: req.body.query}},
+            {title: {$regex: req.body.query}}
+        ]})
+        .then(docs => res.json(docs))
+        .catch(next)
+};
+
 const createGroup = function (req, res, next) {
     const group = new Group({
         name: req.body.name,
@@ -21,8 +30,8 @@ const createGroup = function (req, res, next) {
         .catch(next)
 };
 
-const getGroupByName = function (req, res, next) {
-    Group.findOne({name: req.params.name})
+const getGroupByID = function (req, res, next) {
+    Group.findOne({_id: req.params.id})
         .then(group => {
             if (!group) {
                 const error = new Error();
@@ -36,7 +45,7 @@ const getGroupByName = function (req, res, next) {
 };
 
 const updateGroup = function (req, res, next) {
-    Group.findOneAndUpdate({name: req.params.name}, {
+    Group.findOneAndUpdate({_id: req.params.id}, {
         $set: {
             name: req.body.name,
             title: req.body.title
@@ -47,7 +56,7 @@ const updateGroup = function (req, res, next) {
 };
 
 const removeGroup = function (req, res, next) {
-    Group.findOneAndRemove({name: req.params.name})
+    Group.findOneAndRemove({_id: req.params.id})
         .then(modification => {
             if (!modification) {
                 const error = new Error();
@@ -65,8 +74,9 @@ const removeGroup = function (req, res, next) {
 
 export default {
     getGroups,
+    searchGroup,
     createGroup,
-    getGroupByName,
+    getGroupByID,
     updateGroup,
     removeGroup
 }

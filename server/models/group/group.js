@@ -8,6 +8,5 @@ const groupSchema = new Schema({
     title: {type: String, required: true}, //min: 6, max: 20,
     users: [{type: Schema.Types.ObjectId, ref: User}]
 });
-groupSchema.index( { "$**": "text" } );
 
 export default mongoose.model('Group', groupSchema);

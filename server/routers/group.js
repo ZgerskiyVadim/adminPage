@@ -4,12 +4,14 @@ import GroupCtrl from '../controllers/group';
 
 router.get('/groups/', GroupCtrl.getGroups);
 
-router.get('/groups/:name', GroupCtrl.getGroupByName);
+router.get('/groups/:id', GroupCtrl.getGroupByID);
+
+router.get('/groups/search/', GroupCtrl.searchGroup);
 
 router.post('/groups/', GroupCtrl.createGroup);
 
-router.put('/groups/:name', GroupCtrl.updateGroup);
+router.put('/groups/:id', GroupCtrl.updateGroup);
 
-router.delete('/groups/:name', GroupCtrl.removeGroup);
+router.delete('/groups/:id', GroupCtrl.removeGroup);
 
 export default router;

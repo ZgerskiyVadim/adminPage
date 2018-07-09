@@ -8,10 +8,10 @@ const getUsers = function (req, res, next) {
         .catch(next)
 };
 
-const getUserByUsername = function (req, res, next) {
+const getUserByID = function (req, res, next) {
     async.waterfall([
         function(callback) {
-            User.findOne({username: req.params.username})
+            User.findOne({_id: req.params.id})
                 .then(user => {
                     if (!user) {
                         const error = new Error();
@@ -46,7 +46,12 @@ const getUserByUsername = function (req, res, next) {
 };
 
 const searchUser = function (req, res, next) {
-    User.find({$text: {$search: req.params.search}})
+    User.find({'$or': [
+        {username: {$regex: req.body.query}},
+        {firstName: {$regex: req.body.query}},
+        {lastName: {$regex: req.body.query}},
+        {email: {$regex: req.body.query}}
+    ]})
         .then(docs => res.json(docs))
         .catch(next)
 };
@@ -64,11 +69,11 @@ const createUser = function (req, res, next) {
 };
 
 const addUserInGroup = function (req, res, next) {
-    const {username, name} = req.params;
+    const {userID, groupID} = req.params;
 
     async.waterfall([
         function(callback) {
-            User.findOne({username})
+            User.findOne({_id: userID})
                 .then(user => {
                     if (!user) {
                         const error = new Error();
@@ -81,7 +86,7 @@ const addUserInGroup = function (req, res, next) {
                 .catch(next)
         },
         function(user, callback) {
-            Group.findOneAndUpdate({name}, { $push: { users: user._id } }, {new: true})
+            Group.findOneAndUpdate({_id: groupID}, { $push: { users: user._id } }, {new: true})
                 .then(modification => {
                     if (!modification) {
                         const error = new Error();
@@ -99,7 +104,7 @@ const addUserInGroup = function (req, res, next) {
 };
 
 const updateUser = function (req, res, next) {
-    User.findOneAndUpdate({username: req.params.username}, {
+    User.findOneAndUpdate({_id: req.params.id}, {
         $set: {
             username: req.body.username,
             firstName: req.body.firstName,
@@ -112,7 +117,7 @@ const updateUser = function (req, res, next) {
 };
 
 const removeUser = function (req, res, next) {
-    User.findOneAndRemove({username: req.params.username})
+    User.findOneAndRemove({_id: req.params.id})
         .then(user => {
             if (!user) {
                 const error = new Error();
@@ -134,7 +139,7 @@ const removeUser = function (req, res, next) {
 
 export default {
     getUsers,
-    getUserByUsername,
+    getUserByID,
     searchUser,
     createUser,
     addUserInGroup,

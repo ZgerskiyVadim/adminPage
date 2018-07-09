@@ -4,16 +4,16 @@ import UserCtrl from '../controllers/user';
 
 router.get('/users/', UserCtrl.getUsers);
 
-router.get('/users/:username', UserCtrl.getUserByUsername);
+router.get('/users/:id', UserCtrl.getUserByID);
 
-router.get('/users/search/:search', UserCtrl.searchUser);
+router.get('/users/search/', UserCtrl.searchUser);
 
 router.post('/users/', UserCtrl.createUser);
 
-router.put('/users/:username', UserCtrl.updateUser);
+router.put('/users/:id', UserCtrl.updateUser);
 
-router.put('/users/:username/group/:name', UserCtrl.addUserInGroup);
+router.put('/users/:userID/group/:groupID', UserCtrl.addUserInGroup);
 
-router.delete('/users/:username', UserCtrl.removeUser);
+router.delete('/users/:id', UserCtrl.removeUser);
 
 export default router;
