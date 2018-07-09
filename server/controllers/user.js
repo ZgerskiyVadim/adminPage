@@ -1,4 +1,5 @@
 import async from "async";
+import helper from '../libs/helper';
 import User from '../models/user/user';
 import Group from "../models/group/group";
 
@@ -104,7 +105,8 @@ const addUserInGroup = function (req, res, next) {
 };
 
 const updateUser = function (req, res, next) {
-    const {username, firstName, lastName, email, groupID} = req.body;
+    const {groupID} = req.body;
+
     if (groupID) {
         Group.findOneAndUpdate({_id: groupID}, {$pull: {users: req.params.id}}, {new: true})
             .then(modification => {
@@ -115,14 +117,9 @@ const updateUser = function (req, res, next) {
             })
             .catch(next);
     } else {
-        User.findOneAndUpdate({_id: req.params.id}, {
-            $set: {
-                username,
-                firstName,
-                lastName,
-                email
-            }
-        }, {new: true})
+        User.findByIdAndUpdate({_id: req.params.id},
+            {$set: helper.getPermittedProps(req.body)},
+            {runValidators: true, new: true})
             .then(modification => res.json({user: modification}))
             .catch(next)
     }

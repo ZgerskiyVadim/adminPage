@@ -1,3 +1,4 @@
+import helper from '../libs/helper';
 import Group from "../models/group/group";
 import User from "../models/user/user";
 
@@ -45,7 +46,8 @@ const getGroupByID = function (req, res, next) {
 };
 
 const updateGroup = function (req, res, next) {
-    const {name, title, userID} = req.body;
+    const {userID} = req.body;
+
     if (userID) {
         Group.findOneAndUpdate({_id: req.params.id}, {$pull: {users: userID}}, {new: true})
             .then(modification => {
@@ -56,12 +58,9 @@ const updateGroup = function (req, res, next) {
             })
             .catch(next);
     } else {
-        Group.findOneAndUpdate({_id: req.params.id}, {
-            $set: {
-                name,
-                title
-            }
-        }, {new: true})
+        Group.findOneAndUpdate({_id: req.params.id},
+            {$set: helper.getPermittedProps(req.body)},
+            {new: true})
             .then(modification => res.json({group: modification}))
             .catch(next)
     }
