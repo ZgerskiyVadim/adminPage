@@ -10,7 +10,9 @@ router.get('/groups/search/', GroupCtrl.searchGroup);
 
 router.post('/groups/', GroupCtrl.createGroup);
 
-router.put('/groups/:id', GroupCtrl.updateGroup);
+router.put('/groups/remove-user/:id', GroupCtrl.removeUser);
+
+router.patch('/groups/:id', GroupCtrl.updateGroup);
 
 router.delete('/groups/:id', GroupCtrl.removeGroup);
 

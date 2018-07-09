@@ -105,24 +105,27 @@ const addUserInGroup = function (req, res, next) {
 };
 
 const updateUser = function (req, res, next) {
-    const {groupID} = req.body;
+    User.findOne({_id: req.params.id})
+        .then(user => {
+            user.set(req.body);
+            user.save()
+                .then(updatedUser => res.json(updatedUser))
+                .catch(next);
+        })
+        .catch(next);
+};
 
-    if (groupID) {
-        Group.findOneAndUpdate({_id: groupID}, {$pull: {users: req.params.id}}, {new: true})
-            .then(modification => {
-                return res.json({
-                    modification,
-                    status: 'OK'
-                })
+const removeFromGroup = function (req, res, next) {
+    const {groupID} = req.body.id;
+
+    Group.findOneAndUpdate({_id: groupID}, {$pull: {users: req.params.id}}, {new: true})
+        .then(modification => {
+            return res.json({
+                modification,
+                status: 'OK'
             })
-            .catch(next);
-    } else {
-        User.findByIdAndUpdate({_id: req.params.id},
-            {$set: helper.getPermittedProps(req.body)},
-            {runValidators: true, new: true})
-            .then(modification => res.json({user: modification}))
-            .catch(next)
-    }
+        })
+        .catch(next);
 };
 
 const removeUser = function (req, res, next) {
@@ -153,5 +156,6 @@ export default {
     createUser,
     addUserInGroup,
     updateUser,
+    removeFromGroup,
     removeUser
 }

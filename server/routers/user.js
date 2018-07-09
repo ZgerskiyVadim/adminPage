@@ -10,9 +10,11 @@ router.get('/users/search/', UserCtrl.searchUser);
 
 router.post('/users/', UserCtrl.createUser);
 
-router.put('/users/:id', UserCtrl.updateUser);
+router.patch('/users/:id', UserCtrl.updateUser);
 
 router.put('/users/:userID/group/:groupID', UserCtrl.addUserInGroup);
+
+router.put('/users/leave-group/:id', UserCtrl.removeFromGroup);
 
 router.delete('/users/:id', UserCtrl.removeUser);
 
