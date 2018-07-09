@@ -1,11 +1,18 @@
 import async from "async";
-import helper from '../libs/helper';
 import User from '../models/user/user';
 import Group from "../models/group/group";
+let count = 0;
 
 const getUsers = function (req, res, next) {
-    User.find({})
-        .then(users => res.json(users))
+    const limit = count * 3;
+    console.log('count', count);
+    console.log('limit', limit);
+
+    User.find({}, null, {skip: 0, limit})
+        .then(users => {
+            count++;
+            return res.json(users)
+        })
         .catch(next)
 };
 
