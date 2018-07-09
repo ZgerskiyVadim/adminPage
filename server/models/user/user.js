@@ -3,10 +3,10 @@ import mongoose from 'mongoose';
 const Schema = mongoose.Schema;
 
 const userSchema = new Schema({
-    username: {type: String, required: true, unique: true}, //min: 4, max: 20,
-    firstName: {type: String, required: true}, //min: 2, max: 20,
-    lastName: {type: String, required: true}, //min: 2, max: 20,
-    email: {type: String, required: true, unique: true}, //min: 3, max: 30,
+    username: {type: String, required: true, unique: true, minlength: 4, maxlength: 20},
+    firstName: {type: String, required: true, minlength: 2, maxlength: 20},
+    lastName: {type: String, required: true, minlength: 2, maxlength: 20},
+    email: {type: String, required: true, unique: true, minlength: 3, maxlength: 30, match: /\S+@\S+\.\S+/},
 });
 
 export default mongoose.model('User', userSchema);

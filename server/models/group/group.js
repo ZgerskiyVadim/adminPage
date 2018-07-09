@@ -4,8 +4,8 @@ import User from '../user/user';
 const Schema = mongoose.Schema;
 
 const groupSchema = new Schema({
-    name: {type: String, required: true, unique: true}, //min: 4, max: 20,
-    title: {type: String, required: true}, //min: 6, max: 20,
+    name: {type: String, required: true, unique: true, minlength: 4, maxlength: 20},
+    title: {type: String, required: true, minlength: 6, maxlength: 20},
     users: [{type: Schema.Types.ObjectId, ref: User}]
 });
 
