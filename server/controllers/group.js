@@ -45,14 +45,26 @@ const getGroupByID = function (req, res, next) {
 };
 
 const updateGroup = function (req, res, next) {
-    Group.findOneAndUpdate({_id: req.params.id}, {
-        $set: {
-            name: req.body.name,
-            title: req.body.title
-        }
-    }, {new: true})
-        .then(modification => res.json({group: modification}))
-        .catch(next)
+    const {name, title, userID} = req.body;
+    if (userID) {
+        Group.findOneAndUpdate({_id: req.params.id}, {$pull: {users: userID}}, {new: true})
+            .then(modification => {
+                return res.json({
+                    modification,
+                    status: 'OK'
+                })
+            })
+            .catch(next);
+    } else {
+        Group.findOneAndUpdate({_id: req.params.id}, {
+            $set: {
+                name,
+                title
+            }
+        }, {new: true})
+            .then(modification => res.json({group: modification}))
+            .catch(next)
+    }
 };
 
 const removeGroup = function (req, res, next) {

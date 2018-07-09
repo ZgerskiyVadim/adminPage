@@ -47,11 +47,11 @@ const getUserByID = function (req, res, next) {
 
 const searchUser = function (req, res, next) {
     User.find({'$or': [
-        {username: {$regex: req.body.query}},
-        {firstName: {$regex: req.body.query}},
-        {lastName: {$regex: req.body.query}},
-        {email: {$regex: req.body.query}}
-    ]})
+            {username: {$regex: req.body.query}},
+            {firstName: {$regex: req.body.query}},
+            {lastName: {$regex: req.body.query}},
+            {email: {$regex: req.body.query}}
+        ]})
         .then(docs => res.json(docs))
         .catch(next)
 };
@@ -104,16 +104,28 @@ const addUserInGroup = function (req, res, next) {
 };
 
 const updateUser = function (req, res, next) {
-    User.findOneAndUpdate({_id: req.params.id}, {
-        $set: {
-            username: req.body.username,
-            firstName: req.body.firstName,
-            lastName: req.body.lastName,
-            email: req.body.email
-        }
-    }, {new: true})
-        .then(modification => res.json({user: modification}))
-        .catch(next)
+    const {username, firstName, lastName, email, groupID} = req.body;
+    if (groupID) {
+        Group.findOneAndUpdate({_id: groupID}, {$pull: {users: req.params.id}}, {new: true})
+            .then(modification => {
+                return res.json({
+                    modification,
+                    status: 'OK'
+                })
+            })
+            .catch(next);
+    } else {
+        User.findOneAndUpdate({_id: req.params.id}, {
+            $set: {
+                username,
+                firstName,
+                lastName,
+                email
+            }
+        }, {new: true})
+            .then(modification => res.json({user: modification}))
+            .catch(next)
+    }
 };
 
 const removeUser = function (req, res, next) {
