@@ -24,11 +24,7 @@ export function searchGroup(req, res, next) {
 }
 
 export function createGroup(req, res, next) {
-    const group = new Group({
-        name: req.body.name,
-        title: req.body.title
-    });
-    return group.save()
+    Group.create(req.body)
         .then(newGroup => res.status(201).json(newGroup))
         .catch(next)
 }

@@ -46,13 +46,7 @@ export function searchUser(req, res, next) {
 }
 
 export function createUser(req, res, next) {
-    const user = new User({
-        username: req.body.username,
-        firstName: req.body.firstName,
-        lastName: req.body.lastName,
-        email: req.body.email
-    });
-    return user.save()
+    User.create(req.body)
         .then(newUser => res.status(201).json(newUser))
         .catch(next)
 }
