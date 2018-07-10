@@ -2,7 +2,9 @@ import Group from "../models/group/group";
 import User from "../models/user/user";
 
 const getGroups = function (req, res, next) {
-    Group.find({})
+    const { skip, limit } = req.query;
+
+    Group.find({}, null, {skip: Number(skip), limit: Number(limit)})
         .then(groups => {
             User.populate(groups, {path: 'users'})
                 .then(docs => res.json(docs))
