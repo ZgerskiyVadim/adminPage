@@ -1,6 +1,6 @@
 import mongoose from 'mongoose';
-import config from '../../../config';
-import log from '../logger';
+import config from '../../config';
+import log from './logger';
 
 mongoose.connect(config.dbName, {useMongoClient: true});
 const db = mongoose.connection;

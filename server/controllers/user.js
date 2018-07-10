@@ -1,42 +1,29 @@
 import async from "async";
+import createError from '../libs/error';
 import User from '../models/user/user';
 import Group from "../models/group/group";
 
-const getUsers = function (req, res, next) {
+export function getUsers(req, res, next) {
     const { skip, limit } = req.query;
 
     User.find({}, null, {skip: Number(skip), limit: Number(limit)})
         .then(users => res.json(users))
         .catch(next)
-};
+}
 
-const getUserByID = function (req, res, next) {
+export function getUserByID(req, res, next) {
     async.waterfall([
         function(callback) {
             User.findOne({_id: req.params.id})
                 .then(user => {
-                    if (!user) {
-                        const error = new Error();
-                        error.message = 'Not Found';
-                        error.status = 404;
-                        return next(error);
-                    }
-
+                    if (!user) return next(createError('Not Found', 404));
                     callback(null, user)
                 })
                 .catch(next)
         },
         function(user, callback) {
             Group.find({users: user.id})
-                .then(groups => {
-                    if (!groups) {
-                        const error = new Error();
-                        error.message = 'Not Found';
-                        error.status = 404;
-                        return next(error);
-                    }
-                    callback(user, groups)
-                })
+                .then(groups => callback(user, groups))
                 .catch(next)
         }
     ], function (user, groups) {
@@ -45,9 +32,9 @@ const getUserByID = function (req, res, next) {
             groups
         });
     });
-};
+}
 
-const searchUser = function (req, res, next) {
+export function searchUser(req, res, next) {
     User.find({'$or': [
             {username: {$regex: req.body.query}},
             {firstName: {$regex: req.body.query}},
@@ -56,9 +43,9 @@ const searchUser = function (req, res, next) {
         ]})
         .then(docs => res.json(docs))
         .catch(next)
-};
+}
 
-const createUser = function (req, res, next) {
+export function createUser(req, res, next) {
     const user = new User({
         username: req.body.username,
         firstName: req.body.firstName,
@@ -68,44 +55,34 @@ const createUser = function (req, res, next) {
     return user.save()
         .then(newUser => res.status(201).json(newUser))
         .catch(next)
-};
+}
 
-const addUserInGroup = function (req, res, next) {
+export function addUserInGroup(req, res, next) {
     const {userID, groupID} = req.params;
 
     async.waterfall([
         function(callback) {
             User.findOne({_id: userID})
                 .then(user => {
-                    if (!user) {
-                        const error = new Error();
-                        error.message = 'User not Found';
-                        error.status = 404;
-                        return next(error);
-                    }
+                    if (!user) return next(createError('User not Found', 404));
                     callback(null, user)
                 })
                 .catch(next)
         },
         function(user, callback) {
             Group.findOneAndUpdate({_id: groupID}, { $push: { users: user._id } }, {new: true})
-                .then(modification => {
-                    if (!modification) {
-                        const error = new Error();
-                        error.message = 'Group not Found';
-                        error.status = 404;
-                        return next(error);
-                    }
-                    callback(modification);
+                .then(addedUser => {
+                    if (!addedUser) return next(createError('Group not Found', 404));
+                    callback(addedUser);
                 })
                 .catch(next)
         }
-    ], function (modification) {
-        return res.json(modification);
+    ], function (addedUser) {
+        return res.json(addedUser);
     });
-};
+}
 
-const updateUser = function (req, res, next) {
+export function updateUser(req, res, next) {
     User.findOne({_id: req.params.id})
         .then(user => {
             user.set(req.body);
@@ -114,49 +91,23 @@ const updateUser = function (req, res, next) {
                 .catch(next);
         })
         .catch(next);
-};
+}
 
-const removeFromGroup = function (req, res, next) {
+export function removeFromGroup(req, res, next) {
     const {groupID} = req.body.id;
 
     Group.findOneAndUpdate({_id: groupID}, {$pull: {users: req.params.id}}, {new: true})
-        .then(modification => {
-            return res.json({
-                modification,
-                status: 'OK'
-            })
-        })
+        .then(modification => res.json(modification))
         .catch(next);
-};
+}
 
-const removeUser = function (req, res, next) {
+export function removeUser(req, res, next) {
     User.findOneAndRemove({_id: req.params.id})
         .then(user => {
-            if (!user) {
-                const error = new Error();
-                error.message = 'User already deleted';
-                error.status = 410;
-                return next(error);
-            }
+            if (!user) return next(createError('User already deleted', 410));
             Group.update({}, {$pull: {users: user.id}}, {multi: true})
-                .then(modification => {
-                    return res.json({
-                        modification,
-                        status: 'OK'
-                    })
-                })
+                .then(modification => res.json(modification))
                 .catch(next);
         })
         .catch(next)
-};
-
-export default {
-    getUsers,
-    getUserByID,
-    searchUser,
-    createUser,
-    addUserInGroup,
-    updateUser,
-    removeFromGroup,
-    removeUser
 }

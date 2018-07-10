@@ -1,19 +1,19 @@
 import express from 'express';
 const router = express.Router();
-import GroupCtrl from '../controllers/group';
+import * as groupCtrl from '../controllers/group';
 
-router.get('/groups/', GroupCtrl.getGroups);
+router.get('/api/groups/', groupCtrl.getGroups);
 
-router.get('/groups/:id', GroupCtrl.getGroupByID);
+router.get('/api/groups/:id', groupCtrl.getGroupByID);
 
-router.get('/groups/search/', GroupCtrl.searchGroup);
+router.get('/api/groups/search/', groupCtrl.searchGroup);
 
-router.post('/groups/', GroupCtrl.createGroup);
+router.post('/api/groups/', groupCtrl.createGroup);
 
-router.put('/groups/remove-user/:id', GroupCtrl.removeUser);
+router.put('/api/groups/remove-user/:id', groupCtrl.removeUser);
 
-router.patch('/groups/:id', GroupCtrl.updateGroup);
+router.patch('/api/groups/:id', groupCtrl.updateGroup);
 
-router.delete('/groups/:id', GroupCtrl.removeGroup);
+router.delete('/api/groups/:id', groupCtrl.removeGroup);
 
 export default router;

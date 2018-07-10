@@ -1,21 +1,21 @@
 import express from 'express';
 const router = express.Router();
-import UserCtrl from '../controllers/user';
+import * as userCtrl from '../controllers/user';
 
-router.get('/users/', UserCtrl.getUsers);
+router.get('/api/users/', userCtrl.getUsers);
 
-router.get('/users/:id', UserCtrl.getUserByID);
+router.get('/api/users/:id', userCtrl.getUserByID);
 
-router.get('/users/search/', UserCtrl.searchUser);
+router.get('/api/users/search/', userCtrl.searchUser);
 
-router.post('/users/', UserCtrl.createUser);
+router.post('/api/users/', userCtrl.createUser);
 
-router.patch('/users/:id', UserCtrl.updateUser);
+router.patch('/api/users/:id', userCtrl.updateUser);
 
-router.put('/users/:userID/group/:groupID', UserCtrl.addUserInGroup);
+router.put('/api/users/:userID/group/:groupID', userCtrl.addUserInGroup);
 
-router.put('/users/leave-group/:id', UserCtrl.removeFromGroup);
+router.put('/api/users/leave-group/:id', userCtrl.removeFromGroup);
 
-router.delete('/users/:id', UserCtrl.removeUser);
+router.delete('/api/users/:id', userCtrl.removeUser);
 
 export default router;
