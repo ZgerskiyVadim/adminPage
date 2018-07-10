@@ -6,8 +6,6 @@ router.get('/api/users/', userCtrl.getUsers);
 
 router.get('/api/users/:id', userCtrl.getUserByID);
 
-router.get('/api/users/search/', userCtrl.searchUser);
-
 router.post('/api/users/', userCtrl.createUser);
 
 router.patch('/api/users/:id', userCtrl.updateUser);

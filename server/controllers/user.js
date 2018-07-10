@@ -4,11 +4,22 @@ import User from '../models/user/user';
 import Group from "../models/group/group";
 
 export function getUsers(req, res, next) {
-    const { skip, limit } = req.query;
+    const { skip, limit, searchBy} = req.query;
 
-    User.find({}, null, {skip: Number(skip), limit: Number(limit)})
-        .then(users => res.json(users))
-        .catch(next)
+    if (searchBy) {
+        User.find({'$or': [
+                {username: {$regex: searchBy}},
+                {firstName: {$regex: searchBy}},
+                {lastName: {$regex: searchBy}},
+                {email: {$regex: searchBy}}
+            ]}, null, {skip: Number(skip), limit: Number(limit)})
+            .then(docs => res.json(docs))
+            .catch(next)
+    } else {
+        User.find({}, null, {skip: Number(skip), limit: Number(limit)})
+            .then(users => res.json(users))
+            .catch(next);
+    }
 }
 
 export function getUserByID(req, res, next) {
@@ -32,17 +43,6 @@ export function getUserByID(req, res, next) {
             groups
         });
     });
-}
-
-export function searchUser(req, res, next) {
-    User.find({'$or': [
-            {username: {$regex: req.body.query}},
-            {firstName: {$regex: req.body.query}},
-            {lastName: {$regex: req.body.query}},
-            {email: {$regex: req.body.query}}
-        ]})
-        .then(docs => res.json(docs))
-        .catch(next)
 }
 
 export function createUser(req, res, next) {

@@ -3,24 +3,28 @@ import Group from "../models/group/group";
 import User from "../models/user/user";
 
 export function getGroups(req, res, next) {
-    const { skip, limit } = req.query;
+    const { skip, limit, searchBy } = req.query;
 
-    Group.find({}, null, {skip: Number(skip), limit: Number(limit)})
-        .then(groups => {
-            User.populate(groups, {path: 'users'})
-                .then(docs => res.json(docs))
-                .catch(next)
-        })
-        .catch(next)
-}
-
-export function searchGroup(req, res, next) {
-    Group.find({'$or': [
-            {name: {$regex: req.body.query}},
-            {title: {$regex: req.body.query}}
-        ]})
-        .then(docs => res.json(docs))
-        .catch(next)
+    if (searchBy) {
+        Group.find({'$or': [
+                {name: {$regex: searchBy}},
+                {title: {$regex: searchBy}}
+            ]}, null, {skip: Number(skip), limit: Number(limit)})
+            .then(groups => {
+                User.populate(groups, {path: 'users'})
+                    .then(docs => res.json(docs))
+                    .catch(next)
+            })
+            .catch(next)
+    } else {
+        Group.find({}, null, {skip: Number(skip), limit: Number(limit)})
+            .then(groups => {
+                User.populate(groups, {path: 'users'})
+                    .then(docs => res.json(docs))
+                    .catch(next)
+            })
+            .catch(next)
+    }
 }
 
 export function createGroup(req, res, next) {

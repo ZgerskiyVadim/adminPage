@@ -6,8 +6,6 @@ router.get('/api/groups/', groupCtrl.getGroups);
 
 router.get('/api/groups/:id', groupCtrl.getGroupByID);
 
-router.get('/api/groups/search/', groupCtrl.searchGroup);
-
 router.post('/api/groups/', groupCtrl.createGroup);
 
 router.put('/api/groups/remove-user/:id', groupCtrl.removeUser);
