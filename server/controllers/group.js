@@ -1,4 +1,4 @@
-import createError from '../libs/error';
+import createError from '../services/error';
 import Group from "../models/group/group";
 import User from "../models/user/user";
 
@@ -43,25 +43,27 @@ export function getGroupByID(req, res, done) {
 }
 
 export function updateGroup(req, res, done) {
-    Group.updateOne({_id: req.params.id}, req.body, {runValidators: true}, (err, modification) => {
+    Group.findOneAndUpdate({_id: req.params.id}, req.body, {runValidators: true, new: true}, (err, updatedGroup) => {
         if(err) return done(err);
-        res.json(modification);
+        res.json(updatedGroup);
     })
 }
 
 export function removeUser(req, res, done) {
     const {userID} = req.body;
+    const {groupID} = req.params.id;
 
-    Group.findOneAndUpdate({_id: req.params.id}, {$pull: {users: userID}}, {new: true}, (err, modification) => {
+    Group.findOneAndUpdate({_id: groupID}, {$pull: {users: userID}}, {new: true}, (err, updatedGroup) => {
         if(err) return done(err);
-        res.json(modification);
+        res.json(updatedGroup);
     })
 }
 
 export function removeGroup(req, res, done) {
-    Group.findOneAndRemove({_id: req.params.id}, (err, modification) => {
-        if (!modification) return done(createError('Group already deleted', 410));
+    Group.findOneAndRemove({_id: req.params.id}, (err, group) => {
+        if (!group) return done(createError('Group is not exist', 404));
         if(err) return done(err);
-        res.json(modification);
+        const message = 'Group successfully deleted';
+        res.status(200).json(message);
     })
 }

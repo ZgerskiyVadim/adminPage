@@ -1,5 +1,5 @@
 import async from "async";
-import createError from '../libs/error';
+import createError from '../services/error';
 import User from '../models/user/user';
 import Group from "../models/group/group";
 
@@ -52,49 +52,51 @@ export function createUser(req, res, done) {
 }
 
 export function addUserInGroup(req, res, done) {
-    const {userID, groupID} = req.params;
+    const {userID, groupID} = req.body;
 
     async.waterfall([
         next => {
             User.findOne({_id: userID}, (err, user) => {
                 if (!user) return done(createError('User is not found', 404));
                 if (err) return done(err);
-                next(null, user)
+                next();
             })
         },
-        (user, next) => {
-            Group.findOneAndUpdate({_id: groupID}, { $push: { users: user._id } }, {new: true}, (err, updatedGroup) => {
+        next => {
+            Group.findOneAndUpdate({_id: groupID}, { $push: { users: userID } }, {new: true}, (err, updatedGroup) => {
                 if (!updatedGroup) return done(createError('Group is not found', 404));
                 if (err) return done(err);
                 next(updatedGroup);
             })
         }
-    ], addedUser => res.json(addedUser));
+    ], updatedGroup => res.json(updatedGroup));
 }
 
 export function updateUser(req, res, done) {
-    User.updateOne({_id: req.params.id}, req.body, {runValidators: true}, (err, modification) => {
+    User.findOneAndUpdate({_id: req.params.id}, req.body, {runValidators: true, new: true}, (err, updatedUser) => {
         if (err) return done(err);
-        res.json(modification);
+        res.json(updatedUser);
     })
 }
 
-export function removeFromGroup(req, res, done) {
-    const {groupID} = req.body.id;
+export function removeUserFromGroup(req, res, done) {
+    const {groupID} = req.body;
+    const {userID} = req.params.id;
 
-    Group.findOneAndUpdate({_id: groupID}, {$pull: {users: req.params.id}}, {new: true}, (err, modification) => {
+    Group.findOneAndUpdate({_id: groupID}, {$pull: {users: userID}}, {new: true}, (err, updatedGroup) => {
         if (err) return done(err);
-        res.json(modification);
+        res.json(updatedGroup);
     })
 }
 
 export function removeUser(req, res, done) {
     User.findOneAndRemove({_id: req.params.id}, (err, user) => {
-        if (!user) return done(createError('User already deleted', 410));
+        if (!user) return done(createError('User is not exist', 404));
         if (err) return done(err);
         Group.update({}, {$pull: {users: user.id}}, {multi: true}, (err, modification) => {
             if (err) return done(err);
-            res.json(modification);
+            const message = 'User successfully deleted';
+            res.status(200).json(message);
         })
     })
 }

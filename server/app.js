@@ -1,23 +1,22 @@
 import express from 'express';
 import path from 'path';
 import config from '../config';
-import * as common from './middlewares/common';
-import dbConnection from './libs/mongoose';
+import { errorHandler } from './middlewares/errorHandler';
+import dbConnection from './services/mongoose';
 import bodyParser from 'body-parser';
-import userApi from './routers/user';
-import groupApi from './routers/group';
+import routers from './routers';
+import log from "./services/logger";
 
 const app = express();
 
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
 app.use(express.static(path.join(__dirname, config.static)));
-app.use(userApi);
-app.use(groupApi);
+app.use('/api', routers);
 
-app.use(common.errorHandler);
+app.use(errorHandler);
 
 
 dbConnection.once('open', () => {
-    app.listen(config.port, common.listen);
+    app.listen(config.port, (err) => err ? log.error(err) : log.info(`Server is running on port: ${config.port}`));
 });
