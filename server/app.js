@@ -2,6 +2,7 @@ import express from 'express';
 import path from 'path';
 import config from '../config';
 import { errorHandler } from './middlewares/errorHandler';
+import { sendIndexHtml } from './middlewares/sendIndexHtml';
 import dbConnection from './services/mongoose';
 import bodyParser from 'body-parser';
 import routers from './routers';
@@ -14,6 +15,7 @@ app.use(bodyParser.json());
 app.use(express.static(path.join(__dirname, config.static)));
 app.use('/api', routers);
 
+app.get('*', sendIndexHtml);
 app.use(errorHandler);
 
 
