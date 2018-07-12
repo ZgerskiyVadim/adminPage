@@ -7,8 +7,14 @@ import dbConnection from './services/mongoose';
 import bodyParser from 'body-parser';
 import routers from './routers';
 import log from "./services/logger";
+import webpack from 'webpack';
+import webpackMiddleware from './middlewares/webpackMiddleware';
+import webpackConfig from '../webpack.config.js';
 
 const app = express();
+
+const compiler = webpack(webpackConfig);
+webpackMiddleware(app, compiler, webpackConfig);
 
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
