@@ -4,7 +4,11 @@ export function usersReducer(state = [], action) {
         case 'GET_USERS':
             return [
                 ...state,
-                action.payload
+                ...action.payload
+            ];
+        case 'GET_USERS_REQUEST':
+            return [
+                ...state
             ];
         default: return state
     }

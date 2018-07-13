@@ -1,10 +1,14 @@
 
-export function groupsReducer(state = [1, 2], action) {
+export function groupsReducer(state = [], action) {
     switch (action.type) {
         case 'GET_GROUPS':
             return [
                 ...state,
-                action.payload
+                ...action.payload
+            ];
+        case 'GET_GROUPS_REQUEST':
+            return [
+                ...state
             ];
         default: return state
     }

@@ -1,14 +1,13 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Link } from "react-router-dom";
 
-class Users extends Component {
+class Groups extends Component {
     constructor(props) {
         super(props);
     }
 
     componentWillMount() {
-        this.props.getUsers();
+        this.props.getGroups();
     }
 
     render() {
@@ -16,13 +15,10 @@ class Users extends Component {
             <div>
                 <ul>
                     {
-                        this.props.stateStore.usersReducer.map((item, index) =>
+                        this.props.stateStore.groupsReducer.map((item, index) =>
                             <div key={index}>
-                                <Link to={`users/${item._id}`}>
-                                    <li>{item.username}</li>
-                                </Link>
-                            </div>
-                        )
+                                <li>{item.name}</li>
+                            </div>)
                     }
                 </ul>
             </div>
@@ -35,8 +31,8 @@ export default connect(
         stateStore: state
     }),
     dispatch => ({
-        getUsers: () => {
-            dispatch({type: 'GET_USERS_REQUEST'});
+        getGroups: () => {
+            dispatch({type: 'GET_GROUPS_REQUEST'});
         }
     })
-)(Users)
+)(Groups)
