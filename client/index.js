@@ -16,8 +16,8 @@ render(
         <Router>
             <Switch>
                 <Route exact path="/" component={Home}/>
-                <Route path="/api/users" component={Users}/>
-                <Route path="/api/groups" component={Groups}/>
+                <Route path="/users" component={Users}/>
+                <Route path="/groups" component={Groups}/>
             </Switch>
         </Router>
     </Provider>,

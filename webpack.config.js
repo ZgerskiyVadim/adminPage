@@ -1,6 +1,7 @@
 const path = require('path');
 
 module.exports = {
+    mode: 'development',
     entry: './client/index.js',
     output: {
         path: path.resolve(__dirname, 'dist'),
@@ -15,5 +16,19 @@ module.exports = {
                 use: 'babel-loader'
             }
         ]
+    },
+    devServer: {
+        historyApiFallback: true,
+        port: 3000,
+        proxy: {
+            '/': {
+                target: 'http://localhost:8080',
+                secure: false
+            },
+            '/api/*': {
+                target: 'http://localhost:8080/api/',
+                secure: false
+            }
+        }
     }
 };

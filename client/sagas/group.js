@@ -2,7 +2,7 @@ import { call, put, takeEvery } from 'redux-saga/effects';
 import axios from 'axios';
 
 function requestGetGroups() {
-    return axios.get('groups')
+    return axios.get('/api/groups')
         .then(groups => groups.data)
         .catch(err => err)
 }

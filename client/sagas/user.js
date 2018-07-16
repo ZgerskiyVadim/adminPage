@@ -2,7 +2,7 @@ import { call, put, takeEvery } from 'redux-saga/effects';
 import axios from 'axios';
 
 function requestGetUsers() {
-    return axios.get('users')
+    return axios.get('/api/users')
         .then(users => users.data)
         .catch(err => err)
 }

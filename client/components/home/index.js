@@ -9,8 +9,8 @@ export default class Home extends Component {
     render() {
         return (
             <div>
-                <li><Link to='/api/users'>Users</Link></li>
-                <li><Link to='/api/groups'>Groups</Link></li>
+                <li><Link to='/users'>Users</Link></li>
+                <li><Link to='/groups'>Groups</Link></li>
             </div>
         );
     }
