@@ -10,6 +10,8 @@ export function groupsReducer(state = [], action) {
             return [
                 ...state
             ];
+        case 'CLEAR_STATE_GROUPS':
+            return [];
         default: return state
     }
 }

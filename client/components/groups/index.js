@@ -7,6 +7,7 @@ class Groups extends Component {
     }
 
     componentWillMount() {
+        this.props.clearGroups();
         this.props.getGroups();
     }
 
@@ -33,6 +34,9 @@ export default connect(
     dispatch => ({
         getGroups: () => {
             dispatch({type: 'GET_GROUPS_REQUEST'});
+        },
+        clearGroups: () => {
+            dispatch({type: 'CLEAR_STATE_GROUPS'});
         }
     })
 )(Groups)

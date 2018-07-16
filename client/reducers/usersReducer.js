@@ -10,6 +10,8 @@ export function usersReducer(state = [], action) {
             return [
                 ...state
             ];
+        case 'CLEAR_STATE_USERS':
+            return [];
         default: return state
     }
 }
