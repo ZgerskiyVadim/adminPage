@@ -9,8 +9,9 @@ export default class UsersAPI {
     }
 
     static searchUsers(query) {
-        console.log('query', query);
-        return []
+        return axios.get('/api/users', {params: {searchBy: query}})
+            .then(users => users.data)
+            .catch(err => err);
     }
 
     static removeUser(id) {

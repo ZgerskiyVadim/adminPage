@@ -8,6 +8,12 @@ export default class GroupsAPI {
             .catch(err => err)
     }
 
+    static searchGroups(query) {
+        return axios.get('/api/groups', {params: {searchBy: query}})
+            .then(groups => groups.data)
+            .catch(err => err);
+    }
+
     static removeGroup(id) {
         return axios.delete(`/api/groups/${id}`)
             .then(group => id)

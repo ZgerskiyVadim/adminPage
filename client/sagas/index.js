@@ -1,7 +1,7 @@
 import { fork, all } from 'redux-saga/effects';
 
 import { getUsers, searchUsers, removeUser } from './user';
-import { getGroups, removeGroup } from './group';
+import { getGroups, searchGroups, removeGroup } from './group';
 
 export default function* mySaga() {
     yield all([
@@ -9,6 +9,7 @@ export default function* mySaga() {
         fork(searchUsers),
         fork(removeUser),
         fork(getGroups),
+        fork(searchGroups),
         fork(removeGroup),
     ])
 }

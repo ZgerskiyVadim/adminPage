@@ -28,7 +28,7 @@ class Users extends Component {
         return (
             <div>
                 <h1>Search</h1>
-                <input type="text" onChange={this.search.bind(this, event)}/>
+                <input type="text" onChange={this.search.bind(this)}/>
                 <div className='listUsers'>
                     <div className={'username'}>
                         <h1>username</h1>
@@ -105,7 +105,7 @@ export default connect(
             dispatch({type: 'GET_USERS_REQUEST'});
         },
         search: (query) => {
-            dispatch({type: 'SEARCH_USERS', payload: query});
+            dispatch({type: 'SEARCH_USERS_REQUEST', payload: query});
         },
         removeUser: (id) => {
             dispatch({type: 'REMOVE_USER_REQUEST', payload: id});

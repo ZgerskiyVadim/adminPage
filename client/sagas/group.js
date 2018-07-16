@@ -11,6 +11,15 @@ function* callgetGroups() {
     }
 }
 
+function* callsearchGroups(action) {
+    try {
+        const groups = yield call(GroupsAPI.searchGroups, action.payload);
+        yield put({type: "GET_GROUPS", payload: groups});
+    } catch (e) {
+        yield put({type: "GET_GROUPS_REQUEST_FAILED", message: e.message});
+    }
+}
+
 function* callremoveGroup(action) {
     try {
         const id = yield call(GroupsAPI.removeGroup, action.payload);
@@ -23,6 +32,10 @@ function* callremoveGroup(action) {
 
 export function* getGroups() {
     yield takeEvery('GET_GROUPS_REQUEST', callgetGroups);
+}
+
+export function* searchGroups() {
+    yield takeEvery('SEARCH_GROUPS_REQUEST', callsearchGroups);
 }
 
 export function* removeGroup() {
