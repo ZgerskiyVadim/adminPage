@@ -5,10 +5,8 @@ export function groupsReducer(state = [], action) {
             return [
                 ...action.payload
             ];
-        case 'GET_GROUPS_REQUEST':
-            return [
-                ...state
-            ];
+        case 'REMOVE_GROUP':
+            return state.filter(group => group._id !== action.payload);
 
         default: return state
     }

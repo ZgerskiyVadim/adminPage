@@ -5,10 +5,8 @@ export function usersReducer(state = [], action) {
             return [
                 ...action.payload
             ];
-        case 'GET_USERS_REQUEST':
-            return [
-                ...state
-            ];
+        case 'REMOVE_USER':
+            return state.filter(user => user._id !== action.payload);
 
         default: return state
     }

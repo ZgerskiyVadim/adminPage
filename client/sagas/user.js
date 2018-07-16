@@ -1,22 +1,29 @@
 import { call, put, takeEvery } from 'redux-saga/effects';
-import axios from 'axios';
-
-function requestGetUsers() {
-    return axios.get('/api/users')
-        .then(users => users.data)
-        .catch(err => err)
-}
+import UsersAPI from '../api/usersAPI';
 
 function* callgetUsers() {
     try {
-        const users = yield call(requestGetUsers);
+        const users = yield call(UsersAPI.getUsers);
         yield put({type: "GET_USERS", payload: users});
     } catch (e) {
         yield put({type: "GET_USERS_REQUEST_FAILED", message: e.message});
     }
 }
 
+function* callremoveUser(action) {
+    try {
+        const id = yield call(UsersAPI.removeUser, action.payload);
+        yield put({type: "REMOVE_USER", payload: id});
+    } catch (e) {
+        yield put({type: "REMOVE_USER_REQUEST_FAILED", message: e.message});
+    }
+}
 
-export default function* getUsers() {
+
+export function* getUsers() {
     yield takeEvery('GET_USERS_REQUEST', callgetUsers);
+}
+
+export function* removeUser() {
+    yield takeEvery('REMOVE_USER_REQUEST', callremoveUser);
 }

@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link } from "react-router-dom";
+import './index.scss';
 
 class Users extends Component {
     constructor(props) {
@@ -11,20 +12,76 @@ class Users extends Component {
         this.props.getUsers();
     }
 
+    update() {
+
+    }
+
+    remove(id) {
+        this.props.removeUser(id);
+    }
+
     render() {
         return (
-            <div>
-                <ul>
+            <div className='listUsers'>
+                <div className={'username'}>
+                    <h1>username</h1>
                     {
-                        this.props.stateStore.usersReducer.map((item, index) =>
-                            <div key={index}>
+                        this.props.stateStore.usersReducer.map(item =>
+                            <div key={item._id}>
                                 <Link to={`users/${item._id}`}>
-                                    <li>{item.username}</li>
+                                    <span>{item.username}</span>
                                 </Link>
                             </div>
                         )
                     }
-                </ul>
+                </div>
+                <div className={'firstName'}>
+                    <h1>firstName</h1>
+                    {
+                        this.props.stateStore.usersReducer.map(item =>
+                            <div key={item._id}>
+                                <Link to={`users/${item._id}`}>
+                                    <span>{item.firstName}</span>
+                                </Link>
+                            </div>
+                        )
+                    }
+                </div>
+                <div className={'lastName'}>
+                    <h1>lastName</h1>
+                    {
+                        this.props.stateStore.usersReducer.map(item =>
+                            <div key={item._id}>
+                                <Link to={`users/${item._id}`}>
+                                    <span>{item.lastName}</span>
+                                </Link>
+                            </div>
+                        )
+                    }
+                </div>
+                <div className={'email'}>
+                    <h1>email</h1>
+                    {
+                        this.props.stateStore.usersReducer.map(item =>
+                            <div key={item._id}>
+                                <Link to={`users/${item._id}`}>
+                                    <span>{item.email}</span>
+                                </Link>
+                            </div>
+                        )
+                    }
+                </div>
+                <div className={'modification'}>
+                    <h1>modification</h1>
+                    {
+                        this.props.stateStore.usersReducer.map(item =>
+                            <div key={item._id}>
+                                <button onClick={this.update.bind(this, item._id)}>Update</button>
+                                <button onClick={this.remove.bind(this, item._id)}>Remove</button>
+                            </div>
+                        )
+                    }
+                </div>
             </div>
         );
     }
@@ -37,6 +94,9 @@ export default connect(
     dispatch => ({
         getUsers: () => {
             dispatch({type: 'GET_USERS_REQUEST'});
+        },
+        removeUser: (id) => {
+            dispatch({type: 'REMOVE_USER_REQUEST', payload: id});
         }
     })
 )(Users)
