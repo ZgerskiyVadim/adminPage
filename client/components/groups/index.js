@@ -28,7 +28,7 @@ class Groups extends Component {
                     {
                         this.props.stateStore.groupsReducer.map(item =>
                             <div key={item._id}>
-                                <Link to={`users/${item._id}`}>
+                                <Link to={`groups/${item._id}`}>
                                     <span>{item.name}</span>
                                 </Link>
                             </div>
@@ -40,7 +40,7 @@ class Groups extends Component {
                     {
                         this.props.stateStore.groupsReducer.map(item =>
                             <div key={item._id}>
-                                <Link to={`users/${item._id}`}>
+                                <Link to={`groups/${item._id}`}>
                                     <span>{item.title}</span>
                                 </Link>
                             </div>
