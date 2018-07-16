@@ -4,15 +4,18 @@ import {Provider} from 'react-redux';
 import { BrowserRouter as Router } from 'react-router-dom';
 
 import { configureStore } from './store/configureStore';
+import Breadcrumb from './components/breadcrumb';
 import Routes from './routes';
-
 
 const store = configureStore();
 
 render(
     <Provider store={store}>
         <Router>
-            <Routes/>
+            <div>
+                <Breadcrumb />
+                <Routes />
+            </div>
         </Router>
     </Provider>,
     document.getElementById('root')
