@@ -8,7 +8,6 @@ class Users extends Component {
     }
 
     componentWillMount() {
-        this.props.clearUsers();
         this.props.getUsers();
     }
 
@@ -38,9 +37,6 @@ export default connect(
     dispatch => ({
         getUsers: () => {
             dispatch({type: 'GET_USERS_REQUEST'});
-        },
-        clearUsers: () => {
-            dispatch({type: 'CLEAR_STATE_USERS'});
         }
     })
 )(Users)

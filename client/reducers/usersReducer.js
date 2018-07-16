@@ -3,15 +3,13 @@ export function usersReducer(state = [], action) {
     switch (action.type) {
         case 'GET_USERS':
             return [
-                ...state,
                 ...action.payload
             ];
         case 'GET_USERS_REQUEST':
             return [
                 ...state
             ];
-        case 'CLEAR_STATE_USERS':
-            return [];
+
         default: return state
     }
 }
