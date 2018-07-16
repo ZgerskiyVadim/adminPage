@@ -8,6 +8,11 @@ export default class UsersAPI {
             .catch(err => err)
     }
 
+    static searchUsers(query) {
+        console.log('query', query);
+        return []
+    }
+
     static removeUser(id) {
         return axios.delete(`/api/users/${id}`)
             .then(user => id)

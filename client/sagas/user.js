@@ -10,6 +10,15 @@ function* callgetUsers() {
     }
 }
 
+function* callsearchUsers(action) {
+    try {
+        const users = yield call(UsersAPI.searchUsers, action.payload);
+        yield put({type: "GET_USERS", payload: users});
+    } catch (e) {
+        yield put({type: "GET_USERS_REQUEST_FAILED", message: e.message});
+    }
+}
+
 function* callremoveUser(action) {
     try {
         const id = yield call(UsersAPI.removeUser, action.payload);
@@ -22,6 +31,10 @@ function* callremoveUser(action) {
 
 export function* getUsers() {
     yield takeEvery('GET_USERS_REQUEST', callgetUsers);
+}
+
+export function* searchUsers() {
+    yield takeEvery('SEARCH_USERS_REQUEST', callsearchUsers);
 }
 
 export function* removeUser() {
