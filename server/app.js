@@ -15,7 +15,8 @@ app.use(bodyParser.json());
 app.use(express.static(path.join(__dirname, config.static)));
 app.use('/api', routers);
 
-app.get('*', sendErrorHtml);
+// app.get('*', sendErrorHtml);
+app.get('*', ((req, res) => res.sendFile(path.join(__dirname, `${config.static}/index.html`))));
 app.use(errorHandler);
 
 

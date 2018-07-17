@@ -7,7 +7,9 @@ class User extends Component {
     }
 
     componentWillMount() {
-        console.log('props', this.props);
+        const id = this.props.match.params.id;
+        console.log('id', id);
+        this.props.getUser(id)
     }
 
     render() {
@@ -19,4 +21,13 @@ class User extends Component {
     }
 }
 
-export default connect()(User);
+export default connect(
+    state => ({
+        stateStore: state
+    }),
+    dispatch => ({
+        getUser: () => {
+            dispatch({type: 'GET_USERS_REQUEST'});
+        },
+    })
+)(User)
