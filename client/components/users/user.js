@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link } from "react-router-dom";
+import * as actions from '../../actions/constants';
 
 class User extends Component {
     constructor(props) {
@@ -23,7 +24,7 @@ class User extends Component {
 
     render() {
         return (
-            <div>
+            <div className='user-row'>
                 <Link to={`users/${this.props.user._id}`}>{this.props.user.username}</Link>
                 <Link to={`users/${this.props.user._id}`}>{this.props.user.firstName}</Link>
                 <Link to={`users/${this.props.user._id}`}>{this.props.user.lastName}</Link>
@@ -41,7 +42,7 @@ export default connect(
     }),
     dispatch => ({
         removeUser: (id) => {
-            dispatch({type: 'REMOVE_USER_REQUEST', payload: id});
+            dispatch({type: actions.REMOVE_USER_REQUEST, payload: id});
         }
     })
 )(User)

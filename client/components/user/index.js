@@ -16,12 +16,6 @@ class User extends Component {
     }
 
     leaveGroup(id) {
-        // axios.put(`/api/users/leave-group/${this.state.user.id}`, {groupID: id})
-        //     .then(updatedGroup => {
-        //         const newState = this.state.groups.filter(group => group._id !== updatedGroup.data._id);
-        //         this.setState({groups: newState});
-        //     })
-        //     .catch(err => console.log('err', err));
         this.props.leaveGroup(this.state.userID, id)
     }
 
@@ -36,7 +30,7 @@ class User extends Component {
                 <h1>Groups</h1>
                 {
                     this.props.stateStore.userReducer.groups.map(group =>
-                        <div className='user' key={group._id}>
+                        <div className='groups' key={group._id}>
                             <div>
                                 <h4>name: {group.name}</h4>
                                 <h4>title: {group.title}</h4>

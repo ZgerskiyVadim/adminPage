@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Link } from "react-router-dom";
 import './index.scss';
+import Group from './group';
 import * as actions from '../../actions/constants';
 
 class Groups extends Component {
@@ -17,56 +17,21 @@ class Groups extends Component {
         this.props.search(event.target.value);
     }
 
-    update() {
-
-    }
-
-    remove(id) {
-        this.props.removeGroup(id);
-    }
-
     render() {
         return (
             <div>
                 <h1>Search</h1>
                 <input type="text" onChange={this.search.bind(this)}/>
-
-                <div className='listGroups'>
-                    <div className={'name'}>
+                <div>
+                    <div className='headers'>
                         <h1>name</h1>
-                        {
-                            this.props.stateStore.groupsReducer.map(item =>
-                                <div key={item._id}>
-                                    <Link to={`groups/${item._id}`}>
-                                        <span>{item.name}</span>
-                                    </Link>
-                                </div>
-                            )
-                        }
-                    </div>
-                    <div className={'title'}>
                         <h1>title</h1>
-                        {
-                            this.props.stateStore.groupsReducer.map(item =>
-                                <div key={item._id}>
-                                    <Link to={`groups/${item._id}`}>
-                                        <span>{item.title}</span>
-                                    </Link>
-                                </div>
-                            )
-                        }
                     </div>
-                    <div className={'modification'}>
-                        <h1>modification</h1>
-                        {
-                            this.props.stateStore.groupsReducer.map(item =>
-                                <div key={item._id}>
-                                    <button onClick={this.update.bind(this, item._id)}>Update</button>
-                                    <button onClick={this.remove.bind(this, item._id)}>Remove</button>
-                                </div>
-                            )
-                        }
-                    </div>
+                    {
+                        this.props.stateStore.groupsReducer.map(group =>
+                            <Group group={group} key={group._id}/>
+                        )
+                    }
                 </div>
             </div>
         );
@@ -83,9 +48,6 @@ export default connect(
         },
         search: (query) => {
             dispatch({type: actions.SEARCH_GROUPS_REQUEST, payload: query});
-        },
-        removeGroup: (id) => {
-            dispatch({type: actions.REMOVE_GROUP_REQUEST, payload: id});
         }
     })
 )(Groups)

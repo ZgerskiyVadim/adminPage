@@ -24,8 +24,8 @@ class Users extends Component {
             <div>
                 <h1>Search</h1>
                 <input type="text" onChange={this.search}/>
-                <div className='listUsers'>
-                    <div className={'headers'}>
+                <div>
+                    <div className='headers'>
                         <h1>username</h1>
                         <h1>firstName</h1>
                         <h1>lastName</h1>
@@ -33,12 +33,11 @@ class Users extends Component {
                     </div>
                     {
                         this.props.stateStore.usersReducer.map(user =>
-                            <User key={user._id} user={user}/>
+                            <User user={user} key={user._id}/>
                         )
                     }
                 </div>
             </div>
-
         );
     }
 }
