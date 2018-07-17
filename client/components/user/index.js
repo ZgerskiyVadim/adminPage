@@ -27,7 +27,7 @@ export default connect(
     }),
     dispatch => ({
         getUser: () => {
-            dispatch({type: 'GET_USERS_REQUEST'});
+            dispatch({type: 'GET_USER_REQUEST'});
         },
     })
 )(User)

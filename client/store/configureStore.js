@@ -3,7 +3,9 @@ import {createStore, applyMiddleware, compose} from 'redux';
 import reducer from '../reducers';
 import createSagaMiddleware from 'redux-saga';
 const sagaMiddleware = createSagaMiddleware();
-import mySaga from '../sagas';
+import usersSaga from '../sagas/users';
+import userSaga from '../sagas/user';
+import groupsSaga from '../sagas/groups';
 
 export const configureStore = () => {
     const store = createStore(
@@ -15,7 +17,10 @@ export const configureStore = () => {
                 : (f) => f
         )
     );
-    sagaMiddleware.run(mySaga);
+    sagaMiddleware.run(usersSaga);
+    sagaMiddleware.run(userSaga);
+    sagaMiddleware.run(groupsSaga);
+
     return store;
 };
 

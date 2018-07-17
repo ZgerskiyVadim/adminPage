@@ -31,14 +31,10 @@ function* callremoveGroup(action) {
 }
 
 
-export function* getGroups() {
-    yield takeEvery(actions.GET_GROUPS_REQUEST, callgetGroups);
-}
-
-export function* searchGroups() {
-    yield takeEvery(actions.SEARCH_GROUPS_REQUEST, callsearchGroups);
-}
-
-export function* removeGroup() {
-    yield takeEvery(actions.REMOVE_GROUP_REQUEST, callremoveGroup);
+export default function* groupsSaga() {
+    yield [
+        takeEvery(actions.GET_GROUPS_REQUEST, callgetGroups),
+        takeEvery(actions.SEARCH_GROUPS_REQUEST, callsearchGroups),
+        takeEvery(actions.REMOVE_GROUP_REQUEST, callremoveGroup)
+    ];
 }
