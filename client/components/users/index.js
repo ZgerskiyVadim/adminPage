@@ -11,7 +11,7 @@ class Users extends Component {
         this.search = this.search.bind(this)
     }
 
-    componentWillMount() {
+    componentDidMount() {
         this.props.getUsers();
     }
 

@@ -1,4 +1,4 @@
-import { call, put, takeEvery } from 'redux-saga/effects';
+import { call, put, takeEvery, all } from 'redux-saga/effects';
 import UsersAPI from '../api/usersAPI';
 import * as actions from '../actions/constants';
 
@@ -13,7 +13,7 @@ function* callremoveUser(action) {
 
 
 export default function* userSaga() {
-    yield [
+    yield all([
         takeEvery(actions.REMOVE_USER_REQUEST, callremoveUser)
-    ];
+    ]);
 }

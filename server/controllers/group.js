@@ -38,7 +38,10 @@ export function getGroupByID(req, res, done) {
     Group.findOne({_id: req.params.id}, (err, group) => {
         if (!group) return done(createError('Not Found', 404));
         if (err) return done(err);
-        res.json(group);
+        User.populate(group, {path: 'users'}, (err, docs) => {
+            if (err) return done(err);
+            res.json(docs);
+        });
     })
 }
 
@@ -51,7 +54,7 @@ export function updateGroup(req, res, done) {
 
 export function removeUser(req, res, done) {
     const {userID} = req.body;
-    const {groupID} = req.params.id;
+    const groupID = req.params.id;
 
     Group.findOneAndUpdate({_id: groupID}, {$pull: {users: userID}}, {new: true}, (err, updatedGroup) => {
         if(err) return done(err);

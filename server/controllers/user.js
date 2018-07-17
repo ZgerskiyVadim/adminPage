@@ -81,7 +81,7 @@ export function updateUser(req, res, done) {
 
 export function removeUserFromGroup(req, res, done) {
     const {groupID} = req.body;
-    const {userID} = req.params.id;
+    const userID = req.params.id;
 
     Group.findOneAndUpdate({_id: groupID}, {$pull: {users: userID}}, {new: true}, (err, updatedGroup) => {
         if (err) return done(err);

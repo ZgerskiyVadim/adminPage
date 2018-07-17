@@ -1,4 +1,4 @@
-import { call, put, takeEvery } from 'redux-saga/effects';
+import { call, put, takeEvery, all } from 'redux-saga/effects';
 import UsersAPI from '../api/usersAPI';
 import * as actions from '../actions/constants';
 
@@ -22,8 +22,8 @@ function* callsearchUsers(action) {
 
 
 export default function* usersSaga() {
-    yield [
+    yield all([
         takeEvery(actions.GET_USERS_REQUEST, callgetUsers),
         takeEvery(actions.SEARCH_USERS_REQUEST, callsearchUsers)
-    ];
+    ]);
 }
