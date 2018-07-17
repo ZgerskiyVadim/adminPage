@@ -21,9 +21,19 @@ function* callsearchGroups(action) {
     }
 }
 
+function* callremoveGroup(action) {
+    try {
+        const id = yield call(GroupsAPI.removeGroup, action.payload);
+        yield put({type: actions.REMOVE_GROUP, payload: id});
+    } catch (e) {
+        yield put({type: actions.GROUPS_REQUEST_FAILED, message: e.message});
+    }
+}
+
 export default function* groupsSaga() {
     yield all([
         takeEvery(actions.GET_GROUPS_REQUEST, callgetGroups),
-        takeEvery(actions.SEARCH_GROUPS_REQUEST, callsearchGroups)
+        takeEvery(actions.SEARCH_GROUPS_REQUEST, callsearchGroups),
+        takeEvery(actions.REMOVE_GROUP_REQUEST, callremoveGroup)
     ]);
 }

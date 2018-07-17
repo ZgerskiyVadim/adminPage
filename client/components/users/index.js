@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Link } from "react-router-dom";
 import './index.scss';
+import * as actions from '../../actions/constants';
 import User from './user';
 
 class Users extends Component {
@@ -17,14 +17,6 @@ class Users extends Component {
 
     search(event) {
         this.props.search(event.target.value);
-    }
-
-    update() {
-
-    }
-
-    remove(id) {
-        this.props.removeUser(id);
     }
 
     render() {
@@ -57,13 +49,10 @@ export default connect(
     }),
     dispatch => ({
         getUsers: () => {
-            dispatch({type: 'GET_USERS_REQUEST'});
+            dispatch({type: actions.GET_USERS_REQUEST});
         },
         search: (query) => {
-            dispatch({type: 'SEARCH_USERS_REQUEST', payload: query});
+            dispatch({type: actions.SEARCH_USERS_REQUEST, payload: query});
         },
-        // removeUser: (id) => {
-        //     dispatch({type: 'REMOVE_USER_REQUEST', payload: id});
-        // }
     })
 )(Users)

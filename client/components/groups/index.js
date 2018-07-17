@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link } from "react-router-dom";
 import './index.scss';
+import * as actions from '../../actions/constants';
 
 class Groups extends Component {
     constructor(props) {
@@ -78,13 +79,13 @@ export default connect(
     }),
     dispatch => ({
         getGroups: () => {
-            dispatch({type: 'GET_GROUPS_REQUEST'});
+            dispatch({type: actions.GET_GROUPS_REQUEST});
         },
         search: (query) => {
-            dispatch({type: 'SEARCH_GROUPS_REQUEST', payload: query});
+            dispatch({type: actions.SEARCH_GROUPS_REQUEST, payload: query});
         },
         removeGroup: (id) => {
-            dispatch({type: 'REMOVE_GROUP_REQUEST', payload: id});
+            dispatch({type: actions.REMOVE_GROUP_REQUEST, payload: id});
         }
     })
 )(Groups)

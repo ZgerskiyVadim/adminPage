@@ -1,11 +1,12 @@
+import * as actions from '../actions/constants';
 
-export function usersReducer(state = [], action) {
+export default function usersReducer(state = [], action) {
     switch (action.type) {
-        case 'GET_USERS':
+        case actions.GET_USERS:
             return [
                 ...action.payload
             ];
-        case 'REMOVE_USER':
+        case actions.REMOVE_USER:
             return state.filter(user => user._id !== action.payload);
 
         default: return state

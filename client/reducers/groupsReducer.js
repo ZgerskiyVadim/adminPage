@@ -1,11 +1,12 @@
+import * as actions from '../actions/constants';
 
-export function groupsReducer(state = [], action) {
+export default function groupsReducer(state = [], action) {
     switch (action.type) {
-        case 'GET_GROUPS':
+        case actions.GET_GROUPS:
             return [
                 ...action.payload
             ];
-        case 'REMOVE_GROUP':
+        case actions.REMOVE_GROUP:
             return state.filter(group => group._id !== action.payload);
 
         default: return state

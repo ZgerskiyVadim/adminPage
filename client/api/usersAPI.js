@@ -8,9 +8,22 @@ export default class UsersAPI {
             .catch(err => err)
     }
 
+    static getUser(id) {
+        return axios.get(`/api/users/${id}`)
+            .then(user => user.data)
+            .catch(err => err);
+    }
+
     static searchUsers(query) {
         return axios.get('/api/users', {params: {searchBy: query}})
             .then(users => users.data)
+            .catch(err => err);
+    }
+
+    static leaveGroup(action) {
+        const {userID, groupID} = action;
+        return axios.put(`/api/users/leave-group/${userID}`, {groupID})
+            .then(groups => groupID)
             .catch(err => err);
     }
 

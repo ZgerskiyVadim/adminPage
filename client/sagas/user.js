@@ -2,18 +2,28 @@ import { call, put, takeEvery, all } from 'redux-saga/effects';
 import UsersAPI from '../api/usersAPI';
 import * as actions from '../actions/constants';
 
-function* callremoveUser(action) {
+function* callgetUser(action) {
     try {
-        const id = yield call(UsersAPI.removeUser, action.payload);
-        yield put({type: actions.REMOVE_USER, payload: id});
+        const user = yield call(UsersAPI.getUser, action.payload);
+        yield put({type: actions.GET_USER, payload: user});
     } catch (e) {
-        yield put({type: actions.USERS_REQUEST_FAILED, message: e.message});
+        yield put({type: actions.USER_REQUEST_FAILED, message: e.message});
+    }
+}
+
+function* callleaveGroup(action) {
+    try {
+        const groups = yield call(UsersAPI.leaveGroup, action.payload);
+        yield put({type: actions.USER_UPDATE_GROUPS, payload: groups});
+    } catch (e) {
+        yield put({type: actions.USER_REQUEST_FAILED, message: e.message});
     }
 }
 
 
 export default function* userSaga() {
     yield all([
-        takeEvery(actions.REMOVE_USER_REQUEST, callremoveUser)
+        takeEvery(actions.GET_USER_REQUEST, callgetUser),
+        takeEvery(actions.LEAVE_GROUP_REQUEST, callleaveGroup)
     ]);
 }

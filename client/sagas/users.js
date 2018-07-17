@@ -20,10 +20,20 @@ function* callsearchUsers(action) {
     }
 }
 
+function* callremoveUser(action) {
+    try {
+        const id = yield call(UsersAPI.removeUser, action.payload);
+        yield put({type: actions.REMOVE_USER, payload: id});
+    } catch (e) {
+        yield put({type: actions.USER_REQUEST_FAILED, message: e.message});
+    }
+}
+
 
 export default function* usersSaga() {
     yield all([
         takeEvery(actions.GET_USERS_REQUEST, callgetUsers),
-        takeEvery(actions.SEARCH_USERS_REQUEST, callsearchUsers)
+        takeEvery(actions.SEARCH_USERS_REQUEST, callsearchUsers),
+        takeEvery(actions.REMOVE_USER_REQUEST, callremoveUser)
     ]);
 }
