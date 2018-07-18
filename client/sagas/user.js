@@ -20,10 +20,20 @@ function* callupdateUser(action) {
     }
 }
 
+function* calladdUserInGroup(action) {
+    try {
+        const updatedGroup = yield call(UsersAPI.addUserInGroup, action.payload);
+        yield put({type: actions.UPDATE_GROUP, payload: updatedGroup});
+    } catch (e) {
+        yield put({type: actions.USER_REQUEST_FAILED, message: e.message});
+    }
+}
+
 function* callLeaveGroup(action) {
     try {
-        const groups = yield call(UsersAPI.leaveGroup, action.payload);
-        yield put({type: actions.USER_UPDATE_GROUPS, payload: groups});
+        const updatedGroup = yield call(UsersAPI.leaveGroup, action.payload);
+        yield put({type: actions.USER_UPDATE_GROUPS, payload: updatedGroup});
+        yield put({type: actions.UPDATE_GROUP, payload: updatedGroup});
     } catch (e) {
         yield put({type: actions.USER_REQUEST_FAILED, message: e.message});
     }
@@ -34,6 +44,7 @@ export default function* userSaga() {
     yield all([
         takeEvery(actions.GET_USER_REQUEST, callgetUser),
         takeEvery(actions.UPDATE_USER_REQUEST, callupdateUser),
+        takeEvery(actions.ADD_USER_IN_GROUP_REQUEST, calladdUserInGroup),
         takeEvery(actions.LEAVE_GROUP_REQUEST, callLeaveGroup)
     ]);
 }

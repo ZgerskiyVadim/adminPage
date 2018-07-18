@@ -10,27 +10,46 @@ class Groups extends Component {
     }
 
     componentDidMount() {
-        this.props.getGroups();
+        !this.props.stateStore.userReducer.joiningGroup && this.props.getGroups();
     }
 
     search(event) {
         this.props.search(event.target.value);
     }
 
+    userNotJoinedGroups() {
+        return this.props.stateStore.groupsReducer.filter(group => {
+            for (let i = 0; i < group.users.length; i++ ) {
+                const userID = group.users[i]._id ? group.users[i]._id : group.users[i];
+                console.log('userID', userID);
+                if (userID === this.props.stateStore.userReducer.user._id) {
+                    return false;
+                }
+            }
+            return true;
+        })
+    }
+
     render() {
         return (
-            <div>
+            <div className='groups'>
                 <h1>Search</h1>
-                <input onChange={this.search.bind(this)} className='form-control' type="text"/>
+                <input onChange={this.search.bind(this)} className='form-control col-md-4' type="text"/>
                 <div>
-                    <div className='groups-headers'>
-                        <h1>name</h1>
-                        <h1>title</h1>
+                    <div className='groups-headers col-md-4'>
+                        <h1 className='col-md-6'>name</h1>
+                        <h1 className='col-md-6'>title</h1>
                     </div>
                     {
-                        this.props.stateStore.groupsReducer.map(group =>
-                            <Group group={group} key={group._id}/>
-                        )
+                        this.props.stateStore.userReducer.joiningGroup ?
+
+                            this.userNotJoinedGroups().map(group =>{
+                                console.log('WTF');
+                                return <Group group={group} key={group._id}/>}) :
+
+                            this.props.stateStore.groupsReducer.map(group =>
+                                <Group group={group} key={group._id}/>
+                            )
                     }
                 </div>
             </div>

@@ -23,7 +23,7 @@ class Users extends Component {
         return (
             <div className='users'>
                 <h1>Search</h1>
-                <input className='form-control col-md-4' type="text" onChange={this.search}/>
+                <input onChange={this.search} className='form-control col-md-4' type="text"/>
                 <div>
                     <div className='users-headers col-md-9'>
                         <h1 className='col-md-3'>username</h1>

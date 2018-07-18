@@ -26,10 +26,16 @@ export default class UsersAPI {
             .catch(err => err);
     }
 
+    static addUserInGroup(options) {
+        return axios.put(`/api/users/add-user-in-group`, options)
+            .then(updatedGroup => updatedGroup.data)
+            .catch(err => err);
+    }
+
     static leaveGroup(action) {
         const {userID, groupID} = action;
         return axios.put(`/api/users/leave-group/${userID}`, {groupID})
-            .then(groups => groupID)
+            .then(updatedGroup => updatedGroup.data)
             .catch(err => err);
     }
 

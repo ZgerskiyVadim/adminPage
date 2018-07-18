@@ -1,19 +1,21 @@
+.groups {
+  margin-left: 1em;
+}
 .groups-headers {
   display: flex;
-  h1 {
-    width: 20%;
-  }
+  margin-top: 2em;
 }
 .groups-row {
   display: flex;
   align-items: center;
-  width: 60em;
   margin-top: 0.5em;
-  div {
-    width: 20%;
-  }
   a {
     color: black;
     text-decoration: none;
   }
+}
+.groups-buttons {
+  display: flex;
+  justify-content: space-between;
+  align-self: flex-end;
 }

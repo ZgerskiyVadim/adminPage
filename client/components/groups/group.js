@@ -21,9 +21,15 @@ class Group extends Component {
         this.props.search(event.target.value);
     }
 
+    joinGroup(groupID) {
+        const userID = this.props.stateStore.userReducer.user._id;
+        this.props.joinGroup(userID, groupID);
+    }
+
     update() {
         this.setState({show: false});
-        this.props.updateGroup(getOptions(this.state));
+        const options = getOptions(this.state);
+        this.props.updateGroup(options);
     }
 
     remove(id) {
@@ -31,23 +37,30 @@ class Group extends Component {
     }
 
     render() {
-        const hiddenForm = {display: this.state.show ? "block" : "none"};
-        const shownForm = {display: !this.state.show ? "block" : "none"};
+        const hiddenForm = {display: this.state.show && !this.props.stateStore.userReducer.joiningGroup ? "block" : "none"};
+        const shownForm = {display: !this.state.show && !this.props.stateStore.userReducer.joiningGroup ? "block" : "none"};
+        const joiningGroup = {display: this.props.stateStore.userReducer.joiningGroup ? "block" : "none"};
+        const notJoiningGroup = {display: !this.props.stateStore.userReducer.joiningGroup ? "block" : "none"};
 
         return (
             <div className='groups-row'>
-                <div>
-                    <Link to={`groups/${this.props.group._id}`}>{this.props.group.name}</Link>
-                    <input onChange={onChangeForm.bind(this)} value={this.state.name} className='form-control' style={hiddenForm} name='name' type="text"/>
-                </div>
-                <div>
-                    <Link to={`groups/${this.props.group._id}`}>{this.props.group.title}</Link>
-                    <input onChange={onChangeForm.bind(this)} value={this.state.title} className='form-control' style={hiddenForm} name='title' type="text"/>
+                <div className='groups-row col-md-4'>
+                    <div className='col-md-6'>
+                        <Link to={`groups/${this.props.group._id}`}>{this.props.group.name}</Link>
+                        <input onChange={onChangeForm.bind(this)} value={this.state.name} className='form-control' style={hiddenForm} name='name' type="text"/>
+                    </div>
+                    <div className='col-md-6'>
+                        <Link to={`groups/${this.props.group._id}`}>{this.props.group.title}</Link>
+                        <input onChange={onChangeForm.bind(this)} value={this.state.title} className='form-control' style={hiddenForm} name='title' type="text"/>
+                    </div>
                 </div>
 
-                <button onClick={showForms.bind(this, this.props.group._id)} style={shownForm} className='btn btn-outline-primary'>Update</button>
-                <button onClick={this.update.bind(this)} style={hiddenForm} className='btn btn-outline-primary'>Save</button>
-                <button onClick={this.remove.bind(this, this.props.group._id)} className='btn btn-outline-danger'>Remove</button>
+                <div className='groups-buttons'>
+                    <button onClick={showForms.bind(this, this.props.group._id)} style={shownForm} className='btn btn-outline-primary'>Update</button>
+                    <button onClick={this.update.bind(this)} style={hiddenForm} className='btn btn-outline-primary'>Save</button>
+                    <button onClick={this.remove.bind(this, this.props.group._id)} style={notJoiningGroup} className='btn btn-outline-danger'>Remove</button>
+                    <button onClick={this.joinGroup.bind(this, this.props.group._id)} style={joiningGroup} className='btn btn-outline-info'>Join group</button>
+                </div>
             </div>
         );
     }
@@ -60,6 +73,9 @@ export default connect(
     dispatch => ({
         updateGroup: (options) => {
             dispatch({type: actions.UPDATE_GROUP_REQUEST, payload: options});
+        },
+        joinGroup: (userID, groupID) => {
+            dispatch({type: actions.ADD_USER_IN_GROUP_REQUEST, payload: {userID, groupID}})
         },
         removeGroup: (id) => {
             dispatch({type: actions.REMOVE_GROUP_REQUEST, payload: id});

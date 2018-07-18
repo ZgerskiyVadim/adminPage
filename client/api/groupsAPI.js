@@ -29,7 +29,7 @@ export default class GroupsAPI {
     static removeUserFromGroup(action) {
         const {userID, groupID} = action;
         return axios.put(`/api/groups/remove-user/${groupID}`, {userID})
-            .then(groups => userID)
+            .then(updatedGroup => userID)
             .catch(err => err);
     }
 

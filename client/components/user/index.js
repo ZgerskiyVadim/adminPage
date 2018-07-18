@@ -23,7 +23,13 @@ class User extends Component {
 
     update() {
         this.setState({show: false});
-        this.props.updateUser(getOptions(this.state));
+        const options = getOptions(this.state);
+        this.props.updateUser(options);
+    }
+
+    joinGroup() {
+        this.props.joinGroup();
+        this.props.history.push('/groups');
     }
 
     leaveGroup(id) {
@@ -33,6 +39,7 @@ class User extends Component {
     render() {
         const hiddenForm = {display: this.state.show ? "block" : "none"};
         const shownForm = {display: !this.state.show ? "block" : "none"};
+        const showGroups = {display: this.props.stateStore.userReducer.groups.length ? 'block' : 'none'};
 
         return (
             <div>
@@ -48,11 +55,12 @@ class User extends Component {
                         <h3>email: {this.props.stateStore.userReducer.user.email}</h3>
                         <input onChange={onChangeForm.bind(this)} value={this.state.email} className='form-control' style={hiddenForm} name='email' type="text"/>
                     </div>
-                    <button  onClick={showForms.bind(this, this.state.id)} style={shownForm} className='btn btn-outline-primary'>Update</button>
+                    <button onClick={showForms.bind(this, this.state.id)} style={shownForm} className='btn btn-outline-primary'>Update</button>
                     <button onClick={this.update.bind(this)} style={hiddenForm} className='btn btn-outline-primary'>Save</button>
+                    <button onClick={this.joinGroup.bind(this)} className='btn btn-outline-info'>Join group</button>
                 </div>
 
-                <h1>Groups</h1>
+                <h1 style={showGroups}>Groups</h1>
                 {
                     this.props.stateStore.userReducer.groups.map(group =>
                         <div className='user-groups' key={group._id}>
@@ -79,6 +87,9 @@ export default connect(
         },
         updateUser: (options) => {
             dispatch({type: actions.UPDATE_USER_REQUEST, payload: options});
+        },
+        joinGroup: () => {
+            dispatch({type: actions.IS_JOINING_GROUP, payload: true})
         },
         leaveGroup: (userID, groupID) => {
             dispatch({type: actions.LEAVE_GROUP_REQUEST, payload: {userID, groupID}});

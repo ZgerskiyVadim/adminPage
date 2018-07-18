@@ -21,7 +21,8 @@ class User extends Component {
 
     update() {
         this.setState({show: false});
-        this.props.updateGroup(getOptions(this.state));
+        const options = getOptions(this.state);
+        this.props.updateGroup(options);
     }
 
     removeUser(id) {
@@ -31,6 +32,7 @@ class User extends Component {
     render() {
         const hiddenForm = {display: this.state.show ? "block" : "none"};
         const shownForm = {display: !this.state.show ? "block" : "none"};
+        const showUsers = {display: this.props.stateStore.groupReducer.users.length ? 'block' : 'none'};
 
         return (
             <div>
@@ -47,7 +49,7 @@ class User extends Component {
                     <button onClick={this.update.bind(this)} style={hiddenForm} className='btn btn-outline-primary'>Save</button>
                 </div>
 
-                <h1>Users</h1>
+                <h1 style={showUsers}>Users</h1>
                 {
                     this.props.stateStore.groupReducer.users.map(user =>
                         <div className='users' key={user._id}>
