@@ -55,7 +55,7 @@ class User extends Component {
                 <h1>Groups</h1>
                 {
                     this.props.stateStore.userReducer.groups.map(group =>
-                        <div className='groups' key={group._id}>
+                        <div className='user-groups' key={group._id}>
                             <div>
                                 <h4>name: {group.name}</h4>
                                 <h4>title: {group.title}</h4>

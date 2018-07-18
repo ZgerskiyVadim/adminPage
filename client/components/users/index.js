@@ -21,15 +21,15 @@ class Users extends Component {
 
     render() {
         return (
-            <div>
+            <div className='users'>
                 <h1>Search</h1>
-                <input type="text" onChange={this.search}/>
+                <input className='form-control col-md-4' type="text" onChange={this.search}/>
                 <div>
-                    <div className='headers'>
-                        <h1>username</h1>
-                        <h1>firstName</h1>
-                        <h1>lastName</h1>
-                        <h1>email</h1>
+                    <div className='users-headers col-md-9'>
+                        <h1 className='col-md-3'>username</h1>
+                        <h1 className='col-md-3'>firstName</h1>
+                        <h1 className='col-md-3'>lastName</h1>
+                        <h1 className='col-md-3'>email</h1>
                     </div>
                     {
                         this.props.stateStore.usersReducer.map(user =>

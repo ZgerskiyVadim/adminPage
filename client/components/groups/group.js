@@ -35,7 +35,7 @@ class Group extends Component {
         const shownForm = {display: !this.state.show ? "block" : "none"};
 
         return (
-            <div className='group-row'>
+            <div className='groups-row'>
                 <div>
                     <Link to={`groups/${this.props.group._id}`}>{this.props.group.name}</Link>
                     <input onChange={onChangeForm.bind(this)} value={this.state.name} style={hiddenForm} name='name' type="text"/>

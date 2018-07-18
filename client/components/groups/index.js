@@ -23,7 +23,7 @@ class Groups extends Component {
                 <h1>Search</h1>
                 <input type="text" onChange={this.search.bind(this)}/>
                 <div>
-                    <div className='headers'>
+                    <div className='groups-headers'>
                         <h1>name</h1>
                         <h1>title</h1>
                     </div>

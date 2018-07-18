@@ -7,8 +7,8 @@ export function getGroups(req, res, done) {
 
     if (searchBy) {
         Group.find({'$or': [
-                {name: {$regex: searchBy}},
-                {title: {$regex: searchBy}}
+                {name: {$regex: searchBy, $options:'i'}},
+                {title: {$regex: searchBy, $options:'i'}}
             ]}, null, {skip: Number(skip), limit: Number(limit)}, (err, groups) => {
             if (err) return done(err);
             User.populate(groups, {path: 'users'}, (err, docs) => {

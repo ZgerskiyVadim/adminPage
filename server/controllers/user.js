@@ -8,10 +8,10 @@ export function getUsers(req, res, done) {
 
     if (searchBy) {
         User.find({'$or': [
-                {username: {$regex: searchBy}},
-                {firstName: {$regex: searchBy}},
-                {lastName: {$regex: searchBy}},
-                {email: {$regex: searchBy}}
+                {username: {$regex: searchBy, $options:'i'}},
+                {firstName: {$regex: searchBy, $options:'i'}},
+                {lastName: {$regex: searchBy, $options:'i'}},
+                {email: {$regex: searchBy, $options:'i'}}
             ]}, null, {skip: Number(skip), limit: Number(limit)}, (err, docs) => {
 
             if (err) return done(err);
