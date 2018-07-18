@@ -10,6 +10,14 @@ export default function groupReducer(state = initialState, action) {
     switch (action.type) {
         case actions.GET_GROUP:
             return action.payload;
+
+        case actions.UPDATE_GROUP:
+            return {
+                ...state,
+                name: action.payload.name,
+                title: action.payload.title
+            };
+
         case actions.GROUP_UPDATE_USERS:
             return {
                 ...state,

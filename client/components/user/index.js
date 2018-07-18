@@ -2,31 +2,56 @@ import React, { Component } from 'react';
 import {connect} from "react-redux";
 import './index.scss';
 import * as actions from '../../actions/constants';
+import { onChangeForm, showForms, getOptions } from '../../services/userAndGroupHelper';
 
 class User extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            userID: this.props.match.params.id
+            show: false,
+            username: '',
+            firstName: '',
+            lastName: '',
+            email: '',
+            id: this.props.match.params.id
         }
     }
 
     componentDidMount() {
-        this.props.getUser(this.state.userID);
+        this.props.getUser(this.state.id);
+    }
+
+    update() {
+        this.setState({show: false});
+        this.props.updateUser(getOptions(this.state));
     }
 
     leaveGroup(id) {
-        this.props.leaveGroup(this.state.userID, id)
+        this.props.leaveGroup(this.state.id, id)
     }
 
     render() {
+        const hiddenForm = {display: this.state.show ? "block" : "none"};
+        const shownForm = {display: !this.state.show ? "block" : "none"};
+
         return (
             <div>
                <h1>USER</h1>
-                <h3>username: {this.props.stateStore.userReducer.user.username}</h3>
-                <h3>firstName: {this.props.stateStore.userReducer.user.firstName}</h3>
-                <h3>lastName: {this.props.stateStore.userReducer.user.lastName}</h3>
-                <h3>email: {this.props.stateStore.userReducer.user.email}</h3>
+                <div className='user'>
+                    <div>
+                        <h3>username: {this.props.stateStore.userReducer.user.username}</h3>
+                        <input onChange={onChangeForm.bind(this)} value={this.state.username} style={hiddenForm} name='username' type="text"/>
+                        <h3>firstName: {this.props.stateStore.userReducer.user.firstName}</h3>
+                        <input onChange={onChangeForm.bind(this)} value={this.state.firstName} style={hiddenForm} name='firstName' type="text"/>
+                        <h3>lastName: {this.props.stateStore.userReducer.user.lastName}</h3>
+                        <input onChange={onChangeForm.bind(this)} value={this.state.lastName} style={hiddenForm} name='lastName' type="text"/>
+                        <h3>email: {this.props.stateStore.userReducer.user.email}</h3>
+                        <input onChange={onChangeForm.bind(this)} value={this.state.email} style={hiddenForm} name='email' type="text"/>
+                    </div>
+                    <button style={shownForm} onClick={showForms.bind(this, this.state.id)}>Update</button>
+                    <button style={hiddenForm} onClick={this.update.bind(this)}>Save</button>
+                </div>
+
                 <h1>Groups</h1>
                 {
                     this.props.stateStore.userReducer.groups.map(group =>

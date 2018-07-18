@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link } from "react-router-dom";
 import * as actions from '../../actions/constants';
+import { onChangeForm, showForms, getOptions } from '../../services/userAndGroupHelper';
 
 class Group extends Component {
     constructor(props) {
@@ -20,33 +21,9 @@ class Group extends Component {
         this.props.search(event.target.value);
     }
 
-    onChangeForm(event) {
-        const {value, name} = event.target;
-        this.setState({
-            [name]: value
-        });
-    };
-
-    showForms(id) {
-        this.setState({
-            id,
-            show: true
-        })
-    }
-
-    getOptions() {
-        const options = {};
-        for (const prop in this.state) {
-            if (this.state[prop]) {
-                options[prop] = this.state[prop];
-            }
-        }
-        return options;
-    }
-
     update() {
         this.setState({show: false});
-        this.props.updateGroup(this.getOptions());
+        this.props.updateGroup(getOptions(this.state));
     }
 
     remove(id) {
@@ -61,14 +38,14 @@ class Group extends Component {
             <div className='group-row'>
                 <div>
                     <Link to={`groups/${this.props.group._id}`}>{this.props.group.name}</Link>
-                    <input onChange={this.onChangeForm.bind(this)} value={this.state.name} style={hiddenForm} name='name' type="text"/>
+                    <input onChange={onChangeForm.bind(this)} value={this.state.name} style={hiddenForm} name='name' type="text"/>
                 </div>
                 <div>
                     <Link to={`groups/${this.props.group._id}`}>{this.props.group.title}</Link>
-                    <input onChange={this.onChangeForm.bind(this)} value={this.state.title} style={hiddenForm} name='title' type="text"/>
+                    <input onChange={onChangeForm.bind(this)} value={this.state.title} style={hiddenForm} name='title' type="text"/>
                 </div>
 
-                <button style={shownForm} onClick={this.showForms.bind(this, this.props.group._id)}>Update</button>
+                <button style={shownForm} onClick={showForms.bind(this, this.props.group._id)}>Update</button>
                 <button style={hiddenForm} onClick={this.update.bind(this)}>Save</button>
                 <button onClick={this.remove.bind(this, this.props.group._id)}>Remove</button>
             </div>
