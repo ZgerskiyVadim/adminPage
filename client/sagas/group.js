@@ -12,7 +12,16 @@ function* callgetGroup(action) {
     }
 }
 
-function* callremoveUser(action) {
+function* callupdateGroup(action) {
+    try {
+        const group = yield call(GroupsAPI.updateGroup, action.payload);
+        yield put({type: actions.UPDATE_GROUP, payload: group});
+    } catch (e) {
+        yield put({type: actions.GROUP_REQUEST_FAILED, message: e.message});
+    }
+}
+
+function* callremoveUserFromGroup(action) {
     try {
         const groups = yield call(GroupsAPI.removeUserFromGroup, action.payload);
         yield put({type: actions.GROUP_UPDATE_USERS, payload: groups});
@@ -25,6 +34,7 @@ function* callremoveUser(action) {
 export default function* groupSaga() {
     yield all([
         takeEvery(actions.GET_GROUP_REQUEST, callgetGroup),
-        takeEvery(actions.REMOVE_USER_FROM_GROUP, callremoveUser)
+        takeEvery(actions.UPDATE_GROUP_REQUEST, callupdateGroup),
+        takeEvery(actions.REMOVE_USER_FROM_GROUP, callremoveUserFromGroup)
     ]);
 }

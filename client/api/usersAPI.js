@@ -20,6 +20,12 @@ export default class UsersAPI {
             .catch(err => err);
     }
 
+    static updateUser(options) {
+        return axios.patch(`/api/users/${options.id}`, options)
+            .then(users => users.data)
+            .catch(err => err);
+    }
+
     static leaveGroup(action) {
         const {userID, groupID} = action;
         return axios.put(`/api/users/leave-group/${userID}`, {groupID})

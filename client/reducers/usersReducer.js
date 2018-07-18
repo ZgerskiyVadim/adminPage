@@ -6,6 +6,10 @@ export default function usersReducer(state = [], action) {
             return [
                 ...action.payload
             ];
+
+        case actions.UPDATE_USER:
+            return state.map(user => (user._id === action.payload._id) ? action.payload : user);
+
         case actions.REMOVE_USER:
             return state.filter(user => user._id !== action.payload);
 

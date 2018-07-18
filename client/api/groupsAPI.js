@@ -20,6 +20,12 @@ export default class GroupsAPI {
             .catch(err => err);
     }
 
+    static updateGroup(options) {
+        return axios.patch(`/api/groups/${options.id}`, options)
+            .then(groups => groups.data)
+            .catch(err => err);
+    }
+
     static removeUserFromGroup(action) {
         const {userID, groupID} = action;
         return axios.put(`/api/groups/remove-user/${groupID}`, {userID})

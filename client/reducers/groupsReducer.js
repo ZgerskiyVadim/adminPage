@@ -6,6 +6,10 @@ export default function groupsReducer(state = [], action) {
             return [
                 ...action.payload
             ];
+
+        case actions.UPDATE_GROUP:
+            return state.map(group => (group._id === action.payload._id) ? action.payload : group);
+
         case actions.REMOVE_GROUP:
             return state.filter(group => group._id !== action.payload);
 
