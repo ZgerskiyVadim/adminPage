@@ -21,7 +21,7 @@ class Groups extends Component {
         return (
             <div>
                 <h1>Search</h1>
-                <input type="text" onChange={this.search.bind(this)}/>
+                <input onChange={this.search.bind(this)} className='form-control' type="text"/>
                 <div>
                     <div className='groups-headers'>
                         <h1>name</h1>

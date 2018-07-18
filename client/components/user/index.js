@@ -40,16 +40,16 @@ class User extends Component {
                 <div className='user'>
                     <div>
                         <h3>username: {this.props.stateStore.userReducer.user.username}</h3>
-                        <input onChange={onChangeForm.bind(this)} value={this.state.username} style={hiddenForm} name='username' type="text"/>
+                        <input onChange={onChangeForm.bind(this)} value={this.state.username} className='form-control' style={hiddenForm} name='username' type="text"/>
                         <h3>firstName: {this.props.stateStore.userReducer.user.firstName}</h3>
-                        <input onChange={onChangeForm.bind(this)} value={this.state.firstName} style={hiddenForm} name='firstName' type="text"/>
+                        <input onChange={onChangeForm.bind(this)} value={this.state.firstName} className='form-control' style={hiddenForm} name='firstName' type="text"/>
                         <h3>lastName: {this.props.stateStore.userReducer.user.lastName}</h3>
-                        <input onChange={onChangeForm.bind(this)} value={this.state.lastName} style={hiddenForm} name='lastName' type="text"/>
+                        <input onChange={onChangeForm.bind(this)} value={this.state.lastName} className='form-control' style={hiddenForm} name='lastName' type="text"/>
                         <h3>email: {this.props.stateStore.userReducer.user.email}</h3>
-                        <input onChange={onChangeForm.bind(this)} value={this.state.email} style={hiddenForm} name='email' type="text"/>
+                        <input onChange={onChangeForm.bind(this)} value={this.state.email} className='form-control' style={hiddenForm} name='email' type="text"/>
                     </div>
-                    <button style={shownForm} onClick={showForms.bind(this, this.state.id)}>Update</button>
-                    <button style={hiddenForm} onClick={this.update.bind(this)}>Save</button>
+                    <button  onClick={showForms.bind(this, this.state.id)} style={shownForm} className='btn btn-outline-primary'>Update</button>
+                    <button onClick={this.update.bind(this)} style={hiddenForm} className='btn btn-outline-primary'>Save</button>
                 </div>
 
                 <h1>Groups</h1>
@@ -60,7 +60,7 @@ class User extends Component {
                                 <h4>name: {group.name}</h4>
                                 <h4>title: {group.title}</h4>
                             </div>
-                            <button onClick={this.leaveGroup.bind(this, group._id)}>leave group</button>
+                            <button onClick={this.leaveGroup.bind(this, group._id)} className='btn btn-outline-danger'>leave group</button>
                         </div>
                     )
                 }

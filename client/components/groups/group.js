@@ -38,16 +38,16 @@ class Group extends Component {
             <div className='groups-row'>
                 <div>
                     <Link to={`groups/${this.props.group._id}`}>{this.props.group.name}</Link>
-                    <input onChange={onChangeForm.bind(this)} value={this.state.name} style={hiddenForm} name='name' type="text"/>
+                    <input onChange={onChangeForm.bind(this)} value={this.state.name} className='form-control' style={hiddenForm} name='name' type="text"/>
                 </div>
                 <div>
                     <Link to={`groups/${this.props.group._id}`}>{this.props.group.title}</Link>
-                    <input onChange={onChangeForm.bind(this)} value={this.state.title} style={hiddenForm} name='title' type="text"/>
+                    <input onChange={onChangeForm.bind(this)} value={this.state.title} className='form-control' style={hiddenForm} name='title' type="text"/>
                 </div>
 
-                <button style={shownForm} onClick={showForms.bind(this, this.props.group._id)}>Update</button>
-                <button style={hiddenForm} onClick={this.update.bind(this)}>Save</button>
-                <button onClick={this.remove.bind(this, this.props.group._id)}>Remove</button>
+                <button onClick={showForms.bind(this, this.props.group._id)} style={shownForm} className='btn btn-outline-primary'>Update</button>
+                <button onClick={this.update.bind(this)} style={hiddenForm} className='btn btn-outline-primary'>Save</button>
+                <button onClick={this.remove.bind(this, this.props.group._id)} className='btn btn-outline-danger'>Remove</button>
             </div>
         );
     }

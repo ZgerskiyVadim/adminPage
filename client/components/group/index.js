@@ -38,13 +38,13 @@ class User extends Component {
                 <div className='group'>
                     <div>
                         <h3>name: {this.props.stateStore.groupReducer.name}</h3>
-                        <input onChange={onChangeForm.bind(this)} value={this.state.name} style={hiddenForm} name='name' type="text"/>
+                        <input onChange={onChangeForm.bind(this)} value={this.state.name} className='form-control' style={hiddenForm} name='name' type="text"/>
                         <h3>title: {this.props.stateStore.groupReducer.title}</h3>
-                        <input onChange={onChangeForm.bind(this)} value={this.state.title} style={hiddenForm} name='title' type="text"/>
+                        <input onChange={onChangeForm.bind(this)} value={this.state.title} className='form-control' style={hiddenForm} name='title' type="text"/>
                     </div>
 
-                    <button style={shownForm} onClick={showForms.bind(this, this.state.id)}>Update</button>
-                    <button style={hiddenForm} onClick={this.update.bind(this)}>Save</button>
+                    <button onClick={showForms.bind(this, this.state.id)} style={shownForm} className='btn btn-outline-primary'>Update</button>
+                    <button onClick={this.update.bind(this)} style={hiddenForm} className='btn btn-outline-primary'>Save</button>
                 </div>
 
                 <h1>Users</h1>
@@ -57,7 +57,7 @@ class User extends Component {
                                 <h4>title: {user.lastName}</h4>
                                 <h4>title: {user.email}</h4>
                             </div>
-                            <button onClick={this.removeUser.bind(this, user._id)}>remove user</button>
+                            <button onClick={this.removeUser.bind(this, user._id)} className='btn btn-outline-danger'>remove user</button>
                         </div>
                     )
                 }

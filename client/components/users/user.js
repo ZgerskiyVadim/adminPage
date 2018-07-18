@@ -41,25 +41,25 @@ class User extends Component {
                 <div className='users-row col-md-12'>
                     <div className='users-prop col-md-3'>
                         <Link to={`users/${this.props.user._id}`}>{this.props.user.username}</Link>
-                        <input className='form-control' onChange={onChangeForm.bind(this)} value={this.state.username} style={hiddenForm} name='username' type="text"/>
+                        <input onChange={onChangeForm.bind(this)} value={this.state.username} className='form-control' style={hiddenForm} name='username' type="text"/>
                     </div>
                     <div className='users-prop col-md-3'>
                         <Link to={`users/${this.props.user._id}`}>{this.props.user.firstName}</Link>
-                        <input className='form-control' onChange={onChangeForm.bind(this)} value={this.state.firstName} style={hiddenForm} name='firstName' type="text"/>
+                        <input onChange={onChangeForm.bind(this)} value={this.state.firstName} className='form-control' style={hiddenForm} name='firstName' type="text"/>
                     </div>
                     <div className='users-prop col-md-3'>
                         <Link to={`users/${this.props.user._id}`}>{this.props.user.lastName}</Link>
-                        <input className='form-control' onChange={onChangeForm.bind(this)} value={this.state.lastName} style={hiddenForm} name='lastName' type="text"/>
+                        <input onChange={onChangeForm.bind(this)} value={this.state.lastName} className='form-control' style={hiddenForm} name='lastName' type="text"/>
                     </div>
                     <div className='users-prop col-md-3'>
                         <Link to={`users/${this.props.user._id}`}>{this.props.user.email}</Link>
-                        <input className='form-control' onChange={onChangeForm.bind(this)} value={this.state.email} style={hiddenForm} name='email' type="text"/>
+                        <input onChange={onChangeForm.bind(this)} value={this.state.email} className='form-control' style={hiddenForm} name='email' type="text"/>
                     </div>
                 </div>
                 <div style={{display: 'flex', justifyContent: 'space-between'}}>
-                    <button className='btn btn-outline-primary' style={shownForm} onClick={showForms.bind(this, this.props.user._id)}>Update</button>
-                    <button className='btn btn-outline-primary' style={hiddenForm} onClick={this.update.bind(this)}>Save</button>
-                    <button className='btn btn-outline-danger' onClick={this.remove.bind(this, this.props.user._id)}>Remove</button>
+                    <button onClick={showForms.bind(this, this.props.user._id)} className='btn btn-outline-primary' style={shownForm}>Update</button>
+                    <button onClick={this.update.bind(this)} className='btn btn-outline-primary' style={hiddenForm}>Save</button>
+                    <button onClick={this.remove.bind(this, this.props.user._id)} className='btn btn-outline-danger'>Remove</button>
                 </div>
             </div>
         );
