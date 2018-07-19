@@ -43,13 +43,13 @@ class User extends Component {
     render() {
         const hiddenForm = {display: this.state.show ? "block" : "none"};
         const shownForm = {display: !this.state.show ? "block" : "none"};
-        const showGroups = {display: this.props.stateStore.userReducer.groups.length ? 'block' : 'none'};
+        const isGroups = {display: this.props.stateStore.userReducer.groups.length ? 'block' : 'none'};
 
         return (
             <div>
                <h1>USER</h1>
                 <div className='user'>
-                    <div>
+                    <div className='user--margin-right'>
                         <h3>username: {this.props.stateStore.userReducer.user.username}</h3>
                         <input onChange={onChangeForm.bind(this)} value={this.state.username} className='form-control' style={hiddenForm} name='username' type="text"/>
                         <h3>firstName: {this.props.stateStore.userReducer.user.firstName}</h3>
@@ -59,15 +59,15 @@ class User extends Component {
                         <h3>email: {this.props.stateStore.userReducer.user.email}</h3>
                         <input onChange={onChangeForm.bind(this)} value={this.state.email} className='form-control' style={hiddenForm} name='email' type="text"/>
                     </div>
-                    <button onClick={showForms.bind(this, this.state.id)} style={shownForm} className='btn btn-outline-primary'>Update</button>
-                    <button onClick={this.update.bind(this)} style={hiddenForm} className='btn btn-outline-primary'>Save</button>
+                    <button onClick={showForms.bind(this, this.state.id)} style={shownForm} className='user--margin-right btn btn-outline-primary'>Update</button>
+                    <button onClick={this.update.bind(this)} style={hiddenForm} className='user--margin-right btn btn-outline-primary'>Save</button>
                     <button onClick={this.joinGroup.bind(this)} className='btn btn-outline-info'>Join group</button>
                 </div>
 
-                <h1 style={showGroups}>Groups</h1>
+                <h1 style={isGroups}>Groups</h1>
                 {
                     this.props.stateStore.userReducer.groups.map(group =>
-                        <div className='user-groups' key={group._id}>
+                        <div className='user__groups col-md-4' key={group._id}>
                             <div>
                                 <Link to={`/groups/${group._id}`}>
                                     <h4>name: {group.name}</h4>
@@ -76,7 +76,7 @@ class User extends Component {
                                     <h4>title: {group.title}</h4>
                                 </Link>
                             </div>
-                            <button onClick={this.leaveGroup.bind(this, group._id)} className='btn btn-outline-danger'>leave group</button>
+                            <button onClick={this.leaveGroup.bind(this, group._id)} className='user__leave-group btn btn-outline-danger'>leave group</button>
                         </div>
                     )
                 }

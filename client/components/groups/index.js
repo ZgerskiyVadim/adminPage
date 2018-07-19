@@ -17,6 +17,11 @@ class Groups extends Component {
         this.props.search(event.target.value);
     }
 
+    cancelJoinGroup() {
+        const isJoining = false;
+        this.props.cancelJoinGroup(isJoining)
+    }
+
     userNotJoinedGroups() {
         return this.props.stateStore.groupsReducer.filter(group => {
             for (let i = 0; i < group.users.length; i++ ) {
@@ -30,14 +35,19 @@ class Groups extends Component {
     }
 
     render() {
+        const isJoingingGroup = {display: this.props.stateStore.userReducer.joiningGroup ? 'block' : 'none'};
+
         return (
             <div className='groups'>
-                <h1>Search</h1>
-                <input onChange={this.search.bind(this)} className='form-control col-md-4' type="text"/>
+                <div className='groups-search'>
+                    <h2>Search</h2>
+                    <input onChange={this.search.bind(this)} className='form-control col-md-3' type="text"/>
+                    <button onClick={this.cancelJoinGroup.bind(this)} style={isJoingingGroup} className='btn btn-outline-danger'>Cancel join group</button>
+                </div>
                 <div>
                     <div className='groups-headers col-md-4'>
-                        <h1 className='col-md-6'>name</h1>
-                        <h1 className='col-md-6'>title</h1>
+                        <h2 className='col-md-6'>name</h2>
+                        <h2 className='col-md-6'>title</h2>
                     </div>
                     {
                         this.props.stateStore.userReducer.joiningGroup ?
@@ -64,6 +74,9 @@ export default connect(
         },
         search: (query) => {
             dispatch({type: actions.SEARCH_GROUPS_REQUEST, payload: query});
-        }
+        },
+        cancelJoinGroup: (isJoining) => {
+            dispatch({type: actions.IS_JOINING_GROUP, payload: isJoining})
+        },
     })
 )(Groups)

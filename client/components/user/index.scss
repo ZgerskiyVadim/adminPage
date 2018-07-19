@@ -1,10 +1,18 @@
 .user {
   display: flex;
   align-items: center;
+  margin-bottom: 1em;
 }
-.user-groups {
+.user--margin-right {
+  margin-right: 1em;
+}
+.user__groups {
   display: flex;
   align-items: center;
+  border-bottom: 1px solid lightgrey;
+  .user__leave-group {
+    margin-left: 1em;
+  }
   a {
     color: black;
     text-decoration: none;

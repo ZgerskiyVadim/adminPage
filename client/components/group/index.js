@@ -33,13 +33,13 @@ class User extends Component {
     render() {
         const hiddenForm = {display: this.state.show ? "block" : "none"};
         const shownForm = {display: !this.state.show ? "block" : "none"};
-        const showUsers = {display: this.props.stateStore.groupReducer.users.length ? 'block' : 'none'};
+        const isUsers = {display: this.props.stateStore.groupReducer.users.length ? 'block' : 'none'};
 
         return (
             <div>
                 <h1>GROUP</h1>
                 <div className='group'>
-                    <div>
+                    <div className='group--margin-right'>
                         <h3>name: {this.props.stateStore.groupReducer.name}</h3>
                         <input onChange={onChangeForm.bind(this)} value={this.state.name} className='form-control' style={hiddenForm} name='name' type="text"/>
                         <h3>title: {this.props.stateStore.groupReducer.title}</h3>
@@ -50,25 +50,25 @@ class User extends Component {
                     <button onClick={this.update.bind(this)} style={hiddenForm} className='btn btn-outline-primary'>Save</button>
                 </div>
 
-                <h1 style={showUsers}>Users</h1>
+                <h1 style={isUsers}>Users</h1>
                 {
                     this.props.stateStore.groupReducer.users.map(user =>
-                        <div className='group-users' key={user._id}>
+                        <div className='group__users col-md-6' key={user._id}>
                             <div>
                                 <Link to={`/users/${user._id}`}>
-                                    <h4>name: {user.username}</h4>
+                                    <h4>username: {user.username}</h4>
                                 </Link>
                                 <Link to={`/users/${user._id}`}>
-                                    <h4>title: {user.firstName}</h4>
+                                    <h4>firstName: {user.firstName}</h4>
                                 </Link>
                                 <Link to={`/users/${user._id}`}>
-                                    <h4>title: {user.lastName}</h4>
+                                    <h4>lastName: {user.lastName}</h4>
                                 </Link>
                                 <Link to={`/users/${user._id}`}>
-                                    <h4>title: {user.email}</h4>
+                                    <h4>email: {user.email}</h4>
                                 </Link>
                             </div>
-                            <button onClick={this.removeUser.bind(this, user._id)} className='btn btn-outline-danger'>remove user</button>
+                            <button onClick={this.removeUser.bind(this, user._id)} className='group__remove-user btn btn-outline-danger'>remove user</button>
                         </div>
                     )
                 }
