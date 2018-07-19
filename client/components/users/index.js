@@ -13,6 +13,7 @@ class Users extends Component {
             isLoadMore: true,
             isMounted: false
         };
+        this.loadMore = this.loadMore.bind(this);
     }
 
     componentDidMount() {
@@ -20,24 +21,26 @@ class Users extends Component {
         this.listenScroll();
     }
 
+    componentWillUnmount() {
+        window.removeEventListener('scroll', this.loadMore);
+    }
+
     listenScroll() {
-        window.addEventListener('scroll', () => {
-            if (this.state.isLoadMore && (window.scrollY === (window.document.body.scrollHeight - window.innerHeight))) {
-                this.loadMore();
-            }
-        })
+        window.addEventListener('scroll', this.loadMore)
     }
 
     loadMore() {
-        if (this.state.limit > this.props.stateStore.usersReducer.length) {
-            this.setState({
-                isLoadMore: false
-            })
-        } else {
-            this.setState({
-                limit: this.state.limit + this.state.loadNext
-            });
-            this.props.getUsers(this.state.limit)
+        if (this.state.isLoadMore && (window.scrollY === (window.document.body.scrollHeight - window.innerHeight))) {
+            if (this.state.limit > this.props.stateStore.usersReducer.length) {
+                this.setState({
+                    isLoadMore: false
+                })
+            } else {
+                this.setState({
+                    limit: this.state.limit + this.state.loadNext
+                });
+                this.props.getUsers(this.state.limit)
+            }
         }
     }
 

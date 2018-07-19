@@ -16,6 +16,7 @@ class Groups extends Component {
             isLoadMore: true,
             isSearching: false,
         };
+        this.loadMore = this.loadMore.bind(this);
     }
 
     componentDidMount() {
@@ -23,27 +24,29 @@ class Groups extends Component {
         this.listenScroll();
     }
 
+    componentWillUnmount() {
+        window.removeEventListener('scroll', this.loadMore);
+    }
+
     listenScroll() {
-        window.addEventListener('scroll', () => {
-            if (this.state.isLoadMore && (window.scrollY === (window.document.body.scrollHeight - window.innerHeight))) {
-                this.loadMore();
-            }
-        })
+        window.addEventListener('scroll', this.loadMore)
     }
 
     loadMore() {
-        if (this.state.options.limit > this.props.stateStore.groupsReducer.length) {
-            this.setState({
-                isLoadMore: false
-            })
-        } else {
-            this.setState({
-                options: {
-                    ...this.state.options,
-                    limit: this.state.options.limit + this.state.options.loadNext
-                }
-            });
-            this.state.isSearching ? this.props.search(this.state.options) : this.props.getGroups(this.state.options.limit)
+        if (this.state.isLoadMore && (window.scrollY === (window.document.body.scrollHeight - window.innerHeight))) {
+            if (this.state.options.limit > this.props.stateStore.groupsReducer.length) {
+                this.setState({
+                    isLoadMore: false
+                })
+            } else {
+                this.setState({
+                    options: {
+                        ...this.state.options,
+                        limit: this.state.options.limit + this.state.options.loadNext
+                    }
+                });
+                this.state.isSearching ? this.props.search(this.state.options) : this.props.getGroups(this.state.options.limit)
+            }
         }
     }
 
