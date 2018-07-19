@@ -10,10 +10,9 @@ class Users extends Component {
         this.state = {
             limit: 20,
             loadNext: 10,
-            isLoadMore: true
+            isLoadMore: true,
+            isMounted: false
         };
-
-        this.search = this.search.bind(this)
     }
 
     componentDidMount() {
@@ -51,13 +50,15 @@ class Users extends Component {
     }
 
     render() {
+        const marginBottom = {marginBottom: this.state.isLoadMore ? '0' : '5em'};
+
         return (
             <div className='users'>
                 <div className='users-search'>
                     <h2>Search</h2>
-                    <input onChange={this.search} className='form-control col-md-3' type="text"/>
+                    <input onChange={this.search.bind(this)} className='form-control col-md-3' type="text"/>
                 </div>
-                <div ref='iScroll'>
+                <div style={marginBottom}>
                     <div className='users-headers col-md-9'>
                         <h2 className='col-md-3'>username</h2>
                         <h2 className='col-md-3'>firstName</h2>

@@ -58,8 +58,8 @@ class User extends Component {
                     </div>
                 </div>
                 <div className='users-buttons'>
-                    <button onClick={showForms.bind(this, this.props.user._id)} className='btn btn-outline-primary' style={shownForm}>Update</button>
-                    <button onClick={this.update.bind(this)} className='btn btn-outline-primary' style={hiddenForm}>Save</button>
+                    <button onClick={showForms.bind(this, this.props.user._id)} className='users--margin-right btn btn-outline-primary' style={shownForm}>Update</button>
+                    <button onClick={this.update.bind(this)} className='users--margin-right btn btn-outline-primary' style={hiddenForm}>Save</button>
                     <button onClick={this.remove.bind(this, this.props.user._id)} className='btn btn-outline-danger'>Remove</button>
                 </div>
             </div>

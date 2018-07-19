@@ -56,8 +56,8 @@ class Group extends Component {
                 </div>
 
                 <div className='groups-buttons'>
-                    <button onClick={showForms.bind(this, this.props.group._id)} style={shownForm} className='btn btn-outline-primary'>Update</button>
-                    <button onClick={this.update.bind(this)} style={hiddenForm} className='btn btn-outline-primary'>Save</button>
+                    <button onClick={showForms.bind(this, this.props.group._id)} style={shownForm} className='groups--margin-right btn btn-outline-primary'>Update</button>
+                    <button onClick={this.update.bind(this)} style={hiddenForm} className='groups--margin-right btn btn-outline-primary'>Save</button>
                     <button onClick={this.remove.bind(this, this.props.group._id)} style={notJoiningGroup} className='btn btn-outline-danger'>Remove</button>
                     <button onClick={this.joinGroup.bind(this, this.props.group._id)} style={joiningGroup} className='btn btn-outline-info'>Join group</button>
                 </div>

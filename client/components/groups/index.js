@@ -87,6 +87,7 @@ class Groups extends Component {
 
     render() {
         const isJoingingGroup = {display: this.props.stateStore.userReducer.joiningGroup ? 'block' : 'none'};
+        const marginBottom = {marginBottom: this.state.isLoadMore ? '0' : '5em'};
 
         return (
             <div className='groups'>
@@ -95,7 +96,7 @@ class Groups extends Component {
                     <input onChange={this.search.bind(this)} className='form-control col-md-3' type="text"/>
                     <button onClick={this.cancelJoinGroup.bind(this)} style={isJoingingGroup} className='btn btn-outline-danger'>Cancel join group</button>
                 </div>
-                <div>
+                <div style={marginBottom}>
                     <div className='groups-headers col-md-4'>
                         <h2 className='col-md-6'>name</h2>
                         <h2 className='col-md-6'>title</h2>
