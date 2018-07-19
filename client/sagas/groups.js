@@ -3,9 +3,9 @@ import GroupsAPI from '../api/groupsAPI';
 import * as actions from '../actions/constants';
 
 
-function* callgetGroups() {
+function* callgetGroups(action) {
     try {
-        const groups = yield call(GroupsAPI.getGroups);
+        const groups = yield call(GroupsAPI.getGroups, action.payload);
         yield put({type: actions.GET_GROUPS, payload: groups});
     } catch (e) {
         yield put({type: actions.GROUPS_REQUEST_FAILED, message: e.message});

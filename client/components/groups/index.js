@@ -7,14 +7,65 @@ import * as actions from '../../actions/constants';
 class Groups extends Component {
     constructor(props) {
         super(props);
+        this.state = {
+            options: {
+                limit: 20,
+                loadNext: 10,
+                searchBy: ''
+            },
+            isLoadMore: true,
+            isSearching: false,
+        };
     }
 
     componentDidMount() {
-        this.props.getGroups();
+        this.props.getGroups(this.state.options.limit);
+        this.listenScroll();
+    }
+
+    listenScroll() {
+        window.addEventListener('scroll', () => {
+            if (this.state.isLoadMore && (window.scrollY === (window.document.body.scrollHeight - window.innerHeight))) {
+                this.loadMore();
+            }
+        })
+    }
+
+    loadMore() {
+        if (this.state.options.limit > this.props.stateStore.groupsReducer.length) {
+            this.setState({
+                isLoadMore: false
+            })
+        } else {
+            this.setState({
+                options: {
+                    ...this.state.options,
+                    limit: this.state.options.limit + this.state.options.loadNext
+                }
+            });
+            this.state.isSearching ? this.props.search(this.state.options) : this.props.getGroups(this.state.options.limit)
+        }
     }
 
     search(event) {
-        this.props.search(event.target.value);
+        this.setOptions(event);
+        const options = {
+            limit: 20,
+            searchBy: event.target.value
+        };
+        this.props.search(options);
+    }
+
+    setOptions(event) {
+        this.setState({
+            options: {
+                ...this.state.options,
+                limit: 20,
+                searchBy: event.target.value
+            },
+            isSearching: true,
+            isLoadMore: true
+        });
     }
 
     cancelJoinGroup() {
@@ -69,11 +120,11 @@ export default connect(
         stateStore: state
     }),
     dispatch => ({
-        getGroups: () => {
-            dispatch({type: actions.GET_GROUPS_REQUEST});
+        getGroups: (limit) => {
+            dispatch({type: actions.GET_GROUPS_REQUEST, payload: limit});
         },
-        search: (query) => {
-            dispatch({type: actions.SEARCH_GROUPS_REQUEST, payload: query});
+        search: (options) => {
+            dispatch({type: actions.SEARCH_GROUPS_REQUEST, payload: options});
         },
         cancelJoinGroup: (isJoining) => {
             dispatch({type: actions.IS_JOINING_GROUP, payload: isJoining})

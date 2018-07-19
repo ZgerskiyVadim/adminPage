@@ -2,8 +2,8 @@ import axios from "axios/index";
 
 export default class UsersAPI {
 
-    static getUsers() {
-        return axios.get('/api/users')
+    static getUsers(limit) {
+        return axios.get('/api/users', {params: { limit }})
             .then(users => users.data)
             .catch(err => err)
     }

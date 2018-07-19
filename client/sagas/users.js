@@ -2,9 +2,9 @@ import { call, put, takeEvery, all } from 'redux-saga/effects';
 import UsersAPI from '../api/usersAPI';
 import * as actions from '../actions/constants';
 
-function* callgetUsers() {
+function* callgetUsers(action) {
     try {
-        const users = yield call(UsersAPI.getUsers);
+        const users = yield call(UsersAPI.getUsers, action.payload);
         yield put({type: actions.GET_USERS, payload: users});
     } catch (e) {
         yield put({type: actions.USERS_REQUEST_FAILED, message: e.message});

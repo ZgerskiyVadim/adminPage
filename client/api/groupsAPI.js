@@ -2,8 +2,8 @@ import axios from "axios/index";
 
 export default class GroupsAPI {
 
-    static getGroups() {
-        return axios.get('/api/groups')
+    static getGroups(limit) {
+        return axios.get('/api/groups', {params: {limit}})
             .then(groups => groups.data)
             .catch(err => err)
     }
@@ -14,8 +14,14 @@ export default class GroupsAPI {
             .catch(err => err);
     }
 
-    static searchGroups(query) {
-        return axios.get('/api/groups', {params: {searchBy: query}})
+    static searchGroups(options) {
+        const { searchBy, limit } = options;
+        return axios.get('/api/groups', {
+            params: {
+                searchBy,
+                limit
+            }
+        })
             .then(groups => groups.data)
             .catch(err => err);
     }
