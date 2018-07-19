@@ -10,7 +10,7 @@ class Groups extends Component {
     }
 
     componentDidMount() {
-        !this.props.stateStore.userReducer.joiningGroup && this.props.getGroups();
+        this.props.getGroups();
     }
 
     search(event) {
@@ -21,7 +21,6 @@ class Groups extends Component {
         return this.props.stateStore.groupsReducer.filter(group => {
             for (let i = 0; i < group.users.length; i++ ) {
                 const userID = group.users[i]._id ? group.users[i]._id : group.users[i];
-                console.log('userID', userID);
                 if (userID === this.props.stateStore.userReducer.user._id) {
                     return false;
                 }
@@ -43,9 +42,7 @@ class Groups extends Component {
                     {
                         this.props.stateStore.userReducer.joiningGroup ?
 
-                            this.userNotJoinedGroups().map(group =>{
-                                console.log('WTF');
-                                return <Group group={group} key={group._id}/>}) :
+                            this.userNotJoinedGroups().map(group => <Group group={group} key={group._id}/>) :
 
                             this.props.stateStore.groupsReducer.map(group =>
                                 <Group group={group} key={group._id}/>

@@ -15,6 +15,10 @@ class Users extends Component {
         this.props.getUsers();
     }
 
+    hideCurrentUserJoiningGroup() {
+        return this.props.stateStore.usersReducer.filter(user => user._id !== this.props.stateStore.userReducer.user._id)
+    }
+
     search(event) {
         this.props.search(event.target.value);
     }
@@ -32,6 +36,11 @@ class Users extends Component {
                         <h1 className='col-md-3'>email</h1>
                     </div>
                     {
+                        this.props.stateStore.userReducer.joiningGroup ?
+
+                            this.hideCurrentUserJoiningGroup().map(user =>
+                                <User user={user} key={user._id}/>) :
+
                         this.props.stateStore.usersReducer.map(user =>
                             <User user={user} key={user._id}/>
                         )
