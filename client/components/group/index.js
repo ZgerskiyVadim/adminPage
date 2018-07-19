@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import {connect} from "react-redux";
+import { Link } from "react-router-dom";
 import './index.scss';
 import * as actions from '../../actions/constants';
 import { onChangeForm, showForms, getOptions } from '../../services/userAndGroupHelper';
@@ -52,12 +53,20 @@ class User extends Component {
                 <h1 style={showUsers}>Users</h1>
                 {
                     this.props.stateStore.groupReducer.users.map(user =>
-                        <div className='users' key={user._id}>
+                        <div className='group-users' key={user._id}>
                             <div>
-                                <h4>name: {user.username}</h4>
-                                <h4>title: {user.firstName}</h4>
-                                <h4>title: {user.lastName}</h4>
-                                <h4>title: {user.email}</h4>
+                                <Link to={`/users/${user._id}`}>
+                                    <h4>name: {user.username}</h4>
+                                </Link>
+                                <Link to={`/users/${user._id}`}>
+                                    <h4>title: {user.firstName}</h4>
+                                </Link>
+                                <Link to={`/users/${user._id}`}>
+                                    <h4>title: {user.lastName}</h4>
+                                </Link>
+                                <Link to={`/users/${user._id}`}>
+                                    <h4>title: {user.email}</h4>
+                                </Link>
                             </div>
                             <button onClick={this.removeUser.bind(this, user._id)} className='btn btn-outline-danger'>remove user</button>
                         </div>

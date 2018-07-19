@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import {connect} from "react-redux";
+import { Link } from "react-router-dom";
 import './index.scss';
 import * as actions from '../../actions/constants';
 import { onChangeForm, showForms, getOptions } from '../../services/userAndGroupHelper';
@@ -18,6 +19,8 @@ class User extends Component {
     }
 
     componentDidMount() {
+        const isJoining = false;
+        this.props.joinGroup(isJoining);
         this.props.getUser(this.state.id);
     }
 
@@ -28,7 +31,8 @@ class User extends Component {
     }
 
     joinGroup() {
-        this.props.joinGroup();
+        const isJoining = true;
+        this.props.joinGroup(isJoining);
         this.props.history.push('/groups');
     }
 
@@ -65,8 +69,12 @@ class User extends Component {
                     this.props.stateStore.userReducer.groups.map(group =>
                         <div className='user-groups' key={group._id}>
                             <div>
-                                <h4>name: {group.name}</h4>
-                                <h4>title: {group.title}</h4>
+                                <Link to={`/groups/${group._id}`}>
+                                    <h4>name: {group.name}</h4>
+                                </Link>
+                                <Link to={`/groups/${group._id}`}>
+                                    <h4>title: {group.title}</h4>
+                                </Link>
                             </div>
                             <button onClick={this.leaveGroup.bind(this, group._id)} className='btn btn-outline-danger'>leave group</button>
                         </div>
@@ -88,8 +96,8 @@ export default connect(
         updateUser: (options) => {
             dispatch({type: actions.UPDATE_USER_REQUEST, payload: options});
         },
-        joinGroup: () => {
-            dispatch({type: actions.IS_JOINING_GROUP, payload: true})
+        joinGroup: (isJoining) => {
+            dispatch({type: actions.IS_JOINING_GROUP, payload: isJoining})
         },
         leaveGroup: (userID, groupID) => {
             dispatch({type: actions.LEAVE_GROUP_REQUEST, payload: {userID, groupID}});
