@@ -1,6 +1,6 @@
 export function loadMore(enumItem) {
     const lengthOfItems = enumItem === 'users' ? this.props.stateStore.usersReducer.length : this.props.stateStore.groupsReducer.length;
-    if (this.state.isLoadMore && (window.scrollY === (window.document.body.scrollHeight - window.innerHeight))) {
+    if (this.state.isLoadMore && (window.scrollY === (document.documentElement.scrollHeight - document.documentElement.clientHeight))) {
         setState.call(this, lengthOfItems, enumItem);
     }
 }
