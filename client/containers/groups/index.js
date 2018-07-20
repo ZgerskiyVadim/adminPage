@@ -19,6 +19,7 @@ class Groups extends Component {
         };
         this.loadMore = loadMore.bind(this, 'groups');
         this.setOptions = setOptions.bind(this);
+        this.search = this.search.bind(this)
     }
 
     componentDidMount() {
@@ -64,7 +65,7 @@ class Groups extends Component {
             <div className='groups'>
                 <div className='groups-search'>
                     <h2>Search</h2>
-                    <input onChange={this.search.bind(this)} className='form-control col-md-3' type="text"/>
+                    <input onChange={this.search} className='form-control col-md-3' type="text"/>
                     <button onClick={this.cancelJoinGroup.bind(this)} style={isJoingingGroup} className='btn btn-outline-danger'>Cancel join group</button>
                 </div>
                 <div style={marginBottom}>

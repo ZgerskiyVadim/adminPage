@@ -4,6 +4,7 @@ import { withRouter } from 'react-router';
 class Header extends Component {
     constructor(props) {
         super(props);
+        this.goHome = this.goHome.bind(this);
     }
 
     goHome() {
@@ -13,7 +14,7 @@ class Header extends Component {
     render() {
         return (
             <div style={{cursor: 'pointer'}}>
-                <h1 onClick={this.goHome.bind(this)}>Home</h1>
+                <h1 onClick={this.goHome}>Home</h1>
             </div>
         );
     }

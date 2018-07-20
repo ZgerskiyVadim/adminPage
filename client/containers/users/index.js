@@ -19,6 +19,7 @@ class Users extends Component {
         };
         this.loadMore = loadMore.bind(this, 'users');
         this.setOptions = setOptions.bind(this);
+        this.search = this.search.bind(this);
     }
 
     componentDidMount() {
@@ -50,7 +51,7 @@ class Users extends Component {
             <div className='users'>
                 <div className='users-search'>
                     <h2>Search</h2>
-                    <input onChange={this.search.bind(this)} className='form-control col-md-3' type="text"/>
+                    <input onChange={this.search} className='form-control col-md-3' type="text"/>
                 </div>
                 <div style={marginBottom}>
                     <div className='users-headers col-md-9'>

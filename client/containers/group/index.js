@@ -13,7 +13,10 @@ class User extends Component {
             name: '',
             title: '',
             id: this.props.match.params.id
-        }
+        };
+
+        this.onChangeForm = onChangeForm.bind(this);
+        this.update = this.update.bind(this);
     }
 
     componentDidMount() {
@@ -41,13 +44,13 @@ class User extends Component {
                 <div className='group'>
                     <div className='group--margin-right'>
                         <h3>name: {this.props.stateStore.groupReducer.name}</h3>
-                        <input onChange={onChangeForm.bind(this)} value={this.state.name} className='form-control' style={hiddenForm} name='name' type="text"/>
+                        <input onChange={this.onChangeForm} value={this.state.name} className='form-control' style={hiddenForm} name='name' type="text"/>
                         <h3>title: {this.props.stateStore.groupReducer.title}</h3>
-                        <input onChange={onChangeForm.bind(this)} value={this.state.title} className='form-control' style={hiddenForm} name='title' type="text"/>
+                        <input onChange={this.onChangeForm} value={this.state.title} className='form-control' style={hiddenForm} name='title' type="text"/>
                     </div>
 
                     <button onClick={showForms.bind(this, this.state.id)} style={shownForm} className='btn btn-outline-primary'>Update</button>
-                    <button onClick={this.update.bind(this)} style={hiddenForm} className='btn btn-outline-primary'>Save</button>
+                    <button onClick={this.update} style={hiddenForm} className='btn btn-outline-primary'>Save</button>
                 </div>
 
                 <h1 style={isUsers}>Users</h1>

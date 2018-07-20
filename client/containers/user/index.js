@@ -15,7 +15,11 @@ class User extends Component {
             lastName: '',
             email: '',
             id: this.props.match.params.id
-        }
+        };
+
+        this.onChangeForm = onChangeForm.bind(this);
+        this.update = this.update.bind(this);
+        this.joinGroup = this.joinGroup.bind(this);
     }
 
     componentDidMount() {
@@ -51,17 +55,17 @@ class User extends Component {
                 <div className='user'>
                     <div className='user--margin-right'>
                         <h3>username: {this.props.stateStore.userReducer.user.username}</h3>
-                        <input onChange={onChangeForm.bind(this)} value={this.state.username} className='form-control' style={hiddenForm} name='username' type="text"/>
+                        <input onChange={this.onChangeForm} value={this.state.username} className='form-control' style={hiddenForm} name='username' type="text"/>
                         <h3>firstName: {this.props.stateStore.userReducer.user.firstName}</h3>
-                        <input onChange={onChangeForm.bind(this)} value={this.state.firstName} className='form-control' style={hiddenForm} name='firstName' type="text"/>
+                        <input onChange={this.onChangeForm} value={this.state.firstName} className='form-control' style={hiddenForm} name='firstName' type="text"/>
                         <h3>lastName: {this.props.stateStore.userReducer.user.lastName}</h3>
-                        <input onChange={onChangeForm.bind(this)} value={this.state.lastName} className='form-control' style={hiddenForm} name='lastName' type="text"/>
+                        <input onChange={this.onChangeForm} value={this.state.lastName} className='form-control' style={hiddenForm} name='lastName' type="text"/>
                         <h3>email: {this.props.stateStore.userReducer.user.email}</h3>
-                        <input onChange={onChangeForm.bind(this)} value={this.state.email} className='form-control' style={hiddenForm} name='email' type="text"/>
+                        <input onChange={this.onChangeForm} value={this.state.email} className='form-control' style={hiddenForm} name='email' type="text"/>
                     </div>
                     <button onClick={showForms.bind(this, this.state.id)} style={shownForm} className='user--margin-right btn btn-outline-primary'>Update</button>
-                    <button onClick={this.update.bind(this)} style={hiddenForm} className='user--margin-right btn btn-outline-primary'>Save</button>
-                    <button onClick={this.joinGroup.bind(this)} className='btn btn-outline-info'>Join group</button>
+                    <button onClick={this.update} style={hiddenForm} className='user--margin-right btn btn-outline-primary'>Save</button>
+                    <button onClick={this.joinGroup} className='btn btn-outline-info'>Join group</button>
                 </div>
 
                 <h1 style={isGroups}>Groups</h1>

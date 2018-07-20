@@ -16,11 +16,8 @@ class User extends Component {
             id: ''
         };
 
-        this.search = this.search.bind(this);
-    }
-
-    search(event) {
-        this.props.search(event.target.value);
+        this.onChangeForm = onChangeForm.bind(this);
+        this.update = this.update.bind(this);
     }
 
     update() {
@@ -42,24 +39,24 @@ class User extends Component {
                 <div className='users-row col-md-9'>
                     <div className='col-md-3'>
                         <Link to={`users/${this.props.user._id}`}>{this.props.user.username}</Link>
-                        <input onChange={onChangeForm.bind(this)} value={this.state.username} className='form-control' style={hiddenForm} name='username' type="text"/>
+                        <input onChange={this.onChangeForm} value={this.state.username} className='form-control' style={hiddenForm} name='username' type="text"/>
                     </div>
                     <div className='col-md-3'>
                         <Link to={`users/${this.props.user._id}`}>{this.props.user.firstName}</Link>
-                        <input onChange={onChangeForm.bind(this)} value={this.state.firstName} className='form-control' style={hiddenForm} name='firstName' type="text"/>
+                        <input onChange={this.onChangeForm} value={this.state.firstName} className='form-control' style={hiddenForm} name='firstName' type="text"/>
                     </div>
                     <div className='col-md-3'>
                         <Link to={`users/${this.props.user._id}`}>{this.props.user.lastName}</Link>
-                        <input onChange={onChangeForm.bind(this)} value={this.state.lastName} className='form-control' style={hiddenForm} name='lastName' type="text"/>
+                        <input onChange={this.onChangeForm} value={this.state.lastName} className='form-control' style={hiddenForm} name='lastName' type="text"/>
                     </div>
                     <div className='col-md-3'>
                         <Link to={`users/${this.props.user._id}`}>{this.props.user.email}</Link>
-                        <input onChange={onChangeForm.bind(this)} value={this.state.email} className='form-control' style={hiddenForm} name='email' type="text"/>
+                        <input onChange={this.onChangeForm} value={this.state.email} className='form-control' style={hiddenForm} name='email' type="text"/>
                     </div>
                 </div>
                 <div className='users-buttons'>
                     <button onClick={showForms.bind(this, this.props.user._id)} className='users--margin-right btn btn-outline-primary' style={shownForm}>Update</button>
-                    <button onClick={this.update.bind(this)} className='users--margin-right btn btn-outline-primary' style={hiddenForm}>Save</button>
+                    <button onClick={this.update} className='users--margin-right btn btn-outline-primary' style={hiddenForm}>Save</button>
                     <button onClick={this.remove.bind(this, this.props.user._id)} className='btn btn-outline-danger'>Remove</button>
                 </div>
             </div>
