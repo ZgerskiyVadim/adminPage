@@ -1,7 +1,11 @@
 .home {
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
+  .home-row {
+    display: flex;
+  }
   .home--margin-right {
     margin-right: 1em;
   }

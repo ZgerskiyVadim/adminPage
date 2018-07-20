@@ -10,8 +10,13 @@ export default class Home extends Component {
     render() {
         return (
             <div className='home'>
-                <Link to='/users'><h2 className='home--margin-right'>Users</h2></Link>
-                <Link to='/groups'><h2>Groups</h2></Link>
+                <div className='home-row'>
+                    <Link to='/users'><h2 className='home--margin-right'>Users</h2></Link>
+                    <Link to='/groups'><h2>Groups</h2></Link>
+                </div>
+                <div>
+                    <Link to='/create'><h2>Create</h2></Link>
+                </div>
             </div>
         );
     }

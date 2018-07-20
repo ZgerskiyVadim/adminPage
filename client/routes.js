@@ -5,6 +5,7 @@ import Group from "./containers/group";
 import Users from "./containers/users";
 import User from "./containers/user";
 import Home from "./containers/home";
+import Create from "./containers/create";
 
 
 export default class Routes extends Component{
@@ -16,6 +17,7 @@ export default class Routes extends Component{
                 <Route path="/users/:id" component={User}/>
                 <Route exact path="/groups" component={Groups}/>
                 <Route path="/groups/:id" component={Group}/>
+                <Route path="/create" component={Create}/>
             </Switch>
         )
     }
