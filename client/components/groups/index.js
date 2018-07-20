@@ -51,11 +51,7 @@ class Groups extends Component {
     }
 
     search(event) {
-        this.setOptions(event);
-        const options = {
-            limit: 20,
-            searchBy: event.target.value
-        };
+        const options = this.setOptions(event);
         this.props.search(options);
     }
 
@@ -66,9 +62,13 @@ class Groups extends Component {
                 limit: 20,
                 searchBy: event.target.value
             },
-            isSearching: true,
+            isSearching: !!event.target.value,
             isLoadMore: true
         });
+        return {
+            limit: 20,
+            searchBy: event.target.value
+        }
     }
 
     cancelJoinGroup() {

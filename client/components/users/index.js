@@ -8,8 +8,11 @@ class Users extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            limit: 20,
-            loadNext: 10,
+            options: {
+                limit: 20,
+                loadNext: 10,
+                searchBy: ''
+            },
             isLoadMore: true,
             isMounted: false
         };
@@ -17,7 +20,7 @@ class Users extends Component {
     }
 
     componentDidMount() {
-        this.props.getUsers(this.state.limit);
+        this.props.getUsers(this.state.options.limit);
         this.listenScroll();
     }
 
@@ -31,15 +34,18 @@ class Users extends Component {
 
     loadMore() {
         if (this.state.isLoadMore && (window.scrollY === (window.document.body.scrollHeight - window.innerHeight))) {
-            if (this.state.limit > this.props.stateStore.usersReducer.length) {
+            if (this.state.options.limit > this.props.stateStore.usersReducer.length) {
                 this.setState({
                     isLoadMore: false
                 })
             } else {
                 this.setState({
-                    limit: this.state.limit + this.state.loadNext
+                    options: {
+                        ...this.state.options,
+                        limit: this.state.options.limit + this.state.options.loadNext
+                    }
                 });
-                this.props.getUsers(this.state.limit)
+                this.state.isSearching ? this.props.search(this.state.options) : this.props.getUsers(this.state.options.limit)
             }
         }
     }
@@ -49,7 +55,24 @@ class Users extends Component {
     }
 
     search(event) {
-        this.props.search(event.target.value);
+        const options = this.setOptions(event);
+        this.props.search(options);
+    }
+
+    setOptions(event) {
+        this.setState({
+            options: {
+                ...this.state.options,
+                limit: 20,
+                searchBy: event.target.value
+            },
+            isSearching: !!event.target.value,
+            isLoadMore: true
+        });
+        return {
+            limit: 20,
+            searchBy: event.target.value
+        }
     }
 
     render() {
@@ -92,8 +115,8 @@ export default connect(
         getUsers: (limit) => {
             dispatch({type: actions.GET_USERS_REQUEST, payload: limit});
         },
-        search: (query) => {
-            dispatch({type: actions.SEARCH_USERS_REQUEST, payload: query});
+        search: (options) => {
+            dispatch({type: actions.SEARCH_USERS_REQUEST, payload: options});
         },
     })
 )(Users)

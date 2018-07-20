@@ -14,8 +14,9 @@ export default class UsersAPI {
             .catch(err => err);
     }
 
-    static searchUsers(query) {
-        return axios.get('/api/users', {params: {searchBy: query}})
+    static searchUsers(options) {
+        const { searchBy, limit} = options;
+        return axios.get('/api/users', {params: { searchBy, limit }})
             .then(users => users.data)
             .catch(err => err);
     }

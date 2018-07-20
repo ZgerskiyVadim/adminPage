@@ -16,12 +16,7 @@ export default class GroupsAPI {
 
     static searchGroups(options) {
         const { searchBy, limit } = options;
-        return axios.get('/api/groups', {
-            params: {
-                searchBy,
-                limit
-            }
-        })
+        return axios.get('/api/groups', {params: { searchBy, limit }})
             .then(groups => groups.data)
             .catch(err => err);
     }
