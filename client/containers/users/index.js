@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import './index.scss';
 import * as actions from '../../actions/constants';
 import User from './user';
+import { loadMore, setOptions } from '../../services/loadMore';
 
 class Users extends Component {
     constructor(props) {
@@ -16,7 +17,8 @@ class Users extends Component {
             isLoadMore: true,
             isMounted: false
         };
-        this.loadMore = this.loadMore.bind(this);
+        this.loadMore = loadMore.bind(this, 'users');
+        this.setOptions = setOptions.bind(this);
     }
 
     componentDidMount() {
@@ -32,24 +34,6 @@ class Users extends Component {
         window.addEventListener('scroll', this.loadMore)
     }
 
-    loadMore() {
-        if (this.state.isLoadMore && (window.scrollY === (window.document.body.scrollHeight - window.innerHeight))) {
-            if (this.state.options.limit > this.props.stateStore.usersReducer.length) {
-                this.setState({
-                    isLoadMore: false
-                })
-            } else {
-                this.setState({
-                    options: {
-                        ...this.state.options,
-                        limit: this.state.options.limit + this.state.options.loadNext
-                    }
-                });
-                this.state.isSearching ? this.props.search(this.state.options) : this.props.getUsers(this.state.options.limit)
-            }
-        }
-    }
-
     hideCurrentUserJoiningGroup() {
         return this.props.stateStore.usersReducer.filter(user => user._id !== this.props.stateStore.userReducer.user._id)
     }
@@ -57,22 +41,6 @@ class Users extends Component {
     search(event) {
         const options = this.setOptions(event);
         this.props.search(options);
-    }
-
-    setOptions(event) {
-        this.setState({
-            options: {
-                ...this.state.options,
-                limit: 20,
-                searchBy: event.target.value
-            },
-            isSearching: !!event.target.value,
-            isLoadMore: true
-        });
-        return {
-            limit: 20,
-            searchBy: event.target.value
-        }
     }
 
     render() {

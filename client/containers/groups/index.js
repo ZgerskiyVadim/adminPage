@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import './index.scss';
-import Group from './group';
 import * as actions from '../../actions/constants';
+import Group from './group';
+import { loadMore, setOptions } from '../../services/loadMore';
 
 class Groups extends Component {
     constructor(props) {
@@ -16,7 +17,8 @@ class Groups extends Component {
             isLoadMore: true,
             isSearching: false,
         };
-        this.loadMore = this.loadMore.bind(this);
+        this.loadMore = loadMore.bind(this, 'groups');
+        this.setOptions = setOptions.bind(this);
     }
 
     componentDidMount() {
@@ -32,43 +34,9 @@ class Groups extends Component {
         window.addEventListener('scroll', this.loadMore)
     }
 
-    loadMore() {
-        if (this.state.isLoadMore && (window.scrollY === (window.document.body.scrollHeight - window.innerHeight))) {
-            if (this.state.options.limit > this.props.stateStore.groupsReducer.length) {
-                this.setState({
-                    isLoadMore: false
-                })
-            } else {
-                this.setState({
-                    options: {
-                        ...this.state.options,
-                        limit: this.state.options.limit + this.state.options.loadNext
-                    }
-                });
-                this.state.isSearching ? this.props.search(this.state.options) : this.props.getGroups(this.state.options.limit)
-            }
-        }
-    }
-
     search(event) {
         const options = this.setOptions(event);
         this.props.search(options);
-    }
-
-    setOptions(event) {
-        this.setState({
-            options: {
-                ...this.state.options,
-                limit: 20,
-                searchBy: event.target.value
-            },
-            isSearching: !!event.target.value,
-            isLoadMore: true
-        });
-        return {
-            limit: 20,
-            searchBy: event.target.value
-        }
     }
 
     cancelJoinGroup() {
