@@ -3,10 +3,6 @@ import { Link } from "react-router-dom";
 import './index.scss';
 
 export default class Home extends Component {
-    constructor(props) {
-        super(props);
-    }
-
     render() {
         return (
             <div className='home'>

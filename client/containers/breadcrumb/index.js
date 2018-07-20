@@ -8,27 +8,21 @@ class Breadcrumb extends Component {
     }
 
     locationPath() {
-        let locationPath = this.props.location.pathname;
-        const homePath = 1;
-        if (locationPath.length === homePath) {
-            return [{
-                path: '',
-                location: '',
-                isLastElem: true
-            }]
-        } else {
-            const locations = this.props.location.pathname.split('/')
-                .filter(locationPath => !!locationPath)
-                .map(path => {
+        const locationPath = this.props.location.pathname;
+
+        const locations = locationPath.split('/')
+            .filter(locationPath => !!locationPath)
+            .map(path => {
                 return {
                     path,
                     location:  locationPath.substr(0, locationPath.indexOf(path)) + path
                 }
             });
+        if (locations.length) {
             const lastElem = locations.length - 1;
             locations[lastElem].isLastElem = true;
-            return locations;
         }
+        return locations;
     }
 
     goToPath(location) {
