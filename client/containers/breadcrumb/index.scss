@@ -1,5 +1,9 @@
+.breadcrumb-root {
+  margin-left: 2em;
+  border-bottom: 1px solid lightgrey;
+}
 .breadcrumb--flex {
-  display: flex;
+  display: inline-flex;
 }
 .breadcrumb--cursor {
   cursor: pointer;

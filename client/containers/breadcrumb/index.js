@@ -31,7 +31,7 @@ class Breadcrumb extends Component {
 
     render() {
         return (
-            <div className='breadcrumb--flex'>
+            <div className='breadcrumb-root breadcrumb--flex'>
                 {
                     this.locationPath().map((item, index) => {
                         return (

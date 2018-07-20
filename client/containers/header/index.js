@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { withRouter } from 'react-router';
+import './index.scss';
 
 class Header extends Component {
     constructor(props) {
@@ -13,7 +14,7 @@ class Header extends Component {
 
     render() {
         return (
-            <div style={{cursor: 'pointer'}}>
+            <div className='header'>
                 <h1 onClick={this.goHome}>Home</h1>
             </div>
         );

@@ -50,9 +50,9 @@ class User extends Component {
         const isGroups = {display: this.props.stateStore.userReducer.groups.length ? 'block' : 'none'};
 
         return (
-            <div>
+            <div className='user'>
                <h1>USER</h1>
-                <div className='user'>
+                <div className='user-info'>
                     <div className='user--margin-right'>
                         <h3>username: {this.props.stateStore.userReducer.user.username}</h3>
                         <input onChange={this.onChangeForm} value={this.state.username} className='form-control' style={hiddenForm} name='username' type="text"/>
