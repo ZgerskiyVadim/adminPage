@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link } from "react-router-dom";
-import * as actions from '../../actions/constants';
+import * as types from '../../actions';
 import { onChangeForm, showForms, getOptions } from '../../services/userAndGroupHelper';
 
 class User extends Component {
@@ -70,10 +70,10 @@ export default connect(
     }),
     dispatch => ({
         updateUser: (options) => {
-            dispatch({type: actions.UPDATE_USER_REQUEST, payload: options});
+            dispatch({type: types.UPDATE_USER_REQUEST, payload: options});
         },
         removeUser: (id) => {
-            dispatch({type: actions.REMOVE_USER_REQUEST, payload: id});
+            dispatch({type: types.REMOVE_USER_REQUEST, payload: id});
         }
     })
 )(User)

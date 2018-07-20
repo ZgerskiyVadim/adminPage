@@ -1,16 +1,16 @@
-import * as actions from '../actions/constants';
+import * as types from '../actions';
 
 export default function usersReducer(state = [], action) {
     switch (action.type) {
-        case actions.GET_USERS:
+        case types.GET_USERS:
             return [
                 ...action.payload
             ];
 
-        case actions.UPDATE_USER:
+        case types.UPDATE_USER:
             return state.map(user => (user._id === action.payload._id) ? action.payload : user);
 
-        case actions.REMOVE_USER:
+        case types.REMOVE_USER:
             return state.filter(user => user._id !== action.payload);
 
         default: return state

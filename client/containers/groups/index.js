@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import './index.scss';
-import * as actions from '../../actions/constants';
+import * as types from '../../actions';
 import Group from './group';
 import { loadMore, setOptions } from '../../services/loadMore';
 
@@ -95,13 +95,13 @@ export default connect(
     }),
     dispatch => ({
         getGroups: (limit) => {
-            dispatch({type: actions.GET_GROUPS_REQUEST, payload: limit});
+            dispatch({type: types.GET_GROUPS_REQUEST, payload: limit});
         },
         search: (options) => {
-            dispatch({type: actions.SEARCH_GROUPS_REQUEST, payload: options});
+            dispatch({type: types.SEARCH_GROUPS_REQUEST, payload: options});
         },
         cancelJoinGroup: (isJoining) => {
-            dispatch({type: actions.IS_JOINING_GROUP, payload: isJoining})
+            dispatch({type: types.IS_JOINING_GROUP, payload: isJoining})
         },
     })
 )(Groups)

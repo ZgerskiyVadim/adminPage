@@ -1,16 +1,16 @@
-import * as actions from '../actions/constants';
+import * as types from '../actions';
 
 export default function groupsReducer(state = [], action) {
     switch (action.type) {
-        case actions.GET_GROUPS:
+        case types.GET_GROUPS:
             return [
                 ...action.payload
             ];
 
-        case actions.UPDATE_GROUP:
+        case types.UPDATE_GROUP:
             return state.map(group => (group._id === action.payload._id) ? action.payload : group);
 
-        case actions.REMOVE_GROUP:
+        case types.REMOVE_GROUP:
             return state.filter(group => group._id !== action.payload);
 
         default: return state

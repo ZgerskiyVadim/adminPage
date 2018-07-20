@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import './index.scss';
-import * as actions from '../../actions/constants';
+import * as types from '../../actions';
 import User from './user';
 import { loadMore, setOptions } from '../../services/loadMore';
 
@@ -82,10 +82,10 @@ export default connect(
     }),
     dispatch => ({
         getUsers: (limit) => {
-            dispatch({type: actions.GET_USERS_REQUEST, payload: limit});
+            dispatch({type: types.GET_USERS_REQUEST, payload: limit});
         },
         search: (options) => {
-            dispatch({type: actions.SEARCH_USERS_REQUEST, payload: options});
+            dispatch({type: types.SEARCH_USERS_REQUEST, payload: options});
         },
     })
 )(Users)

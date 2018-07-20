@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import {connect} from "react-redux";
 import { Link } from "react-router-dom";
 import './index.scss';
-import * as actions from '../../actions/constants';
+import * as types from '../../actions';
 import { onChangeForm, showForms, getOptions } from '../../services/userAndGroupHelper';
 
 class User extends Component {
@@ -86,13 +86,13 @@ export default connect(
     }),
     dispatch => ({
         getGroup: (id) => {
-            dispatch({type: actions.GET_GROUP_REQUEST, payload: id});
+            dispatch({type: types.GET_GROUP_REQUEST, payload: id});
         },
         updateGroup: (options) => {
-            dispatch({type: actions.UPDATE_GROUP_REQUEST, payload: options});
+            dispatch({type: types.UPDATE_GROUP_REQUEST, payload: options});
         },
         removeUser: (groupID, userID) => {
-            dispatch({type: actions.REMOVE_USER_FROM_GROUP, payload: {userID, groupID}});
+            dispatch({type: types.REMOVE_USER_FROM_GROUP, payload: {userID, groupID}});
         }
     })
 )(User)
