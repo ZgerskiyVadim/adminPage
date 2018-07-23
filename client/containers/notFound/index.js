@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
+import './index.scss';
 
 export default class Home extends Component {
     render() {
         return (
-            <div>
-                <h1 style={{color: 'red'}}>Not found!</h1>
+            <div className='notFound'>
+                <h1>Not found!</h1>
             </div>
         );
     }

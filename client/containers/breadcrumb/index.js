@@ -30,14 +30,17 @@ class Breadcrumb extends Component {
     }
 
     render() {
+        const showPath = {display: this.locationPath().length ? 'block' : 'none'};
+
         return (
             <div className='breadcrumb-root breadcrumb--flex'>
+                <h1 style={showPath}>Path:&nbsp;</h1>
                 {
                     this.locationPath().map((item, index) => {
                         return (
                             <div className='breadcrumb--flex' key={index}>
                                 <h1 onClick={this.goToPath.bind(this, item.location)} className='breadcrumb--cursor'>{item.path}</h1>
-                                <h1 style={{display: item.isLastElem ? 'none' : 'block'}}> - > </h1>
+                                <h1 style={{display: item.isLastElem ? 'none' : 'block'}}>&nbsp;- >&nbsp;</h1>
                             </div>
                         )
                     })

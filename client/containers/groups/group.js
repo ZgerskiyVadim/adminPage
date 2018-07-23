@@ -43,14 +43,17 @@ class Group extends Component {
 
         return (
             <div className='groups-row'>
-                <div className='groups-row col-md-4'>
-                    <div className='col-md-6'>
+                <div className='groups-row col-md-8'>
+                    <div className='col-md-4'>
                         <Link to={`groups/${this.props.group._id}`}>{this.props.group.name}</Link>
                         <input onChange={this.onChangeForm} value={this.state.name} className='form-control' style={hiddenForm} name='name' type="text"/>
                     </div>
-                    <div className='col-md-6'>
+                    <div className='col-md-4'>
                         <Link to={`groups/${this.props.group._id}`}>{this.props.group.title}</Link>
                         <input onChange={this.onChangeForm} value={this.state.title} className='form-control' style={hiddenForm} name='title' type="text"/>
+                    </div>
+                    <div className='col-md-4'>
+                        <span>{this.props.group.users.length}</span>
                     </div>
                 </div>
 

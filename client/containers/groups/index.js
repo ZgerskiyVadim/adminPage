@@ -71,9 +71,10 @@ class Groups extends Component {
                     <button onClick={this.cancelJoinGroup.bind(this)} style={isJoingingGroup} className='btn btn-outline-danger'>Cancel join group</button>
                 </div>
                 <div style={marginBottom}>
-                    <div className='groups-headers col-md-4'>
-                        <h2 className='col-md-6'>name</h2>
-                        <h2 className='col-md-6'>title</h2>
+                    <div className='groups-headers col-md-8'>
+                        <h2 className='col-md-4'>name</h2>
+                        <h2 className='col-md-4'>title</h2>
+                        <h2 className='groups--nowrap col-md-4'>count of users</h2>
                     </div>
                     {
                         this.props.user.joiningGroup ?

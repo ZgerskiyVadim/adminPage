@@ -77,8 +77,8 @@ class Create extends Component {
         return (
             <div className='create'>
                 <h2>Create User</h2>
-                <div className='create-row'>
-                    <div>
+                <div className='create-row create--margin-bottom'>
+                    <div className='col-md-6'>
                         <h3>username</h3>
                         <input  onChange={this.onChangeUser} value={this.state.user.username} name='username' className='form-control' type="text"/>
                         <h3>firstName</h3>
@@ -93,7 +93,7 @@ class Create extends Component {
                 </div>
                 <h2>Create Group</h2>
                 <div className='create-row'>
-                    <div>
+                    <div className='col-md-6'>
                         <h3>name</h3>
                         <input  onChange={this.onChangeGroup} value={this.state.group.name} name='name' className='form-control' type="text"/>
                         <h3>title</h3>
