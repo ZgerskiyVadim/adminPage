@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link } from "react-router-dom";
-import * as types from '../../actions';
+import { bindActionCreators } from 'redux';
+import * as groupsActionCreators from '../../actions/action_creators/groups';
 import { onChangeForm, showForms, getOptions } from '../../services/userAndGroupHelper';
+
 
 class Group extends Component {
     constructor(props) {
@@ -19,25 +21,25 @@ class Group extends Component {
     }
 
     joinGroup(groupID) {
-        const userID = this.props.stateStore.userReducer.user._id;
-        this.props.joinGroup(userID, groupID);
+        const userID = this.props.user.user._id;
+        this.props.actions.joinGroup({userID, groupID});
     }
 
     update() {
         this.setState({show: false});
         const options = getOptions(this.state);
-        this.props.updateGroup(options);
+        this.props.actions.updateGroupRequest(options);
     }
 
     remove(id) {
-        this.props.removeGroup(id);
+        this.props.actions.removeGroupRequest(id);
     }
 
     render() {
-        const hiddenForm = {display: this.state.show && !this.props.stateStore.userReducer.joiningGroup ? "block" : "none"};
-        const shownForm = {display: !this.state.show && !this.props.stateStore.userReducer.joiningGroup ? "block" : "none"};
-        const joiningGroup = {display: this.props.stateStore.userReducer.joiningGroup ? "block" : "none"};
-        const notJoiningGroup = {display: !this.props.stateStore.userReducer.joiningGroup ? "block" : "none"};
+        const hiddenForm = {display: this.state.show && !this.props.user.joiningGroup ? "block" : "none"};
+        const shownForm = {display: !this.state.show && !this.props.user.joiningGroup ? "block" : "none"};
+        const joiningGroup = {display: this.props.user.joiningGroup ? "block" : "none"};
+        const notJoiningGroup = {display: !this.props.user.joiningGroup ? "block" : "none"};
 
         return (
             <div className='groups-row'>
@@ -63,19 +65,14 @@ class Group extends Component {
     }
 }
 
-export default connect(
-    state => ({
-        stateStore: state
-    }),
-    dispatch => ({
-        updateGroup: (options) => {
-            dispatch({type: types.UPDATE_GROUP_REQUEST, payload: options});
-        },
-        joinGroup: (userID, groupID) => {
-            dispatch({type: types.ADD_USER_IN_GROUP_REQUEST, payload: {userID, groupID}})
-        },
-        removeGroup: (id) => {
-            dispatch({type: types.REMOVE_GROUP_REQUEST, payload: id});
-        }
-    })
-)(Group)
+const mapStateToProps = (state) => ({
+    user: state.userReducer
+});
+
+const mapDispatchToProps = (dispatch) => ({
+    actions: bindActionCreators({
+        ...groupsActionCreators
+    }, dispatch)
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Group)

@@ -1,4 +1,9 @@
-import * as types from '../actions';
+import {
+    GET_USER,
+    UPDATE_USER,
+    USER_UPDATE_GROUPS,
+    IS_JOINING_GROUP
+} from '../actions';
 
 const initialState = {
     user: {
@@ -14,26 +19,26 @@ const initialState = {
 
 export default function userReducer(state = initialState, action) {
     switch (action.type) {
-        case types.GET_USER:
+        case GET_USER:
             return {
                 ...state,
                 user: action.payload.user,
                 groups: action.payload.groups
             };
 
-        case types.UPDATE_USER:
+        case UPDATE_USER:
             return {
                 ...state,
                 user: action.payload
             };
 
-        case types.USER_UPDATE_GROUPS:
+        case USER_UPDATE_GROUPS:
             return {
                 ...state,
                 groups: state.groups.filter(group => group._id !== action.payload._id)
             };
 
-        case types.IS_JOINING_GROUP:
+        case IS_JOINING_GROUP:
             return {
                 ...state,
                 joiningGroup: action.payload

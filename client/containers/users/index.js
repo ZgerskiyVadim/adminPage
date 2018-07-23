@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import './index.scss';
-import * as types from '../../actions';
 import User from './user';
 import { loadMore, setOptions } from '../../services/loadMore';
+import { bindActionCreators } from 'redux';
+import * as usersActionCreators from "../../actions/action_creators/users";
 
 class Users extends Component {
     constructor(props) {
@@ -23,7 +24,7 @@ class Users extends Component {
     }
 
     componentDidMount() {
-        this.props.getUsers(this.state.options.limit);
+        this.props.actions.getUsersRequest(this.state.options.limit);
         this.listenScroll();
     }
 
@@ -36,12 +37,12 @@ class Users extends Component {
     }
 
     hideCurrentUserJoiningGroup() {
-        return this.props.stateStore.usersReducer.filter(user => user._id !== this.props.stateStore.userReducer.user._id)
+        return this.props.users.filter(user => user._id !== this.props.user.user._id)
     }
 
     search(event) {
         const options = this.setOptions(event);
-        this.props.search(options);
+        this.props.actions.searchUsersRequest(options);
     }
 
     render() {
@@ -61,12 +62,12 @@ class Users extends Component {
                         <h2 className='col-md-3'>email</h2>
                     </div>
                     {
-                        this.props.stateStore.userReducer.joiningGroup ?
+                        this.props.user.joiningGroup ?
 
                             this.hideCurrentUserJoiningGroup().map(user =>
                                 <User user={user} key={user._id}/>) :
 
-                            this.props.stateStore.usersReducer.map(user =>
+                            this.props.users.map(user =>
                                 <User user={user} key={user._id}/>
                             )
                     }
@@ -76,16 +77,15 @@ class Users extends Component {
     }
 }
 
-export default connect(
-    state => ({
-        stateStore: state
-    }),
-    dispatch => ({
-        getUsers: (limit) => {
-            dispatch({type: types.GET_USERS_REQUEST, payload: limit});
-        },
-        search: (options) => {
-            dispatch({type: types.SEARCH_USERS_REQUEST, payload: options});
-        },
-    })
-)(Users)
+const mapStateToProps = (state) => ({
+    users: state.usersReducer,
+    user: state.userReducer
+});
+
+const mapDispatchToProps = (dispatch) => ({
+    actions: bindActionCreators({
+        ...usersActionCreators
+    }, dispatch)
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Users)

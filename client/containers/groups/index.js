@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import './index.scss';
-import * as types from '../../actions';
+import { bindActionCreators } from 'redux';
+import * as groupsActionCreators from '../../actions/action_creators/groups';
 import Group from './group';
 import { loadMore, setOptions } from '../../services/loadMore';
 
@@ -23,7 +24,7 @@ class Groups extends Component {
     }
 
     componentDidMount() {
-        this.props.getGroups(this.state.options.limit);
+        this.props.actions.getGroupsRequest(this.state.options.limit);
         this.listenScroll();
     }
 
@@ -37,20 +38,20 @@ class Groups extends Component {
 
     search(event) {
         const options = this.setOptions(event);
-        this.props.search(options);
+        this.props.actions.searchGroupsRequest(options);
     }
 
     cancelJoinGroup() {
         const isJoining = false;
-        this.props.cancelJoinGroup(isJoining);
-        this.props.history.push(`/users/${this.props.stateStore.userReducer.user._id}`);
+        this.props.actions.cancelJoinGroup(isJoining);
+        this.props.history.push(`/users/${this.props.user.user._id}`);
     }
 
     userNotJoinedGroups() {
-        return this.props.stateStore.groupsReducer.filter(group => {
+        return this.props.groups.filter(group => {
             for (let i = 0; i < group.users.length; i++ ) {
                 const userID = group.users[i]._id ? group.users[i]._id : group.users[i];
-                if (userID === this.props.stateStore.userReducer.user._id) {
+                if (userID === this.props.user.user._id) {
                     return false;
                 }
             }
@@ -59,7 +60,7 @@ class Groups extends Component {
     }
 
     render() {
-        const isJoingingGroup = {display: this.props.stateStore.userReducer.joiningGroup ? 'block' : 'none'};
+        const isJoingingGroup = {display: this.props.user.joiningGroup ? 'block' : 'none'};
         const marginBottom = {marginBottom: this.state.isLoadMore ? '0' : '5em'};
 
         return (
@@ -75,11 +76,11 @@ class Groups extends Component {
                         <h2 className='col-md-6'>title</h2>
                     </div>
                     {
-                        this.props.stateStore.userReducer.joiningGroup ?
+                        this.props.user.joiningGroup ?
 
                             this.userNotJoinedGroups().map(group => <Group group={group} key={group._id}/>) :
 
-                            this.props.stateStore.groupsReducer.map(group =>
+                            this.props.groups.map(group =>
                                 <Group group={group} key={group._id}/>
                             )
                     }
@@ -89,19 +90,15 @@ class Groups extends Component {
     }
 }
 
-export default connect(
-    state => ({
-        stateStore: state
-    }),
-    dispatch => ({
-        getGroups: (limit) => {
-            dispatch({type: types.GET_GROUPS_REQUEST, payload: limit});
-        },
-        search: (options) => {
-            dispatch({type: types.SEARCH_GROUPS_REQUEST, payload: options});
-        },
-        cancelJoinGroup: (isJoining) => {
-            dispatch({type: types.IS_JOINING_GROUP, payload: isJoining})
-        },
-    })
-)(Groups)
+const mapStateToProps = (state) => ({
+    groups: state.groupsReducer,
+    user: state.userReducer
+});
+
+const mapDispatchToProps = (dispatch) => ({
+    actions: bindActionCreators({
+        ...groupsActionCreators
+    }, dispatch)
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Groups)

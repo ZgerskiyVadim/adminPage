@@ -2,8 +2,10 @@ import React, { Component } from 'react';
 import {connect} from "react-redux";
 import { Link } from "react-router-dom";
 import './index.scss';
-import * as types from '../../actions';
+import { bindActionCreators } from 'redux';
+import * as userActionCreators from "../../actions/action_creators/user";
 import { onChangeForm, showForms, getOptions } from '../../services/userAndGroupHelper';
+import * as usersActionCreators from "../../actions/action_creators/users";
 
 class User extends Component {
     constructor(props) {
@@ -24,43 +26,47 @@ class User extends Component {
 
     componentDidMount() {
         const isJoining = false;
-        this.props.joinGroup(isJoining);
-        this.props.getUser(this.state.id);
+        this.props.actions.joinGroup(isJoining);
+        this.props.actions.getUserRequest(this.state.id);
     }
 
     update() {
         this.setState({show: false});
         const options = getOptions(this.state);
-        this.props.updateUser(options);
+        this.props.actions.updateUserRequest(options);
     }
 
     joinGroup() {
         const isJoining = true;
-        this.props.joinGroup(isJoining);
+        this.props.actions.joinGroup(isJoining);
         this.props.history.push('/groups');
     }
 
     leaveGroup(id) {
-        this.props.leaveGroup(this.state.id, id)
+        const options = {
+            userID: this.state.id,
+            groupID: id
+        };
+        this.props.actions.leaveGroupRequest(options)
     }
 
     render() {
         const hiddenForm = {display: this.state.show ? "block" : "none"};
         const shownForm = {display: !this.state.show ? "block" : "none"};
-        const isGroups = {display: this.props.stateStore.userReducer.groups.length ? 'block' : 'none'};
+        const isGroups = {display: this.props.userStore.groups.length ? 'block' : 'none'};
 
         return (
             <div className='user'>
                <h1>USER</h1>
                 <div className='user-info'>
                     <div className='user--margin-right'>
-                        <h3>username: {this.props.stateStore.userReducer.user.username}</h3>
+                        <h3>username: {this.props.userStore.user.username}</h3>
                         <input onChange={this.onChangeForm} value={this.state.username} className='form-control' style={hiddenForm} name='username' type="text"/>
-                        <h3>firstName: {this.props.stateStore.userReducer.user.firstName}</h3>
+                        <h3>firstName: {this.props.userStore.user.firstName}</h3>
                         <input onChange={this.onChangeForm} value={this.state.firstName} className='form-control' style={hiddenForm} name='firstName' type="text"/>
-                        <h3>lastName: {this.props.stateStore.userReducer.user.lastName}</h3>
+                        <h3>lastName: {this.props.userStore.user.lastName}</h3>
                         <input onChange={this.onChangeForm} value={this.state.lastName} className='form-control' style={hiddenForm} name='lastName' type="text"/>
-                        <h3>email: {this.props.stateStore.userReducer.user.email}</h3>
+                        <h3>email: {this.props.userStore.user.email}</h3>
                         <input onChange={this.onChangeForm} value={this.state.email} className='form-control' style={hiddenForm} name='email' type="text"/>
                     </div>
                     <button onClick={showForms.bind(this, this.state.id)} style={shownForm} className='user--margin-right btn btn-outline-primary'>Update</button>
@@ -70,7 +76,7 @@ class User extends Component {
 
                 <h1 style={isGroups}>Groups</h1>
                 {
-                    this.props.stateStore.userReducer.groups.map(group =>
+                    this.props.userStore.groups.map(group =>
                         <div className='user__groups col-md-4' key={group._id}>
                             <div>
                                 <Link to={`/groups/${group._id}`}>
@@ -89,22 +95,14 @@ class User extends Component {
     }
 }
 
-export default connect(
-    state => ({
-        stateStore: state
-    }),
-    dispatch => ({
-        getUser: (id) => {
-            dispatch({type: types.GET_USER_REQUEST, payload: id});
-        },
-        updateUser: (options) => {
-            dispatch({type: types.UPDATE_USER_REQUEST, payload: options});
-        },
-        joinGroup: (isJoining) => {
-            dispatch({type: types.IS_JOINING_GROUP, payload: isJoining})
-        },
-        leaveGroup: (userID, groupID) => {
-            dispatch({type: types.LEAVE_GROUP_REQUEST, payload: {userID, groupID}});
-        }
-    })
-)(User)
+const mapStateToProps = (state) => ({
+    userStore: state.userReducer
+});
+
+const mapDispatchToProps = (dispatch) => ({
+    actions: bindActionCreators({
+        ...userActionCreators
+    }, dispatch)
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(User)

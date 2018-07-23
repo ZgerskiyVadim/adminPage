@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import {connect} from "react-redux";
 import { Link } from "react-router-dom";
 import './index.scss';
-import * as types from '../../actions';
+import { bindActionCreators } from 'redux';
+import * as groupActionCreators from '../../actions/action_creators/group';
 import { onChangeForm, showForms, getOptions } from '../../services/userAndGroupHelper';
 
 class User extends Component {
@@ -20,32 +21,36 @@ class User extends Component {
     }
 
     componentDidMount() {
-        this.props.getGroup(this.state.id);
+        this.props.actions.getGroupRequest(this.state.id);
     }
 
     update() {
         this.setState({show: false});
         const options = getOptions(this.state);
-        this.props.updateGroup(options);
+        this.props.actions.updateGroupRequest(options);
     }
 
     removeUser(id) {
-        this.props.removeUser(this.state.id, id)
+        const options = {
+            groupID: this.state.id,
+            userID: id
+        };
+        this.props.actions.removeUserRequest(options)
     }
 
     render() {
         const hiddenForm = {display: this.state.show ? "block" : "none"};
         const shownForm = {display: !this.state.show ? "block" : "none"};
-        const isUsers = {display: this.props.stateStore.groupReducer.users.length ? 'block' : 'none'};
+        const isUsers = {display: this.props.group.users.length ? 'block' : 'none'};
 
         return (
             <div className='group'>
                 <h1>GROUP</h1>
                 <div className='group-info'>
                     <div className='group--margin-right'>
-                        <h3>name: {this.props.stateStore.groupReducer.name}</h3>
+                        <h3>name: {this.props.group.name}</h3>
                         <input onChange={this.onChangeForm} value={this.state.name} className='form-control' style={hiddenForm} name='name' type="text"/>
-                        <h3>title: {this.props.stateStore.groupReducer.title}</h3>
+                        <h3>title: {this.props.group.title}</h3>
                         <input onChange={this.onChangeForm} value={this.state.title} className='form-control' style={hiddenForm} name='title' type="text"/>
                     </div>
 
@@ -55,7 +60,7 @@ class User extends Component {
 
                 <h1 style={isUsers}>Users</h1>
                 {
-                    this.props.stateStore.groupReducer.users.map(user =>
+                    this.props.group.users.map(user =>
                         <div className='group__users col-md-6' key={user._id}>
                             <div>
                                 <Link to={`/users/${user._id}`}>
@@ -80,19 +85,14 @@ class User extends Component {
     }
 }
 
-export default connect(
-    state => ({
-        stateStore: state
-    }),
-    dispatch => ({
-        getGroup: (id) => {
-            dispatch({type: types.GET_GROUP_REQUEST, payload: id});
-        },
-        updateGroup: (options) => {
-            dispatch({type: types.UPDATE_GROUP_REQUEST, payload: options});
-        },
-        removeUser: (groupID, userID) => {
-            dispatch({type: types.REMOVE_USER_FROM_GROUP, payload: {userID, groupID}});
-        }
-    })
-)(User)
+const mapStateToProps = (state) => ({
+    group: state.groupReducer
+});
+
+const mapDispatchToProps = (dispatch) => ({
+    actions: bindActionCreators({
+        ...groupActionCreators
+    }, dispatch)
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(User)

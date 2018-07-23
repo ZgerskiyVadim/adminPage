@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link } from "react-router-dom";
-import * as types from '../../actions';
 import { onChangeForm, showForms, getOptions } from '../../services/userAndGroupHelper';
+import { bindActionCreators } from 'redux';
+import * as usersActionCreators from "../../actions/action_creators/users";
 
 class User extends Component {
     constructor(props) {
@@ -23,11 +24,11 @@ class User extends Component {
     update() {
         this.setState({show: false});
         const options = getOptions(this.state);
-        this.props.updateUser(options);
+        this.props.actions.updateUserRequest(options);
     }
 
     remove(id) {
-        this.props.removeUser(id);
+        this.props.actions.removeUserRequest(id);
     }
 
     render() {
@@ -64,16 +65,10 @@ class User extends Component {
     }
 }
 
-export default connect(
-    state => ({
-        stateStore: state
-    }),
-    dispatch => ({
-        updateUser: (options) => {
-            dispatch({type: types.UPDATE_USER_REQUEST, payload: options});
-        },
-        removeUser: (id) => {
-            dispatch({type: types.REMOVE_USER_REQUEST, payload: id});
-        }
-    })
-)(User)
+const mapDispatchToProps = (dispatch) => ({
+    actions: bindActionCreators({
+        ...usersActionCreators
+    }, dispatch)
+});
+
+export default connect(null, mapDispatchToProps)(User)
