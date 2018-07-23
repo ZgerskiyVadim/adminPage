@@ -24,8 +24,16 @@ class Groups extends Component {
     }
 
     componentDidMount() {
-        this.props.actions.getGroupsRequest(this.state.options.limit);
-        this.listenScroll();
+        if (this.props.user.joiningGroup) {
+            const showAllGroups = 0;
+            this.props.actions.getGroupsRequest(showAllGroups);
+            this.setState({
+                isLoadMore: false
+            })
+        } else {
+            this.props.actions.getGroupsRequest(this.state.options.limit);
+            this.listenScroll();
+        }
     }
 
     componentWillUnmount() {
