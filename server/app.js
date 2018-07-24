@@ -2,10 +2,11 @@ import express from 'express';
 import path from 'path';
 import config from '../config';
 import { errorHandler } from './middlewares/errorHandler';
+import { sendFileHtml } from './middlewares/sendFileHtml';
+import { runServer } from './middlewares/runServer';
 import dbConnection from './services/mongoose';
 import bodyParser from 'body-parser';
 import routers from './routers';
-import log from "./services/logger";
 
 const app = express();
 
@@ -14,10 +15,10 @@ app.use(bodyParser.json());
 app.use(express.static(path.join(__dirname, config.static)));
 app.use('/api', routers);
 
-app.get('*', ((req, res) => res.sendFile(path.join(__dirname, `${config.static}/index.html`))));
+app.get('*', sendFileHtml);
 app.use(errorHandler);
 
 
-dbConnection.once('open', () => {
-    app.listen(config.port, (err) => err ? log.error(err) : log.info(`Server is running on port: ${config.port}`));
-});
+dbConnection.once('open', runServer);
+
+export default app;
