@@ -5,7 +5,7 @@ import {
     USER_REQUEST_FAILED,
     UPDATE_USER,
     UPDATE_GROUP,
-    USER_UPDATE_GROUPS,
+    USER_LEAVE_GROUP,
     GET_USER_REQUEST,
     UPDATE_USER_REQUEST,
     ADD_USER_IN_GROUP_REQUEST,
@@ -42,7 +42,7 @@ function* calladdUserInGroup(action) {
 function* callLeaveGroup(action) {
     try {
         const updatedGroup = yield call(UsersAPI.leaveGroup, action.payload);
-        yield put({type: USER_UPDATE_GROUPS, payload: updatedGroup});
+        yield put({type: USER_LEAVE_GROUP, payload: updatedGroup});
         yield put({type: UPDATE_GROUP, payload: updatedGroup});
     } catch (e) {
         yield put({type: USER_REQUEST_FAILED, message: e.message});

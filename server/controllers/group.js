@@ -56,9 +56,12 @@ export function removeUser(req, res, done) {
     const {userID} = req.body;
     const groupID = req.params.id;
 
-    Group.findOneAndUpdate({_id: groupID}, {$pull: {users: userID}}, {new: true}, (err, updatedGroup) => {
+    Group.findOneAndUpdate({_id: groupID}, {$pull: {users: userID}}, {new: true}, (err, group) => {
         if(err) return done(err);
-        res.json(updatedGroup);
+        User.populate(group, {path: 'users'}, (err, docs) => {
+            if (err) return done(err);
+            res.json(docs);
+        });
     })
 }
 

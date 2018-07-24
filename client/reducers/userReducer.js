@@ -1,7 +1,7 @@
 import {
     GET_USER,
     UPDATE_USER,
-    USER_UPDATE_GROUPS,
+    USER_LEAVE_GROUP,
     IS_JOINING_GROUP
 } from '../actions';
 
@@ -32,7 +32,7 @@ export default function userReducer(state = initialState, action) {
                 user: action.payload
             };
 
-        case USER_UPDATE_GROUPS:
+        case USER_LEAVE_GROUP:
             return {
                 ...state,
                 groups: state.groups.filter(group => group._id !== action.payload._id)

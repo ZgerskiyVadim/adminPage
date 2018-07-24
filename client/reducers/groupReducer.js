@@ -1,7 +1,6 @@
 import {
     GET_GROUP,
-    UPDATE_GROUP,
-    GROUP_UPDATE_USERS
+    UPDATE_GROUP
 } from '../actions';
 
 const initialState = {
@@ -21,12 +20,6 @@ export default function groupReducer(state = initialState, action) {
                 name: action.payload.name,
                 title: action.payload.title,
                 users: action.payload.users
-            };
-
-        case GROUP_UPDATE_USERS:
-            return {
-                ...state,
-                users: state.users.filter(user => user._id !== action.payload)
             };
 
         default: return state
