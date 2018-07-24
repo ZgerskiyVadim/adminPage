@@ -14,6 +14,7 @@ class User extends Component {
             id: ''
         };
 
+        this.showForms = showForms.bind(this, this.props.user._id);
         this.onChangeForm = onChangeForm.bind(this);
         this.update = this.props.update;
         this.remove = this.props.remove;
@@ -28,6 +29,7 @@ class User extends Component {
     render() {
         const hiddenForm = {display: this.state.show ? "block" : "none"};
         const shownForm = {display: !this.state.show ? "block" : "none"};
+        const isJoiningUser = {display: this.props.user.isJoining ? 'none' : 'block'};
 
         return (
             <div className='users-row'>
@@ -50,9 +52,9 @@ class User extends Component {
                     </div>
                 </div>
                 <div className='users-buttons'>
-                    <button onClick={showForms.bind(this, this.props.user._id)} className='users--margin-right btn btn-outline-primary' style={shownForm}>Update</button>
+                    <button onClick={this.showForms} className='users--margin-right btn btn-outline-primary' style={shownForm}>Update</button>
                     <button onClick={this.sendOptionsUpdate} className='users--margin-right btn btn-outline-primary' style={hiddenForm}>Save</button>
-                    <button onClick={this.remove(this.props.user._id)} className='btn btn-outline-danger'>Remove</button>
+                    <button onClick={this.remove(this.props.user._id)} style={isJoiningUser} className='btn btn-outline-danger'>Remove</button>
                 </div>
             </div>
         );

@@ -1,12 +1,19 @@
+const scrollMinHeight = 250;
+
 export function loadMore(enumItem) {
     const lengthOfItems = enumItem === 'users' ? this.props.users.length : this.props.groups.length;
-    if (this.state.isLoadMore && isScrollDown()) {
+
+    if (this.state.isLoadMore && ((scrollHeight() <= scrollMinHeight) || isScrollDown())) {
         setState.call(this, lengthOfItems, enumItem);
     }
 }
 
+function scrollHeight() {
+    return document.documentElement.scrollHeight - document.documentElement.clientHeight
+}
+
 function isScrollDown() {
-    return window.scrollY === (document.documentElement.scrollHeight - document.documentElement.clientHeight);
+    return window.scrollY === scrollHeight();
 }
 
 function setState(lengthOfItems, enumItem) {
@@ -20,8 +27,7 @@ function setState(lengthOfItems, enumItem) {
                 ...this.state.options,
                 limit: this.state.options.limit + this.state.options.loadNext
             }
-        });
-        getItems.call(this, enumItem);
+        }, () => getItems.call(this, enumItem));
     }
 }
 

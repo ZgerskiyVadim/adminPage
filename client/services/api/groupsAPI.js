@@ -28,7 +28,7 @@ import axios from "axios/index";
     export const removeUserFromGroup = (action) => {
         const {userID, groupID} = action;
         return axios.put(`/api/groups/remove-user/${groupID}`, {userID})
-            .then(updatedGroup => userID)
+            .then(updatedGroup => updatedGroup.data)
             .catch(err => err);
     };
 

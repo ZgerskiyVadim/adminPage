@@ -4,7 +4,8 @@ import {
     UPDATE_GROUP_REQUEST,
     REMOVE_GROUP_REQUEST,
     ADD_USER_IN_GROUP_REQUEST,
-    IS_JOINING_GROUP
+    IS_JOINING_GROUP,
+    REMOVE_USER_FROM_GROUP
 } from '../index';
 
 export const getGroupsRequest = (data) => ({
@@ -34,5 +35,10 @@ export const joinGroup = (data) => ({
 
 export const cancelJoinGroup = (data) => ({
     type: IS_JOINING_GROUP,
+    payload: data
+});
+
+export const removeUserRequest = (data) => ({
+    type: REMOVE_USER_FROM_GROUP,
     payload: data
 });

@@ -5,7 +5,6 @@ import './index.scss';
 import { bindActionCreators } from 'redux';
 import * as userActionCreators from "../../actions/action_creators/user";
 import { onChangeForm, showForms, getOptions } from '../../services/userAndGroupHelper';
-import * as usersActionCreators from "../../actions/action_creators/users";
 
 class User extends Component {
     constructor(props) {
@@ -20,8 +19,7 @@ class User extends Component {
         };
 
         this.onChangeForm = onChangeForm.bind(this);
-        this.update = this.update.bind(this);
-        this.joinGroup = this.joinGroup.bind(this);
+        this.showForms = showForms.bind(this, this.state.id);
     }
 
     componentDidMount() {
@@ -30,25 +28,25 @@ class User extends Component {
         this.props.actions.getUserRequest(this.state.id);
     }
 
-    update() {
+    update = () => {
         this.setState({show: false});
         const options = getOptions(this.state);
         this.props.actions.updateUserRequest(options);
-    }
+    };
 
-    joinGroup() {
+    joinGroup = () => {
         const isJoining = true;
         this.props.actions.joinGroup(isJoining);
         this.props.history.push('/groups');
-    }
+    };
 
-    leaveGroup(id) {
+    leaveGroup = (id) => (e) => {
         const options = {
             userID: this.state.id,
             groupID: id
         };
         this.props.actions.leaveGroupRequest(options)
-    }
+    };
 
     render() {
         const hiddenForm = {display: this.state.show ? "block" : "none"};
@@ -69,7 +67,7 @@ class User extends Component {
                         <h3>email: {this.props.userStore.user.email}</h3>
                         <input onChange={this.onChangeForm} value={this.state.email} className='form-control' style={hiddenForm} name='email' type="text"/>
                     </div>
-                    <button onClick={showForms.bind(this, this.state.id)} style={shownForm} className='user--margin-right btn btn-outline-primary'>Update</button>
+                    <button onClick={this.showForms} style={shownForm} className='user--margin-right btn btn-outline-primary'>Update</button>
                     <button onClick={this.update} style={hiddenForm} className='user--margin-right btn btn-outline-primary'>Save</button>
                     <button onClick={this.joinGroup} className='btn btn-outline-info'>Join group</button>
                 </div>
@@ -86,7 +84,7 @@ class User extends Component {
                                     <h4>title: {group.title}</h4>
                                 </Link>
                             </div>
-                            <button onClick={this.leaveGroup.bind(this, group._id)} className='user__leave-group btn btn-outline-danger'>leave group</button>
+                            <button onClick={this.leaveGroup(group._id)} className='user__leave-group btn btn-outline-danger'>leave group</button>
                         </div>
                     )
                 }

@@ -25,9 +25,9 @@ class Breadcrumb extends Component {
         return locations;
     }
 
-    goToPath(location) {
+    goToPath = (location) => (e) => {
         this.props.history.push(location);
-    }
+    };
 
     render() {
         const showPath = {display: this.locationPath().length ? 'block' : 'none'};
@@ -39,7 +39,7 @@ class Breadcrumb extends Component {
                     this.locationPath().map((item, index) => {
                         return (
                             <div className='breadcrumb--flex' key={index}>
-                                <h1 onClick={this.goToPath.bind(this, item.location)} className='breadcrumb--cursor'>{item.path}</h1>
+                                <h1 onClick={this.goToPath(item.location)} className='breadcrumb--cursor'>{item.path}</h1>
                                 <h1 style={{display: item.isLastElem ? 'none' : 'block'}}>&nbsp;- >&nbsp;</h1>
                             </div>
                         )

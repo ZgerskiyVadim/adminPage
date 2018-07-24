@@ -30,8 +30,12 @@ class Users extends Component {
         window.removeEventListener('scroll', this.loadMore);
     }
 
-    hideCurrentUserJoiningGroup() {
-        return this.props.users.filter(user => user._id !== this.props.user.user._id)
+    getUsers() {
+        if (this.props.user.joiningGroup) {
+            return this.props.users.map(user => user._id === this.props.user.user._id ? {...user, isJoining: true} : user)
+        } else {
+            return this.props.users;
+        }
     }
 
     search = (event) => {
@@ -44,7 +48,10 @@ class Users extends Component {
             isSearching: !!event.target.value,
             isLoadMore: true
         },
-            () => this.props.actions.searchUsersRequest(this.state.options)
+            () => {
+            this.props.actions.searchUsersRequest(this.state.options);
+            this.loadMore();
+        }
         );
     };
 
@@ -53,7 +60,15 @@ class Users extends Component {
     };
 
     remove = (id) => (e) => {
-        this.props.actions.removeUserRequest(id);
+        this.setState({
+            options: {
+                ...this.state.options,
+                limit: this.state.options.limit - 1
+            }
+        }, () => {
+            this.props.actions.removeUserRequest(id);
+            this.loadMore()
+        })
     };
 
     render() {
@@ -73,24 +88,13 @@ class Users extends Component {
                         <h2 className='col-md-3'>email</h2>
                     </div>
                     {
-                        this.props.user.joiningGroup ?
-
-                            this.hideCurrentUserJoiningGroup().map(user =>
-                                <User
-                                    user={user}
-                                    key={user._id}
-                                    update={this.update}
-                                    remove={this.remove}
-                                />) :
-
-                            this.props.users.map(user =>
-                                <User
-                                    user={user}
-                                    key={user._id}
-                                    update={this.update}
-                                    remove={this.remove}
-                                />
-                            )
+                        this.getUsers().map(user =>
+                            <User
+                                user={user}
+                                key={user._id}
+                                update={this.update}
+                                remove={this.remove}
+                            />)
                     }
                 </div>
             </div>

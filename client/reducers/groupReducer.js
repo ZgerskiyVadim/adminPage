@@ -19,7 +19,8 @@ export default function groupReducer(state = initialState, action) {
             return {
                 ...state,
                 name: action.payload.name,
-                title: action.payload.title
+                title: action.payload.title,
+                users: action.payload.users
             };
 
         case GROUP_UPDATE_USERS:

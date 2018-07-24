@@ -31,8 +31,9 @@ function* callupdateGroup(action) {
 
 function* callremoveUserFromGroup(action) {
     try {
-        const groups = yield call(GroupsAPI.removeUserFromGroup, action.payload);
-        yield put({type: GROUP_UPDATE_USERS, payload: groups});
+        const updatedGroup = yield call(GroupsAPI.removeUserFromGroup, action.payload);
+        yield put({type: GROUP_UPDATE_USERS, payload: updatedGroup});
+        yield put({type: UPDATE_GROUP, payload: updatedGroup});
     } catch (e) {
         yield put({type: GROUP_REQUEST_FAILED, message: e.message});
     }

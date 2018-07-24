@@ -30,16 +30,26 @@ class Groups extends Component {
         window.removeEventListener('scroll', this.loadMore);
     }
 
-    groupsWithoutJoinUserInGroup() {
-        return this.props.groups.filter(group => {
-            for (let i = 0; i < group.users.length; i++ ) {
-                const userID = group.users[i]._id ? group.users[i]._id : group.users[i];
-                if (userID === this.props.user.user._id) {
-                    return false;
+    getGroups() {
+        if (this.props.user.joiningGroup) {
+            return this.props.groups.map(group => {
+                for (let i = 0; i < group.users.length; i++ ) {
+                    const userID = group.users[i]._id ? group.users[i]._id : group.users[i];
+                    if (userID === this.props.user.user._id) {
+                        return {
+                            ...group,
+                            isJoiningUserInGroup: true
+                        };
+                    }
                 }
-            }
-            return true;
-        })
+                return {
+                    ...group,
+                    isJoiningUserInGroup: false
+                };
+            })
+        } else {
+            return this.props.groups;
+        }
     }
 
     search = (event) => {
@@ -71,11 +81,23 @@ class Groups extends Component {
     };
 
     remove = (id) => (e) => {
-        this.props.actions.removeGroupRequest(id);
+        this.setState({
+                options: {
+                    ...this.state.options,
+                    limit: this.state.options.limit - 1
+                }
+            }, () => {
+            this.props.actions.removeGroupRequest(id);
+            this.loadMore();
+        })
+    };
+
+    leaveGroup = (options) => {
+        this.props.actions.removeUserRequest(options);
     };
 
     render() {
-        const isJoingingGroup = {display: this.props.user.joiningGroup ? 'block' : 'none'};
+        const isJoiningGroup = {display: this.props.user.joiningGroup ? 'block' : 'none'};
         const marginBottom = {marginBottom: this.state.isLoadMore ? '0' : '5em'};
 
         return (
@@ -83,7 +105,7 @@ class Groups extends Component {
                 <div className='groups-search'>
                     <h2>Search</h2>
                     <input onChange={this.search} className='form-control col-md-3' type="text"/>
-                    <button onClick={this.cancelJoinGroup} style={isJoingingGroup} className='btn btn-outline-danger'>Cancel join group</button>
+                    <button onClick={this.cancelJoinGroup} style={isJoiningGroup} className='btn btn-outline-danger'>Cancel join group</button>
                 </div>
                 <div style={marginBottom}>
                     <div className='groups-headers col-md-8'>
@@ -94,26 +116,26 @@ class Groups extends Component {
                     {
                         this.props.user.joiningGroup ?
 
-                            this.groupsWithoutJoinUserInGroup().map(group =>
+                            this.getGroups().map((group, index) =>
                                 <Group
+                                    key={index}
                                     group={group}
-                                    key={group._id}
                                     userID={this.props.user.user._id}
                                     isJoiningGroup={true}
                                     joinGroup={this.joinGroup}
                                     update={this.update}
                                     remove={this.remove}
+                                    leaveGroup={this.leaveGroup}
                                 />) :
 
-                            this.props.groups.map(group =>
+                            this.getGroups().map((group, index) =>
                                 <Group
+                                    key={index}
                                     group={group}
-                                    key={group._id}
                                     isJoiningGroup={false}
                                     update={this.update}
                                     remove={this.remove}
-                                />
-                            )
+                                />)
                     }
                 </div>
             </div>

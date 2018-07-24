@@ -14,16 +14,13 @@ class Group extends Component {
             userID: this.props.userID ? this.props.userID : null
         };
 
+        this.showForms = showForms.bind(this, this.props.group._id);
         this.onChangeForm = onChangeForm.bind(this);
         this.joinGroup = this.props.joinGroup;
         this.update = this.props.update;
         this.remove = this.props.remove;
+        this.leaveGroup = this.props.leaveGroup;
     }
-
-    sendOptionsJoinGroup = (groupID) => (e) => {
-        const userID = this.state.userID;
-        userID && this.joinGroup({userID, groupID});
-    };
 
     sendOptionsUpdate = () => {
         this.setState({show: false});
@@ -31,13 +28,25 @@ class Group extends Component {
         this.update(options)
     };
 
+    sendOptionsJoinGroup = (groupID) => (e) => {
+        const userID = this.state.userID;
+        userID && this.joinGroup({userID, groupID});
+    };
+
+    sendOptionsLeaveGroup = (groupID) => (e) => {
+        const userID = this.state.userID;
+        userID && this.leaveGroup({userID, groupID});
+    };
+
     render() {
         const { isJoiningGroup } = this.props;
+        const { isJoiningUserInGroup } = this.props.group;
 
         const hiddenForm = {display: this.state.show && !isJoiningGroup ? "block" : "none"};
         const shownForm = {display: !this.state.show && !isJoiningGroup ? "block" : "none"};
-        const joiningGroup = {display: isJoiningGroup ? "block" : "none"};
         const notJoiningGroup = {display: !isJoiningGroup ? "block" : "none"};
+        const userAlreadyInGroup = {display: !isJoiningGroup || isJoiningUserInGroup ? 'none' : 'block'};
+        const userNotInGroup = {display: isJoiningGroup && isJoiningUserInGroup ? 'block' : 'none'};
 
         return (
             <div className='groups-row'>
@@ -56,10 +65,11 @@ class Group extends Component {
                 </div>
 
                 <div className='groups-buttons'>
-                    <button onClick={showForms.bind(this, this.props.group._id)} style={shownForm} className='groups--margin-right btn btn-outline-primary'>Update</button>
+                    <button onClick={this.showForms} style={shownForm} className='groups--margin-right btn btn-outline-primary'>Update</button>
                     <button onClick={this.sendOptionsUpdate} style={hiddenForm} className='groups--margin-right btn btn-outline-primary'>Save</button>
                     <button onClick={this.remove(this.props.group._id)} style={notJoiningGroup} className='btn btn-outline-danger'>Remove</button>
-                    <button onClick={this.sendOptionsJoinGroup(this.props.group._id)} style={joiningGroup} className='btn btn-outline-info'>Join group</button>
+                    <button onClick={this.sendOptionsJoinGroup(this.props.group._id)} style={userAlreadyInGroup} className='btn btn-outline-info'>Join group</button>
+                    <button onClick={this.sendOptionsLeaveGroup(this.props.group._id)} style={userNotInGroup} className='btn btn-outline-danger'>Leave group</button>
                 </div>
             </div>
         );

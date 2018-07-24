@@ -16,27 +16,27 @@ class User extends Component {
             id: this.props.match.params.id
         };
 
+        this.showForms = showForms.bind(this, this.state.id);
         this.onChangeForm = onChangeForm.bind(this);
-        this.update = this.update.bind(this);
     }
 
     componentDidMount() {
         this.props.actions.getGroupRequest(this.state.id);
     }
 
-    update() {
+    update = () => {
         this.setState({show: false});
         const options = getOptions(this.state);
         this.props.actions.updateGroupRequest(options);
-    }
+    };
 
-    removeUser(id) {
+    removeUser = (id) => (e) => {
         const options = {
             groupID: this.state.id,
             userID: id
         };
         this.props.actions.removeUserRequest(options)
-    }
+    };
 
     render() {
         const hiddenForm = {display: this.state.show ? "block" : "none"};
@@ -54,14 +54,14 @@ class User extends Component {
                         <input onChange={this.onChangeForm} value={this.state.title} className='form-control' style={hiddenForm} name='title' type="text"/>
                     </div>
 
-                    <button onClick={showForms.bind(this, this.state.id)} style={shownForm} className='btn btn-outline-primary'>Update</button>
+                    <button onClick={this.showForms} style={shownForm} className='btn btn-outline-primary'>Update</button>
                     <button onClick={this.update} style={hiddenForm} className='btn btn-outline-primary'>Save</button>
                 </div>
 
                 <h1 style={isUsers}>Users</h1>
                 {
-                    this.props.group.users.map(user =>
-                        <div className='group__users col-md-6' key={user._id}>
+                    this.props.group.users.map((user, index) =>
+                        <div className='group__users col-md-6' key={index}>
                             <div>
                                 <Link to={`/users/${user._id}`}>
                                     <h4>username: {user.username}</h4>
@@ -76,7 +76,7 @@ class User extends Component {
                                     <h4>email: {user.email}</h4>
                                 </Link>
                             </div>
-                            <button onClick={this.removeUser.bind(this, user._id)} className='group__remove-user btn btn-outline-danger'>remove user</button>
+                            <button onClick={this.removeUser(user._id)} className='group__remove-user btn btn-outline-danger'>remove user</button>
                         </div>
                     )
                 }
