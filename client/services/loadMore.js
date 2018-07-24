@@ -1,24 +1,12 @@
 export function loadMore(enumItem) {
     const lengthOfItems = enumItem === 'users' ? this.props.users.length : this.props.groups.length;
-    if (this.state.isLoadMore && (window.scrollY === (document.documentElement.scrollHeight - document.documentElement.clientHeight))) {
+    if (this.state.isLoadMore && isScrollDown()) {
         setState.call(this, lengthOfItems, enumItem);
     }
 }
 
-export function setOptions(event) {
-    this.setState({
-        options: {
-            ...this.state.options,
-            limit: 20,
-            searchBy: event.target.value
-        },
-        isSearching: !!event.target.value,
-        isLoadMore: true
-    });
-    return {
-        limit: 20,
-        searchBy: event.target.value
-    }
+function isScrollDown() {
+    return window.scrollY === (document.documentElement.scrollHeight - document.documentElement.clientHeight);
 }
 
 function setState(lengthOfItems, enumItem) {

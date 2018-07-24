@@ -1,4 +1,6 @@
 {
   "presets": ["env", "react", "stage-3"], //stage-3 for spread operators
-  "plugins": ["transform-class-properties"] //for arrow funcs
+  "plugins": [
+    "transform-class-properties" //for arrow funcs
+  ]
 }

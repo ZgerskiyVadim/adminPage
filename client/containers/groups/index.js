@@ -3,8 +3,8 @@ import { connect } from 'react-redux';
 import './index.scss';
 import { bindActionCreators } from 'redux';
 import * as groupsActionCreators from '../../actions/action_creators/groups';
+import { loadMore } from '../../services/loadMore';
 import Group from './group';
-import { loadMore, setOptions } from '../../services/loadMore';
 
 class Groups extends Component {
     constructor(props) {
@@ -16,46 +16,21 @@ class Groups extends Component {
                 searchBy: ''
             },
             isLoadMore: true,
-            isSearching: false,
+            isSearching: false
         };
         this.loadMore = loadMore.bind(this, 'groups');
-        this.setOptions = setOptions.bind(this);
-        this.search = this.search.bind(this)
     }
 
     componentDidMount() {
-        if (this.props.user.joiningGroup) {
-            const showAllGroups = 0;
-            this.props.actions.getGroupsRequest(showAllGroups);
-            this.setState({
-                isLoadMore: false
-            })
-        } else {
-            this.props.actions.getGroupsRequest(this.state.options.limit);
-            this.listenScroll();
-        }
+        this.props.actions.getGroupsRequest(this.state.options.limit);
+        window.addEventListener('scroll', this.loadMore)
     }
 
     componentWillUnmount() {
         window.removeEventListener('scroll', this.loadMore);
     }
 
-    listenScroll() {
-        window.addEventListener('scroll', this.loadMore)
-    }
-
-    search(event) {
-        const options = this.setOptions(event);
-        this.props.actions.searchGroupsRequest(options);
-    }
-
-    cancelJoinGroup() {
-        const isJoining = false;
-        this.props.actions.cancelJoinGroup(isJoining);
-        this.props.history.push(`/users/${this.props.user.user._id}`);
-    }
-
-    userNotJoinedGroups() {
+    groupsWithoutJoinUserInGroup() {
         return this.props.groups.filter(group => {
             for (let i = 0; i < group.users.length; i++ ) {
                 const userID = group.users[i]._id ? group.users[i]._id : group.users[i];
@@ -67,6 +42,38 @@ class Groups extends Component {
         })
     }
 
+    search = (event) => {
+        this.setState({
+                options: {
+                    ...this.state.options,
+                    limit: 20,
+                    searchBy: event.target.value
+                },
+                isSearching: !!event.target.value,
+                isLoadMore: true
+            },
+            () => this.props.actions.searchGroupsRequest(this.state.options)
+        )
+    };
+
+    joinGroup = (options) => {
+        this.props.actions.joinGroup(options);
+    };
+
+    cancelJoinGroup = () => {
+        const isJoining = false;
+        this.props.actions.cancelJoinGroup(isJoining);
+        this.props.history.push(`/users/${this.props.user.user._id}`);
+    };
+
+    update = (options) => {
+        this.props.actions.updateGroupRequest(options);
+    };
+
+    remove = (id) => (e) => {
+        this.props.actions.removeGroupRequest(id);
+    };
+
     render() {
         const isJoingingGroup = {display: this.props.user.joiningGroup ? 'block' : 'none'};
         const marginBottom = {marginBottom: this.state.isLoadMore ? '0' : '5em'};
@@ -76,7 +83,7 @@ class Groups extends Component {
                 <div className='groups-search'>
                     <h2>Search</h2>
                     <input onChange={this.search} className='form-control col-md-3' type="text"/>
-                    <button onClick={this.cancelJoinGroup.bind(this)} style={isJoingingGroup} className='btn btn-outline-danger'>Cancel join group</button>
+                    <button onClick={this.cancelJoinGroup} style={isJoingingGroup} className='btn btn-outline-danger'>Cancel join group</button>
                 </div>
                 <div style={marginBottom}>
                     <div className='groups-headers col-md-8'>
@@ -87,10 +94,25 @@ class Groups extends Component {
                     {
                         this.props.user.joiningGroup ?
 
-                            this.userNotJoinedGroups().map(group => <Group group={group} key={group._id}/>) :
+                            this.groupsWithoutJoinUserInGroup().map(group =>
+                                <Group
+                                    group={group}
+                                    key={group._id}
+                                    userID={this.props.user.user._id}
+                                    isJoiningGroup={true}
+                                    joinGroup={this.joinGroup}
+                                    update={this.update}
+                                    remove={this.remove}
+                                />) :
 
                             this.props.groups.map(group =>
-                                <Group group={group} key={group._id}/>
+                                <Group
+                                    group={group}
+                                    key={group._id}
+                                    isJoiningGroup={false}
+                                    update={this.update}
+                                    remove={this.remove}
+                                />
                             )
                     }
                 </div>

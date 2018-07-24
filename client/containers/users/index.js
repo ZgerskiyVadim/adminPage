@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import './index.scss';
 import User from './user';
-import { loadMore, setOptions } from '../../services/loadMore';
+import { loadMore } from '../../services/loadMore';
 import { bindActionCreators } from 'redux';
 import * as usersActionCreators from "../../actions/action_creators/users";
 
@@ -19,31 +19,42 @@ class Users extends Component {
             isMounted: false
         };
         this.loadMore = loadMore.bind(this, 'users');
-        this.setOptions = setOptions.bind(this);
-        this.search = this.search.bind(this);
     }
 
     componentDidMount() {
         this.props.actions.getUsersRequest(this.state.options.limit);
-        this.listenScroll();
+        window.addEventListener('scroll', this.loadMore)
     }
 
     componentWillUnmount() {
         window.removeEventListener('scroll', this.loadMore);
     }
 
-    listenScroll() {
-        window.addEventListener('scroll', this.loadMore)
-    }
-
     hideCurrentUserJoiningGroup() {
         return this.props.users.filter(user => user._id !== this.props.user.user._id)
     }
 
-    search(event) {
-        const options = this.setOptions(event);
-        this.props.actions.searchUsersRequest(options);
-    }
+    search = (event) => {
+        this.setState({
+            options: {
+                ...this.state.options,
+                limit: 20,
+                searchBy: event.target.value
+            },
+            isSearching: !!event.target.value,
+            isLoadMore: true
+        },
+            () => this.props.actions.searchUsersRequest(this.state.options)
+        );
+    };
+
+    update = (options) => {
+        this.props.actions.updateUserRequest(options);
+    };
+
+    remove = (id) => (e) => {
+        this.props.actions.removeUserRequest(id);
+    };
 
     render() {
         const marginBottom = {marginBottom: this.state.isLoadMore ? '0' : '5em'};
@@ -65,10 +76,20 @@ class Users extends Component {
                         this.props.user.joiningGroup ?
 
                             this.hideCurrentUserJoiningGroup().map(user =>
-                                <User user={user} key={user._id}/>) :
+                                <User
+                                    user={user}
+                                    key={user._id}
+                                    update={this.update}
+                                    remove={this.remove}
+                                />) :
 
                             this.props.users.map(user =>
-                                <User user={user} key={user._id}/>
+                                <User
+                                    user={user}
+                                    key={user._id}
+                                    update={this.update}
+                                    remove={this.remove}
+                                />
                             )
                     }
                 </div>

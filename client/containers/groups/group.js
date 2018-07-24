@@ -1,8 +1,5 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
 import { Link } from "react-router-dom";
-import { bindActionCreators } from 'redux';
-import * as groupsActionCreators from '../../actions/action_creators/groups';
 import { onChangeForm, showForms, getOptions } from '../../services/userAndGroupHelper';
 
 
@@ -13,33 +10,34 @@ class Group extends Component {
             show: false,
             name: '',
             title: '',
-            id: ''
+            id: '',
+            userID: this.props.userID ? this.props.userID : null
         };
 
         this.onChangeForm = onChangeForm.bind(this);
-        this.update = this.update.bind(this);
+        this.joinGroup = this.props.joinGroup;
+        this.update = this.props.update;
+        this.remove = this.props.remove;
     }
 
-    joinGroup(groupID) {
-        const userID = this.props.user.user._id;
-        this.props.actions.joinGroup({userID, groupID});
-    }
+    sendOptionsJoinGroup = (groupID) => (e) => {
+        const userID = this.state.userID;
+        userID && this.joinGroup({userID, groupID});
+    };
 
-    update() {
+    sendOptionsUpdate = () => {
         this.setState({show: false});
         const options = getOptions(this.state);
-        this.props.actions.updateGroupRequest(options);
-    }
-
-    remove(id) {
-        this.props.actions.removeGroupRequest(id);
-    }
+        this.update(options)
+    };
 
     render() {
-        const hiddenForm = {display: this.state.show && !this.props.user.joiningGroup ? "block" : "none"};
-        const shownForm = {display: !this.state.show && !this.props.user.joiningGroup ? "block" : "none"};
-        const joiningGroup = {display: this.props.user.joiningGroup ? "block" : "none"};
-        const notJoiningGroup = {display: !this.props.user.joiningGroup ? "block" : "none"};
+        const { isJoiningGroup } = this.props;
+
+        const hiddenForm = {display: this.state.show && !isJoiningGroup ? "block" : "none"};
+        const shownForm = {display: !this.state.show && !isJoiningGroup ? "block" : "none"};
+        const joiningGroup = {display: isJoiningGroup ? "block" : "none"};
+        const notJoiningGroup = {display: !isJoiningGroup ? "block" : "none"};
 
         return (
             <div className='groups-row'>
@@ -59,23 +57,13 @@ class Group extends Component {
 
                 <div className='groups-buttons'>
                     <button onClick={showForms.bind(this, this.props.group._id)} style={shownForm} className='groups--margin-right btn btn-outline-primary'>Update</button>
-                    <button onClick={this.update} style={hiddenForm} className='groups--margin-right btn btn-outline-primary'>Save</button>
-                    <button onClick={this.remove.bind(this, this.props.group._id)} style={notJoiningGroup} className='btn btn-outline-danger'>Remove</button>
-                    <button onClick={this.joinGroup.bind(this, this.props.group._id)} style={joiningGroup} className='btn btn-outline-info'>Join group</button>
+                    <button onClick={this.sendOptionsUpdate} style={hiddenForm} className='groups--margin-right btn btn-outline-primary'>Save</button>
+                    <button onClick={this.remove(this.props.group._id)} style={notJoiningGroup} className='btn btn-outline-danger'>Remove</button>
+                    <button onClick={this.sendOptionsJoinGroup(this.props.group._id)} style={joiningGroup} className='btn btn-outline-info'>Join group</button>
                 </div>
             </div>
         );
     }
 }
 
-const mapStateToProps = (state) => ({
-    user: state.userReducer
-});
-
-const mapDispatchToProps = (dispatch) => ({
-    actions: bindActionCreators({
-        ...groupsActionCreators
-    }, dispatch)
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(Group)
+export default Group

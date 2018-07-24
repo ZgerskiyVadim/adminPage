@@ -1,9 +1,6 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
 import { Link } from "react-router-dom";
 import { onChangeForm, showForms, getOptions } from '../../services/userAndGroupHelper';
-import { bindActionCreators } from 'redux';
-import * as usersActionCreators from "../../actions/action_creators/users";
 
 class User extends Component {
     constructor(props) {
@@ -18,18 +15,15 @@ class User extends Component {
         };
 
         this.onChangeForm = onChangeForm.bind(this);
-        this.update = this.update.bind(this);
+        this.update = this.props.update;
+        this.remove = this.props.remove;
     }
 
-    update() {
+    sendOptionsUpdate = () => {
         this.setState({show: false});
         const options = getOptions(this.state);
-        this.props.actions.updateUserRequest(options);
-    }
-
-    remove(id) {
-        this.props.actions.removeUserRequest(id);
-    }
+        this.update(options)
+    };
 
     render() {
         const hiddenForm = {display: this.state.show ? "block" : "none"};
@@ -57,18 +51,12 @@ class User extends Component {
                 </div>
                 <div className='users-buttons'>
                     <button onClick={showForms.bind(this, this.props.user._id)} className='users--margin-right btn btn-outline-primary' style={shownForm}>Update</button>
-                    <button onClick={this.update} className='users--margin-right btn btn-outline-primary' style={hiddenForm}>Save</button>
-                    <button onClick={this.remove.bind(this, this.props.user._id)} className='btn btn-outline-danger'>Remove</button>
+                    <button onClick={this.sendOptionsUpdate} className='users--margin-right btn btn-outline-primary' style={hiddenForm}>Save</button>
+                    <button onClick={this.remove(this.props.user._id)} className='btn btn-outline-danger'>Remove</button>
                 </div>
             </div>
         );
     }
 }
 
-const mapDispatchToProps = (dispatch) => ({
-    actions: bindActionCreators({
-        ...usersActionCreators
-    }, dispatch)
-});
-
-export default connect(null, mapDispatchToProps)(User)
+export default User
