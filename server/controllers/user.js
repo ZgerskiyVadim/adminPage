@@ -2,6 +2,12 @@ import async from "async";
 import createError from '../services/error';
 import User from '../models/user/user';
 import Group from "../models/group/group";
+import * as commonCrudOperations from '../services/commonCrudOperations';
+
+
+export const createUser = commonCrudOperations.create(User);
+
+export const updateUser = commonCrudOperations.update(User);
 
 export function getUsers(req, res, done) {
     const { skip, limit, searchBy} = req.query;
@@ -44,13 +50,6 @@ export function getUserByID(req, res, done) {
     );
 }
 
-export function createUser(req, res, done) {
-    User.create(req.body, (err, newUser) => {
-        if (err) return done(err);
-        res.status(201).json(newUser);
-    })
-}
-
 export function addUserInGroup(req, res, done) {
     const {userID, groupID} = req.body;
 
@@ -70,13 +69,6 @@ export function addUserInGroup(req, res, done) {
             })
         }
     ], updatedGroup => res.json(updatedGroup));
-}
-
-export function updateUser(req, res, done) {
-    User.findOneAndUpdate({_id: req.params.id}, req.body, {runValidators: true, new: true}, (err, updatedUser) => {
-        if (err) return done(err);
-        res.json(updatedUser);
-    })
 }
 
 export function removeUserFromGroup(req, res, done) {

@@ -1,6 +1,12 @@
 import createError from '../services/error';
 import Group from "../models/group/group";
 import User from "../models/user/user";
+import * as commonCrudOperations from '../services/commonCrudOperations';
+
+
+export const createGroup = commonCrudOperations.create(Group);
+
+export const updateGroup = commonCrudOperations.update(Group);
 
 export function getGroups(req, res, done) {
     const { skip, limit, searchBy } = req.query;
@@ -27,13 +33,6 @@ export function getGroups(req, res, done) {
     }
 }
 
-export function createGroup(req, res, done) {
-    Group.create(req.body, (err, newGroup) => {
-        if (err) return done(err);
-        res.status(201).json(newGroup);
-    })
-}
-
 export function getGroupByID(req, res, done) {
     Group.findOne({_id: req.params.id}, (err, group) => {
         if (!group) return done(createError('Not Found', 404));
@@ -42,13 +41,6 @@ export function getGroupByID(req, res, done) {
             if (err) return done(err);
             res.json(docs);
         });
-    })
-}
-
-export function updateGroup(req, res, done) {
-    Group.findOneAndUpdate({_id: req.params.id}, req.body, {runValidators: true, new: true}, (err, updatedGroup) => {
-        if(err) return done(err);
-        res.json(updatedGroup);
     })
 }
 
