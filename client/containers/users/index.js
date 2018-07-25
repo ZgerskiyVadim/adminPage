@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
 import './index.scss';
-import User from './user';
+import User from '../../components/user/user';
 import { loadMore } from '../../services/loadMore';
 import * as usersActionCreators from "../../actions/action_creators/users";
 import toastr from "toastr";

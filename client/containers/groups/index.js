@@ -6,7 +6,7 @@ import toastr from "toastr";
 import './index.scss';
 import * as groupsActionCreators from '../../actions/action_creators/groups';
 import { loadMore } from '../../services/loadMore';
-import Group from './group';
+import Group from '../../components/group/group';
 
 
 class Groups extends Component {

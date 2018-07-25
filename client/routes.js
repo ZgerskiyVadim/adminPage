@@ -9,7 +9,7 @@ import Create from "./containers/create";
 import NotFound from "./containers/notFound";
 
 
-export default class Routes extends Component{
+export default class Routes extends Component {
     render() {
         return (
             <Switch>
