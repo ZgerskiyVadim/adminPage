@@ -38,6 +38,20 @@ class Users extends Component {
         nextProps.usersStore.isRemoved && toastr.info('User deleted', 'Ok!');
     }
 
+    shouldComponentUpdate(nextProps) {
+        if (nextProps.users.length < this.props.users.length) {
+            this.setState({
+                options: {
+                    ...this.state.options,
+                    limit: nextProps.users.length
+                }
+            }, () => {
+                this.loadMore();
+            })
+        }
+        return true;
+    }
+
     getUsers() {
         if (this.props.user.joiningGroup) {
             return this.props.users.map(user => user._id === this.props.user.user._id ? {...user, isJoining: true} : user)
@@ -68,15 +82,7 @@ class Users extends Component {
     };
 
     remove = (id) => (e) => {
-        this.setState({
-            options: {
-                ...this.state.options,
-                limit: this.state.options.limit - 1
-            }
-        }, () => {
-            this.props.actions.removeUserRequest(id);
-            this.loadMore()
-        })
+        this.props.actions.removeUserRequest(id);
     };
 
     render() {

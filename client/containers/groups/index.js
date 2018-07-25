@@ -38,6 +38,20 @@ class Groups extends Component {
         nextProps.groupsStore.isRemoved && toastr.info('Group deleted', 'Ok!');
     }
 
+    shouldComponentUpdate(nextProps) {
+        if (nextProps.groups.length < this.props.groups.length) {
+            this.setState({
+                options: {
+                    ...this.state.options,
+                    limit: nextProps.groups.length
+                }
+            }, () => {
+                this.loadMore();
+            })
+        }
+        return true;
+    }
+
     groupsIsJoinUser() {
         return this.props.groups.map(group => {
             for (let i = 0; i < group.users.length; i++ ) {
@@ -89,15 +103,7 @@ class Groups extends Component {
     };
 
     remove = (id) => (e) => {
-        this.setState({
-            options: {
-                ...this.state.options,
-                limit: this.state.options.limit - 1
-            }
-        }, () => {
-            this.props.actions.removeGroupRequest(id);
-            this.loadMore();
-        })
+        this.props.actions.removeGroupRequest(id);
     };
 
     render() {
