@@ -75,6 +75,10 @@ class Groups extends Component {
         this.props.actions.joinGroup(options);
     };
 
+    leaveGroup = (options) => {
+        this.props.actions.removeUserRequest(options);
+    };
+
     cancelJoinGroup = () => {
         const isJoining = false;
         this.props.actions.cancelJoinGroup(isJoining);
@@ -95,10 +99,6 @@ class Groups extends Component {
             this.props.actions.removeGroupRequest(id);
             this.loadMore();
         })
-    };
-
-    leaveGroup = (options) => {
-        this.props.actions.removeUserRequest(options);
     };
 
     render() {
