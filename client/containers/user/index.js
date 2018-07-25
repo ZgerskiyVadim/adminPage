@@ -33,7 +33,7 @@ class User extends Component {
     componentWillReceiveProps(nextProps) {
         nextProps.userStore.error && toastr.error(nextProps.userStore.error, 'Opps!');
         nextProps.userStore.isLeftGroup && toastr.info('User left group', 'Ok!');
-        nextProps.userStore.isUpdated && toastr.success('Group updated', 'Ok!');
+        nextProps.userStore.isUpdated && toastr.success('User updated', 'Ok!');
     }
 
     update = () => {

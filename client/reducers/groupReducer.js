@@ -17,7 +17,9 @@ export default function groupReducer(state = initialState, action) {
         case GET_GROUP:
             return {
                 ...state,
-                ...action.payload
+                ...action.payload,
+                isUpdated: false,
+                error: null
             };
 
         case UPDATE_GROUP:
