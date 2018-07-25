@@ -8,7 +8,6 @@ import * as groupsActionCreators from '../../actions/action_creators/groups';
 import { loadMore } from '../../services/loadMore';
 import Group from '../../components/group/group';
 
-
 class Groups extends Component {
     constructor(props) {
         super(props);

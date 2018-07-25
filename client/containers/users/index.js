@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+import toastr from "toastr";
 
 import './index.scss';
 import User from '../../components/user/user';
 import { loadMore } from '../../services/loadMore';
 import * as usersActionCreators from "../../actions/action_creators/users";
-import toastr from "toastr";
 
 class Users extends Component {
     constructor(props) {

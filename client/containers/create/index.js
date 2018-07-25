@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import {connect} from "react-redux";
 import {bindActionCreators} from "redux";
+import toastr from "toastr";
 
 import './index.scss';
 import * as createActionCreators from "../../actions/action_creators/create";
-import toastr from "toastr";
 
 class Create extends Component {
     constructor(props) {
