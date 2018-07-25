@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
 import {connect} from "react-redux";
 import { Link } from "react-router-dom";
-import './index.scss';
 import { bindActionCreators } from 'redux';
+import toastr from 'toastr';
+
+import './index.scss';
 import * as userActionCreators from "../../actions/action_creators/user";
 import { onChangeForm, showForms, getOptions } from '../../services/userAndGroupHelper';
 
@@ -26,6 +28,12 @@ class User extends Component {
         const isJoining = false;
         this.props.actions.joinGroup(isJoining);
         this.props.actions.getUserRequest(this.state.id);
+    }
+
+    componentWillReceiveProps(nextProps) {
+        nextProps.userStore.error && toastr.error(nextProps.userStore.error, 'Opps!');
+        nextProps.userStore.isLeftGroup && toastr.info('User left group', 'Ok!');
+        nextProps.userStore.isUpdated && toastr.success('Group updated', 'Ok!');
     }
 
     update = () => {

@@ -1,6 +1,10 @@
 import React, { Component } from 'react';
-import axios from 'axios';
+import {connect} from "react-redux";
+import {bindActionCreators} from "redux";
+
 import './index.scss';
+import * as createActionCreators from "../../actions/action_creators/create";
+import toastr from "toastr";
 
 class Create extends Component {
     constructor(props) {
@@ -25,6 +29,12 @@ class Create extends Component {
         this.sendGroup = this.sendGroup.bind(this);
     }
 
+    componentWillReceiveProps(nextProps) {
+        nextProps.createStore.error && toastr.error(nextProps.createStore.error.response.data.message, 'Opps!');
+        nextProps.createStore.userCreated && toastr.info('User created', 'Ok!');
+        nextProps.createStore.groupCreated && toastr.info('Group created', 'Ok!');
+    }
+
     onChangeUser(event) {
         const {value, name} = event.target;
         this.setState({
@@ -46,31 +56,11 @@ class Create extends Component {
     }
 
     sendUser() {
-        axios.post('/api/users', this.state.user)
-            .then(user => {
-                this.setState({
-                    user: {
-                        ...this.state.user,
-                        username: '',
-                        firstName: '',
-                        lastName: '',
-                        email: '',
-                    }
-                });
-            });
+        this.props.actions.createUserRequest(this.state.user)
     }
 
     sendGroup() {
-        axios.post('/api/groups', this.state.group)
-            .then(group => {
-                this.setState({
-                    group: {
-                        ...this.state.group,
-                        name: '',
-                        title: ''
-                    }
-                });
-            })
+        this.props.actions.createGroupRequest(this.state.group)
     }
 
     render() {
@@ -107,4 +97,14 @@ class Create extends Component {
     }
 }
 
-export default Create;
+const mapStateToProps = (state) => ({
+    createStore: state.createReducer
+});
+
+const mapDispatchToProps = (dispatch) => ({
+    actions: bindActionCreators({
+        ...createActionCreators
+    }, dispatch)
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Create)

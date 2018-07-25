@@ -1,10 +1,13 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import './index.scss';
 import { bindActionCreators } from 'redux';
+import toastr from "toastr";
+
+import './index.scss';
 import * as groupsActionCreators from '../../actions/action_creators/groups';
 import { loadMore } from '../../services/loadMore';
 import Group from './group';
+
 
 class Groups extends Component {
     constructor(props) {
@@ -30,26 +33,28 @@ class Groups extends Component {
         window.removeEventListener('scroll', this.loadMore);
     }
 
-    getGroups() {
-        if (this.props.user.joiningGroup) {
-            return this.props.groups.map(group => {
-                for (let i = 0; i < group.users.length; i++ ) {
-                    const userID = group.users[i]._id ? group.users[i]._id : group.users[i];
-                    if (userID === this.props.user.user._id) {
-                        return {
-                            ...group,
-                            isJoiningUserInGroup: true
-                        };
-                    }
+    componentWillReceiveProps(nextProps) {
+        nextProps.groupsStore.error && toastr.error(nextProps.group.error, 'Opps!');
+        nextProps.groupsStore.isUpdated && toastr.success('Group updated', 'Ok!');
+        nextProps.groupsStore.isRemoved && toastr.info('Group deleted', 'Ok!');
+    }
+
+    groupsIsJoinUser() {
+        return this.props.groups.map(group => {
+            for (let i = 0; i < group.users.length; i++ ) {
+                const userID = group.users[i]._id ? group.users[i]._id : group.users[i];
+                if (userID === this.props.user._id) {
+                    return {
+                        ...group,
+                        isJoinUserInGroup: true
+                    };
                 }
-                return {
-                    ...group,
-                    isJoiningUserInGroup: false
-                };
-            })
-        } else {
-            return this.props.groups;
-        }
+            }
+            return {
+                ...group,
+                isJoinUserInGroup: false
+            };
+        })
     }
 
     search = (event) => {
@@ -73,7 +78,7 @@ class Groups extends Component {
     cancelJoinGroup = () => {
         const isJoining = false;
         this.props.actions.cancelJoinGroup(isJoining);
-        this.props.history.push(`/users/${this.props.user.user._id}`);
+        this.props.history.push(`/users/${this.props.user._id}`);
     };
 
     update = (options) => {
@@ -82,11 +87,11 @@ class Groups extends Component {
 
     remove = (id) => (e) => {
         this.setState({
-                options: {
-                    ...this.state.options,
-                    limit: this.state.options.limit - 1
-                }
-            }, () => {
+            options: {
+                ...this.state.options,
+                limit: this.state.options.limit - 1
+            }
+        }, () => {
             this.props.actions.removeGroupRequest(id);
             this.loadMore();
         })
@@ -97,7 +102,7 @@ class Groups extends Component {
     };
 
     render() {
-        const isJoiningGroup = {display: this.props.user.joiningGroup ? 'block' : 'none'};
+        const isJoiningGroup = {display: this.props.joiningGroup ? 'block' : 'none'};
         const marginBottom = {marginBottom: this.state.isLoadMore ? '0' : '5em'};
 
         return (
@@ -114,13 +119,13 @@ class Groups extends Component {
                         <h2 className='groups--nowrap col-md-4'>count of users</h2>
                     </div>
                     {
-                        this.props.user.joiningGroup ?
+                        this.props.joiningGroup ?
 
-                            this.getGroups().map((group, index) =>
+                            this.groupsIsJoinUser().map((group, index) =>
                                 <Group
                                     key={index}
                                     group={group}
-                                    userID={this.props.user.user._id}
+                                    userID={this.props.user._id}
                                     isJoiningGroup={true}
                                     joinGroup={this.joinGroup}
                                     update={this.update}
@@ -128,7 +133,7 @@ class Groups extends Component {
                                     leaveGroup={this.leaveGroup}
                                 />) :
 
-                            this.getGroups().map((group, index) =>
+                            this.props.groups.map((group, index) =>
                                 <Group
                                     key={index}
                                     group={group}
@@ -144,8 +149,10 @@ class Groups extends Component {
 }
 
 const mapStateToProps = (state) => ({
-    groups: state.groupsReducer,
-    user: state.userReducer
+    groupsStore: state.groupsReducer,
+    groups: state.groupsReducer.groups,
+    user: state.userReducer.user,
+    joiningGroup: state.userReducer.joiningGroup
 });
 
 const mapDispatchToProps = (dispatch) => ({

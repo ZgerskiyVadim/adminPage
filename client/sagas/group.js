@@ -1,5 +1,5 @@
 import { call, put, takeEvery, all } from 'redux-saga/effects';
-import * as GroupsAPI from "../services/api/groupsAPI";
+import * as groupsAPI from "../services/api/groupsAPI";
 import {
     GET_GROUP,
     GET_GROUP_REQUEST,
@@ -12,28 +12,28 @@ import {
 
 function* callgetGroup(action) {
     try {
-        const group = yield call(GroupsAPI.getGroup, action.payload);
+        const group = yield call(groupsAPI.getGroup, action.payload);
         yield put({type: GET_GROUP, payload: group});
     } catch (e) {
-        yield put({type: GROUP_REQUEST_FAILED, message: e.message});
+        yield put({type: GROUP_REQUEST_FAILED, payload: e.message});
     }
 }
 
 function* callupdateGroup(action) {
     try {
-        const group = yield call(GroupsAPI.updateGroup, action.payload);
+        const group = yield call(groupsAPI.updateGroup, action.payload);
         yield put({type: UPDATE_GROUP, payload: group});
     } catch (e) {
-        yield put({type: GROUP_REQUEST_FAILED, message: e.message});
+        yield put({type: GROUP_REQUEST_FAILED, payload: e.message});
     }
 }
 
 function* callremoveUserFromGroup(action) {
     try {
-        const updatedGroup = yield call(GroupsAPI.removeUserFromGroup, action.payload);
+        const updatedGroup = yield call(groupsAPI.removeUserFromGroup, action.payload);
         yield put({type: UPDATE_GROUP, payload: updatedGroup});
     } catch (e) {
-        yield put({type: GROUP_REQUEST_FAILED, message: e.message});
+        yield put({type: GROUP_REQUEST_FAILED, payload: e.message});
     }
 }
 

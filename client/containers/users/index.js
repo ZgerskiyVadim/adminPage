@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+
 import './index.scss';
 import User from './user';
 import { loadMore } from '../../services/loadMore';
-import { bindActionCreators } from 'redux';
 import * as usersActionCreators from "../../actions/action_creators/users";
+import toastr from "toastr";
 
 class Users extends Component {
     constructor(props) {
@@ -28,6 +30,12 @@ class Users extends Component {
 
     componentWillUnmount() {
         window.removeEventListener('scroll', this.loadMore);
+    }
+
+    componentWillReceiveProps(nextProps) {
+        nextProps.usersStore.error && toastr.error(nextProps.usersStore.error, 'Opps!');
+        nextProps.usersStore.isUpdated && toastr.success('User updated', 'Ok!');
+        nextProps.usersStore.isRemoved && toastr.info('User deleted', 'Ok!');
     }
 
     getUsers() {
@@ -103,7 +111,8 @@ class Users extends Component {
 }
 
 const mapStateToProps = (state) => ({
-    users: state.usersReducer,
+    usersStore: state.usersReducer,
+    users: state.usersReducer.users,
     user: state.userReducer
 });
 

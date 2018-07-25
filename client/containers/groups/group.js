@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from "react-router-dom";
+
 import { onChangeForm, showForms, getOptions } from '../../services/userAndGroupHelper';
 
 
@@ -40,13 +41,13 @@ class Group extends Component {
 
     render() {
         const { isJoiningGroup } = this.props;
-        const { isJoiningUserInGroup } = this.props.group;
+        const { isJoinUserInGroup } = this.props.group;
 
         const hiddenForm = {display: this.state.show && !isJoiningGroup ? "block" : "none"};
         const shownForm = {display: !this.state.show && !isJoiningGroup ? "block" : "none"};
         const notJoiningGroup = {display: !isJoiningGroup ? "block" : "none"};
-        const userAlreadyInGroup = {display: !isJoiningGroup || isJoiningUserInGroup ? 'none' : 'block'};
-        const userNotInGroup = {display: isJoiningGroup && isJoiningUserInGroup ? 'block' : 'none'};
+        const userAlreadyInGroup = {display: !isJoiningGroup || isJoinUserInGroup ? 'none' : 'block'};
+        const userNotInGroup = {display: isJoiningGroup && isJoinUserInGroup ? 'block' : 'none'};
 
         return (
             <div className='groups-row'>
