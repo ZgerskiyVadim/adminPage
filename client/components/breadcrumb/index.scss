@@ -2,9 +2,12 @@
   margin-left: 2em;
   border-bottom: 1px solid lightgrey;
 }
-.breadcrumb--flex {
+.breadcrumb--inline-flex {
   display: inline-flex;
 }
 .breadcrumb--cursor {
   cursor: pointer;
+}
+.breadcrumb--nowrap {
+  white-space: nowrap;
 }

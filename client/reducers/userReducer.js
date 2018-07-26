@@ -2,7 +2,8 @@ import {
     GET_USER,
     UPDATE_USER,
     USER_LEAVE_GROUP,
-    IS_JOINING_GROUP, USER_REQUEST_FAILED
+    IS_JOINING_GROUP,
+    USER_REQUEST_FAILED
 } from '../actions';
 
 const initialState = {
