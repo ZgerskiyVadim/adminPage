@@ -28,7 +28,7 @@ class User extends Component {
 
     componentWillReceiveProps(nextProps) {
         nextProps.group.error && toastr.error(nextProps.group.error, 'Opps!');
-        nextProps.group.isUpdated && toastr.success('Group updated', 'Ok!');
+        nextProps.group.isUpdated && toastr.success('Success!', 'Ok!');
     }
 
     update = () => {

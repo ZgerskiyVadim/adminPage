@@ -34,7 +34,7 @@ class Groups extends Component {
 
     componentWillReceiveProps(nextProps) {
         nextProps.groupsStore.error && toastr.error(nextProps.group.error, 'Opps!');
-        nextProps.groupsStore.isUpdated && toastr.success('Group updated', 'Ok!');
+        nextProps.groupsStore.isUpdated && toastr.success('Success!', 'Ok!');
         nextProps.groupsStore.isRemoved && toastr.info('Group deleted', 'Ok!');
     }
 
