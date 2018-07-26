@@ -114,7 +114,7 @@ class Groups extends Component {
                     <div className='groups-headers col-md-8'>
                         <h2 className='col-md-4'>name</h2>
                         <h2 className='col-md-4'>title</h2>
-                        <h2 className='groups--nowrap col-md-4'>count of users</h2>
+                        <h2 className='groups--nowrap col-md-4'>users</h2>
                     </div>
                     {
                         this.props.joiningGroup ?
