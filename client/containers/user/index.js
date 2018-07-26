@@ -43,8 +43,8 @@ class User extends Component {
     };
 
     joinGroup = () => {
-        const isJoining = true;
-        this.props.actions.joinGroup(isJoining);
+        const joinGroup = true;
+        this.props.actions.joinGroup(joinGroup);
         this.props.history.push('/groups');
     };
 

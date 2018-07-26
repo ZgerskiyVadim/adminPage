@@ -30,7 +30,10 @@ function isScrollDown() {
 }
 
 function setState(lengthOfItems, enumItem) {
-    if (this.state.options.limit > lengthOfItems) {
+    const limit = this.state.options.limit;
+    const loadNext = this.state.options.loadNext;
+
+    if (limit > lengthOfItems) {
         this.setState({
             isLoadMore: false
         })
@@ -38,16 +41,18 @@ function setState(lengthOfItems, enumItem) {
         this.setState({
             options: {
                 ...this.state.options,
-                limit: this.state.options.limit + this.state.options.loadNext
+                limit: limit + loadNext
             }
         }, () => getItems.call(this, enumItem));
     }
 }
 
 function getItems (enumItem) {
+    const isSearching = this.state.isSearching;
+
     if (enumItem === 'users') {
-        this.state.isSearching ? this.props.actions.searchUsersRequest(this.state.options) : this.props.actions.getUsersRequest(this.state.options.limit)
+        isSearching ? this.props.actions.searchUsersRequest(this.state.options) : this.props.actions.getUsersRequest(this.state.options.limit)
     } else {
-        this.state.isSearching ? this.props.actions.searchGroupsRequest(this.state.options) : this.props.actions.getGroupsRequest(this.state.options.limit)
+        isSearching ? this.props.actions.searchGroupsRequest(this.state.options) : this.props.actions.getGroupsRequest(this.state.options.limit)
     }
 }

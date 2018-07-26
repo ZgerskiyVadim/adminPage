@@ -86,8 +86,8 @@ class Groups extends Component {
     };
 
     cancelJoinGroup = () => {
-        const isJoining = false;
-        this.props.actions.cancelJoinGroup(isJoining);
+        const stopJoinGroups = false;
+        this.props.actions.cancelJoinGroup(stopJoinGroups);
         this.props.history.push(`/users/${this.props.user._id}`);
     };
 
