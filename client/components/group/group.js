@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from "react-router-dom";
 
-import { onChangeForm, showForms, getOptions } from '../../services/userAndGroupHelper';
+import { onChangeForm, showForms, getValidOptions } from '../../services/formsOperations';
 
 
 class Group extends Component {
@@ -25,7 +25,7 @@ class Group extends Component {
 
     sendOptionsUpdate = () => {
         this.setState({show: false});
-        const options = getOptions(this.state);
+        const options = getValidOptions(this.state);
         this.update(options)
     };
 

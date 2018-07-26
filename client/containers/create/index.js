@@ -5,6 +5,7 @@ import toastr from "toastr";
 
 import './index.scss';
 import * as createActionCreators from "../../actions/action_creators/create";
+import { onChangeForm } from '../../services/formsOperations';
 
 class Create extends Component {
     constructor(props) {
@@ -22,11 +23,6 @@ class Create extends Component {
                 title: ''
             }
         };
-
-        this.onChangeUser = this.onChangeUser.bind(this);
-        this.onChangeGroup = this.onChangeGroup.bind(this);
-        this.sendUser = this.sendUser.bind(this);
-        this.sendGroup = this.sendGroup.bind(this);
     }
 
     componentWillReceiveProps(nextProps) {
@@ -36,33 +32,21 @@ class Create extends Component {
         nextProps.createStore.groupCreated && toastr.info('Group created', 'Ok!');
     }
 
-    onChangeUser(event) {
-        const {value, name} = event.target;
-        this.setState({
-            user: {
-                ...this.state.user,
-                [name]: value
-            }
-        });
-    }
+    onChangeUser = (event) => {
+        onChangeForm.call(this, event, 'user');
+    };
 
-    onChangeGroup(event) {
-        const {value, name} = event.target;
-        this.setState({
-            group: {
-                ...this.state.group,
-                [name]: value
-            }
-        });
-    }
+    onChangeGroup = (event) => {
+        onChangeForm.call(this, event, 'group');
+    };
 
-    sendUser() {
+    sendUser = () => {
         this.props.actions.createUserRequest(this.state.user)
-    }
+    };
 
-    sendGroup() {
+    sendGroup = () => {
         this.props.actions.createGroupRequest(this.state.group)
-    }
+    };
 
     render() {
         return (

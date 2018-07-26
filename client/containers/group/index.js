@@ -6,7 +6,7 @@ import toastr from 'toastr';
 
 import './index.scss';
 import * as groupActionCreators from '../../actions/action_creators/group';
-import { onChangeForm, showForms, getOptions } from '../../services/userAndGroupHelper';
+import { onChangeForm, showForms, getValidOptions } from '../../services/formsOperations';
 
 class User extends Component {
     constructor(props) {
@@ -33,7 +33,7 @@ class User extends Component {
 
     update = () => {
         this.setState({show: false});
-        const options = getOptions(this.state);
+        const options = getValidOptions(this.state);
         this.props.actions.updateGroupRequest(options);
     };
 
