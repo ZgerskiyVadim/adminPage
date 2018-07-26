@@ -35,6 +35,6 @@ export default function createReducer(state = initialState, action) {
                 groupCreated: false,
                 error: action.payload
             };
-        default: return state
+        default: return state;
     }
 }

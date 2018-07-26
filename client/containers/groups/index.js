@@ -1,11 +1,11 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
-import toastr from "toastr";
+import React, {Component} from 'react';
+import {connect} from 'react-redux';
+import {bindActionCreators} from 'redux';
+import toastr from 'toastr';
 
 import './index.scss';
 import * as groupsActionCreators from '../../actions/action_creators/groups';
-import { loadMore, checkRemovedItems } from '../../services/loadMore';
+import {loadMore, checkRemovedItems} from '../../services/loadMore';
 import Group from '../../components/group/group';
 
 class Groups extends Component {
@@ -60,7 +60,7 @@ class Groups extends Component {
                 ...group,
                 isJoinUserInGroup: false
             };
-        })
+        });
     }
 
     search = (event) => {
@@ -74,7 +74,7 @@ class Groups extends Component {
                 isLoadMore: true
             },
             () => this.props.actions.searchGroupsRequest(this.state.options)
-        )
+        );
     };
 
     joinGroup = (options) => {
@@ -159,4 +159,4 @@ const mapDispatchToProps = (dispatch) => ({
     }, dispatch)
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(Groups)
+export default connect(mapStateToProps, mapDispatchToProps)(Groups);

@@ -1,4 +1,4 @@
-import { call, put, takeEvery, all } from 'redux-saga/effects';
+import {call, put, takeEvery, all} from 'redux-saga/effects';
 import * as usersAPI from '../services/api/usersAPI';
 import {
     GET_USERS,
@@ -6,7 +6,7 @@ import {
     SEARCH_USERS_REQUEST,
     REMOVE_USER,
     REMOVE_USER_REQUEST,
-    USERS_REQUEST_FAILED,
+    USERS_REQUEST_FAILED
 } from '../actions';
 
 function* callgetUsers(action) {

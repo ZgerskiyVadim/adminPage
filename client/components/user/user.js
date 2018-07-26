@@ -1,7 +1,7 @@
-import React, { Component } from 'react';
-import { Link } from "react-router-dom";
+import React, {Component} from 'react';
+import {Link} from 'react-router-dom';
 
-import { onChangeForm, showForms, getValidOptions } from '../../services/formsOperations';
+import {onChangeForm, showForms, getValidOptions} from '../../services/formsOperations';
 
 class User extends Component {
     constructor(props) {
@@ -28,8 +28,8 @@ class User extends Component {
     };
 
     render() {
-        const hiddenForm = {display: this.state.show ? "block" : "none"};
-        const shownForm = {display: !this.state.show ? "block" : "none"};
+        const hiddenForm = {display: this.state.show ? 'block' : 'none'};
+        const shownForm = {display: !this.state.show ? 'block' : 'none'};
         const isJoiningUser = {display: this.props.user.isJoining ? 'none' : 'block'};
 
         return (
@@ -62,4 +62,4 @@ class User extends Component {
     }
 }
 
-export default User
+export default User;

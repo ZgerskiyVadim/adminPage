@@ -1,12 +1,12 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
-import toastr from "toastr";
+import React, {Component} from 'react';
+import {connect} from 'react-redux';
+import {bindActionCreators} from 'redux';
+import toastr from 'toastr';
 
 import './index.scss';
 import User from '../../components/user/user';
-import { loadMore, checkRemovedItems } from '../../services/loadMore';
-import * as usersActionCreators from "../../actions/action_creators/users";
+import {loadMore, checkRemovedItems} from '../../services/loadMore';
+import * as usersActionCreators from '../../actions/action_creators/users';
 
 class Users extends Component {
     constructor(props) {
@@ -47,7 +47,7 @@ class Users extends Component {
 
     getUsers() {
         if (this.props.user.joiningGroup) {
-            return this.props.users.map(user => user._id === this.props.user.user._id ? {...user, isJoining: true} : user)
+            return this.props.users.map(user => user._id === this.props.user.user._id ? {...user, isJoining: true} : user);
         } else {
             return this.props.users;
         }
@@ -121,4 +121,4 @@ const mapDispatchToProps = (dispatch) => ({
     }, dispatch)
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(Users)
+export default connect(mapStateToProps, mapDispatchToProps)(Users);

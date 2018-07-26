@@ -23,7 +23,7 @@ const userSchema = new Schema({
         validate: {
             validator: validator.email,
             message: 'Provided email is invalid.'
-        }},
+        }}
 });
 
 export default mongoose.model('User', userSchema);

@@ -2,7 +2,7 @@ import {
     GET_GROUP_REQUEST,
     UPDATE_GROUP_REQUEST,
     REMOVE_USER_FROM_GROUP
-} from "../index";
+} from '../index';
 
 export const getGroupRequest = (data) => ({
     type: GET_GROUP_REQUEST,

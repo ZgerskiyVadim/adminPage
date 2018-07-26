@@ -1,7 +1,7 @@
-import async from "async";
+import async from 'async';
 import createError from '../services/error';
 import User from '../models/user/user';
-import Group from "../models/group/group";
+import Group from '../models/group/group';
 import * as commonCrudOperations from '../services/commonCrudOperations';
 
 
@@ -21,14 +21,14 @@ export function getUserByID(req, res, done) {
                 User.findOne({_id: req.params.id}, (err, user) => {
                     if (!user) return done(createError('Not Found', 404));
                     if (err) return done(err);
-                    next(null, user)
-                })
+                    next(null, user);
+                });
             },
             (user, next) => {
                 Group.find({users: user.id}, (err, groups) => {
                     if (err) return done(err);
-                    next(user, groups)
-                })
+                    next(user, groups);
+                });
             }
         ], (user, groups) => res.json({ user, groups })
     );
@@ -43,14 +43,14 @@ export function addUserInGroup(req, res, done) {
                 if (!user) return done(createError('User is not found', 404));
                 if (err) return done(err);
                 next();
-            })
+            });
         },
         next => {
             Group.findOneAndUpdate({_id: groupID}, { $push: { users: userID } }, {new: true}, (err, updatedGroup) => {
                 if (!updatedGroup) return done(createError('Group is not found', 404));
                 if (err) return done(err);
                 next(updatedGroup);
-            })
+            });
         }
     ], updatedGroup => res.json(updatedGroup));
 }

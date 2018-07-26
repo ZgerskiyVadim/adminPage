@@ -1,6 +1,6 @@
 import { call, put, takeEvery, all } from 'redux-saga/effects';
-import * as groupsAPI from "../services/api/groupsAPI";
-import * as usersApi from "../services/api/usersAPI";
+import * as groupsAPI from '../services/api/groupsAPI';
+import * as usersApi from '../services/api/usersAPI';
 
 import {
     USER_CREATED,

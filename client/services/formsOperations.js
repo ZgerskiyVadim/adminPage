@@ -19,7 +19,7 @@ export function showForms(id) {
     this.setState({
         id,
         show: true
-    })
+    });
 }
 
 export function getValidOptions(state) {

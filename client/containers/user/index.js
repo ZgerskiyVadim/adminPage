@@ -1,12 +1,12 @@
-import React, { Component } from 'react';
-import {connect} from "react-redux";
-import { Link } from "react-router-dom";
-import { bindActionCreators } from 'redux';
+import React, {Component} from 'react';
+import {connect} from 'react-redux';
+import {Link} from 'react-router-dom';
+import {bindActionCreators} from 'redux';
 import toastr from 'toastr';
 
 import './index.scss';
-import * as userActionCreators from "../../actions/action_creators/user";
-import { onChangeForm, showForms, getValidOptions } from '../../services/formsOperations';
+import * as userActionCreators from '../../actions/action_creators/user';
+import {onChangeForm, showForms, getValidOptions} from '../../services/formsOperations';
 
 class User extends Component {
     constructor(props) {
@@ -53,12 +53,12 @@ class User extends Component {
             userID: this.state.id,
             groupID: id
         };
-        this.props.actions.leaveGroupRequest(options)
+        this.props.actions.leaveGroupRequest(options);
     };
 
     render() {
-        const hiddenForm = {display: this.state.show ? "block" : "none"};
-        const shownForm = {display: !this.state.show ? "block" : "none"};
+        const hiddenForm = {display: this.state.show ? 'block' : 'none'};
+        const shownForm = {display: !this.state.show ? 'block' : 'none'};
         const isGroups = {display: this.props.userStore.groups.length ? 'block' : 'none'};
 
         return (
@@ -111,4 +111,4 @@ const mapDispatchToProps = (dispatch) => ({
     }, dispatch)
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(User)
+export default connect(mapStateToProps, mapDispatchToProps)(User);

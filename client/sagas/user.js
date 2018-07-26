@@ -1,4 +1,4 @@
-import { call, put, takeEvery, all } from 'redux-saga/effects';
+import {call, put, takeEvery, all} from 'redux-saga/effects';
 import * as usersAPI from '../services/api/usersAPI';
 import {
     GET_USER,
@@ -9,7 +9,7 @@ import {
     GET_USER_REQUEST,
     UPDATE_USER_REQUEST,
     ADD_USER_IN_GROUP_REQUEST,
-    LEAVE_GROUP_REQUEST,
+    LEAVE_GROUP_REQUEST
 } from '../actions';
 
 function* callgetUser(action) {

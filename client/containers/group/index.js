@@ -1,12 +1,12 @@
-import React, { Component } from 'react';
-import {connect} from "react-redux";
-import { Link } from "react-router-dom";
-import { bindActionCreators } from 'redux';
+import React, {Component} from 'react';
+import {connect} from 'react-redux';
+import {Link} from 'react-router-dom';
+import {bindActionCreators} from 'redux';
 import toastr from 'toastr';
 
 import './index.scss';
 import * as groupActionCreators from '../../actions/action_creators/group';
-import { onChangeForm, showForms, getValidOptions } from '../../services/formsOperations';
+import {onChangeForm, showForms, getValidOptions} from '../../services/formsOperations';
 
 class User extends Component {
     constructor(props) {
@@ -42,12 +42,12 @@ class User extends Component {
             groupID: this.state.id,
             userID: id
         };
-        this.props.actions.removeUserRequest(options)
+        this.props.actions.removeUserRequest(options);
     };
 
     render() {
-        const hiddenForm = {display: this.state.show ? "block" : "none"};
-        const shownForm = {display: !this.state.show ? "block" : "none"};
+        const hiddenForm = {display: this.state.show ? 'block' : 'none'};
+        const shownForm = {display: !this.state.show ? 'block' : 'none'};
         const isUsers = {display: this.props.group.users.length ? 'block' : 'none'};
 
         return (
@@ -102,4 +102,4 @@ const mapDispatchToProps = (dispatch) => ({
     }, dispatch)
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(User)
+export default connect(mapStateToProps, mapDispatchToProps)(User);

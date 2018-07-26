@@ -1,5 +1,5 @@
-import { call, put, takeEvery, all } from 'redux-saga/effects';
-import * as groupsAPI from "../services/api/groupsAPI";
+import {call, put, takeEvery, all} from 'redux-saga/effects';
+import * as groupsAPI from '../services/api/groupsAPI';
 import {
     GET_GROUP,
     GET_GROUP_REQUEST,

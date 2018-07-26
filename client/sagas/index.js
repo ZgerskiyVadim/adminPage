@@ -1,4 +1,4 @@
-import { fork, all } from 'redux-saga/effects';
+import {fork, all} from 'redux-saga/effects';
 import usersSaga from './users';
 import userSaga from './user';
 import groupsSaga from './groups';
@@ -11,6 +11,6 @@ export default function* rootSaga() {
         fork(userSaga),
         fork(groupsSaga),
         fork(groupSaga),
-        fork(createSaga),
+        fork(createSaga)
     ]);
 }

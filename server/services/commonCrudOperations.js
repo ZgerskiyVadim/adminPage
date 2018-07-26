@@ -1,4 +1,4 @@
-import createError from "./error";
+import createError from './error';
 
 export const getAll = (Model, ModelPopulate) => (
     (req, res, done) => {
@@ -14,8 +14,8 @@ export const getAll = (Model, ModelPopulate) => (
                             if (err) return done(err);
                             res.json(docs);
                         })
-                )
-            })
+                );
+            });
         } else {
             Model.find({}, null, {skip: Number(skip), limit: Number(limit)}, (err, data) => {
                 if (err) return done(err);
@@ -27,8 +27,8 @@ export const getAll = (Model, ModelPopulate) => (
                             if (err) return done(err);
                             res.json(docs);
                         })
-                )
-            })
+                );
+            });
         }
     }
 );
@@ -38,16 +38,16 @@ export const create = (Model) => (
         Model.create(req.body, (err, data) => {
             if (err) return done(err);
             res.status(201).json(data);
-        })
+        });
     }
 );
 
 export const update = (Model) => (
     (req, res, done) => {
         Model.findOneAndUpdate({_id: req.params.id}, req.body, {runValidators: true, new: true}, (err, data) => {
-            if(err) return done(err);
+            if (err) return done(err);
             res.json(data);
-        })
+        });
     }
 );
 
@@ -65,8 +65,8 @@ export const remove = (Model, ModelPopulate) => (
                         if (err) return done(err);
                         res.status(200).json(message);
                     })
-            )
-        })
+            );
+        });
     }
 );
 
@@ -76,7 +76,7 @@ export const removeFromGroup = (Model, ModelPopulate) => (
         const groupID = req.body.groupID || req.params.id;
 
         Model.findOneAndUpdate({_id: groupID}, {$pull: {users: userID}}, {new: true}, (err, data) => {
-            if(err) return done(err);
+            if (err) return done(err);
             return (
                 !ModelPopulate ?
                     res.json(data) :
@@ -84,8 +84,8 @@ export const removeFromGroup = (Model, ModelPopulate) => (
                         if (err) return done(err);
                         res.json(docs);
                     })
-            )
-        })
+            );
+        });
     }
 );
 
@@ -93,14 +93,14 @@ function searchFields(searchBy, ModelPopulate) {
     return (
         ModelPopulate ?
             [
-                {name: {$regex: searchBy, $options:'i'}},
-                {title: {$regex: searchBy, $options:'i'}}
+                {name: {$regex: searchBy, $options: 'i'}},
+                {title: {$regex: searchBy, $options: 'i'}}
             ] :
             [
-                {username: {$regex: searchBy, $options:'i'}},
-                {firstName: {$regex: searchBy, $options:'i'}},
-                {lastName: {$regex: searchBy, $options:'i'}},
-                {email: {$regex: searchBy, $options:'i'}}
+                {username: {$regex: searchBy, $options: 'i'}},
+                {firstName: {$regex: searchBy, $options: 'i'}},
+                {lastName: {$regex: searchBy, $options: 'i'}},
+                {email: {$regex: searchBy, $options: 'i'}}
             ]
-    )
+    );
 }

@@ -1,7 +1,7 @@
-import React, { Component } from 'react';
-import { Link } from "react-router-dom";
+import React, {Component} from 'react';
+import {Link} from 'react-router-dom';
 
-import { onChangeForm, showForms, getValidOptions } from '../../services/formsOperations';
+import {onChangeForm, showForms, getValidOptions} from '../../services/formsOperations';
 
 
 class Group extends Component {
@@ -43,9 +43,9 @@ class Group extends Component {
         const { isJoiningGroup } = this.props;
         const { isJoinUserInGroup } = this.props.group;
 
-        const hiddenForm = {display: this.state.show && !isJoiningGroup ? "block" : "none"};
-        const shownForm = {display: !this.state.show && !isJoiningGroup ? "block" : "none"};
-        const notJoiningGroup = {display: !isJoiningGroup ? "block" : "none"};
+        const hiddenForm = {display: this.state.show && !isJoiningGroup ? 'block' : 'none'};
+        const shownForm = {display: !this.state.show && !isJoiningGroup ? 'block' : 'none'};
+        const notJoiningGroup = {display: !isJoiningGroup ? 'block' : 'none'};
         const userAlreadyInGroup = {display: !isJoiningGroup || isJoinUserInGroup ? 'none' : 'block'};
         const userNotInGroup = {display: isJoiningGroup && isJoinUserInGroup ? 'block' : 'none'};
 
@@ -77,4 +77,4 @@ class Group extends Component {
     }
 }
 
-export default Group
+export default Group;

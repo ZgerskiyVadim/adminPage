@@ -1,6 +1,6 @@
 import createError from '../services/error';
-import Group from "../models/group/group";
-import User from "../models/user/user";
+import Group from '../models/group/group';
+import User from '../models/user/user';
 import * as commonCrudOperations from '../services/commonCrudOperations';
 
 
@@ -22,5 +22,5 @@ export function getGroupByID(req, res, done) {
             if (err) return done(err);
             res.json(docs);
         });
-    })
+    });
 }

@@ -17,12 +17,12 @@ export function checkRemovedItems(prevCountUsers, nextCountUsers) {
             }
         }, () => {
             this.loadMore();
-        })
+        });
     }
 }
 
 function scrollHeight() {
-    return document.documentElement.scrollHeight - document.documentElement.clientHeight
+    return document.documentElement.scrollHeight - document.documentElement.clientHeight;
 }
 
 function isScrollDown() {
@@ -47,12 +47,12 @@ function setState(lengthOfItems, enumItem) {
     }
 }
 
-function getItems (enumItem) {
+function getItems(enumItem) {
     const isSearching = this.state.isSearching;
 
     if (enumItem === 'users') {
-        isSearching ? this.props.actions.searchUsersRequest(this.state.options) : this.props.actions.getUsersRequest(this.state.options.limit)
+        isSearching ? this.props.actions.searchUsersRequest(this.state.options) : this.props.actions.getUsersRequest(this.state.options.limit);
     } else {
-        isSearching ? this.props.actions.searchGroupsRequest(this.state.options) : this.props.actions.getGroupsRequest(this.state.options.limit)
+        isSearching ? this.props.actions.searchGroupsRequest(this.state.options) : this.props.actions.getGroupsRequest(this.state.options.limit);
     }
 }

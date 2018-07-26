@@ -39,6 +39,6 @@ export default function groupReducer(state = initialState, action) {
                 error: action.payload
             };
 
-        default: return state
+        default: return state;
     }
 }

@@ -15,8 +15,8 @@ class Breadcrumb extends Component {
             .map(path => {
                 return {
                     path,
-                    location:  locationPath.substr(0, locationPath.indexOf(path)) + path
-                }
+                    location: locationPath.substr(0, locationPath.indexOf(path)) + path
+                };
             });
         if (locations.length) {
             const lastElem = locations.length - 1;
@@ -42,7 +42,7 @@ class Breadcrumb extends Component {
                                 <h1 onClick={!item.isLastElem ? this.goToPath(item.location) : null} className='breadcrumb--cursor'>{item.path}</h1>
                                 <h1 style={{display: item.isLastElem ? 'none' : 'block'}} className='breadcrumb--nowrap'>&nbsp;- >&nbsp;</h1>
                             </div>
-                        )
+                        );
                     })
                 }
             </div>

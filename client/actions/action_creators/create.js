@@ -1,7 +1,7 @@
 import {
     USER_CREATE_REQUEST,
     GROUP_CREATE_REQUEST
-} from "../index";
+} from '../index';
 
 export const createUserRequest = (data) => ({
     type: USER_CREATE_REQUEST,
