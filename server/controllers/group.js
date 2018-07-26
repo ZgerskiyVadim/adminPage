@@ -8,7 +8,7 @@ export const getGroups = commonCrudOperations.getAll(Group, User);
 
 export const createGroup = commonCrudOperations.create(Group);
 
-export const updateGroup = commonCrudOperations.update(Group);
+export const updateGroup = commonCrudOperations.update(Group, User);
 
 export const removeGroup = commonCrudOperations.remove(Group);
 

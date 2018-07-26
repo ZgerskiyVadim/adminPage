@@ -42,11 +42,19 @@ export const create = (Model) => (
     }
 );
 
-export const update = (Model) => (
+export const update = (Model, ModelPopulate) => (
     (req, res, done) => {
         Model.findOneAndUpdate({_id: req.params.id}, req.body, {runValidators: true, new: true}, (err, data) => {
             if (err) return done(err);
-            res.json(data);
+
+            return (
+                !ModelPopulate ?
+                    res.json(data) :
+                    ModelPopulate.populate(data, {path: 'users'}, (err, docs) => {
+                        if (err) return done(err);
+                        res.json(docs);
+                    })
+            );
         });
     }
 );
