@@ -5,7 +5,7 @@ import toastr from "toastr";
 
 import './index.scss';
 import * as groupsActionCreators from '../../actions/action_creators/groups';
-import { loadMore } from '../../services/loadMore';
+import { loadMore, checkRemovedItems } from '../../services/loadMore';
 import Group from '../../components/group/group';
 
 class Groups extends Component {
@@ -39,16 +39,9 @@ class Groups extends Component {
     }
 
     shouldComponentUpdate(nextProps) {
-        if (nextProps.groups.length < this.props.groups.length) {
-            this.setState({
-                options: {
-                    ...this.state.options,
-                    limit: nextProps.groups.length
-                }
-            }, () => {
-                this.loadMore();
-            })
-        }
+        const prevCountGroups = this.props.groups.length;
+        const nextCountGroups = nextProps.groups.length;
+        checkRemovedItems.call(this, prevCountGroups, nextCountGroups);
         return true;
     }
 

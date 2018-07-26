@@ -8,6 +8,19 @@ export function loadMore(enumItem) {
     }
 }
 
+export function checkRemovedItems(prevCountUsers, nextCountUsers) {
+    if (nextCountUsers < prevCountUsers) {
+        this.setState({
+            options: {
+                ...this.state.options,
+                limit: nextCountUsers
+            }
+        }, () => {
+            this.loadMore();
+        })
+    }
+}
+
 function scrollHeight() {
     return document.documentElement.scrollHeight - document.documentElement.clientHeight
 }

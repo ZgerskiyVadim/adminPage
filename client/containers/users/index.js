@@ -5,7 +5,7 @@ import toastr from "toastr";
 
 import './index.scss';
 import User from '../../components/user/user';
-import { loadMore } from '../../services/loadMore';
+import { loadMore, checkRemovedItems } from '../../services/loadMore';
 import * as usersActionCreators from "../../actions/action_creators/users";
 
 class Users extends Component {
@@ -39,16 +39,9 @@ class Users extends Component {
     }
 
     shouldComponentUpdate(nextProps) {
-        if (nextProps.users.length < this.props.users.length) {
-            this.setState({
-                options: {
-                    ...this.state.options,
-                    limit: nextProps.users.length
-                }
-            }, () => {
-                this.loadMore();
-            })
-        }
+        const prevCountUsers = this.props.users.length;
+        const nextCountUsers = nextProps.users.length;
+        checkRemovedItems.call(this, prevCountUsers, nextCountUsers);
         return true;
     }
 
