@@ -15,7 +15,6 @@ const app = express();
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
 app.use(favicon(path.join(__dirname, config.favicon)));
-app.use(express.static(path.join(__dirname, config.static)));
 app.use('/api', routers);
 
 app.get('*', sendFileHtml);
