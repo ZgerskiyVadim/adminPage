@@ -3,14 +3,10 @@ import {withRouter} from 'react-router';
 import './index.scss';
 
 class Header extends Component {
-    constructor(props) {
-        super(props);
-        this.goHome = this.goHome.bind(this);
-    }
 
-    goHome() {
+    goHome = () => {
         this.props.history.push('/');
-    }
+    };
 
     render() {
         return (
