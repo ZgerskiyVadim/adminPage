@@ -7,6 +7,7 @@ import './index.scss';
 import * as groupsActionCreators from '../../actions/action_creators/groups';
 import {loadMore, checkRemovedItems} from '../../services/loadMore';
 import Group from '../../components/group/group';
+import {searchRequest} from '../../services/searchOperation';
 
 class Groups extends Component {
     constructor(props) {
@@ -64,17 +65,7 @@ class Groups extends Component {
     }
 
     search = (event) => {
-        this.setState({
-                options: {
-                    ...this.state.options,
-                    limit: 20,
-                    searchBy: event.target.value
-                },
-                isSearching: !!event.target.value,
-                isLoadMore: true
-            },
-            () => this.props.actions.searchGroupsRequest(this.state.options)
-        );
+        searchRequest.call(this, event, 'groups');
     };
 
     joinGroup = (options) => {

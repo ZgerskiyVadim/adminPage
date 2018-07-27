@@ -7,6 +7,7 @@ import './index.scss';
 import User from '../../components/user/user';
 import {loadMore, checkRemovedItems} from '../../services/loadMore';
 import * as usersActionCreators from '../../actions/action_creators/users';
+import {searchRequest} from '../../services/searchOperation';
 
 class Users extends Component {
     constructor(props) {
@@ -54,17 +55,7 @@ class Users extends Component {
     }
 
     search = (event) => {
-        this.setState({
-            options: {
-                ...this.state.options,
-                limit: 20,
-                searchBy: event.target.value
-            },
-            isSearching: !!event.target.value,
-            isLoadMore: true
-        },
-            () => this.props.actions.searchUsersRequest(this.state.options)
-        );
+        searchRequest.call(this, event, 'users');
     };
 
     update = (options) => {
