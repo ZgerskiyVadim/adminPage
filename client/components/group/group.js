@@ -40,14 +40,13 @@ class Group extends Component {
     };
 
     render() {
-        const { isJoiningGroup } = this.props;
-        const { isJoinUserInGroup } = this.props.group;
+        const { isJoiningGroup, isJoinedUserInGroup } = this.props;
 
         const hiddenForm = {display: this.state.show && !isJoiningGroup ? 'block' : 'none'};
         const shownForm = {display: !this.state.show && !isJoiningGroup ? 'block' : 'none'};
         const notJoiningGroup = {display: !isJoiningGroup ? 'block' : 'none'};
-        const userAlreadyInGroup = {display: !isJoiningGroup || isJoinUserInGroup ? 'none' : 'block'};
-        const userNotInGroup = {display: isJoiningGroup && isJoinUserInGroup ? 'block' : 'none'};
+        const userAlreadyInGroup = {display: !isJoiningGroup || isJoinedUserInGroup ? 'none' : 'block'};
+        const userNotInGroup = {display: isJoiningGroup && isJoinedUserInGroup ? 'block' : 'none'};
 
         return (
             <div className='groups-row'>

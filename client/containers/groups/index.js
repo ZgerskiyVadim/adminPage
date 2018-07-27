@@ -46,20 +46,20 @@ class Groups extends Component {
         return true;
     }
 
-    groupsIsJoinUser() {
+    isJoinedUserInGroup() {
         return this.props.groups.map(group => {
             for (let i = 0; i < group.users.length; i++ ) {
                 const userID = group.users[i]._id ? group.users[i]._id : group.users[i];
                 if (userID === this.props.user._id) {
                     return {
                         ...group,
-                        isJoinUserInGroup: true
+                        isJoinedUserInGroup: true
                     };
                 }
             }
             return {
                 ...group,
-                isJoinUserInGroup: false
+                isJoinedUserInGroup: false
             };
         });
     }
@@ -110,11 +110,12 @@ class Groups extends Component {
                     {
                         this.props.joiningGroup ?
 
-                            this.groupsIsJoinUser().map((group, index) =>
+                            this.isJoinedUserInGroup().map((group, index) =>
                                 <Group
                                     key={index}
                                     group={group}
                                     userID={this.props.user._id}
+                                    isJoinedUserInGroup={group.isJoinedUserInGroup}
                                     isJoiningGroup={true}
                                     joinGroup={this.joinGroup}
                                     update={this.update}
