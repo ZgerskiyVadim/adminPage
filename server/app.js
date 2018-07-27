@@ -16,10 +16,9 @@ app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
 app.use(favicon(path.join(__dirname, config.favicon)));
 app.use('/api', routers);
-
-app.get('*', sendFileHtml);
 app.use(errorHandler);
 
+app.get('*', sendFileHtml);
 
 dbConnection.once('open', runServer);
 
