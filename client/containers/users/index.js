@@ -63,10 +63,7 @@ class Users extends Component {
             isSearching: !!event.target.value,
             isLoadMore: true
         },
-            () => {
-            this.props.actions.searchUsersRequest(this.state.options);
-            this.loadMore();
-        }
+            () => this.props.actions.searchUsersRequest(this.state.options)
         );
     };
 
