@@ -1,4 +1,4 @@
 export function name(v) {
-    const re = /[A-Za-z0-9\.\,\-]+/g;
+    const re = /^[a-zA-Z0-9.,-]+$/;
     return re.test(v);
 }

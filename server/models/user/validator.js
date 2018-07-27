@@ -1,15 +1,15 @@
 export function username(v) {
-    const re = /[A-Za-z0-9\.\,\-]+/g;
+    const re = /^[a-zA-Z0-9.,-]+$/;
     return re.test(v);
 }
 
 export function firstName(v) {
-    const re = /^[a-zA-Z\s\-]*$/;
+    const re = /^[a-zA-Z\s-]+$/;
     return re.test(v);
 }
 
 export function lastName(v) {
-    const re = /^[a-zA-Z]*$/;
+    const re = /^[a-zA-Z]+$/;
     return re.test(v);
 }
 
