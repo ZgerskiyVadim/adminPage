@@ -43,11 +43,11 @@ function setState(lengthOfItems, enumItem) {
                 ...this.state.options,
                 limit: limit + loadNext
             }
-        }, () => getItems.call(this, enumItem));
+        }, () => requestGetItems.call(this, enumItem));
     }
 }
 
-function getItems(enumItem) {
+function requestGetItems(enumItem) {
     const isSearching = this.state.isSearching;
     const options = this.state.options;
     const limit = this.state.options.limit;
