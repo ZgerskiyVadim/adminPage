@@ -6,8 +6,8 @@ import toastr from 'toastr';
 import './index.scss';
 import * as groupsActionCreators from '../../actions/action_creators/groups';
 import {loadMore, checkRemovedItems} from '../../services/loadMore';
-import Group from '../../components/group/group';
 import {searchRequest} from '../../services/searchOperation';
+import Group from '../../components/group/group';
 
 class Groups extends Component {
     constructor(props) {

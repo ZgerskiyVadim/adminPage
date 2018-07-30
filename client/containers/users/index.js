@@ -4,10 +4,10 @@ import {bindActionCreators} from 'redux';
 import toastr from 'toastr';
 
 import './index.scss';
-import User from '../../components/user/user';
-import {loadMore, checkRemovedItems} from '../../services/loadMore';
 import * as usersActionCreators from '../../actions/action_creators/users';
+import {loadMore, checkRemovedItems} from '../../services/loadMore';
 import {searchRequest} from '../../services/searchOperation';
+import User from '../../components/user/user';
 
 class Users extends Component {
     constructor(props) {
