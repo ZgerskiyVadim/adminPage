@@ -41,11 +41,10 @@ class Users extends Component {
         nextProps.usersStore.isRemoved && toastr.info('User deleted', 'Ok!');
     }
 
-    shouldComponentUpdate(nextProps) {
-        const prevCountUsers = this.props.users.length;
-        const nextCountUsers = nextProps.users.length;
+    componentDidUpdate(prevProps) {
+        const nextCountUsers = this.props.users.length;
+        const prevCountUsers = prevProps.users.length;
         checkRemovedItems.call(this, prevCountUsers, nextCountUsers);
-        return true;
     }
 
     getUsers() {

@@ -41,11 +41,10 @@ class Groups extends Component {
         nextProps.groupsStore.isRemoved && toastr.info('Group deleted', 'Ok!');
     }
 
-    shouldComponentUpdate(nextProps) {
-        const prevCountGroups = this.props.groups.length;
-        const nextCountGroups = nextProps.groups.length;
+    componentDidUpdate(prevProps) {
+        const nextCountGroups = this.props.groups.length;
+        const prevCountGroups = prevProps.groups.length;
         checkRemovedItems.call(this, prevCountGroups, nextCountGroups);
-        return true;
     }
 
     isJoinedUserInGroup() {
