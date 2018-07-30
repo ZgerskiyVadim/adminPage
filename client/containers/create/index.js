@@ -26,7 +26,7 @@ class Create extends Component {
     }
 
     componentWillReceiveProps(nextProps) {
-        const errorMessage = nextProps.createStore.error && (nextProps.createStore.error.response.data.message || nextProps.createStore.error.response.data.errmsg);
+        const errorMessage = nextProps.createStore.error && (nextProps.createStore.error.response.data.message || nextProps.createStore.error.message);
         nextProps.createStore.error && toastr.error(errorMessage, 'Opps!');
         nextProps.createStore.userCreated && toastr.info('User created', 'Ok!');
         nextProps.createStore.groupCreated && toastr.info('Group created', 'Ok!');
