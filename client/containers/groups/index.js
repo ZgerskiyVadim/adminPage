@@ -25,7 +25,8 @@ class Groups extends Component {
     }
 
     componentDidMount() {
-        this.props.actions.getGroupsRequest(this.state.options.limit);
+        const limit = this.state.options.limit;
+        this.props.actions.getGroupsRequest(limit);
         window.addEventListener('scroll', this.loadMore)
     }
 

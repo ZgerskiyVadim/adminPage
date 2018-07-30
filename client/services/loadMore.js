@@ -49,10 +49,12 @@ function setState(lengthOfItems, enumItem) {
 
 function getItems(enumItem) {
     const isSearching = this.state.isSearching;
+    const options = this.state.options;
+    const limit = this.state.options.limit;
 
     if (enumItem === 'users') {
-        isSearching ? this.props.actions.searchUsersRequest(this.state.options) : this.props.actions.getUsersRequest(this.state.options.limit);
+        isSearching ? this.props.actions.searchUsersRequest(options) : this.props.actions.getUsersRequest(limit);
     } else {
-        isSearching ? this.props.actions.searchGroupsRequest(this.state.options) : this.props.actions.getGroupsRequest(this.state.options.limit);
+        isSearching ? this.props.actions.searchGroupsRequest(options) : this.props.actions.getGroupsRequest(limit);
     }
 }
