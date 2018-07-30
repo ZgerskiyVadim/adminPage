@@ -28,9 +28,10 @@ class User extends Component {
     };
 
     render() {
+        const { isJoining } = this.props;
         const hiddenForm = {display: this.state.show ? 'block' : 'none'};
         const shownForm = {display: !this.state.show ? 'block' : 'none'};
-        const isJoiningUser = {display: this.props.user.isJoining ? 'none' : 'block'};
+        const isJoiningUser = {display: isJoining ? 'none' : 'block'};
 
         return (
             <div className='users-row'>

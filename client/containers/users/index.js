@@ -50,7 +50,7 @@ class Users extends Component {
 
     getUsers() {
         if (this.props.user.joiningGroup) {
-            return this.props.users.map(user => user._id === this.props.user.user._id ? {...user, isJoining: true} : user);
+            return this.props.users.map(user => user._id === this.props.user.user._id ? {...user, isJoining: true} : user); //Hide remove button for joining user
         } else {
             return this.props.users;
         }
@@ -89,6 +89,7 @@ class Users extends Component {
                             <User
                                 user={user}
                                 key={user._id}
+                                isJoining={user.isJoining}
                                 update={this.update}
                                 remove={this.remove}
                             />)

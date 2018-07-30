@@ -25,13 +25,18 @@ class User extends Component {
     }
 
     componentDidMount() {
-        const isJoining = false;
-        this.props.actions.joinGroup(isJoining);
+        const stopJoinGroup = false;
+        this.props.actions.joinGroup(stopJoinGroup);
         this.props.actions.getUserRequest(this.state.id);
     }
 
     componentWillReceiveProps(nextProps) {
         const errorMessage = nextProps.userStore.error && (nextProps.userStore.error.response.data.message || nextProps.userStore.error.message);
+        const status = nextProps.userStore.error && (nextProps.userStore.error.response.data.status || nextProps.userStore.error.response.status);
+        if (status === 404) {
+            toastr.error('User not found!', 'Opps!');
+            return this.props.history.push('/');
+        }
         nextProps.userStore.error && toastr.error(errorMessage, 'Opps!');
         nextProps.userStore.isLeftGroup && toastr.info('User left group', 'Ok!');
         nextProps.userStore.isUpdated && toastr.success('User updated', 'Ok!');

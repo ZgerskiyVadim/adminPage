@@ -28,6 +28,11 @@ class User extends Component {
 
     componentWillReceiveProps(nextProps) {
         const errorMessage = nextProps.group.error && (nextProps.group.error.response.data.message || nextProps.group.error.message);
+        const status = nextProps.group.error && (nextProps.group.error.response.data.status || nextProps.group.error.response.status);
+        if (status === 404) {
+            toastr.error('Group not found!', 'Opps!');
+            return this.props.history.push('/');
+        }
         nextProps.group.error && toastr.error(errorMessage, 'Opps!');
         nextProps.group.isUpdated && toastr.success('Success!', 'Ok!');
     }
