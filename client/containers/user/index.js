@@ -31,7 +31,7 @@ class User extends Component {
     }
 
     componentWillReceiveProps(nextProps) {
-        const errorMessage = nextProps.userStore.error && (nextProps.userStore.error.response.data.message || nextProps.userStore.error.message);
+        const errorMessage = nextProps.userStore.error && (nextProps.userStore.error.response.data.errmsg || nextProps.userStore.error.message);
         const status = nextProps.userStore.error && (nextProps.userStore.error.response.data.status || nextProps.userStore.error.response.status);
         if (status === 404) {
             toastr.error('User not found!', 'Opps!');

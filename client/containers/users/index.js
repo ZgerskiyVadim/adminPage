@@ -35,7 +35,7 @@ class Users extends Component {
     }
 
     componentWillReceiveProps(nextProps) {
-        const errorMessage = nextProps.usersStore.error && (nextProps.usersStore.error.response.data.message || nextProps.usersStore.error.message);
+        const errorMessage = nextProps.usersStore.error && (nextProps.usersStore.error.response.data.errmsg || nextProps.usersStore.error.message);
         nextProps.usersStore.error && toastr.error(errorMessage, 'Opps!');
         nextProps.usersStore.isUpdated && toastr.success('User updated', 'Ok!');
         nextProps.usersStore.isRemoved && toastr.info('User deleted', 'Ok!');
