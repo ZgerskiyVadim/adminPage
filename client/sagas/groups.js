@@ -14,8 +14,8 @@ function* callgetGroups(action) {
     try {
         const groups = yield call(groupsAPI.getGroups, action.payload);
         yield put({type: GET_GROUPS, payload: groups});
-    } catch (e) {
-        yield put({type: GROUPS_REQUEST_FAILED, payload: e.message});
+    } catch (error) {
+        yield put({type: GROUPS_REQUEST_FAILED, payload: error});
     }
 }
 
@@ -23,8 +23,8 @@ function* callsearchGroups(action) {
     try {
         const groups = yield call(groupsAPI.searchGroups, action.payload);
         yield put({type: GET_GROUPS, payload: groups});
-    } catch (e) {
-        yield put({type: GROUPS_REQUEST_FAILED, payload: e.message});
+    } catch (error) {
+        yield put({type: GROUPS_REQUEST_FAILED, payload: error});
     }
 }
 
@@ -32,8 +32,8 @@ function* callremoveGroup(action) {
     try {
         const id = yield call(groupsAPI.removeGroup, action.payload);
         yield put({type: REMOVE_GROUP, payload: id});
-    } catch (e) {
-        yield put({type: GROUPS_REQUEST_FAILED, payload: e.message});
+    } catch (error) {
+        yield put({type: GROUPS_REQUEST_FAILED, payload: error});
     }
 }
 

@@ -13,8 +13,8 @@ function* callgetUsers(action) {
     try {
         const users = yield call(usersAPI.getUsers, action.payload);
         yield put({type: GET_USERS, payload: users});
-    } catch (e) {
-        yield put({type: USERS_REQUEST_FAILED, payload: e.message});
+    } catch (error) {
+        yield put({type: USERS_REQUEST_FAILED, payload: error});
     }
 }
 
@@ -22,8 +22,8 @@ function* callsearchUsers(action) {
     try {
         const users = yield call(usersAPI.searchUsers, action.payload);
         yield put({type: GET_USERS, payload: users});
-    } catch (e) {
-        yield put({type: USERS_REQUEST_FAILED, payload: e.message});
+    } catch (error) {
+        yield put({type: USERS_REQUEST_FAILED, payload: error});
     }
 }
 
@@ -31,8 +31,8 @@ function* callremoveUser(action) {
     try {
         const id = yield call(usersAPI.removeUser, action.payload);
         yield put({type: REMOVE_USER, payload: id});
-    } catch (e) {
-        yield put({type: USERS_REQUEST_FAILED, payload: e.message});
+    } catch (error) {
+        yield put({type: USERS_REQUEST_FAILED, payload: error});
     }
 }
 

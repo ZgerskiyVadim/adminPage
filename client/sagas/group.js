@@ -6,7 +6,8 @@ import {
     UPDATE_GROUP,
     UPDATE_GROUP_REQUEST,
     REMOVE_USER_FROM_GROUP,
-    GROUP_REQUEST_FAILED
+    GROUP_REQUEST_FAILED,
+    GROUPS_REQUEST_FAILED
 } from '../actions';
 
 
@@ -14,8 +15,8 @@ function* callgetGroup(action) {
     try {
         const group = yield call(groupsAPI.getGroup, action.payload);
         yield put({type: GET_GROUP, payload: group});
-    } catch (e) {
-        yield put({type: GROUP_REQUEST_FAILED, payload: e.message});
+    } catch (error) {
+        yield put({type: GROUP_REQUEST_FAILED, payload: error});
     }
 }
 
@@ -23,8 +24,9 @@ function* callupdateGroup(action) {
     try {
         const group = yield call(groupsAPI.updateGroup, action.payload);
         yield put({type: UPDATE_GROUP, payload: group});
-    } catch (e) {
-        yield put({type: GROUP_REQUEST_FAILED, payload: e.message});
+    } catch (error) {
+        yield put({type: GROUP_REQUEST_FAILED, payload: error});
+        yield put({type: GROUPS_REQUEST_FAILED, payload: error});
     }
 }
 
@@ -32,8 +34,8 @@ function* callremoveUserFromGroup(action) {
     try {
         const updatedGroup = yield call(groupsAPI.removeUserFromGroup, action.payload);
         yield put({type: UPDATE_GROUP, payload: updatedGroup});
-    } catch (e) {
-        yield put({type: GROUP_REQUEST_FAILED, payload: e.message});
+    } catch (error) {
+        yield put({type: GROUP_REQUEST_FAILED, payload: error});
     }
 }
 
