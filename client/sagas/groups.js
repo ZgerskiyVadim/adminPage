@@ -10,7 +10,7 @@ import {
 } from '../actions';
 
 
-function* callgetGroups(action) {
+function* getGroups(action) {
     try {
         const groups = yield call(groupsAPI.getGroups, action.payload);
         yield put({type: GET_GROUPS, payload: groups});
@@ -19,7 +19,7 @@ function* callgetGroups(action) {
     }
 }
 
-function* callsearchGroups(action) {
+function* searchGroups(action) {
     try {
         const groups = yield call(groupsAPI.searchGroups, action.payload);
         yield put({type: GET_GROUPS, payload: groups});
@@ -28,7 +28,7 @@ function* callsearchGroups(action) {
     }
 }
 
-function* callremoveGroup(action) {
+function* removeGroup(action) {
     try {
         const id = yield call(groupsAPI.removeGroup, action.payload);
         yield put({type: REMOVE_GROUP, payload: id});
@@ -39,8 +39,8 @@ function* callremoveGroup(action) {
 
 export default function* groupsSaga() {
     yield all([
-        takeEvery(GET_GROUPS_REQUEST, callgetGroups),
-        takeEvery(SEARCH_GROUPS_REQUEST, callsearchGroups),
-        takeEvery(REMOVE_GROUP_REQUEST, callremoveGroup)
+        takeEvery(GET_GROUPS_REQUEST, getGroups),
+        takeEvery(SEARCH_GROUPS_REQUEST, searchGroups),
+        takeEvery(REMOVE_GROUP_REQUEST, removeGroup)
     ]);
 }

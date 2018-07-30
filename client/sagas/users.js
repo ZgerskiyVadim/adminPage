@@ -9,7 +9,7 @@ import {
     USERS_REQUEST_FAILED
 } from '../actions';
 
-function* callgetUsers(action) {
+function* getUsers(action) {
     try {
         const users = yield call(usersAPI.getUsers, action.payload);
         yield put({type: GET_USERS, payload: users});
@@ -18,7 +18,7 @@ function* callgetUsers(action) {
     }
 }
 
-function* callsearchUsers(action) {
+function* searchUsers(action) {
     try {
         const users = yield call(usersAPI.searchUsers, action.payload);
         yield put({type: GET_USERS, payload: users});
@@ -27,7 +27,7 @@ function* callsearchUsers(action) {
     }
 }
 
-function* callremoveUser(action) {
+function* removeUser(action) {
     try {
         const id = yield call(usersAPI.removeUser, action.payload);
         yield put({type: REMOVE_USER, payload: id});
@@ -39,8 +39,8 @@ function* callremoveUser(action) {
 
 export default function* usersSaga() {
     yield all([
-        takeEvery(GET_USERS_REQUEST, callgetUsers),
-        takeEvery(SEARCH_USERS_REQUEST, callsearchUsers),
-        takeEvery(REMOVE_USER_REQUEST, callremoveUser)
+        takeEvery(GET_USERS_REQUEST, getUsers),
+        takeEvery(SEARCH_USERS_REQUEST, searchUsers),
+        takeEvery(REMOVE_USER_REQUEST, removeUser)
     ]);
 }

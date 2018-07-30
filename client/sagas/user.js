@@ -14,7 +14,7 @@ import {
     GROUPS_REQUEST_FAILED
 } from '../actions';
 
-function* callgetUser(action) {
+function* getUser(action) {
     try {
         const user = yield call(usersAPI.getUser, action.payload);
         yield put({type: GET_USER, payload: user});
@@ -23,7 +23,7 @@ function* callgetUser(action) {
     }
 }
 
-function* callupdateUser(action) {
+function* updateUser(action) {
     try {
         const user = yield call(usersAPI.updateUser, action.payload);
         yield put({type: UPDATE_USER, payload: user});
@@ -33,7 +33,7 @@ function* callupdateUser(action) {
     }
 }
 
-function* calladdUserInGroup(action) {
+function* addUserInGroup(action) {
     try {
         const updatedGroup = yield call(usersAPI.addUserInGroup, action.payload);
         yield put({type: UPDATE_GROUP, payload: updatedGroup});
@@ -42,7 +42,7 @@ function* calladdUserInGroup(action) {
     }
 }
 
-function* callLeaveGroup(action) {
+function* leaveGroup(action) {
     try {
         const updatedGroup = yield call(usersAPI.leaveGroup, action.payload);
         yield put({type: USER_LEAVE_GROUP, payload: updatedGroup});
@@ -56,9 +56,9 @@ function* callLeaveGroup(action) {
 
 export default function* userSaga() {
     yield all([
-        takeEvery(GET_USER_REQUEST, callgetUser),
-        takeEvery(UPDATE_USER_REQUEST, callupdateUser),
-        takeEvery(ADD_USER_IN_GROUP_REQUEST, calladdUserInGroup),
-        takeEvery(LEAVE_GROUP_REQUEST, callLeaveGroup)
+        takeEvery(GET_USER_REQUEST, getUser),
+        takeEvery(UPDATE_USER_REQUEST, updateUser),
+        takeEvery(ADD_USER_IN_GROUP_REQUEST, addUserInGroup),
+        takeEvery(LEAVE_GROUP_REQUEST, leaveGroup)
     ]);
 }

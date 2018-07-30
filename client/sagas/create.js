@@ -11,7 +11,7 @@ import {
 } from '../actions';
 
 
-function* callcreateUser(action) {
+function* createUser(action) {
     try {
         yield call(usersApi.create, action.payload);
         yield put({type: USER_CREATED});
@@ -20,7 +20,7 @@ function* callcreateUser(action) {
     }
 }
 
-function* callcreateGroup(action) {
+function* createGroup(action) {
     try {
         yield call(groupsAPI.create, action.payload);
         yield put({type: GROUP_CREATED});
@@ -31,7 +31,7 @@ function* callcreateGroup(action) {
 
 export default function* createSaga() {
     yield all([
-        takeEvery(USER_CREATE_REQUEST, callcreateUser),
-        takeEvery(GROUP_CREATE_REQUEST, callcreateGroup)
+        takeEvery(USER_CREATE_REQUEST, createUser),
+        takeEvery(GROUP_CREATE_REQUEST, createGroup)
     ]);
 }

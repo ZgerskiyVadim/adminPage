@@ -11,7 +11,7 @@ import {
 } from '../actions';
 
 
-function* callgetGroup(action) {
+function* getGroup(action) {
     try {
         const group = yield call(groupsAPI.getGroup, action.payload);
         yield put({type: GET_GROUP, payload: group});
@@ -20,7 +20,7 @@ function* callgetGroup(action) {
     }
 }
 
-function* callupdateGroup(action) {
+function* updateGroup(action) {
     try {
         const group = yield call(groupsAPI.updateGroup, action.payload);
         yield put({type: UPDATE_GROUP, payload: group});
@@ -30,7 +30,7 @@ function* callupdateGroup(action) {
     }
 }
 
-function* callremoveUserFromGroup(action) {
+function* removeUserFromGroup(action) {
     try {
         const updatedGroup = yield call(groupsAPI.removeUserFromGroup, action.payload);
         yield put({type: UPDATE_GROUP, payload: updatedGroup});
@@ -42,8 +42,8 @@ function* callremoveUserFromGroup(action) {
 
 export default function* groupSaga() {
     yield all([
-        takeEvery(GET_GROUP_REQUEST, callgetGroup),
-        takeEvery(UPDATE_GROUP_REQUEST, callupdateGroup),
-        takeEvery(REMOVE_USER_FROM_GROUP, callremoveUserFromGroup)
+        takeEvery(GET_GROUP_REQUEST, getGroup),
+        takeEvery(UPDATE_GROUP_REQUEST, updateGroup),
+        takeEvery(REMOVE_USER_FROM_GROUP, removeUserFromGroup)
     ]);
 }
