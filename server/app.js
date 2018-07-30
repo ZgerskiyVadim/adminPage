@@ -5,7 +5,7 @@ import favicon from 'serve-favicon';
 
 import config from '../config';
 import { errorHandler } from './middlewares/errorHandler';
-import { sendFileHtml } from './middlewares/sendFileHtml';
+import { sendHtmlFile } from './middlewares/sendHtmlFile';
 import { runServer } from './middlewares/runServer';
 import dbConnection from './services/mongoose';
 import routers from './routers';
@@ -18,7 +18,7 @@ app.use(favicon(path.join(__dirname, config.favicon)));
 app.use('/api', routers);
 app.use(errorHandler);
 
-app.get('*', sendFileHtml);
+app.get('*', sendHtmlFile);
 
 dbConnection.once('open', runServer);
 
