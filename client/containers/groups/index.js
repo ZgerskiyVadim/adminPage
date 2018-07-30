@@ -112,9 +112,9 @@ class Groups extends Component {
                     {
                         this.props.joiningGroup ?
 
-                            this.isJoinedUserInGroup().map((group, index) =>
+                            this.isJoinedUserInGroup().map(group =>
                                 <Group
-                                    key={index}
+                                    key={group._id}
                                     group={group}
                                     userID={this.props.user._id}
                                     isJoinedUserInGroup={group.isJoinedUserInGroup}
@@ -125,9 +125,9 @@ class Groups extends Component {
                                     leaveGroup={this.leaveGroup}
                                 />) :
 
-                            this.props.groups.map((group, index) =>
+                            this.props.groups.map(group =>
                                 <Group
-                                    key={index}
+                                    key={group._id}
                                     group={group}
                                     isJoiningGroup={false}
                                     update={this.update}
