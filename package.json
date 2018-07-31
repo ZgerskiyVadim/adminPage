@@ -6,7 +6,7 @@
   "scripts": {
     "start": "npm run serve | npm run dev",
     "serve": "nodemon --exec babel-node server/app.js",
-    "dev": "webpack-dev-server",
+    "dev": "webpack-dev-server --config client/webpack.config.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
