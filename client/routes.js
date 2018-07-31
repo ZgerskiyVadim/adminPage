@@ -5,7 +5,8 @@ import GroupPage from './containers/groupPage';
 import Users from './containers/users';
 import UserPage from './containers/userPage';
 import Home from './containers/home';
-import CreatePage from './containers/createPage';
+import CreateUser from './containers/createUserPage';
+import CreateGroup from './containers/createGroupPage';
 import NotFound from './containers/notFound';
 
 
@@ -18,7 +19,8 @@ export default class Routes extends Component {
                 <Route path="/users/:id" component={UserPage}/>
                 <Route exact path="/groups" component={Groups}/>
                 <Route path="/groups/:id" component={GroupPage}/>
-                <Route exact path="/create" component={CreatePage}/>
+                <Route exact path="/create-user" component={CreateUser}/>
+                <Route exact path="/create-group" component={CreateGroup}/>
                 <Route path="*" component={NotFound} />
             </Switch>
         );
