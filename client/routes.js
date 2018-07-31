@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import { Route, Switch } from 'react-router-dom';
 import Groups from './containers/groups';
-import Group from './containers/group';
+import GroupPage from './containers/groupPage';
 import Users from './containers/users';
-import User from './containers/user';
+import UserPage from './containers/userPage';
 import Home from './containers/home';
-import Create from './containers/create';
+import CreatePage from './containers/createPage';
 import NotFound from './containers/notFound';
 
 
@@ -15,10 +15,10 @@ export default class Routes extends Component {
             <Switch>
                 <Route exact path="/" component={Home}/>
                 <Route exact path="/users" component={Users}/>
-                <Route path="/users/:id" component={User}/>
+                <Route path="/users/:id" component={UserPage}/>
                 <Route exact path="/groups" component={Groups}/>
-                <Route path="/groups/:id" component={Group}/>
-                <Route exact path="/create" component={Create}/>
+                <Route path="/groups/:id" component={GroupPage}/>
+                <Route exact path="/create" component={CreatePage}/>
                 <Route path="*" component={NotFound} />
             </Switch>
         );

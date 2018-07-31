@@ -3,5 +3,5 @@ export default {
     loggerFileName: 'logInfo.log',
     dbName: 'mongodb://localhost/adminPage',
     static: '../client',
-    favicon: '../client/images/favicon.ico'
+    favicon: '../client/asserts/favicon.ico'
 };

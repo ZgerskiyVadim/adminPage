@@ -6,7 +6,7 @@ import toastr from 'toastr';
 
 import './index.scss';
 import * as groupActionCreators from '../../actions/action_creators/group';
-import {onChangeForm, showForms, getValidOptions} from '../../services/formsOperations';
+import {handleChangeForm, showForms, getValidOptions} from '../../services/formsOperations';
 
 class User extends Component {
     constructor(props) {
@@ -19,7 +19,7 @@ class User extends Component {
         };
 
         this.showForms = showForms.bind(this, this.state.id);
-        this.onChangeForm = onChangeForm.bind(this);
+        this.handleChangeForm = handleChangeForm.bind(this);
     }
 
     componentDidMount() {
@@ -27,14 +27,18 @@ class User extends Component {
     }
 
     componentWillReceiveProps(nextProps) {
-        const errorMessage = nextProps.group.error && (nextProps.group.error.response.data.errmsg || nextProps.group.error.message);
-        const status = nextProps.group.error && (nextProps.group.error.response.data.status || nextProps.group.error.response.status);
+        const {error, isUpdated} = nextProps.group;
+        const message = error && error.response.data.message;
+        const errmsg = error && error.response.data.errmsg;
+        const errorMessage = error && (message || errmsg || error.message);
+
+        const status = error && (error.response.data.status || error.response.status);
         if (status === 404) {
             toastr.error('Group not found!', 'Opps!');
             return this.props.history.push('/');
         }
-        nextProps.group.error && toastr.error(errorMessage, 'Opps!');
-        nextProps.group.isUpdated && toastr.success('Success!', 'Ok!');
+        error && toastr.error(errorMessage, 'Opps!');
+        isUpdated && toastr.success('Success!', 'Ok!');
     }
 
     update = () => {
@@ -52,6 +56,8 @@ class User extends Component {
     };
 
     render() {
+        const {name, title} = this.props.group;
+
         const hiddenForm = {display: this.state.show ? 'block' : 'none'};
         const shownForm = {display: !this.state.show ? 'block' : 'none'};
         const isUsers = {display: this.props.group.users.length ? 'block' : 'none'};
@@ -61,10 +67,10 @@ class User extends Component {
                 <h1>GROUP</h1>
                 <div className='group-info'>
                     <div className='group--margin-right'>
-                        <h3>name: {this.props.group.name}</h3>
-                        <input onChange={this.onChangeForm} value={this.state.name} className='form-control' style={hiddenForm} name='name' type="text"/>
-                        <h3>title: {this.props.group.title}</h3>
-                        <input onChange={this.onChangeForm} value={this.state.title} className='form-control' style={hiddenForm} name='title' type="text"/>
+                        <h3>name: {name}</h3>
+                        <input onChange={this.handleChangeForm} value={this.state.name} className='form-control' style={hiddenForm} name='name' type="text"/>
+                        <h3>title: {title}</h3>
+                        <input onChange={this.handleChangeForm} value={this.state.title} className='form-control' style={hiddenForm} name='title' type="text"/>
                     </div>
 
                     <button onClick={this.showForms} style={shownForm} className='btn btn-outline-primary'>Update</button>

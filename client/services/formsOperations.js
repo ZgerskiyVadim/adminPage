@@ -1,4 +1,4 @@
-export function onChangeForm(event, propState) {
+export function handleChangeForm(event, propState) {
     const {value, name} = event.target;
 
     propState ?

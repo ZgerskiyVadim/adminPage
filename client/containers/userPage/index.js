@@ -6,7 +6,7 @@ import toastr from 'toastr';
 
 import './index.scss';
 import * as userActionCreators from '../../actions/action_creators/user';
-import {onChangeForm, showForms, getValidOptions} from '../../services/formsOperations';
+import {handleChangeForm, showForms, getValidOptions} from '../../services/formsOperations';
 
 class User extends Component {
     constructor(props) {
@@ -20,7 +20,7 @@ class User extends Component {
             id: this.props.match.params.id
         };
 
-        this.onChangeForm = onChangeForm.bind(this);
+        this.handleChangeForm = handleChangeForm.bind(this);
         this.showForms = showForms.bind(this, this.state.id);
     }
 
@@ -31,15 +31,19 @@ class User extends Component {
     }
 
     componentWillReceiveProps(nextProps) {
-        const errorMessage = nextProps.userStore.error && (nextProps.userStore.error.response.data.errmsg || nextProps.userStore.error.message);
-        const status = nextProps.userStore.error && (nextProps.userStore.error.response.data.status || nextProps.userStore.error.response.status);
+        const {error, isLeftGroup, isUpdated} = nextProps.userStore;
+        const message = error && error.response.data.message;
+        const errmsg = error && error.response.data.errmsg;
+        const errorMessage = error && (message || errmsg || error.message);
+
+        const status = error && (error.response.data.status || error.response.status);
         if (status === 404) {
             toastr.error('User not found!', 'Opps!');
             return this.props.history.push('/');
         }
-        nextProps.userStore.error && toastr.error(errorMessage, 'Opps!');
-        nextProps.userStore.isLeftGroup && toastr.info('User left group', 'Ok!');
-        nextProps.userStore.isUpdated && toastr.success('User updated', 'Ok!');
+        error && toastr.error(errorMessage, 'Opps!');
+        isLeftGroup && toastr.info('User left group', 'Ok!');
+        isUpdated && toastr.success('User updated', 'Ok!');
     }
 
     update = () => {
@@ -63,6 +67,8 @@ class User extends Component {
     };
 
     render() {
+        const {username, firstName, lastName, email} = this.props.userStore.user;
+
         const hiddenForm = {display: this.state.show ? 'block' : 'none'};
         const shownForm = {display: !this.state.show ? 'block' : 'none'};
         const isGroups = {display: this.props.userStore.groups.length ? 'block' : 'none'};
@@ -72,14 +78,14 @@ class User extends Component {
                <h1>USER</h1>
                 <div className='user-info'>
                     <div className='user--margin-right'>
-                        <h3>username: {this.props.userStore.user.username}</h3>
-                        <input onChange={this.onChangeForm} value={this.state.username} className='form-control' style={hiddenForm} name='username' type="text"/>
-                        <h3>firstName: {this.props.userStore.user.firstName}</h3>
-                        <input onChange={this.onChangeForm} value={this.state.firstName} className='form-control' style={hiddenForm} name='firstName' type="text"/>
-                        <h3>lastName: {this.props.userStore.user.lastName}</h3>
-                        <input onChange={this.onChangeForm} value={this.state.lastName} className='form-control' style={hiddenForm} name='lastName' type="text"/>
-                        <h3>email: {this.props.userStore.user.email}</h3>
-                        <input onChange={this.onChangeForm} value={this.state.email} className='form-control' style={hiddenForm} name='email' type="text"/>
+                        <h3>username: {username}</h3>
+                        <input onChange={this.handleChangeForm} value={this.state.username} className='form-control' style={hiddenForm} name='username' type="text"/>
+                        <h3>firstName: {firstName}</h3>
+                        <input onChange={this.handleChangeForm} value={this.state.firstName} className='form-control' style={hiddenForm} name='firstName' type="text"/>
+                        <h3>lastName: {lastName}</h3>
+                        <input onChange={this.handleChangeForm} value={this.state.lastName} className='form-control' style={hiddenForm} name='lastName' type="text"/>
+                        <h3>email: {email}</h3>
+                        <input onChange={this.handleChangeForm} value={this.state.email} className='form-control' style={hiddenForm} name='email' type="text"/>
                     </div>
                     <button onClick={this.showForms} style={shownForm} className='user--margin-right btn btn-outline-primary'>Update</button>
                     <button onClick={this.update} style={hiddenForm} className='user--margin-right btn btn-outline-primary'>Save</button>

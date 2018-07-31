@@ -35,10 +35,14 @@ class Groups extends Component {
     }
 
     componentWillReceiveProps(nextProps) {
-        const errorMessage = nextProps.groupsStore.error && (nextProps.groupsStore.error.response.data.errmsg || nextProps.groupsStore.error.message);
-        nextProps.groupsStore.error && toastr.error(errorMessage, 'Opps!');
-        nextProps.groupsStore.isUpdated && toastr.success('Success!', 'Ok!');
-        nextProps.groupsStore.isRemoved && toastr.info('Group deleted', 'Ok!');
+        const {error, isUpdated, isRemoved} = nextProps.groupsStore;
+        const message = error && error.response.data.message;
+        const errmsg = error && error.response.data.errmsg;
+        const errorMessage = error && (message || errmsg || error.message);
+
+        error && toastr.error(errorMessage, 'Opps!');
+        isUpdated && toastr.success('Success!', 'Ok!');
+        isRemoved && toastr.info('Group deleted', 'Ok!');
     }
 
     componentDidUpdate(prevProps) {

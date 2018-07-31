@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {Link} from 'react-router-dom';
 
-import {onChangeForm, showForms, getValidOptions} from '../../services/formsOperations';
+import {handleChangeForm, showForms, getValidOptions} from '../../services/formsOperations';
 
 
 class Group extends Component {
@@ -16,7 +16,7 @@ class Group extends Component {
         };
 
         this.showForms = showForms.bind(this, this.props.group._id);
-        this.onChangeForm = onChangeForm.bind(this);
+        this.handleChangeForm = handleChangeForm.bind(this);
         this.joinGroup = this.props.joinGroup;
         this.update = this.props.update;
         this.remove = this.props.remove;
@@ -53,11 +53,11 @@ class Group extends Component {
                 <div className='groups-row col-md-8'>
                     <div className='col-md-4'>
                         <Link to={`groups/${this.props.group._id}`}>{this.props.group.name}</Link>
-                        <input onChange={this.onChangeForm} value={this.state.name} className='form-control' style={hiddenForm} name='name' type="text"/>
+                        <input onChange={this.handleChangeForm} value={this.state.name} className='form-control' style={hiddenForm} name='name' type="text"/>
                     </div>
                     <div className='col-md-4'>
                         <Link to={`groups/${this.props.group._id}`}>{this.props.group.title}</Link>
-                        <input onChange={this.onChangeForm} value={this.state.title} className='form-control' style={hiddenForm} name='title' type="text"/>
+                        <input onChange={this.handleChangeForm} value={this.state.title} className='form-control' style={hiddenForm} name='title' type="text"/>
                     </div>
                     <div className='col-md-4'>
                         <span>{this.props.group.users.length}</span>
