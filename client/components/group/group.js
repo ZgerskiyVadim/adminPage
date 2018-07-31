@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import {Link} from 'react-router-dom';
 import classNames from 'classnames';
+import PropTypes from 'prop-types';
 
 import {handleChangeForm, showForms, getValidOptions} from '../../services/formsOperations';
 
@@ -73,5 +74,13 @@ class Group extends Component {
         );
     }
 }
+
+Group.propTypes = {
+    group: PropTypes.object.isRequired,
+    update: PropTypes.func.isRequired,
+    remove: PropTypes.func.isRequired,
+    joinGroup: PropTypes.func,
+    leaveGroup: PropTypes.func
+};
 
 export default Group;

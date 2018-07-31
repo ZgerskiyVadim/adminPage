@@ -145,17 +145,17 @@ class Groups extends Component {
 }
 
 Groups.propTypes = {
-    groupsStore: PropTypes.object,
-    groups: PropTypes.array,
-    user: PropTypes.object,
-    isJoiningGroup: PropTypes.bool
+    groupsStore: PropTypes.object.isRequired,
+    groups: PropTypes.array.isRequired,
+    user: PropTypes.object.isRequired,
+    isJoiningGroup: PropTypes.bool.isRequired
 };
 
 const mapStateToProps = (state) => ({
     groupsStore: state.groupsReducer,
     groups: state.groupsReducer.groups,
     user: state.userReducer.user,
-    isJoiningGroup: state.userReducer.isJoiningGroup
+    isJoiningGroup: state.userReducer.user.isJoiningGroup
 });
 
 const mapDispatchToProps = (dispatch) => ({

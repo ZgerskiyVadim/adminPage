@@ -115,8 +115,8 @@ class User extends Component {
 }
 
 User.propTypes = {
-    userStore: PropTypes.object,
-    groups: PropTypes.array
+    userStore: PropTypes.object.isRequired,
+    groups: PropTypes.array.isRequired
 };
 
 const mapStateToProps = (state) => ({

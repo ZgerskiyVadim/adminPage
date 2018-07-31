@@ -58,7 +58,7 @@ class CreateUser extends Component {
 }
 
 CreateUser.propTypes = {
-    createUserStore: PropTypes.object
+    createUserStore: PropTypes.object.isRequired
 };
 
 const mapStateToProps = (state) => ({

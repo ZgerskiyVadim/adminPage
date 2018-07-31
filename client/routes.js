@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { Route, Switch } from 'react-router-dom';
-import Groups from './containers/groups';
+import Groups from './containers/groupsPage';
 import GroupPage from './containers/groupPage';
-import Users from './containers/users';
+import Users from './containers/usersPage';
 import UserPage from './containers/userPage';
 import Home from './containers/home';
 import CreateUser from './containers/createUserPage';

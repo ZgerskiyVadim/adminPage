@@ -52,7 +52,7 @@ class CreateGroup extends Component {
 }
 
 CreateGroup.propTypes = {
-    createGroupStore: PropTypes.object
+    createGroupStore: PropTypes.object.isRequired
 };
 
 const mapStateToProps = (state) => ({

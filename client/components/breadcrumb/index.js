@@ -4,9 +4,6 @@ import classNames from 'classnames';
 import './index.scss';
 
 class Breadcrumb extends Component {
-    constructor(props) {
-        super(props);
-    }
 
     locationPath() {
         const locationPath = this.props.location.pathname;

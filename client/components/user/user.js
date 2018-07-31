@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import {Link} from 'react-router-dom';
+import PropTypes from 'prop-types';
 
 import {handleChangeForm, showForms, getValidOptions} from '../../services/formsOperations';
 import classNames from "classnames";
@@ -18,14 +19,12 @@ class User extends Component {
 
         this.showForms = showForms.bind(this, this.props.user._id);
         this.handleChangeForm = handleChangeForm.bind(this);
-        this.update = this.props.update;
-        this.remove = this.props.remove;
     }
 
     sendOptionsUpdate = () => {
         this.setState({show: false});
         const options = getValidOptions(this.state);
-        this.update(options)
+        this.props.update(options)
     };
 
     render() {
@@ -59,11 +58,17 @@ class User extends Component {
                 <div className='users-buttons'>
                     <button onClick={this.showForms} className={classNames('users--margin-right btn btn-outline-primary', shownForm)}>Update</button>
                     <button onClick={this.sendOptionsUpdate} className={classNames('users--margin-right btn btn-outline-primary', hiddenForm)}>Save</button>
-                    <button onClick={this.remove(_id)} className={classNames('btn btn-outline-danger', isJoiningUser)}>Remove</button>
+                    <button onClick={this.props.remove(_id)} className={classNames('btn btn-outline-danger', isJoiningUser)}>Remove</button>
                 </div>
             </div>
         );
     }
 }
+
+User.propTypes = {
+    user: PropTypes.object.isRequired,
+    update: PropTypes.func.isRequired,
+    remove: PropTypes.func.isRequired
+};
 
 export default User;

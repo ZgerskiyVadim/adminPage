@@ -53,8 +53,8 @@ class Users extends Component {
     }
 
     getUsers() {
-        if (this.props.user.isJoiningGroup) {
-            return this.props.users.map(user => user._id === this.props.user.user._id ? {...user, isJoining: true} : user); //Hide remove button for joining user
+        if (this.props.isJoiningGroup) {
+            return this.props.users.map(user => user._id === this.props.user._id ? {...user, isJoining: true} : user); //Hide remove button for joining user
         } else {
             return this.props.users;
         }
@@ -105,16 +105,16 @@ class Users extends Component {
 }
 
 Users.propTypes = {
-    usersStore: PropTypes.object,
-    users: PropTypes.array,
-    user: PropTypes.object,
-    isJoiningGroup: PropTypes.bool
+    usersStore: PropTypes.object.isRequired,
+    users: PropTypes.array.isRequired,
+    user: PropTypes.object.isRequired,
+    isJoiningGroup: PropTypes.bool.isRequired
 };
 
 const mapStateToProps = (state) => ({
     usersStore: state.usersReducer,
     users: state.usersReducer.users,
-    user: state.userReducer,
+    user: state.userReducer.user,
     isJoiningGroup: state.userReducer.user.isJoiningGroup
 });
 
