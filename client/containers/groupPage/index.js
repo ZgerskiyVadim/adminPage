@@ -7,7 +7,7 @@ import {bindActionCreators} from 'redux';
 import toastr from 'toastr';
 
 import './index.scss';
-import * as groupActionCreators from '../../actions/action_creators/group';
+import * as groupsActionCreators from '../../actions/action_creators/groups';
 import {handleChangeState, showForms, getValidOptions} from '../../services/formsOperations';
 import {getErrorMessage} from '../../services/getErrorMessage';
 
@@ -117,7 +117,7 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
     actions: bindActionCreators({
-        ...groupActionCreators
+        ...groupsActionCreators
     }, dispatch)
 });
 

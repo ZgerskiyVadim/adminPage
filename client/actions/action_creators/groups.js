@@ -5,8 +5,20 @@ import {
     REMOVE_GROUP_REQUEST,
     ADD_USER_IN_GROUP_REQUEST,
     IS_JOINING_GROUP,
-    REMOVE_USER_FROM_GROUP
+    REMOVE_USER_FROM_GROUP,
+    GROUP_CREATE_REQUEST,
+    GET_GROUP_REQUEST
 } from '../index';
+
+export const createGroupRequest = (data) => ({
+    type: GROUP_CREATE_REQUEST,
+    payload: data
+});
+
+export const getGroupRequest = (data) => ({
+    type: GET_GROUP_REQUEST,
+    payload: data
+});
 
 export const getGroupsRequest = (data) => ({
     type: GET_GROUPS_REQUEST,
