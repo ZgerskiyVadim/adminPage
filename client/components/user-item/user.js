@@ -30,6 +30,7 @@ class User extends Component {
     render() {
         const {username, firstName, lastName, email, _id} = this.props.user;
         const { isJoining } = this.props;
+        const {...state} = this.state;
 
         const hiddenForm = classNames({'users--hide': !this.state.show});
         const shownForm = classNames({'users--hide': this.state.show});
@@ -40,19 +41,19 @@ class User extends Component {
                 <div className='users-row col-md-9'>
                     <div className='col-md-3'>
                         <Link to={`users/${_id}`}>{username}</Link>
-                        <input onChange={this.handleChangeState} value={this.state.username} className={classNames('form-control', hiddenForm)} name='username' type="text"/>
+                        <input onChange={this.handleChangeState} value={state.username} className={classNames('form-control', hiddenForm)} name='username' type="text"/>
                     </div>
                     <div className='col-md-3'>
                         <Link to={`users/${_id}`}>{firstName}</Link>
-                        <input onChange={this.handleChangeState} value={this.state.firstName} className={classNames('form-control', hiddenForm)} name='firstName' type="text"/>
+                        <input onChange={this.handleChangeState} value={state.firstName} className={classNames('form-control', hiddenForm)} name='firstName' type="text"/>
                     </div>
                     <div className='col-md-3'>
                         <Link to={`users/${_id}`}>{lastName}</Link>
-                        <input onChange={this.handleChangeState} value={this.state.lastName} className={classNames('form-control', hiddenForm)} name='lastName' type="text"/>
+                        <input onChange={this.handleChangeState} value={state.lastName} className={classNames('form-control', hiddenForm)} name='lastName' type="text"/>
                     </div>
                     <div className='col-md-3'>
                         <Link to={`users/${_id}`}>{email}</Link>
-                        <input onChange={this.handleChangeState} value={this.state.email} className={classNames('form-control', hiddenForm)} name='email' type="text"/>
+                        <input onChange={this.handleChangeState} value={state.email} className={classNames('form-control', hiddenForm)} name='email' type="text"/>
                     </div>
                 </div>
                 <div className='users-buttons'>

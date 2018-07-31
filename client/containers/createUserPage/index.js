@@ -35,19 +35,21 @@ class CreateUser extends Component {
     };
 
     render() {
+        const {username, firstName, lastName, email} = this.state;
+
         return (
             <div className='create-user'>
                 <h2>Create User</h2>
                 <div className='create-user--row'>
                     <div className='col-md-6'>
                         <h3>username</h3>
-                        <input onChange={this.handleChangeState} value={this.state.username} name='username' className='form-control' type="text"/>
+                        <input onChange={this.handleChangeState} value={username} name='username' className='form-control' type="text"/>
                         <h3>firstName</h3>
-                        <input onChange={this.handleChangeState} value={this.state.firstName} name='firstName' className='form-control' type="text"/>
+                        <input onChange={this.handleChangeState} value={firstName} name='firstName' className='form-control' type="text"/>
                         <h3>lastName</h3>
-                        <input onChange={this.handleChangeState} value={this.state.lastName} name='lastName' className='form-control' type="text"/>
+                        <input onChange={this.handleChangeState} value={lastName} name='lastName' className='form-control' type="text"/>
                         <h3>email</h3>
-                        <input onChange={this.handleChangeState} value={this.state.email} name='email' className='form-control' type="text"/>
+                        <input onChange={this.handleChangeState} value={email} name='email' className='form-control' type="text"/>
                     </div>
 
                     <button onClick={this.sendUser} className='create-user-send btn btn-outline-primary'>Send</button>

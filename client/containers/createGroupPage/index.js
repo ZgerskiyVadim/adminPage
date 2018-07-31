@@ -33,15 +33,17 @@ class CreateGroup extends Component {
     };
 
     render() {
+        const {name, title} = this.state;
+
         return (
             <div className='create-group'>
                 <h2>Create Group</h2>
                 <div className='create-group--row'>
                     <div className='col-md-6'>
                         <h3>name</h3>
-                        <input onChange={this.handleChangeState} value={this.state.name} name='name' className='form-control' type="text"/>
+                        <input onChange={this.handleChangeState} value={name} name='name' className='form-control' type="text"/>
                         <h3>title</h3>
-                        <input onChange={this.handleChangeState} value={this.state.title} name='title' className='form-control' type="text"/>
+                        <input onChange={this.handleChangeState} value={title} name='title' className='form-control' type="text"/>
                     </div>
 
                     <button onClick={this.sendGroup} className='create-group-send btn btn-outline-primary'>Send</button>

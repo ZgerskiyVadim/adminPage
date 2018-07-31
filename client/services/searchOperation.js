@@ -1,16 +1,19 @@
 
 export function searchRequest(event, enumItems) {
+    const {value} = event.target;
+    const {options} = this.state;
+
     this.setState({
             options: {
                 ...this.state.options,
                 limit: 20,
-                searchBy: event.target.value
+                searchBy: value
             },
-            isSearching: !!event.target.value,
+            isSearching: !!value,
             isLoadMore: true
         },
         () => enumItems === 'groups' ?
-            this.props.actions.searchGroupsRequest(this.state.options) :
-            this.props.actions.searchUsersRequest(this.state.options)
+            this.props.actions.searchGroupsRequest(options) :
+            this.props.actions.searchUsersRequest(options)
     );
 }

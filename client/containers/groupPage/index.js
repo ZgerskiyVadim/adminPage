@@ -58,6 +58,8 @@ class User extends Component {
 
     render() {
         const {name, title} = this.props.group;
+        const {users} = this.props;
+        const {...state} = this.state;
 
         const hiddenForm = classNames({'group--hide': !this.state.show});
         const shownForm = classNames({'group--hide': this.state.show});
@@ -69,9 +71,9 @@ class User extends Component {
                 <div className='group-info'>
                     <div className='group--margin-right'>
                         <h3>name: {name}</h3>
-                        <input onChange={this.handleChangeState} value={this.state.name} className={classNames('form-control', hiddenForm)} name='name' type="text"/>
+                        <input onChange={this.handleChangeState} value={state.name} className={classNames('form-control', hiddenForm)} name='name' type="text"/>
                         <h3>title: {title}</h3>
-                        <input onChange={this.handleChangeState} value={this.state.title} className={classNames('form-control', hiddenForm)} name='title' type="text"/>
+                        <input onChange={this.handleChangeState} value={state.title} className={classNames('form-control', hiddenForm)} name='title' type="text"/>
                     </div>
 
                     <button onClick={this.showForms} className={classNames('btn btn-outline-primary', shownForm)}>Update</button>
@@ -80,7 +82,7 @@ class User extends Component {
 
                 <h1 className={isUsers}>Users</h1>
                 {
-                    this.props.users.map((user, index) =>
+                    users.map((user, index) =>
                         <div key={index} className='group__users col-md-4 col-sm-6'>
                             <div>
                                 <Link to={`/users/${user._id}`}>

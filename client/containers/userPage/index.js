@@ -69,6 +69,7 @@ class User extends Component {
 
     render() {
         const {username, firstName, lastName, email} = this.props.userStore.user;
+        const {...state} = this.state;
 
         const hiddenForm = classNames({'user--hide': !this.state.show});
         const shownForm = classNames('user--margin-right btn btn-outline-primary', {'user--hide': this.state.show});
@@ -80,13 +81,13 @@ class User extends Component {
                 <div className='user-info'>
                     <div className='user--margin-right'>
                         <h3>username: {username}</h3>
-                        <input onChange={this.handleChangeState} value={this.state.username} className={classNames('form-control', hiddenForm)} name='username' type="text"/>
+                        <input onChange={this.handleChangeState} value={state.username} className={classNames('form-control', hiddenForm)} name='username' type="text"/>
                         <h3>firstName: {firstName}</h3>
-                        <input onChange={this.handleChangeState} value={this.state.firstName} className={classNames('form-control', hiddenForm)} name='firstName' type="text"/>
+                        <input onChange={this.handleChangeState} value={state.firstName} className={classNames('form-control', hiddenForm)} name='firstName' type="text"/>
                         <h3>lastName: {lastName}</h3>
-                        <input onChange={this.handleChangeState} value={this.state.lastName} className={classNames('form-control', hiddenForm)} name='lastName' type="text"/>
+                        <input onChange={this.handleChangeState} value={state.lastName} className={classNames('form-control', hiddenForm)} name='lastName' type="text"/>
                         <h3>email: {email}</h3>
-                        <input onChange={this.handleChangeState} value={this.state.email} className={classNames('form-control', hiddenForm)} name='email' type="text"/>
+                        <input onChange={this.handleChangeState} value={state.email} className={classNames('form-control', hiddenForm)} name='email' type="text"/>
                     </div>
                     <button onClick={this.showForms} className={shownForm}>Update</button>
                     <button onClick={this.update} className={classNames('user--margin-right btn btn-outline-primary', hiddenForm)}>Save</button>

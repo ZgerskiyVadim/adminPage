@@ -2,8 +2,9 @@ const scrollMinHeight = 250;
 
 export function loadMore(enumItem) {
     const lengthOfItems = enumItem === 'users' ? this.props.users.length : this.props.groups.length;
+    const {isLoadMore} = this.state;
 
-    if (this.state.isLoadMore && ((scrollHeight() <= scrollMinHeight) || isScrollDown())) {
+    if (isLoadMore && ((scrollHeight() <= scrollMinHeight) || isScrollDown())) {
         setState.call(this, lengthOfItems, enumItem);
     }
 }
@@ -30,8 +31,7 @@ function isScrollDown() {
 }
 
 function setState(lengthOfItems, enumItem) {
-    const limit = this.state.options.limit;
-    const loadNext = this.state.options.loadNext;
+    const {limit, loadNext} = this.state.options;
 
     if (limit > lengthOfItems) {
         this.setState({
@@ -48,13 +48,14 @@ function setState(lengthOfItems, enumItem) {
 }
 
 function requestGetItems(enumItem) {
-    const isSearching = this.state.isSearching;
-    const options = this.state.options;
-    const limit = this.state.options.limit;
+    const {isSearching, options} = this.state;
+    const {limit} = options;
 
     if (enumItem === 'users') {
-        isSearching ? this.props.actions.searchUsersRequest(options) : this.props.actions.getUsersRequest(limit);
+        const {searchUsersRequest, getUsersRequest} = this.props.actions;
+        isSearching ? searchUsersRequest(options) : getUsersRequest(limit);
     } else {
-        isSearching ? this.props.actions.searchGroupsRequest(options) : this.props.actions.getGroupsRequest(limit);
+        const {searchGroupsRequest, getGroupsRequest} = this.props.actions;
+        isSearching ? searchGroupsRequest(options) : getGroupsRequest(limit);
     }
 }

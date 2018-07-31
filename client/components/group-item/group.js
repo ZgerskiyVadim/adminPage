@@ -40,6 +40,7 @@ class Group extends Component {
     render() {
         const { isJoiningGroup, isJoinedUserInGroup } = this.props;
         const {users, name, title, _id} = this.props.group;
+        const {...state} = this.state;
 
         const hiddenForm = classNames({'groups--hide': !this.state.show});
         const shownForm = classNames({'groups--hide': this.state.show});
@@ -52,11 +53,11 @@ class Group extends Component {
                 <div className='groups-row col-md-8'>
                     <div className='col-md-4'>
                         <Link to={`groups/${_id}`}>{name}</Link>
-                        <input onChange={this.handleChangeState} value={this.state.name} className={classNames('form-control', hiddenForm)} name='name' type="text"/>
+                        <input onChange={this.handleChangeState} value={state.name} className={classNames('form-control', hiddenForm)} name='name' type="text"/>
                     </div>
                     <div className='col-md-4'>
                         <Link to={`groups/${_id}`}>{title}</Link>
-                        <input onChange={this.handleChangeState} value={this.state.title} className={classNames('form-control', hiddenForm)} name='title' type="text"/>
+                        <input onChange={this.handleChangeState} value={state.title} className={classNames('form-control', hiddenForm)} name='title' type="text"/>
                     </div>
                     <div className='col-md-4'>
                         <span>{users.length}</span>
