@@ -7,6 +7,7 @@ import toastr from 'toastr';
 import './index.scss';
 import * as groupActionCreators from '../../actions/action_creators/group';
 import {handleChangeForm, showForms, getValidOptions} from '../../services/formsOperations';
+import {getErrorMessage} from '../../services/getErrorMessage';
 
 class User extends Component {
     constructor(props) {
@@ -28,9 +29,7 @@ class User extends Component {
 
     componentWillReceiveProps(nextProps) {
         const {error, isUpdated} = nextProps.group;
-        const message = error && error.response.data.message;
-        const errmsg = error && error.response.data.errmsg;
-        const errorMessage = error && (message || errmsg || error.message);
+        const errorMessage = getErrorMessage(nextProps.group);
 
         const status = error && (error.response.data.status || error.response.status);
         if (status === 404) {

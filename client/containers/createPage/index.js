@@ -6,6 +6,7 @@ import toastr from 'toastr';
 import './index.scss';
 import * as createActionCreators from '../../actions/action_creators/create';
 import {handleChangeForm} from '../../services/formsOperations';
+import {getErrorMessage} from '../../services/getErrorMessage';
 
 class Create extends Component {
     constructor(props) {
@@ -27,9 +28,7 @@ class Create extends Component {
 
     componentWillReceiveProps(nextProps) {
         const {error, userCreated, groupCreated} = nextProps.createStore;
-        const message = error && error.response.data.message;
-        const errmsg = error && error.response.data.errmsg;
-        const errorMessage = error && (message || errmsg || error.message);
+        const errorMessage = getErrorMessage(nextProps.createStore);
 
         error && toastr.error(errorMessage, 'Opps!');
         userCreated && toastr.info('User created', 'Ok!');

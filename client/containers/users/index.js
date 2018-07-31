@@ -7,6 +7,7 @@ import './index.scss';
 import * as usersActionCreators from '../../actions/action_creators/users';
 import {loadMore, checkRemovedItems} from '../../services/loadMore';
 import {searchRequest} from '../../services/searchOperation';
+import {getErrorMessage} from '../../services/getErrorMessage';
 import User from '../../components/user/user';
 
 class Users extends Component {
@@ -36,9 +37,7 @@ class Users extends Component {
 
     componentWillReceiveProps(nextProps) {
         const {error, isUpdated, isRemoved} = nextProps.usersStore;
-        const message = error && error.response.data.message;
-        const errmsg = error && error.response.data.errmsg;
-        const errorMessage = error && (message || errmsg || error.message);
+        const errorMessage = getErrorMessage(nextProps.usersStore);
 
         error && toastr.error(errorMessage, 'Opps!');
         isUpdated && toastr.success('User updated', 'Ok!');

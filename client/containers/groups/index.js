@@ -7,6 +7,7 @@ import './index.scss';
 import * as groupsActionCreators from '../../actions/action_creators/groups';
 import {loadMore, checkRemovedItems} from '../../services/loadMore';
 import {searchRequest} from '../../services/searchOperation';
+import {getErrorMessage} from '../../services/getErrorMessage';
 import Group from '../../components/group/group';
 
 class Groups extends Component {
@@ -36,9 +37,7 @@ class Groups extends Component {
 
     componentWillReceiveProps(nextProps) {
         const {error, isUpdated, isRemoved} = nextProps.groupsStore;
-        const message = error && error.response.data.message;
-        const errmsg = error && error.response.data.errmsg;
-        const errorMessage = error && (message || errmsg || error.message);
+        const errorMessage = getErrorMessage(nextProps.groupsStore);
 
         error && toastr.error(errorMessage, 'Opps!');
         isUpdated && toastr.success('Success!', 'Ok!');
