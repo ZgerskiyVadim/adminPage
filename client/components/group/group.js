@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import {Link} from 'react-router-dom';
+import classNames from 'classnames';
 
 import {handleChangeForm, showForms, getValidOptions} from '../../services/formsOperations';
 
@@ -42,22 +43,22 @@ class Group extends Component {
     render() {
         const { isJoiningGroup, isJoinedUserInGroup } = this.props;
 
-        const hiddenForm = {display: this.state.show && !isJoiningGroup ? 'block' : 'none'};
-        const shownForm = {display: !this.state.show && !isJoiningGroup ? 'block' : 'none'};
-        const notJoiningGroup = {display: !isJoiningGroup ? 'block' : 'none'};
-        const userAlreadyInGroup = {display: !isJoiningGroup || isJoinedUserInGroup ? 'none' : 'block'};
-        const userNotInGroup = {display: isJoiningGroup && isJoinedUserInGroup ? 'block' : 'none'};
+        const hiddenForm = classNames({'groups--hide': !this.state.show});
+        const shownForm = classNames({'groups--hide': this.state.show && isJoiningGroup});
+        const notJoiningGroup = classNames({'groups--hide': isJoiningGroup});
+        const userAlreadyInGroup = classNames({'groups--hide': !isJoiningGroup || isJoinedUserInGroup});
+        const userNotInGroup = classNames({'groups--hide': !isJoiningGroup || !isJoinedUserInGroup});
 
         return (
             <div className='groups-row'>
                 <div className='groups-row col-md-8'>
                     <div className='col-md-4'>
                         <Link to={`groups/${this.props.group._id}`}>{this.props.group.name}</Link>
-                        <input onChange={this.handleChangeForm} value={this.state.name} className='form-control' style={hiddenForm} name='name' type="text"/>
+                        <input onChange={this.handleChangeForm} value={this.state.name} className={classNames('form-control', hiddenForm)} name='name' type="text"/>
                     </div>
                     <div className='col-md-4'>
                         <Link to={`groups/${this.props.group._id}`}>{this.props.group.title}</Link>
-                        <input onChange={this.handleChangeForm} value={this.state.title} className='form-control' style={hiddenForm} name='title' type="text"/>
+                        <input onChange={this.handleChangeForm} value={this.state.title} className={classNames('form-control', hiddenForm)} name='title' type="text"/>
                     </div>
                     <div className='col-md-4'>
                         <span>{this.props.group.users.length}</span>
@@ -65,11 +66,11 @@ class Group extends Component {
                 </div>
 
                 <div className='groups-buttons'>
-                    <button onClick={this.showForms} style={shownForm} className='groups--margin-right btn btn-outline-primary'>Update</button>
-                    <button onClick={this.sendOptionsUpdate} style={hiddenForm} className='groups--margin-right btn btn-outline-primary'>Save</button>
-                    <button onClick={this.remove(this.props.group._id)} style={notJoiningGroup} className='btn btn-outline-danger'>Remove</button>
-                    <button onClick={this.sendOptionsJoinGroup(this.props.group._id)} style={userAlreadyInGroup} className='btn btn-outline-info'>Join group</button>
-                    <button onClick={this.sendOptionsLeaveGroup(this.props.group._id)} style={userNotInGroup} className='btn btn-outline-danger'>Leave group</button>
+                    <button onClick={this.showForms} className={classNames('groups--margin-right btn btn-outline-primary', shownForm, notJoiningGroup)}>Update</button>
+                    <button onClick={this.sendOptionsUpdate} className={classNames('groups--margin-right btn btn-outline-primary', hiddenForm)}>Save</button>
+                    <button onClick={this.remove(this.props.group._id)} className={classNames('btn btn-outline-danger', notJoiningGroup)}>Remove</button>
+                    <button onClick={this.sendOptionsJoinGroup(this.props.group._id)} className={classNames('btn btn-outline-info', userAlreadyInGroup)}>Join group</button>
+                    <button onClick={this.sendOptionsLeaveGroup(this.props.group._id)} className={classNames('btn btn-outline-danger', userNotInGroup)}>Leave group</button>
                 </div>
             </div>
         );

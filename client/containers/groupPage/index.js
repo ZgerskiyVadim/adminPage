@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
+import classNames from 'classnames';
 import {Link} from 'react-router-dom';
 import {bindActionCreators} from 'redux';
 import toastr from 'toastr';
@@ -57,9 +58,9 @@ class User extends Component {
     render() {
         const {name, title} = this.props.group;
 
-        const hiddenForm = {display: this.state.show ? 'block' : 'none'};
-        const shownForm = {display: !this.state.show ? 'block' : 'none'};
-        const isUsers = {display: this.props.group.users.length ? 'block' : 'none'};
+        const hiddenForm = classNames({'group--hide': !this.state.show});
+        const shownForm = classNames({'group--hide': this.state.show});
+        const isUsers = classNames({'group--hide': !this.props.group.users.length});
 
         return (
             <div className='group'>
@@ -67,16 +68,16 @@ class User extends Component {
                 <div className='group-info'>
                     <div className='group--margin-right'>
                         <h3>name: {name}</h3>
-                        <input onChange={this.handleChangeForm} value={this.state.name} className='form-control' style={hiddenForm} name='name' type="text"/>
+                        <input onChange={this.handleChangeForm} value={this.state.name} className={classNames('form-control', hiddenForm)} name='name' type="text"/>
                         <h3>title: {title}</h3>
-                        <input onChange={this.handleChangeForm} value={this.state.title} className='form-control' style={hiddenForm} name='title' type="text"/>
+                        <input onChange={this.handleChangeForm} value={this.state.title} className={classNames('form-control', hiddenForm)} name='title' type="text"/>
                     </div>
 
-                    <button onClick={this.showForms} style={shownForm} className='btn btn-outline-primary'>Update</button>
-                    <button onClick={this.update} style={hiddenForm} className='btn btn-outline-primary'>Save</button>
+                    <button onClick={this.showForms} className={classNames('btn btn-outline-primary', shownForm)}>Update</button>
+                    <button onClick={this.update} className={classNames('btn btn-outline-primary', hiddenForm)}>Save</button>
                 </div>
 
-                <h1 style={isUsers}>Users</h1>
+                <h1 className={isUsers}>Users</h1>
                 {
                     this.props.group.users.map(user =>
                         <div className='group__users col-md-4 col-sm-6' key={user._id}>

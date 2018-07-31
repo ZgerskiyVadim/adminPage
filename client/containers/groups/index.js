@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
+import classNames from 'classnames';
 import {bindActionCreators} from 'redux';
 import toastr from 'toastr';
 
@@ -95,17 +96,17 @@ class Groups extends Component {
     };
 
     render() {
-        const isJoiningGroup = {display: this.props.joiningGroup ? 'block' : 'none'};
-        const marginBottom = {marginBottom: this.state.isLoadMore ? '0' : '5em'};
+        const isJoiningGroup = classNames({'groups--hide': !this.props.joiningGroup});
+        const marginBottom = classNames({'groups--margin-bottom': !this.state.isLoadMore});
 
         return (
             <div className='groups'>
                 <div className='groups-search'>
                     <h2>Search</h2>
                     <input onChange={this.search} className='form-control col-md-3' type="text"/>
-                    <button onClick={this.cancelJoinGroup} style={isJoiningGroup} className='btn btn-outline-danger'>Cancel join group</button>
+                    <button onClick={this.cancelJoinGroup} className={classNames('btn btn-outline-danger', isJoiningGroup)}>Cancel join group</button>
                 </div>
-                <div style={marginBottom}>
+                <div className={marginBottom}>
                     <div className='groups-headers col-md-8'>
                         <h2 className='col-md-4'>name</h2>
                         <h2 className='col-md-4'>title</h2>

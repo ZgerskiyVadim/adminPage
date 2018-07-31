@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
+import classNames from 'classnames';
 import {bindActionCreators} from 'redux';
 import toastr from 'toastr';
 
@@ -71,7 +72,7 @@ class Users extends Component {
     };
 
     render() {
-        const marginBottom = {marginBottom: this.state.isLoadMore ? '0' : '5em'};
+        const marginBottom = classNames({'users--margin-bottom': !this.state.isLoadMore});
 
         return (
             <div className='users'>
@@ -79,7 +80,7 @@ class Users extends Component {
                     <h2>Search</h2>
                     <input onChange={this.search} className='form-control col-md-3' type="text"/>
                 </div>
-                <div style={marginBottom}>
+                <div className={marginBottom}>
                     <div className='users-headers col-md-9'>
                         <h2 className='col-md-3'>username</h2>
                         <h2 className='col-md-3'>firstName</h2>

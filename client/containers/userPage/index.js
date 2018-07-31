@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
+import classNames from 'classnames';
 import {Link} from 'react-router-dom';
 import {bindActionCreators} from 'redux';
 import toastr from 'toastr';
@@ -68,9 +69,9 @@ class User extends Component {
     render() {
         const {username, firstName, lastName, email} = this.props.userStore.user;
 
-        const hiddenForm = {display: this.state.show ? 'block' : 'none'};
-        const shownForm = {display: !this.state.show ? 'block' : 'none'};
-        const isGroups = {display: this.props.userStore.groups.length ? 'block' : 'none'};
+        const hiddenForm = classNames({'user--hide': !this.state.show});
+        const shownForm = classNames('user--margin-right btn btn-outline-primary', {'user--hide': this.state.show});
+        const isGroups = classNames({'user--hide': !this.props.userStore.groups.length});
 
         return (
             <div className='user'>
@@ -78,20 +79,20 @@ class User extends Component {
                 <div className='user-info'>
                     <div className='user--margin-right'>
                         <h3>username: {username}</h3>
-                        <input onChange={this.handleChangeForm} value={this.state.username} className='form-control' style={hiddenForm} name='username' type="text"/>
+                        <input onChange={this.handleChangeForm} value={this.state.username} className={classNames('form-control', hiddenForm)} name='username' type="text"/>
                         <h3>firstName: {firstName}</h3>
-                        <input onChange={this.handleChangeForm} value={this.state.firstName} className='form-control' style={hiddenForm} name='firstName' type="text"/>
+                        <input onChange={this.handleChangeForm} value={this.state.firstName} className={classNames('form-control', hiddenForm)} name='firstName' type="text"/>
                         <h3>lastName: {lastName}</h3>
-                        <input onChange={this.handleChangeForm} value={this.state.lastName} className='form-control' style={hiddenForm} name='lastName' type="text"/>
+                        <input onChange={this.handleChangeForm} value={this.state.lastName} className={classNames('form-control', hiddenForm)} name='lastName' type="text"/>
                         <h3>email: {email}</h3>
-                        <input onChange={this.handleChangeForm} value={this.state.email} className='form-control' style={hiddenForm} name='email' type="text"/>
+                        <input onChange={this.handleChangeForm} value={this.state.email} className={classNames('form-control', hiddenForm)} name='email' type="text"/>
                     </div>
-                    <button onClick={this.showForms} style={shownForm} className='user--margin-right btn btn-outline-primary'>Update</button>
-                    <button onClick={this.update} style={hiddenForm} className='user--margin-right btn btn-outline-primary'>Save</button>
+                    <button onClick={this.showForms} className={shownForm}>Update</button>
+                    <button onClick={this.update} className={classNames('user--margin-right btn btn-outline-primary', hiddenForm)}>Save</button>
                     <button onClick={this.joinGroup} className='btn btn-outline-info'>Join group</button>
                 </div>
 
-                <h1 style={isGroups}>Groups</h1>
+                <h1 className={isGroups}>Groups</h1>
                 {
                     this.props.userStore.groups.map(group =>
                         <div className='user__groups col-md-4 col-sm-6' key={group._id}>
