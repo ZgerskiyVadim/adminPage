@@ -96,7 +96,7 @@ class User extends Component {
                 <h1 className={isGroups}>Groups</h1>
                 {
                     this.props.groups.map(group =>
-                        <div className='user__groups col-md-4 col-sm-6' key={group._id}>
+                        <div key={group._id} className='user__groups col-md-4 col-sm-6'>
                             <div>
                                 <Link to={`/groups/${group._id}`}>
                                     <h4>name: {group.name}</h4>

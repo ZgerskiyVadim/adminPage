@@ -26,8 +26,11 @@ export default function userReducer(state = initialState, action) {
         case GET_USER:
             return {
                 ...state,
-                user: action.payload.user,
-                groups: action.payload.groups,
+                user: {
+                    ...state.user,
+                    ...action.payload.user
+                },
+                groups: [...action.payload.groups],
                 isLeftGroup: false,
                 isUpdated: false,
                 error: null
@@ -36,7 +39,10 @@ export default function userReducer(state = initialState, action) {
         case UPDATE_USER:
             return {
                 ...state,
-                user: action.payload,
+                user: {
+                    ...state.user,
+                    ...action.payload
+                },
                 isLeftGroup: false,
                 isUpdated: true,
                 error: null

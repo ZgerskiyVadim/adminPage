@@ -80,8 +80,8 @@ class User extends Component {
 
                 <h1 className={isUsers}>Users</h1>
                 {
-                    this.props.users.map(user =>
-                        <div className='group__users col-md-4 col-sm-6' key={user._id}>
+                    this.props.users.map((user, index) =>
+                        <div key={index} className='group__users col-md-4 col-sm-6'>
                             <div>
                                 <Link to={`/users/${user._id}`}>
                                     <h4>username: {user.username}</h4>
