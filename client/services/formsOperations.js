@@ -1,18 +1,9 @@
-export function handleChangeForm(event, propState) {
+export function handleChangeState(event) {
     const {value, name} = event.target;
 
-    propState ?
-
-        this.setState({
-            [propState]: {
-                ...this.state[propState],
-                [name]: value
-            }
-        }) :
-
-        this.setState({
-            [name]: value
-        });
+    this.setState({
+        [name]: value
+    });
 }
 
 export function showForms(id) {

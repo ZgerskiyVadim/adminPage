@@ -6,7 +6,7 @@ import toastr from 'toastr';
 
 import './index.scss';
 import * as createGroupActionCreators from '../../actions/action_creators/createGroup';
-import {handleChangeForm} from '../../services/formsOperations';
+import {handleChangeState} from '../../services/formsOperations';
 import {getErrorMessage} from '../../services/getErrorMessage';
 
 class CreateGroup extends Component {
@@ -17,7 +17,7 @@ class CreateGroup extends Component {
             name: '',
             title: ''
         };
-        this.handleChangeForm = handleChangeForm.bind(this);
+        this.handleChangeState = handleChangeState.bind(this);
     }
 
     componentWillReceiveProps(nextProps) {
@@ -39,9 +39,9 @@ class CreateGroup extends Component {
                 <div className='create-group--row'>
                     <div className='col-md-6'>
                         <h3>name</h3>
-                        <input onChange={this.handleChangeForm} value={this.state.name} name='name' className='form-control' type="text"/>
+                        <input onChange={this.handleChangeState} value={this.state.name} name='name' className='form-control' type="text"/>
                         <h3>title</h3>
-                        <input onChange={this.handleChangeForm} value={this.state.title} name='title' className='form-control' type="text"/>
+                        <input onChange={this.handleChangeState} value={this.state.title} name='title' className='form-control' type="text"/>
                     </div>
 
                     <button onClick={this.sendGroup} className='create-group-send btn btn-outline-primary'>Send</button>

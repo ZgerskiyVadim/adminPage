@@ -8,7 +8,7 @@ import toastr from 'toastr';
 
 import './index.scss';
 import * as userActionCreators from '../../actions/action_creators/user';
-import {handleChangeForm, showForms, getValidOptions} from '../../services/formsOperations';
+import {handleChangeState, showForms, getValidOptions} from '../../services/formsOperations';
 import {getErrorMessage} from '../../services/getErrorMessage';
 
 class User extends Component {
@@ -23,7 +23,7 @@ class User extends Component {
             id: this.props.match.params.id
         };
 
-        this.handleChangeForm = handleChangeForm.bind(this);
+        this.handleChangeState = handleChangeState.bind(this);
         this.showForms = showForms.bind(this, this.state.id);
     }
 
@@ -80,13 +80,13 @@ class User extends Component {
                 <div className='user-info'>
                     <div className='user--margin-right'>
                         <h3>username: {username}</h3>
-                        <input onChange={this.handleChangeForm} value={this.state.username} className={classNames('form-control', hiddenForm)} name='username' type="text"/>
+                        <input onChange={this.handleChangeState} value={this.state.username} className={classNames('form-control', hiddenForm)} name='username' type="text"/>
                         <h3>firstName: {firstName}</h3>
-                        <input onChange={this.handleChangeForm} value={this.state.firstName} className={classNames('form-control', hiddenForm)} name='firstName' type="text"/>
+                        <input onChange={this.handleChangeState} value={this.state.firstName} className={classNames('form-control', hiddenForm)} name='firstName' type="text"/>
                         <h3>lastName: {lastName}</h3>
-                        <input onChange={this.handleChangeForm} value={this.state.lastName} className={classNames('form-control', hiddenForm)} name='lastName' type="text"/>
+                        <input onChange={this.handleChangeState} value={this.state.lastName} className={classNames('form-control', hiddenForm)} name='lastName' type="text"/>
                         <h3>email: {email}</h3>
-                        <input onChange={this.handleChangeForm} value={this.state.email} className={classNames('form-control', hiddenForm)} name='email' type="text"/>
+                        <input onChange={this.handleChangeState} value={this.state.email} className={classNames('form-control', hiddenForm)} name='email' type="text"/>
                     </div>
                     <button onClick={this.showForms} className={shownForm}>Update</button>
                     <button onClick={this.update} className={classNames('user--margin-right btn btn-outline-primary', hiddenForm)}>Save</button>

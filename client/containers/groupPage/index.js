@@ -8,7 +8,7 @@ import toastr from 'toastr';
 
 import './index.scss';
 import * as groupActionCreators from '../../actions/action_creators/group';
-import {handleChangeForm, showForms, getValidOptions} from '../../services/formsOperations';
+import {handleChangeState, showForms, getValidOptions} from '../../services/formsOperations';
 import {getErrorMessage} from '../../services/getErrorMessage';
 
 class User extends Component {
@@ -22,7 +22,7 @@ class User extends Component {
         };
 
         this.showForms = showForms.bind(this, this.state.id);
-        this.handleChangeForm = handleChangeForm.bind(this);
+        this.handleChangeState = handleChangeState.bind(this);
     }
 
     componentDidMount() {
@@ -69,9 +69,9 @@ class User extends Component {
                 <div className='group-info'>
                     <div className='group--margin-right'>
                         <h3>name: {name}</h3>
-                        <input onChange={this.handleChangeForm} value={this.state.name} className={classNames('form-control', hiddenForm)} name='name' type="text"/>
+                        <input onChange={this.handleChangeState} value={this.state.name} className={classNames('form-control', hiddenForm)} name='name' type="text"/>
                         <h3>title: {title}</h3>
-                        <input onChange={this.handleChangeForm} value={this.state.title} className={classNames('form-control', hiddenForm)} name='title' type="text"/>
+                        <input onChange={this.handleChangeState} value={this.state.title} className={classNames('form-control', hiddenForm)} name='title' type="text"/>
                     </div>
 
                     <button onClick={this.showForms} className={classNames('btn btn-outline-primary', shownForm)}>Update</button>

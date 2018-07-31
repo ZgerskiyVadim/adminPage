@@ -3,7 +3,7 @@ import {Link} from 'react-router-dom';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
 
-import {handleChangeForm, showForms, getValidOptions} from '../../services/formsOperations';
+import {handleChangeState, showForms, getValidOptions} from '../../services/formsOperations';
 
 
 class Group extends Component {
@@ -18,7 +18,7 @@ class Group extends Component {
         };
 
         this.showForms = showForms.bind(this, this.props.group._id);
-        this.handleChangeForm = handleChangeForm.bind(this);
+        this.handleChangeState = handleChangeState.bind(this);
     }
 
     sendOptionsUpdate = () => {
@@ -52,11 +52,11 @@ class Group extends Component {
                 <div className='groups-row col-md-8'>
                     <div className='col-md-4'>
                         <Link to={`groups/${_id}`}>{name}</Link>
-                        <input onChange={this.handleChangeForm} value={this.state.name} className={classNames('form-control', hiddenForm)} name='name' type="text"/>
+                        <input onChange={this.handleChangeState} value={this.state.name} className={classNames('form-control', hiddenForm)} name='name' type="text"/>
                     </div>
                     <div className='col-md-4'>
                         <Link to={`groups/${_id}`}>{title}</Link>
-                        <input onChange={this.handleChangeForm} value={this.state.title} className={classNames('form-control', hiddenForm)} name='title' type="text"/>
+                        <input onChange={this.handleChangeState} value={this.state.title} className={classNames('form-control', hiddenForm)} name='title' type="text"/>
                     </div>
                     <div className='col-md-4'>
                         <span>{users.length}</span>
