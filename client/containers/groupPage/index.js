@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import classNames from 'classnames';
+import PropTypes from 'prop-types';
 import {Link} from 'react-router-dom';
 import {bindActionCreators} from 'redux';
 import toastr from 'toastr';
@@ -60,7 +61,7 @@ class User extends Component {
 
         const hiddenForm = classNames({'group--hide': !this.state.show});
         const shownForm = classNames({'group--hide': this.state.show});
-        const isUsers = classNames({'group--hide': !this.props.group.users.length});
+        const isUsers = classNames({'group--hide': !this.props.users.length});
 
         return (
             <div className='group'>
@@ -79,7 +80,7 @@ class User extends Component {
 
                 <h1 className={isUsers}>Users</h1>
                 {
-                    this.props.group.users.map(user =>
+                    this.props.users.map(user =>
                         <div className='group__users col-md-4 col-sm-6' key={user._id}>
                             <div>
                                 <Link to={`/users/${user._id}`}>
@@ -104,8 +105,14 @@ class User extends Component {
     }
 }
 
+User.propTypes = {
+    group: PropTypes.object,
+    users: PropTypes.array
+};
+
 const mapStateToProps = (state) => ({
-    group: state.groupReducer
+    group: state.groupReducer,
+    users: state.groupReducer.users
 });
 
 const mapDispatchToProps = (dispatch) => ({

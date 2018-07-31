@@ -3,14 +3,16 @@ import groupsReducer from './groupsReducer';
 import groupReducer from './groupReducer';
 import usersReducer from './usersReducer';
 import userReducer from './userReducer';
-import createReducer from './createReducer';
+import createUserReducer from './createUserReducer';
+import createGroupReducer from './createGroupReducer';
 
 const rootReducer = combineReducers({
     groupsReducer,
     groupReducer,
     usersReducer,
     userReducer,
-    createReducer
+    createUserReducer,
+    createGroupReducer
 });
 
 export default rootReducer;

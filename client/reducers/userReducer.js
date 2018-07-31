@@ -15,7 +15,7 @@ const initialState = {
         _id: ''
     },
     groups: [],
-    joiningGroup: false,
+    isJoiningGroup: false,
     isLeftGroup: false,
     isUpdated: false,
     error: null
@@ -54,7 +54,7 @@ export default function userReducer(state = initialState, action) {
         case IS_JOINING_GROUP:
             return {
                 ...state,
-                joiningGroup: action.payload,
+                isJoiningGroup: action.payload,
                 isLeftGroup: false,
                 isUpdated: false,
                 error: null

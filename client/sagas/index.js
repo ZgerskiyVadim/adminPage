@@ -3,7 +3,8 @@ import usersSaga from './users';
 import userSaga from './user';
 import groupsSaga from './groups';
 import groupSaga from './group';
-import createSaga from './create';
+import createUserSaga from './createUser';
+import createGroupSaga from './createGroup';
 
 export default function* rootSaga() {
     yield all([
@@ -11,6 +12,7 @@ export default function* rootSaga() {
         fork(userSaga),
         fork(groupsSaga),
         fork(groupSaga),
-        fork(createSaga)
+        fork(createUserSaga),
+        fork(createGroupSaga)
     ]);
 }

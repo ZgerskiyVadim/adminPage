@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import classNames from 'classnames';
+import PropTypes from 'prop-types';
 import {bindActionCreators} from 'redux';
 import toastr from 'toastr';
 
@@ -96,7 +97,7 @@ class Groups extends Component {
     };
 
     render() {
-        const isJoiningGroup = classNames({'groups--hide': !this.props.joiningGroup});
+        const isJoiningGroup = classNames({'groups--hide': !this.props.isJoiningGroup});
         const marginBottom = classNames({'groups--margin-bottom': !this.state.isLoadMore});
 
         return (
@@ -113,7 +114,7 @@ class Groups extends Component {
                         <h2 className='groups--nowrap col-md-4'>users</h2>
                     </div>
                     {
-                        this.props.joiningGroup ?
+                        this.props.isJoiningGroup ?
 
                             this.isJoinedUserInGroup().map(group =>
                                 <Group
@@ -143,11 +144,18 @@ class Groups extends Component {
     }
 }
 
+Groups.propTypes = {
+    groupsStore: PropTypes.object,
+    groups: PropTypes.array,
+    user: PropTypes.object,
+    isJoiningGroup: PropTypes.bool
+};
+
 const mapStateToProps = (state) => ({
     groupsStore: state.groupsReducer,
     groups: state.groupsReducer.groups,
     user: state.userReducer.user,
-    joiningGroup: state.userReducer.joiningGroup
+    isJoiningGroup: state.userReducer.isJoiningGroup
 });
 
 const mapDispatchToProps = (dispatch) => ({

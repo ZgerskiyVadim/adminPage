@@ -1,10 +1,11 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
+import PropTypes from 'prop-types';
 import {bindActionCreators} from 'redux';
 import toastr from 'toastr';
 
 import './index.scss';
-import * as createActionCreators from '../../actions/action_creators/create';
+import * as createUserActionCreators from '../../actions/action_creators/createUser';
 import {handleChangeForm} from '../../services/formsOperations';
 import {getErrorMessage} from '../../services/getErrorMessage';
 
@@ -22,8 +23,8 @@ class CreateUser extends Component {
     }
 
     componentWillReceiveProps(nextProps) {
-        const {error, userCreated} = nextProps.createStore;
-        const errorMessage = getErrorMessage(nextProps.createStore);
+        const {error, userCreated} = nextProps.createUserStore;
+        const errorMessage = getErrorMessage(nextProps.createUserStore);
 
         error && toastr.error(errorMessage, 'Opps!');
         userCreated && toastr.info('User created', 'Ok!');
@@ -56,13 +57,17 @@ class CreateUser extends Component {
     }
 }
 
+CreateUser.propTypes = {
+    createUserStore: PropTypes.object
+};
+
 const mapStateToProps = (state) => ({
-    createStore: state.createReducer
+    createUserStore: state.createUserReducer
 });
 
 const mapDispatchToProps = (dispatch) => ({
     actions: bindActionCreators({
-        ...createActionCreators
+        ...createUserActionCreators
     }, dispatch)
 });
 

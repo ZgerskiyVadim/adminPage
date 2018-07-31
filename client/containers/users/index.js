@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import classNames from 'classnames';
+import PropTypes from 'prop-types';
 import {bindActionCreators} from 'redux';
 import toastr from 'toastr';
 
@@ -52,7 +53,7 @@ class Users extends Component {
     }
 
     getUsers() {
-        if (this.props.user.joiningGroup) {
+        if (this.props.user.isJoiningGroup) {
             return this.props.users.map(user => user._id === this.props.user.user._id ? {...user, isJoining: true} : user); //Hide remove button for joining user
         } else {
             return this.props.users;
@@ -103,10 +104,18 @@ class Users extends Component {
     }
 }
 
+Users.propTypes = {
+    usersStore: PropTypes.object,
+    users: PropTypes.array,
+    user: PropTypes.object,
+    isJoiningGroup: PropTypes.bool
+};
+
 const mapStateToProps = (state) => ({
     usersStore: state.usersReducer,
     users: state.usersReducer.users,
-    user: state.userReducer
+    user: state.userReducer,
+    isJoiningGroup: state.userReducer.user.isJoiningGroup
 });
 
 const mapDispatchToProps = (dispatch) => ({

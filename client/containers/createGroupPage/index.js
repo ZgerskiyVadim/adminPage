@@ -1,10 +1,11 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
+import PropTypes from 'prop-types';
 import {bindActionCreators} from 'redux';
 import toastr from 'toastr';
 
 import './index.scss';
-import * as createActionCreators from '../../actions/action_creators/create';
+import * as createGroupActionCreators from '../../actions/action_creators/createGroup';
 import {handleChangeForm} from '../../services/formsOperations';
 import {getErrorMessage} from '../../services/getErrorMessage';
 
@@ -20,8 +21,8 @@ class CreateGroup extends Component {
     }
 
     componentWillReceiveProps(nextProps) {
-        const {error, groupCreated} = nextProps.createStore;
-        const errorMessage = getErrorMessage(nextProps.createStore);
+        const {error, groupCreated} = nextProps.createGroupStore;
+        const errorMessage = getErrorMessage(nextProps.createGroupStore);
 
         error && toastr.error(errorMessage, 'Opps!');
         groupCreated && toastr.info('Group created', 'Ok!');
@@ -50,13 +51,17 @@ class CreateGroup extends Component {
     }
 }
 
+CreateGroup.propTypes = {
+    createGroupStore: PropTypes.object
+};
+
 const mapStateToProps = (state) => ({
-    createStore: state.createReducer
+    createGroupStore: state.createGroupReducer
 });
 
 const mapDispatchToProps = (dispatch) => ({
     actions: bindActionCreators({
-        ...createActionCreators
+        ...createGroupActionCreators
     }, dispatch)
 });
 
