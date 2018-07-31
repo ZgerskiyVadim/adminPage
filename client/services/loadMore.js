@@ -8,12 +8,12 @@ export function loadMore(enumItem) {
     }
 }
 
-export function checkRemovedItems(prevCountUsers, nextCountUsers) {
-    if (nextCountUsers < prevCountUsers) {
+export function checkRemovedItems(prevCount, currentCount) {
+    if (currentCount < prevCount) {
         this.setState({
             options: {
                 ...this.state.options,
-                limit: nextCountUsers
+                limit: currentCount
             }
         }, () => {
             this.loadMore();

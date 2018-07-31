@@ -10,7 +10,7 @@ import * as groupsActionCreators from '../../actions/action_creators/groups';
 import {loadMore, checkRemovedItems} from '../../services/loadMore';
 import {searchRequest} from '../../services/searchOperation';
 import {getErrorMessage} from '../../services/getErrorMessage';
-import Group from '../../components/group/group';
+import Group from '../../components/group-item/group';
 
 class Groups extends Component {
     constructor(props) {
@@ -47,9 +47,9 @@ class Groups extends Component {
     }
 
     componentDidUpdate(prevProps) {
-        const nextCountGroups = this.props.groups.length;
+        const currentCountGroups = this.props.groups.length;
         const prevCountGroups = prevProps.groups.length;
-        checkRemovedItems.call(this, prevCountGroups, nextCountGroups);
+        checkRemovedItems.call(this, prevCountGroups, currentCountGroups);
     }
 
     isJoinedUserInGroup() {

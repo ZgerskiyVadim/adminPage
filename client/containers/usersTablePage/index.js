@@ -10,7 +10,7 @@ import * as usersActionCreators from '../../actions/action_creators/users';
 import {loadMore, checkRemovedItems} from '../../services/loadMore';
 import {searchRequest} from '../../services/searchOperation';
 import {getErrorMessage} from '../../services/getErrorMessage';
-import User from '../../components/user/user';
+import User from '../../components/user-item/user';
 
 class Users extends Component {
     constructor(props) {
@@ -47,9 +47,9 @@ class Users extends Component {
     }
 
     componentDidUpdate(prevProps) {
-        const nextCountUsers = this.props.users.length;
+        const currentCountUsers = this.props.users.length;
         const prevCountUsers = prevProps.users.length;
-        checkRemovedItems.call(this, prevCountUsers, nextCountUsers);
+        checkRemovedItems.call(this, prevCountUsers, currentCountUsers);
     }
 
     getUsers() {
