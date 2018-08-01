@@ -97,15 +97,18 @@ class Groups extends Component {
     };
 
     render() {
-        const isJoiningGroup = classNames({'groups--hide': !this.props.isJoiningGroup});
-        const marginBottom = classNames({'groups--margin-bottom': !this.state.isLoadMore});
+        const {isJoiningGroup, groups, user} = this.props;
+        const {isLoadMore} = this.state;
+
+        const isJoinGroup = classNames({'groups--hide': !isJoiningGroup});
+        const marginBottom = classNames({'groups--margin-bottom': !isLoadMore});
 
         return (
             <div className='groups'>
                 <div className='groups-search'>
                     <h2>Search</h2>
                     <input onChange={this.search} className='form-control col-md-3' type="text"/>
-                    <button onClick={this.cancelJoinGroup} className={classNames('btn btn-outline-danger', isJoiningGroup)}>Cancel join group</button>
+                    <button onClick={this.cancelJoinGroup} className={classNames('btn btn-outline-danger', isJoinGroup)}>Cancel join group</button>
                 </div>
                 <div className={marginBottom}>
                     <div className='groups-headers col-md-8'>
@@ -114,13 +117,13 @@ class Groups extends Component {
                         <h2 className='groups--nowrap col-md-4'>users</h2>
                     </div>
                     {
-                        this.props.isJoiningGroup ?
+                        isJoiningGroup ?
 
                             this.isJoinedUserInGroup().map(group =>
                                 <Group
                                     key={group._id}
                                     group={group}
-                                    userID={this.props.user._id}
+                                    userID={user._id}
                                     isJoinedUserInGroup={group.isJoinedUserInGroup}
                                     isJoiningGroup={true}
                                     joinGroup={this.joinGroup}
@@ -129,7 +132,7 @@ class Groups extends Component {
                                     leaveGroup={this.leaveGroup}
                                 />) :
 
-                            this.props.groups.map(group =>
+                            groups.map(group =>
                                 <Group
                                     key={group._id}
                                     group={group}

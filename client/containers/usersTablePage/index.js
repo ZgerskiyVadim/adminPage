@@ -73,7 +73,8 @@ class Users extends Component {
     };
 
     render() {
-        const marginBottom = classNames({'users--margin-bottom': !this.state.isLoadMore});
+        const {isLoadMore} = this.state;
+        const marginBottom = classNames({'users--margin-bottom': !isLoadMore});
 
         return (
             <div className='users'>

@@ -69,11 +69,12 @@ class User extends Component {
 
     render() {
         const {username, firstName, lastName, email} = this.props.userStore.user;
-        const {...state} = this.state;
+        const {groups} = this.props;
+        const {show, ...state} = this.state;
 
-        const hiddenForm = classNames({'user--hide': !this.state.show});
-        const shownForm = classNames('user--margin-right btn btn-outline-primary', {'user--hide': this.state.show});
-        const isGroups = classNames({'user--hide': !this.props.groups.length});
+        const hiddenForm = classNames({'user--hide': !show});
+        const shownForm = classNames('user--margin-right btn btn-outline-primary', {'user--hide': show});
+        const isGroups = classNames({'user--hide': !groups.length});
 
         return (
             <div className='user'>
@@ -96,7 +97,7 @@ class User extends Component {
 
                 <h1 className={isGroups}>Groups</h1>
                 {
-                    this.props.groups.map(group =>
+                    groups.map(group =>
                         <div key={group._id} className='user__groups col-md-4 col-sm-6'>
                             <div>
                                 <Link to={`/groups/${group._id}`}>

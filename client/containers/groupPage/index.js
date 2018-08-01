@@ -59,11 +59,11 @@ class User extends Component {
     render() {
         const {name, title} = this.props.group;
         const {users} = this.props;
-        const {...state} = this.state;
+        const {show, ...state} = this.state;
 
-        const hiddenForm = classNames({'group--hide': !this.state.show});
-        const shownForm = classNames({'group--hide': this.state.show});
-        const isUsers = classNames({'group--hide': !this.props.users.length});
+        const hiddenForm = classNames({'group--hide': !show});
+        const shownForm = classNames({'group--hide': show});
+        const isUsers = classNames({'group--hide': !users.length});
 
         return (
             <div className='group'>
