@@ -28,8 +28,8 @@ class User extends Component {
     }
 
     componentDidMount() {
-        const stopJoinGroup = false;
-        this.props.actions.joinGroup(stopJoinGroup);
+        const isJoiningGroup = false;
+        this.props.actions.joinGroup(isJoiningGroup);
         this.props.actions.getUserRequest(this.state.id);
     }
 
@@ -54,8 +54,8 @@ class User extends Component {
     };
 
     joinGroup = () => {
-        const joinGroup = true;
-        this.props.actions.joinGroup(joinGroup);
+        const isJoiningGroup = true;
+        this.props.actions.joinGroup(isJoiningGroup);
         this.props.history.push('/groups');
     };
 
