@@ -1,7 +1,6 @@
 
 export function searchRequest(event, enumItems) {
     const {value} = event.target;
-    const {options} = this.state;
 
     this.setState({
             options: {
@@ -13,7 +12,7 @@ export function searchRequest(event, enumItems) {
             isLoadMore: true
         },
         () => enumItems === 'groups' ?
-            this.props.actions.searchGroupsRequest(options) :
-            this.props.actions.searchUsersRequest(options)
+            this.props.actions.searchGroupsRequest(this.state.options) :
+            this.props.actions.searchUsersRequest(this.state.options)
     );
 }
