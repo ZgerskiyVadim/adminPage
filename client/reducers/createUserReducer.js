@@ -4,7 +4,7 @@ import {
 } from '../actions';
 
 const initialState = {
-    userCreated: false,
+    isUserCreated: false,
     error: null
 };
 
@@ -13,14 +13,14 @@ export default function createUserReducer(state = initialState, action) {
         case USER_CREATED:
             return {
                 ...state,
-                userCreated: true,
+                isUserCreated: true,
                 error: null
             };
 
         case CREATE_USER_REQUEST_FAILED:
             return {
                 ...state,
-                userCreated: false,
+                isUserCreated: false,
                 error: action.payload
             };
         default: return state;

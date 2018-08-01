@@ -4,7 +4,7 @@ import {
 } from '../actions';
 
 const initialState = {
-    groupCreated: false,
+    isGroupCreated: false,
     error: null
 };
 
@@ -13,14 +13,14 @@ export default function createGroupReducer(state = initialState, action) {
         case GROUP_CREATED:
             return {
                 ...state,
-                groupCreated: true,
+                isGroupCreated: true,
                 error: null
             };
 
         case CREATE_GROUP_REQUEST_FAILED:
             return {
                 ...state,
-                groupCreated: false,
+                isGroupCreated: false,
                 error: action.payload
             };
         default: return state;

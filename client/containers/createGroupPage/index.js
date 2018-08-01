@@ -21,11 +21,11 @@ class CreateGroup extends Component {
     }
 
     componentWillReceiveProps(nextProps) {
-        const {error, groupCreated} = nextProps.createGroupStore;
+        const {error, isGroupCreated} = nextProps.createGroupStore;
         const errorMessage = getErrorMessage(nextProps.createGroupStore);
 
         error && toastr.error(errorMessage, 'Opps!');
-        groupCreated && toastr.info('Group created', 'Ok!');
+        isGroupCreated && toastr.info('Group created', 'Ok!');
     }
 
     sendGroup = () => {

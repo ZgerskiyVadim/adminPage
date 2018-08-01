@@ -23,11 +23,11 @@ class CreateUser extends Component {
     }
 
     componentWillReceiveProps(nextProps) {
-        const {error, userCreated} = nextProps.createUserStore;
+        const {error, isUserCreated} = nextProps.createUserStore;
         const errorMessage = getErrorMessage(nextProps.createUserStore);
 
         error && toastr.error(errorMessage, 'Opps!');
-        userCreated && toastr.info('User created', 'Ok!');
+        isUserCreated && toastr.info('User created', 'Ok!');
     }
 
     sendUser = () => {
