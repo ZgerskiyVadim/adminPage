@@ -1,8 +1,8 @@
 import createError from '../services/error';
 import Group from '../models/group/group';
 import User from '../models/user/user';
-import * as commonCrudOperations from '../services/commonCrudOperations';
-
+import {CommonCrudOperations} from '../services/commonCrudOperations';
+const commonCrudOperations = new CommonCrudOperations();
 
 export const getGroups = commonCrudOperations.getAll(Group, User);
 

@@ -2,7 +2,8 @@ import async from 'async';
 import createError from '../services/error';
 import User from '../models/user/user';
 import Group from '../models/group/group';
-import * as commonCrudOperations from '../services/commonCrudOperations';
+import {CommonCrudOperations} from '../services/commonCrudOperations';
+const commonCrudOperations = new CommonCrudOperations();
 
 
 export const getUsers = commonCrudOperations.getAll(User);
