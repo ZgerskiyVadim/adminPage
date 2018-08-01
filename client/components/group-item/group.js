@@ -60,7 +60,7 @@ class Group extends Component {
                         <input onChange={this.handleChangeState} value={state.title} className={classNames('form-control', hiddenForm)} name='title' type="text"/>
                     </div>
                     <div className='col-md-4'>
-                        <span>{users.length}</span>
+                        <Link to={`groups/${_id}`}>{users.length}</Link>
                     </div>
                 </div>
 
