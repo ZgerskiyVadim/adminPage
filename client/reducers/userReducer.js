@@ -28,7 +28,7 @@ export default function userReducer(state = initialState, action) {
                 ...state,
                 user: {
                     ...state.user,
-                    ...action.payload.user
+                    ...action.payload
                 },
                 groups: [...action.payload.groups],
                 isLeftGroup: false,

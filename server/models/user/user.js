@@ -1,5 +1,6 @@
 import mongoose from 'mongoose';
 import * as validator from './validator';
+import Group from '../group/group';
 
 const Schema = mongoose.Schema;
 
@@ -23,7 +24,8 @@ const userSchema = new Schema({
         validate: {
             validator: validator.email,
             message: 'Provided email is invalid.'
-        }}
+        }},
+    groups: [{type: Schema.Types.ObjectId, ref: Group}]
 });
 
 export default mongoose.model('User', userSchema);
