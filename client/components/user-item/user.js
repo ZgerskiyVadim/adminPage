@@ -9,7 +9,7 @@ class User extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            show: false,
+            showForm: false,
             username: '',
             firstName: '',
             lastName: '',
@@ -22,7 +22,7 @@ class User extends Component {
     }
 
     sendOptionsUpdate = () => {
-        this.setState({show: false});
+        this.setState({showForm: false});
         const options = getValidOptions(this.state);
         this.props.update(options)
     };
@@ -30,10 +30,10 @@ class User extends Component {
     render() {
         const {username, firstName, lastName, email, _id} = this.props.user;
         const { isJoining } = this.props;
-        const {...state} = this.state;
+        const {showForm, ...state} = this.state;
 
-        const hiddenForm = classNames({'users--hide': !this.state.show});
-        const shownForm = classNames({'users--hide': this.state.show});
+        const hiddenForm = classNames({'users--hide': !showForm});
+        const shownForm = classNames({'users--hide': showForm});
         const isJoiningUser = classNames({'users--hide': isJoining});
 
         return (

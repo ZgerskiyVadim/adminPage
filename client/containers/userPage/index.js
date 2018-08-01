@@ -15,7 +15,7 @@ class User extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            show: false,
+            showForm: false,
             username: '',
             firstName: '',
             lastName: '',
@@ -48,7 +48,7 @@ class User extends Component {
     }
 
     update = () => {
-        this.setState({show: false});
+        this.setState({showForm: false});
         const options = getValidOptions(this.state);
         this.props.actions.updateUserRequest(options);
     };
@@ -70,10 +70,10 @@ class User extends Component {
     render() {
         const {username, firstName, lastName, email} = this.props.userStore.user;
         const {groups} = this.props;
-        const {show, ...state} = this.state;
+        const {showForm, ...state} = this.state;
 
-        const hiddenForm = classNames({'user--hide': !show});
-        const shownForm = classNames('user--margin-right btn btn-outline-primary', {'user--hide': show});
+        const hiddenForm = classNames({'user--hide': !showForm});
+        const shownForm = classNames('user--margin-right btn btn-outline-primary', {'user--hide': showForm});
         const isGroups = classNames({'user--hide': !groups.length});
 
         return (

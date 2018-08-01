@@ -15,7 +15,7 @@ class User extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            show: false,
+            showForm: false,
             name: '',
             title: '',
             id: this.props.match.params.id
@@ -43,7 +43,7 @@ class User extends Component {
     }
 
     update = () => {
-        this.setState({show: false});
+        this.setState({showForm: false});
         const options = getValidOptions(this.state);
         this.props.actions.updateGroupRequest(options);
     };
@@ -59,10 +59,10 @@ class User extends Component {
     render() {
         const {name, title} = this.props.group;
         const {users} = this.props;
-        const {show, ...state} = this.state;
+        const {showForm, ...state} = this.state;
 
-        const hiddenForm = classNames({'group--hide': !show});
-        const shownForm = classNames({'group--hide': show});
+        const hiddenForm = classNames({'group--hide': !showForm});
+        const shownForm = classNames({'group--hide': showForm});
         const isUsers = classNames({'group--hide': !users.length});
 
         return (

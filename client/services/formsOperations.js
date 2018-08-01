@@ -9,7 +9,7 @@ export function handleChangeState(event) {
 export function showForms(id) {
     this.setState({
         id,
-        show: true
+        showForm: true
     });
 }
 

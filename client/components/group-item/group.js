@@ -10,7 +10,7 @@ class Group extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            show: false,
+            showForm: false,
             name: '',
             title: '',
             id: '',
@@ -22,7 +22,7 @@ class Group extends Component {
     }
 
     sendOptionsUpdate = () => {
-        this.setState({show: false});
+        this.setState({showForm: false});
         const options = getValidOptions(this.state);
         this.props.update(options)
     };
@@ -40,10 +40,10 @@ class Group extends Component {
     render() {
         const { isJoiningGroup, isJoinedUserInGroup } = this.props;
         const {users, name, title, _id} = this.props.group;
-        const {...state} = this.state;
+        const {showForm, ...state} = this.state;
 
-        const hiddenForm = classNames({'groups--hide': !this.state.show});
-        const shownForm = classNames({'groups--hide': this.state.show});
+        const hiddenForm = classNames({'groups--hide': !showForm});
+        const shownForm = classNames({'groups--hide': showForm});
         const notJoiningGroup = classNames({'groups--hide': isJoiningGroup});
         const userAlreadyInGroup = classNames({'groups--hide': !isJoiningGroup || isJoinedUserInGroup});
         const userNotInGroup = classNames({'groups--hide': !isJoiningGroup || !isJoinedUserInGroup});
