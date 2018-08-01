@@ -8,7 +8,16 @@ class Breadcrumb extends Component {
     locationPath() {
         const locationPath = this.props.location.pathname;
 
-        const locations = locationPath.split('/')
+        const locations = this.getLocations(locationPath);
+        if (locations.length) {
+            const lastPath = locations.length - 1;
+            locations[lastPath].islastPath = true;
+        }
+        return locations;
+    }
+
+    getLocations(locationPath) {
+        return locationPath.split('/')
             .filter(locationPath => !!locationPath)
             .map(path => {
                 return {
@@ -16,11 +25,6 @@ class Breadcrumb extends Component {
                     location: locationPath.substr(0, locationPath.indexOf(path)) + path
                 };
             });
-        if (locations.length) {
-            const lastElem = locations.length - 1;
-            locations[lastElem].isLastElem = true;
-        }
-        return locations;
     }
 
     goToPath = (location) => (e) => {
@@ -37,8 +41,8 @@ class Breadcrumb extends Component {
                     this.locationPath().map((item, index) => {
                         return (
                             <div className='breadcrumb--inline-flex' key={index}>
-                                <h1 onClick={!item.isLastElem ? this.goToPath(item.location) : null} className='breadcrumb--cursor'>{item.path}</h1>
-                                <h1 className={classNames('breadcrumb--nowrap', {'breadcrumb--hide': item.isLastElem})}>&nbsp;- >&nbsp;</h1>
+                                <h1 onClick={!item.islastPath ? this.goToPath(item.location) : null} className='breadcrumb--cursor'>{item.path}</h1>
+                                <h1 className={classNames('breadcrumb--nowrap', {'breadcrumb--hide': item.islastPath})}>&nbsp;- >&nbsp;</h1>
                             </div>
                         );
                     })
