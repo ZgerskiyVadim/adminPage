@@ -1,10 +1,6 @@
 .groups {
   margin-left: 1em;
 }
-.groups-headers {
-  display: flex;
-  margin-top: 2em;
-}
 .groups--margin-right {
   margin-right: 1em;
 }
@@ -18,32 +14,15 @@
     margin-right: 3em;
   }
 }
-.groups-row {
-  display: flex;
-  align-items: center;
-  margin-top: 0.5em;
-  div {
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-  }
-  a {
-    color: black;
-    text-decoration: none;
-  }
+.groups-table {
+  margin-top: 2em;
 }
-.groups-buttons {
-  display: flex;
-  justify-content: space-between;
-  align-self: flex-end;
-}
-.groups--nowrap {
-  white-space: nowrap;
-}
-
 .groups--margin-bottom {
   margin-bottom: 5em;
 }
 .groups--hide {
   display: none;
+}
+.groups--cursor {
+  cursor: pointer;
 }

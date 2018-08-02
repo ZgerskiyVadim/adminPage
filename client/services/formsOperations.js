@@ -6,7 +6,8 @@ export function handleChangeState(event) {
     });
 }
 
-export function showForms(id) {
+export function showForms(id, e) {
+    e.stopPropagation();
     this.setState({
         id,
         showForm: true

@@ -110,20 +110,34 @@ class Groups extends Component {
                     <input onChange={this.search} className='form-control col-md-3' type="text"/>
                     <button onClick={this.cancelJoinGroup} className={classNames('btn btn-outline-danger', isJoinGroup)}>Cancel join group</button>
                 </div>
-                <div className={marginBottom}>
-                    <div className='groups-headers col-md-8'>
-                        <h2 className='col-md-4'>name</h2>
-                        <h2 className='col-md-4'>title</h2>
-                        <h2 className='groups--nowrap col-md-4'>users</h2>
-                    </div>
+                <table className={classNames('groups-table table table-hover', marginBottom)}>
+                    <thead className='thead-light'>
+                    <tr>
+                        <th>
+                            <h5>#</h5>
+                        </th>
+                        <th>
+                            <h5>name</h5>
+                        </th>
+                        <th>
+                            <h5>title</h5>
+                        </th>
+                        <th>
+                            <h5>users</h5>
+                        </th>
+                        <th/>
+                    </tr>
+                    </thead>
                     {
                         isJoiningGroup ?
 
-                            this.isJoinedUserInGroup().map(group =>
+                            this.isJoinedUserInGroup().map((group, index) =>
                                 <Group
                                     key={group._id}
                                     group={group}
+                                    index={index}
                                     userID={user._id}
+                                    history={this.props.history}
                                     isJoinedUserInGroup={group.isJoinedUserInGroup}
                                     isJoiningGroup={true}
                                     joinGroup={this.joinGroup}
@@ -132,16 +146,18 @@ class Groups extends Component {
                                     leaveGroup={this.leaveGroup}
                                 />) :
 
-                            groups.map(group =>
+                            groups.map((group, index) =>
                                 <Group
                                     key={group._id}
                                     group={group}
+                                    index={index}
+                                    history={this.props.history}
                                     isJoiningGroup={false}
                                     update={this.update}
                                     remove={this.remove}
                                 />)
                     }
-                </div>
+                </table>
             </div>
         );
     }

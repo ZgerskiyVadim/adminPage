@@ -82,24 +82,40 @@ class Users extends Component {
                     <h2>Search</h2>
                     <input onChange={this.search} className='form-control col-md-3' type="text"/>
                 </div>
-                <div className={marginBottom}>
-                    <div className='users-headers col-md-9'>
-                        <h2 className='col-md-3'>username</h2>
-                        <h2 className='col-md-3'>firstName</h2>
-                        <h2 className='col-md-3'>lastName</h2>
-                        <h2 className='col-md-3'>email</h2>
-                    </div>
+                <table className={classNames('users-table table table-hover', marginBottom)}>
+                    <thead className='thead-light'>
+                    <tr>
+                        <th>
+                            <h5>#</h5>
+                        </th>
+                        <th>
+                            <h5>username</h5>
+                        </th>
+                        <th>
+                            <h5>firstName</h5>
+                        </th>
+                        <th>
+                            <h5>lastName</h5>
+                        </th>
+                        <th>
+                            <h5>email</h5>
+                        </th>
+                        <th/>
+                    </tr>
+                    </thead>
                     {
-                        this.getUsers().map(user =>
+                        this.getUsers().map((user, index) =>
                             <User
                                 user={user}
+                                index={index}
+                                history={this.props.history}
                                 key={user._id}
                                 isJoining={user.isJoining}
                                 update={this.update}
                                 remove={this.remove}
                             />)
                     }
-                </div>
+                </table>
             </div>
         );
     }
