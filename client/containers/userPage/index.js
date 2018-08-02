@@ -7,6 +7,7 @@ import toastr from 'toastr';
 
 import './index.scss';
 import * as usersActionCreators from '../../actions/action_creators/users';
+import * as groupsActionCreators from '../../actions/action_creators/groups';
 import {handleChangeState, showForms, getValidOptions} from '../../services/formsOperations';
 import {getErrorMessage} from '../../services/getErrorMessage';
 
@@ -28,7 +29,7 @@ class User extends Component {
 
     componentDidMount() {
         const isJoiningGroup = false;
-        this.props.actions.joinGroup(isJoiningGroup);
+        this.props.actions.startJoiningGroup(isJoiningGroup);
         this.props.actions.getUserRequest(this.state.id);
     }
 
@@ -56,13 +57,24 @@ class User extends Component {
         this.props.actions.updateUserRequest(options);
     };
 
-    joinGroup = () => {
+    startJoiningGroup = (e) => {
+        e.stopPropagation();
         const isJoiningGroup = true;
-        this.props.actions.joinGroup(isJoiningGroup);
+        this.props.actions.startJoiningGroup(isJoiningGroup);
         this.props.history.push('/groups');
     };
 
+    joinGroup = (id) => (e) => {
+        e.stopPropagation();
+        const options = {
+            userID: this.state.id,
+            groupID: id
+        };
+        this.props.actions.joinGroup(options);
+    };
+
     leaveGroup = (id) => (e) => {
+        e.stopPropagation();
         const options = {
             userID: this.state.id,
             groupID: id
@@ -95,11 +107,11 @@ class User extends Component {
                     </div>
                     <button onClick={this.showForms} className={shownForm}>Update</button>
                     <button onClick={this.update} className={classNames('user--margin-right btn btn-outline-primary', hiddenForm)}>Save</button>
-                    <button onClick={this.joinGroup} className='btn btn-outline-info'>Join group</button>
+                    <button onClick={this.startJoiningGroup} className='btn btn-outline-info'>Join group</button>
                 </div>
 
                 <h1 className={isGroups}>Groups</h1>
-                <table className='table table-hover'>
+                <table className={classNames('table table-hover', isGroups)}>
                     <thead className='thead-light'>
                     <tr>
                         <th>
@@ -120,7 +132,7 @@ class User extends Component {
                     {
                         groups.map((group, index) =>
                             <tbody key={group._id}>
-                            <tr onClick={this.goToGroup(group._id)} className='groups--cursor'>
+                            <tr onClick={this.goToGroup(group._id)} className={classNames('user__groups-list', {'user--light-grey': group.isLeftGroup})}>
                                 <th>{index + 1}</th>
                                 <td>
                                     <h5>{group.name}</h5>
@@ -132,7 +144,8 @@ class User extends Component {
                                     <h5>{group.users.length}</h5>
                                 </td>
                                 <td>
-                                    <button onClick={this.leaveGroup(group._id)} className='user__leave-group btn btn-outline-danger'>leave group</button>
+                                    <button onClick={this.leaveGroup(group._id)} className={classNames('user__leave-group btn btn-outline-danger', {'user--hide': group.isLeftGroup})}>leave group</button>
+                                    <button onClick={this.joinGroup(group._id)} className={classNames('user__leave-group btn btn-outline-info', {'user--hide': !group.isLeftGroup})}>join group</button>
                                 </td>
                             </tr>
                             </tbody>
@@ -156,7 +169,8 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
     actions: bindActionCreators({
-        ...usersActionCreators
+        ...usersActionCreators,
+        ...groupsActionCreators
     }, dispatch)
 });
 

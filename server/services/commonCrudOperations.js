@@ -29,15 +29,23 @@ export class CommonCrudOperations {
         }
     );
 
-    getByID = (Model, ModelPopulate, path) => (
+    getByID = (Model, ModelPopulate, pathPopulate) => (
         (req, res, done) => {
+            const { skip, limit, searchBy } = req.query;
+
             Model.findOne({_id: req.params.id}, (err, user) => {
                 if (!user) return done(createError('Not Found', 404));
                 if (err) return done(err);
-                ModelPopulate.populate(user, {path}, (err, docs) => {
-                    if (err) return done(err);
-                    res.json(docs);
-                });
+                ModelPopulate.populate(user,
+                    {
+                        path: pathPopulate,
+                        match: {'$or': searchFields(searchBy, pathPopulate)},
+                        options: {skip: Number(skip), limit: Number(limit)}
+                    },
+                    (err, docs) => {
+                        if (err) return done(err);
+                        res.json(docs);
+                    });
             });
         }
     );
@@ -138,8 +146,9 @@ export class CommonCrudOperations {
 }
 
 function searchFields(searchBy, path) {
+    searchBy = searchBy ? searchBy : '';
     return (
-        path === 'users' ?
+        path === 'groups' ?
             [
                 {name: {$regex: searchBy, $options: 'i'}},
                 {title: {$regex: searchBy, $options: 'i'}}

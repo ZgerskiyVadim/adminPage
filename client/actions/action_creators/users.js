@@ -19,7 +19,7 @@ export const getUserRequest = (data) => ({
     payload: data
 });
 
-export const joinGroup = (data) => ({
+export const startJoiningGroup = (data) => ({
     type: IS_USER_WANT_JOIN_GROUP,
     payload: data
 });

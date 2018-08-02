@@ -1,10 +1,18 @@
 import {
     GET_USER,
     UPDATE_USER,
-    USER_LEAVE_GROUP,
+    USER_LEFT_GROUP,
+    USER_JOINED_GROUP,
     IS_USER_WANT_JOIN_GROUP,
     USER_REQUEST_FAILED
 } from '../actions';
+
+const defaultProps = {
+    isJoinedGroup: false,
+    isLeftGroup: false,
+    isUpdated: false,
+    error: null
+};
 
 const initialState = {
     user: {
@@ -16,9 +24,7 @@ const initialState = {
         isJoiningGroup: false,
     },
     groups: [],
-    isLeftGroup: false,
-    isUpdated: false,
-    error: null
+    ...defaultProps
 };
 
 export default function userReducer(state = initialState, action) {
@@ -31,9 +37,7 @@ export default function userReducer(state = initialState, action) {
                     ...action.payload
                 },
                 groups: [...action.payload.groups],
-                isLeftGroup: false,
-                isUpdated: false,
-                error: null
+                ...defaultProps
             };
 
         case UPDATE_USER:
@@ -43,18 +47,24 @@ export default function userReducer(state = initialState, action) {
                     ...state.user,
                     ...action.payload
                 },
-                isLeftGroup: false,
+                ...defaultProps,
                 isUpdated: true,
-                error: null
             };
 
-        case USER_LEAVE_GROUP:
+        case USER_JOINED_GROUP:
             return {
                 ...state,
-                groups: state.groups.filter(group => group._id !== action.payload._id),
+                groups: state.groups.map(group => group._id === action.payload._id ? {...action.payload, isLeftGroup: false} : group),
+                ...defaultProps,
+                isJoinedGroup: true,
+            };
+
+        case USER_LEFT_GROUP:
+            return {
+                ...state,
+                groups: state.groups.map(group => group._id === action.payload._id ? {...action.payload, isLeftGroup: true} : group),
+                ...defaultProps,
                 isLeftGroup: true,
-                isUpdated: false,
-                error: null
             };
 
         case IS_USER_WANT_JOIN_GROUP:
@@ -64,16 +74,13 @@ export default function userReducer(state = initialState, action) {
                     ...state.user,
                     isJoiningGroup: action.payload
                 },
-                isLeftGroup: false,
-                isUpdated: false,
-                error: null
+                ...defaultProps
             };
 
         case USER_REQUEST_FAILED:
             return {
                 ...state,
-                isLeftGroup: false,
-                isUpdated: false,
+                ...defaultProps,
                 error: action.payload
             };
 
