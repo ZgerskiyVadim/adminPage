@@ -20,7 +20,11 @@ class User extends Component {
             firstName: '',
             lastName: '',
             email: '',
-            id: this.props.match.params.id
+            id: this.props.match.params.id,
+            options: {
+                limit: 20,
+                searchBy: ''
+            }
         };
 
         this.handleChangeState = handleChangeState.bind(this);
@@ -50,6 +54,20 @@ class User extends Component {
     goToGroup = (id) => (e) => {
         this.props.history.push(`/groups/${id}`);
     };
+
+    search(event) {
+        const {value} = event.target;
+
+        this.setState({
+                options: {
+                    ...this.state.options,
+                    limit: 20,
+                    searchBy: value
+                },
+            },
+            (f) => f
+        );
+    }
 
     update = () => {
         this.setState({showForm: false});
@@ -111,6 +129,10 @@ class User extends Component {
                 </div>
 
                 <h1 className={isGroups}>Groups</h1>
+                <div className='users-search'> {/*!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!change classNAme*/}
+                    <h2>Search</h2>
+                    <input onChange={this.search} className='form-control col-md-3' type="text"/>
+                </div>
                 <table className={classNames('table table-hover', isGroups)}>
                     <thead className='thead-dark'>
                     <tr>
