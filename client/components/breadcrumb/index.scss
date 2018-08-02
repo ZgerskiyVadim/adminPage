@@ -1,16 +1,16 @@
 .breadcrumb-root {
-  margin-left: 2em;
-  border-bottom: 1px solid lightgrey;
-}
-.breadcrumb--inline-flex {
-  display: inline-flex;
+  display: inline-block;
+  margin: 2em 0 0 2em;
 }
 .breadcrumb--cursor {
   cursor: pointer;
 }
-.breadcrumb--nowrap {
-  white-space: nowrap;
-}
 .breadcrumb--hide {
   display: none;
+}
+.breadcrumb--blue {
+  color: darkblue;
+}
+.breadcrumb-item {
+  font-size: 2em;
 }

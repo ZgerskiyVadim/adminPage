@@ -32,22 +32,25 @@ class Breadcrumb extends Component {
     };
 
     render() {
-        const showPath = classNames({'breadcrumb--hide': !this.locationPath().length});
+        const isPathHomeActive = classNames({'breadcrumb--blue': this.locationPath().length, 'active': !this.locationPath().length});
 
         return (
-            <div className='breadcrumb-root breadcrumb--inline-flex'>
-                <h1 className={showPath}>Path:&nbsp;</h1>
-                {
-                    this.locationPath().map((item, index) => {
-                        return (
-                            <div className='breadcrumb--inline-flex' key={index}>
-                                <h1 onClick={!item.islastPath ? this.goToPath(item.location) : null} className='breadcrumb--cursor'>{item.path}</h1>
-                                <h1 className={classNames('breadcrumb--nowrap', {'breadcrumb--hide': item.islastPath})}>&nbsp;- >&nbsp;</h1>
-                            </div>
-                        );
-                    })
-                }
-            </div>
+            <nav className="breadcrumb-root" aria-label="breadcrumb">
+                <ol className="breadcrumb">
+                    <li onClick={this.goToPath('/')} className={classNames('breadcrumb--cursor breadcrumb-item', isPathHomeActive)}>
+                        home
+                    </li>
+                    {
+                        this.locationPath().map((item, index) => {
+                            return (
+                                <li onClick={!item.islastPath ? this.goToPath(item.location) : null} className={classNames('breadcrumb--cursor breadcrumb-item', {'breadcrumb--blue': !item.islastPath, 'active': item.islastPath})} key={index}>
+                                    {item.path}
+                                </li>
+                            );
+                        })
+                    }
+                </ol>
+            </nav>
         );
     }
 }
