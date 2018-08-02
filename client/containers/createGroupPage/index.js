@@ -46,7 +46,7 @@ class CreateGroup extends Component {
                         <input onChange={this.handleChangeState} value={title} name='title' className='form-control' type="text"/>
                     </div>
 
-                    <button onClick={this.sendGroup} className='create-group-send btn btn-outline-primary'>Send</button>
+                    <button onClick={this.sendGroup} className='create-group__send btn btn-outline-primary'>Send</button>
                 </div>
             </div>
         );

@@ -104,7 +104,7 @@ class User extends Component {
         return (
             <div className='user'>
                 <h1>USER</h1>
-                <div className='user-info'>
+                <div className='user__info'>
                     <div className='user--margin-right'>
                         <h3>username: {username}</h3>
                         <input onChange={this.handleChangeState} value={state.username} className={classNames('form-control', hiddenForm)} name='username' type="text"/>
@@ -121,51 +121,53 @@ class User extends Component {
                 </div>
 
                 <h1 className={isGroups}>Groups</h1>
-                <div className='user-search'> {/*!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!change classNAme*/}
-                    <h2>Search</h2>
-                    <input onChange={this.search} className='form-control col-md-3' type="text"/>
+                <div className={classNames('user__groups-table', isGroups)}>
+                    <div className='user__search'>
+                        <h2>Search</h2>
+                        <input onChange={this.search} className='form-control col-md-3' type="text"/>
+                    </div>
+                    <table className='table table-hover'>
+                        <thead className='thead-dark'>
+                        <tr>
+                            <th>
+                                <h5>#</h5>
+                            </th>
+                            <th>
+                                <h5>name</h5>
+                            </th>
+                            <th>
+                                <h5>title</h5>
+                            </th>
+                            <th>
+                                <h5>users</h5>
+                            </th>
+                            <th/>
+                        </tr>
+                        </thead>
+                        {
+                            groups.map((group, index) =>
+                                <tbody key={group._id}>
+                                <tr onClick={this.goToGroup(group._id)} className={classNames('user__groups-list', {'user--light-grey': group.isLeftGroup})}>
+                                    <th>{index + 1}</th>
+                                    <td>
+                                        <h5>{group.name}</h5>
+                                    </td>
+                                    <td>
+                                        <h5>{group.title}</h5>
+                                    </td>
+                                    <td>
+                                        <h5>{group.users.length}</h5>
+                                    </td>
+                                    <td>
+                                        <button onClick={this.leaveGroup(group._id)} className={classNames('user__leave-group btn btn-outline-danger', {'user--hide': group.isLeftGroup})}>leave group</button>
+                                        <button onClick={this.joinGroup(group._id)} className={classNames('user__leave-group btn btn-outline-info', {'user--hide': !group.isLeftGroup})}>join group</button>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            )
+                        }
+                    </table>
                 </div>
-                <table className={classNames('table table-hover', isGroups)}>
-                    <thead className='thead-dark'>
-                    <tr>
-                        <th>
-                            <h5>#</h5>
-                        </th>
-                        <th>
-                            <h5>name</h5>
-                        </th>
-                        <th>
-                            <h5>title</h5>
-                        </th>
-                        <th>
-                            <h5>users</h5>
-                        </th>
-                        <th/>
-                    </tr>
-                    </thead>
-                    {
-                        groups.map((group, index) =>
-                            <tbody key={group._id}>
-                            <tr onClick={this.goToGroup(group._id)} className={classNames('user__groups-list', {'user--light-grey': group.isLeftGroup})}>
-                                <th>{index + 1}</th>
-                                <td>
-                                    <h5>{group.name}</h5>
-                                </td>
-                                <td>
-                                    <h5>{group.title}</h5>
-                                </td>
-                                <td>
-                                    <h5>{group.users.length}</h5>
-                                </td>
-                                <td>
-                                    <button onClick={this.leaveGroup(group._id)} className={classNames('user__leave-group btn btn-outline-danger', {'user--hide': group.isLeftGroup})}>leave group</button>
-                                    <button onClick={this.joinGroup(group._id)} className={classNames('user__leave-group btn btn-outline-info', {'user--hide': !group.isLeftGroup})}>join group</button>
-                                </td>
-                            </tr>
-                            </tbody>
-                        )
-                    }
-                </table>
             </div>
         );
     }

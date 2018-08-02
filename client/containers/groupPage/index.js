@@ -68,7 +68,7 @@ class User extends Component {
         return (
             <div className='group'>
                 <h1>GROUP</h1>
-                <div className='group-info'>
+                <div className='group__info'>
                     <div className='group--margin-right'>
                         <h3>name: {name}</h3>
                         <input onChange={this.handleChangeState} value={state.name} className={classNames('form-control', hiddenForm)} name='name' type="text"/>

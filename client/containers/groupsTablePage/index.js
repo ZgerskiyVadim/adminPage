@@ -105,12 +105,12 @@ class Groups extends Component {
 
         return (
             <div className='groups'>
-                <div className='groups-search'>
+                <div className='groups__search'>
                     <h2>Search</h2>
                     <input onChange={this.search} className='form-control col-md-3' type="text"/>
                     <button onClick={this.cancelJoinGroup} className={classNames('btn btn-outline-danger', isJoinGroup)}>Cancel join group</button>
                 </div>
-                <table className={classNames('groups-table table table-hover', marginBottom)}>
+                <table className={classNames('groups__table table table-hover', marginBottom)}>
                     <thead className='thead-dark'>
                     <tr>
                         <th>

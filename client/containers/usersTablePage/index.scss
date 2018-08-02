@@ -1,17 +1,18 @@
 .users {
-    margin-left: 1em;
+    width: 90%;
+    margin: 0 auto;
 }
 .users--margin-right {
     margin-right: 1em;
 }
-.users-search {
+.users__search {
     display: flex;
-    margin: 2em 0 0 1em;
+    margin: 2em 0;
     h2 {
         margin-right: 1em;
     }
 }
-.users-table {
+.users__table {
     margin-top: 2em;
 }
 .users--cursor {

@@ -52,7 +52,7 @@ class CreateUser extends Component {
                         <input onChange={this.handleChangeState} value={email} name='email' className='form-control' type="text"/>
                     </div>
 
-                    <button onClick={this.sendUser} className='create-user-send btn btn-outline-primary'>Send</button>
+                    <button onClick={this.sendUser} className='create-user__send btn btn-outline-primary'>Send</button>
                 </div>
             </div>
         );

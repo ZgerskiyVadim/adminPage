@@ -78,11 +78,11 @@ class Users extends Component {
 
         return (
             <div className='users'>
-                <div className='users-search'>
+                <div className='users__search'>
                     <h2>Search</h2>
                     <input onChange={this.search} className='form-control col-md-3' type="text"/>
                 </div>
-                <table className={classNames('users-table table table-hover', marginBottom)}>
+                <table className={classNames('users__table table table-hover', marginBottom)}>
                     <thead className='thead-dark'>
                     <tr>
                         <th>
