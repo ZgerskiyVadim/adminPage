@@ -3,7 +3,7 @@ import {
     SEARCH_USERS_REQUEST,
     UPDATE_USER_REQUEST,
     REMOVE_USER_REQUEST,
-    IS_JOINING_GROUP,
+    IS_USER_WANT_JOIN_GROUP,
     LEAVE_GROUP_REQUEST,
     USER_CREATE_REQUEST,
     GET_USER_REQUEST
@@ -20,7 +20,7 @@ export const getUserRequest = (data) => ({
 });
 
 export const joinGroup = (data) => ({
-    type: IS_JOINING_GROUP,
+    type: IS_USER_WANT_JOIN_GROUP,
     payload: data
 });
 

@@ -4,7 +4,7 @@ import {
     UPDATE_GROUP_REQUEST,
     REMOVE_GROUP_REQUEST,
     ADD_USER_IN_GROUP_REQUEST,
-    IS_JOINING_GROUP,
+    IS_USER_WANT_JOIN_GROUP,
     REMOVE_USER_FROM_GROUP,
     GROUP_CREATE_REQUEST,
     GET_GROUP_REQUEST
@@ -46,7 +46,7 @@ export const joinGroup = (data) => ({
 });
 
 export const cancelJoinGroup = (data) => ({
-    type: IS_JOINING_GROUP,
+    type: IS_USER_WANT_JOIN_GROUP,
     payload: data
 });
 

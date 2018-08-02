@@ -2,7 +2,6 @@ import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
-import {Link} from 'react-router-dom';
 import {bindActionCreators} from 'redux';
 import toastr from 'toastr';
 
@@ -47,6 +46,10 @@ class User extends Component {
         isUpdated && toastr.success('User updated', 'Ok!');
     }
 
+    goToGroup = (id) => (e) => {
+        this.props.history.push(`/groups/${id}`);
+    };
+
     update = () => {
         this.setState({showForm: false});
         const options = getValidOptions(this.state);
@@ -78,7 +81,7 @@ class User extends Component {
 
         return (
             <div className='user'>
-               <h1>USER</h1>
+                <h1>USER</h1>
                 <div className='user-info'>
                     <div className='user--margin-right'>
                         <h3>username: {username}</h3>
@@ -96,21 +99,46 @@ class User extends Component {
                 </div>
 
                 <h1 className={isGroups}>Groups</h1>
-                {
-                    groups.map(group =>
-                        <div key={group._id} className='user__groups col-md-4 col-sm-6'>
-                            <div>
-                                <Link to={`/groups/${group._id}`}>
-                                    <h4>name: {group.name}</h4>
-                                </Link>
-                                <Link to={`/groups/${group._id}`}>
-                                    <h4>title: {group.title}</h4>
-                                </Link>
-                            </div>
-                            <button onClick={this.leaveGroup(group._id)} className='user__leave-group btn btn-outline-danger'>leave group</button>
-                        </div>
-                    )
-                }
+                <table className='table table-hover'>
+                    <thead className='thead-light'>
+                    <tr>
+                        <th>
+                            <h5>#</h5>
+                        </th>
+                        <th>
+                            <h5>name</h5>
+                        </th>
+                        <th>
+                            <h5>title</h5>
+                        </th>
+                        <th>
+                            <h5>users</h5>
+                        </th>
+                        <th/>
+                    </tr>
+                    </thead>
+                    {
+                        groups.map((group, index) =>
+                            <tbody key={group._id}>
+                            <tr onClick={this.goToGroup(group._id)} className='groups--cursor'>
+                                <th>{index + 1}</th>
+                                <td>
+                                    <h5>{group.name}</h5>
+                                </td>
+                                <td>
+                                    <h5>{group.title}</h5>
+                                </td>
+                                <td>
+                                    <h5>{group.users.length}</h5>
+                                </td>
+                                <td>
+                                    <button onClick={this.leaveGroup(group._id)} className='user__leave-group btn btn-outline-danger'>leave group</button>
+                                </td>
+                            </tr>
+                            </tbody>
+                        )
+                    }
+                </table>
             </div>
         );
     }

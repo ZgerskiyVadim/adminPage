@@ -19,7 +19,7 @@ class Group extends Component {
         this.handleChangeState = handleChangeState.bind(this);
     }
 
-    goToUser = () => {
+    goToGroup = () => {
         const {_id} = this.props.group;
         this.props.history.push(`/groups/${_id}`);
     };
@@ -60,7 +60,7 @@ class Group extends Component {
 
         return (
             <tbody>
-            <tr onClick={this.goToUser} className='groups--cursor'>
+            <tr onClick={this.goToGroup} className='groups--cursor'>
                 <th>{index + 1}</th>
                 <td>
                     <h5>{name}</h5>

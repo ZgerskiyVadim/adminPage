@@ -2,7 +2,7 @@ import {
     GET_USER,
     UPDATE_USER,
     USER_LEAVE_GROUP,
-    IS_JOINING_GROUP,
+    IS_USER_WANT_JOIN_GROUP,
     USER_REQUEST_FAILED
 } from '../actions';
 
@@ -57,7 +57,7 @@ export default function userReducer(state = initialState, action) {
                 error: null
             };
 
-        case IS_JOINING_GROUP:
+        case IS_USER_WANT_JOIN_GROUP:
             return {
                 ...state,
                 user: {
