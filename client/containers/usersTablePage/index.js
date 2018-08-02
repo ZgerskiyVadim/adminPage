@@ -83,7 +83,7 @@ class Users extends Component {
                     <input onChange={this.search} className='form-control col-md-3' type="text"/>
                 </div>
                 <table className={classNames('users-table table table-hover', marginBottom)}>
-                    <thead className='thead-light'>
+                    <thead className='thead-dark'>
                     <tr>
                         <th>
                             <h5>#</h5>

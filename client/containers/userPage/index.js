@@ -112,7 +112,7 @@ class User extends Component {
 
                 <h1 className={isGroups}>Groups</h1>
                 <table className={classNames('table table-hover', isGroups)}>
-                    <thead className='thead-light'>
+                    <thead className='thead-dark'>
                     <tr>
                         <th>
                             <h5>#</h5>

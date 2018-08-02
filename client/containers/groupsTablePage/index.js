@@ -111,7 +111,7 @@ class Groups extends Component {
                     <button onClick={this.cancelJoinGroup} className={classNames('btn btn-outline-danger', isJoinGroup)}>Cancel join group</button>
                 </div>
                 <table className={classNames('groups-table table table-hover', marginBottom)}>
-                    <thead className='thead-light'>
+                    <thead className='thead-dark'>
                     <tr>
                         <th>
                             <h5>#</h5>
