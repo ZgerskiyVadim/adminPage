@@ -10,8 +10,9 @@ import axios from 'axios/index';
             .then(users => users.data);
     };
 
-    export const getUser = (id) => {
-        return axios.get(`/api/users/${id}`)
+    export const getUser = (options) => {
+        const { id, searchBy, limit} = options;
+        return axios.get(`/api/users/${id}`, {params: {searchBy, limit}})
             .then(user => user.data);
     };
 

@@ -5,11 +5,15 @@ import {
     GROUPS_REQUEST_FAILED
 } from '../actions';
 
-const initialState = {
-    groups: [],
+const defaultProps = {
     isRemoved: false,
     isUpdated: false,
     error: null
+};
+
+const initialState = {
+    groups: [],
+    ...defaultProps
 };
 
 export default function groupsReducer(state = initialState, action) {
@@ -27,25 +31,22 @@ export default function groupsReducer(state = initialState, action) {
             return {
                 ...state,
                 groups: state.groups.map(group => (group._id === action.payload._id) ? action.payload : group),
-                isRemoved: false,
-                isUpdated: true,
-                error: null
+                ...defaultProps,
+                isUpdated: true
             };
 
         case REMOVE_GROUP:
             return {
                 ...state,
                 groups: state.groups.filter(group => group._id !== action.payload),
+                ...defaultProps,
                 isRemoved: true,
-                isUpdated: false,
-                error: null
             };
 
         case GROUPS_REQUEST_FAILED:
             return {
                 ...state,
-                isRemoved: false,
-                isUpdated: false,
+                ...defaultProps,
                 error: action.payload
             };
 

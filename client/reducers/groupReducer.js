@@ -4,12 +4,16 @@ import {
     UPDATE_GROUP
 } from '../actions';
 
+const defaultProps = {
+    isUpdated: false,
+    error: null
+};
+
 const initialState = {
     name: '',
     title: '',
     users: [],
-    isUpdated: false,
-    error: null
+    ...defaultProps
 };
 
 export default function groupReducer(state = initialState, action) {
@@ -18,8 +22,7 @@ export default function groupReducer(state = initialState, action) {
             return {
                 ...state,
                 ...action.payload,
-                isUpdated: false,
-                error: null
+                ...defaultProps
             };
 
         case UPDATE_GROUP:
@@ -28,14 +31,14 @@ export default function groupReducer(state = initialState, action) {
                 name: action.payload.name,
                 title: action.payload.title,
                 users: action.payload.users,
+                ...defaultProps,
                 isUpdated: true,
-                error: null
             };
 
         case GROUP_REQUEST_FAILED:
             return {
                 ...state,
-                isUpdated: false,
+                ...defaultProps,
                 error: action.payload
             };
 

@@ -10,7 +10,8 @@ export class CommonCrudOperations {
             const { skip, limit, searchBy } = req.query;
 
             if (searchBy) {
-                Model.find({'$or': searchFields(searchBy, path)}, null, {skip: Number(skip), limit: Number(limit)}, (err, data) => {
+                const fieldsBy = path === 'users' ? path : 'users';
+                Model.find({'$or': searchFields(searchBy, fieldsBy)}, null, {skip: Number(skip), limit: Number(limit)}, (err, data) => {
                     if (err) return done(err);
                     ModelPopulate.populate(data, {path}, (err, docs) => {
                         if (err) return done(err);
@@ -145,10 +146,10 @@ export class CommonCrudOperations {
     );
 }
 
-function searchFields(searchBy, path) {
+function searchFields(searchBy, fieldsBy) {
     searchBy = searchBy ? searchBy : '';
     return (
-        path === 'groups' ?
+        fieldsBy === 'groups' ?
             [
                 {name: {$regex: searchBy, $options: 'i'}},
                 {title: {$regex: searchBy, $options: 'i'}}

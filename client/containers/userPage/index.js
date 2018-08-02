@@ -10,6 +10,7 @@ import * as usersActionCreators from '../../actions/action_creators/users';
 import * as groupsActionCreators from '../../actions/action_creators/groups';
 import {handleChangeState, showForms, getValidOptions} from '../../services/formsOperations';
 import {getErrorMessage} from '../../services/getErrorMessage';
+import {searchUserRequest} from '../../services/searchOperation';
 
 class User extends Component {
     constructor(props) {
@@ -20,25 +21,25 @@ class User extends Component {
             firstName: '',
             lastName: '',
             email: '',
-            id: this.props.match.params.id,
             options: {
                 limit: 20,
-                searchBy: ''
+                searchBy: '',
+                id: this.props.match.params.id
             }
         };
 
         this.handleChangeState = handleChangeState.bind(this);
-        this.showForms = showForms.bind(this, this.state.id);
+        this.showForms = showForms.bind(this, this.state.options.id);
     }
 
     componentDidMount() {
         const isJoiningGroup = false;
         this.props.actions.startJoiningGroup(isJoiningGroup);
-        this.props.actions.getUserRequest(this.state.id);
+        this.props.actions.getUserRequest(this.state.options);
     }
 
     componentWillReceiveProps(nextProps) {
-        const {error, isLeftGroup, isUpdated} = nextProps.userStore;
+        const {error, isLeftGroup, isUpdated, isJoinedGroup} = nextProps.userStore;
         const errorMessage = getErrorMessage(nextProps.userStore);
 
         const status = error && (error.response.data.status || error.response.status);
@@ -47,6 +48,7 @@ class User extends Component {
             return this.props.history.push('/');
         }
         error && toastr.error(errorMessage, 'Opps!');
+        isJoinedGroup && toastr.success('User joined group', 'Ok!');
         isLeftGroup && toastr.info('User left group', 'Ok!');
         isUpdated && toastr.success('User updated', 'Ok!');
     }
@@ -55,19 +57,9 @@ class User extends Component {
         this.props.history.push(`/groups/${id}`);
     };
 
-    search(event) {
-        const {value} = event.target;
-
-        this.setState({
-                options: {
-                    ...this.state.options,
-                    limit: 20,
-                    searchBy: value
-                },
-            },
-            (f) => f
-        );
-    }
+    search = (event) => {
+        searchUserRequest.call(this, event);
+    };
 
     update = () => {
         this.setState({showForm: false});
@@ -85,7 +77,7 @@ class User extends Component {
     joinGroup = (id) => (e) => {
         e.stopPropagation();
         const options = {
-            userID: this.state.id,
+            userID: this.state.options.id,
             groupID: id
         };
         this.props.actions.joinGroup(options);
@@ -94,7 +86,7 @@ class User extends Component {
     leaveGroup = (id) => (e) => {
         e.stopPropagation();
         const options = {
-            userID: this.state.id,
+            userID: this.state.options.id,
             groupID: id
         };
         this.props.actions.leaveGroupRequest(options);
@@ -129,7 +121,7 @@ class User extends Component {
                 </div>
 
                 <h1 className={isGroups}>Groups</h1>
-                <div className='users-search'> {/*!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!change classNAme*/}
+                <div className='user-search'> {/*!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!change classNAme*/}
                     <h2>Search</h2>
                     <input onChange={this.search} className='form-control col-md-3' type="text"/>
                 </div>

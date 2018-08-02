@@ -8,7 +8,7 @@ import toastr from 'toastr';
 import './index.scss';
 import * as usersActionCreators from '../../actions/action_creators/users';
 import {loadMore, checkRemovedItems} from '../../services/loadMore';
-import {searchRequest} from '../../services/searchOperation';
+import {searchUsersRequest} from '../../services/searchOperation';
 import {getErrorMessage} from '../../services/getErrorMessage';
 import User from '../../components/user-item/user';
 
@@ -61,7 +61,7 @@ class Users extends Component {
     }
 
     search = (event) => {
-        searchRequest.call(this, event, 'users');
+        searchUsersRequest.call(this, event);
     };
 
     update = (options) => {
