@@ -2,7 +2,6 @@ import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
-import {Link} from 'react-router-dom';
 import {bindActionCreators} from 'redux';
 import toastr from 'toastr';
 
@@ -10,7 +9,8 @@ import './index.scss';
 import * as groupsActionCreators from '../../actions/action_creators/groups';
 import {handleChangeState, showForms, getValidOptions} from '../../services/formsOperations';
 import {getErrorMessage} from '../../services/getErrorMessage';
-import {groupSearchUsersRequest} from "../../services/searchOperation";
+import {groupSearchUsersRequest} from '../../services/searchOperation';
+import {loadMore} from '../../services/loadMore';
 
 class User extends Component {
     constructor(props) {
@@ -20,18 +20,22 @@ class User extends Component {
             name: '',
             title: '',
             options: {
-                limit: 20,
+                limit: 10,
+                loadNext: 10,
                 searchBy: '',
                 id: this.props.match.params.id
-            }
+            },
+            isLoadMore: true,
         };
 
+        this.loadMore = loadMore.bind(this, 'group');
         this.showForms = showForms.bind(this, this.state.options.id);
         this.handleChangeState = handleChangeState.bind(this);
     }
 
     componentDidMount() {
         this.props.actions.getGroupRequest(this.state.options);
+        window.addEventListener('scroll', this.loadMore);
     }
 
     componentWillReceiveProps(nextProps) {
@@ -45,6 +49,10 @@ class User extends Component {
         }
         error && toastr.error(errorMessage, 'Opps!');
         isUpdated && toastr.success('Success!', 'Ok!');
+    }
+
+    componentWillUnmount() {
+        window.removeEventListener('scroll', this.loadMore);
     }
 
     goToUser = (id) => (e) => {

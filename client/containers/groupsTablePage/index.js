@@ -7,7 +7,7 @@ import toastr from 'toastr';
 
 import './index.scss';
 import * as groupsActionCreators from '../../actions/action_creators/groups';
-import {loadMore, checkRemovedItems} from '../../services/loadMore';
+import {loadMore} from '../../services/loadMore';
 import {searchGroupsRequest} from '../../services/searchOperation';
 import {getErrorMessage} from '../../services/getErrorMessage';
 import Group from '../../components/group-item/group';
@@ -44,12 +44,6 @@ class Groups extends Component {
         error && toastr.error(errorMessage, 'Opps!');
         isUpdated && toastr.success('Success!', 'Ok!');
         isRemoved && toastr.info('Group deleted', 'Ok!');
-    }
-
-    componentDidUpdate(prevProps) {
-        const currentCountGroups = this.props.groups.length;
-        const prevCountGroups = prevProps.groups.length;
-        checkRemovedItems.call(this, prevCountGroups, currentCountGroups);
     }
 
     isJoinedUserInGroup() {
@@ -93,6 +87,7 @@ class Groups extends Component {
     };
 
     remove = (id) => (e) => {
+        e.stopPropagation();
         this.props.actions.removeGroupRequest(id);
     };
 

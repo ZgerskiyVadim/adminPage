@@ -7,7 +7,7 @@ import toastr from 'toastr';
 
 import './index.scss';
 import * as usersActionCreators from '../../actions/action_creators/users';
-import {loadMore, checkRemovedItems} from '../../services/loadMore';
+import {loadMore} from '../../services/loadMore';
 import {searchUsersRequest} from '../../services/searchOperation';
 import {getErrorMessage} from '../../services/getErrorMessage';
 import User from '../../components/user-item/user';
@@ -46,12 +46,6 @@ class Users extends Component {
         isRemoved && toastr.info('User deleted', 'Ok!');
     }
 
-    componentDidUpdate(prevProps) {
-        const currentCountUsers = this.props.users.length;
-        const prevCountUsers = prevProps.users.length;
-        checkRemovedItems.call(this, prevCountUsers, currentCountUsers);
-    }
-
     getUsers() {
         if (this.props.isJoiningGroup) {
             return this.props.users.map(user => user._id === this.props.user._id ? {...user, isJoining: true} : user); //Hide remove button for joining user
@@ -69,6 +63,7 @@ class Users extends Component {
     };
 
     remove = (id) => (e) => {
+        e.stopPropagation();
         this.props.actions.removeUserRequest(id);
     };
 

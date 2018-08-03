@@ -22,10 +22,12 @@ class User extends Component {
             lastName: '',
             email: '',
             options: {
-                limit: 20,
+                limit: 10,
+                loadNext: 10,
                 searchBy: '',
                 id: this.props.match.params.id
-            }
+            },
+            isLoadMore: true,
         };
 
         this.handleChangeState = handleChangeState.bind(this);

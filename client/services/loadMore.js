@@ -1,33 +1,24 @@
-const scrollMinHeight = 250;
-
 export function loadMore(enumItem) {
-    const lengthOfItems = enumItem === 'users' ? this.props.users.length : this.props.groups.length;
+    const lengthOfItems = getLengthOfItems.call(this, enumItem);
     const {isLoadMore} = this.state;
 
-    if (isLoadMore && ((scrollHeight() <= scrollMinHeight) || isScrollDown())) {
+    if (isLoadMore && isScrollDown()) {
         setState.call(this, lengthOfItems, enumItem);
     }
 }
 
-export function checkRemovedItems(prevCount, currentCount) {
-    if (currentCount < prevCount) {
-        this.setState({
-            options: {
-                ...this.state.options,
-                limit: currentCount
-            }
-        }, () => {
-            this.loadMore();
-        });
+function getLengthOfItems(enumItem) {
+    if (enumItem === 'users' || enumItem === 'groups') {
+        return enumItem === 'users' ? this.props.users.length : this.props.groups.length
+    } else if (enumItem === 'user' || enumItem === 'group') {
+
+        return enumItem === 'user' ? this.props.groups.length : this.props.users.length
     }
 }
 
-function scrollHeight() {
-    return document.documentElement.scrollHeight - document.documentElement.clientHeight;
-}
-
 function isScrollDown() {
-    return window.scrollY === scrollHeight();
+    const scrollHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+    return window.scrollY === scrollHeight;
 }
 
 function setState(lengthOfItems, enumItem) {
@@ -48,6 +39,14 @@ function setState(lengthOfItems, enumItem) {
 }
 
 function requestGetItems(enumItem) {
+    if (enumItem === 'users' || enumItem === 'groups') {
+        sendRequestUsersOrGroups.call(this, enumItem);
+    } else if (enumItem === 'user' || enumItem === 'group') {
+        sendRequestUserOrGroup.call(this, enumItem);
+    }
+}
+
+function sendRequestUsersOrGroups(enumItem) {
     const {isSearching, options} = this.state;
     const {limit} = options;
 
@@ -57,5 +56,17 @@ function requestGetItems(enumItem) {
     } else {
         const {searchGroupsRequest, getGroupsRequest} = this.props.actions;
         isSearching ? searchGroupsRequest(options) : getGroupsRequest(limit);
+    }
+}
+
+function sendRequestUserOrGroup(enumItem) {
+    const {options} = this.state;
+
+    if (enumItem === 'user') {
+        const {getUserRequest} = this.props.actions;
+        getUserRequest(options);
+    } else {
+        const {getGroupRequest} = this.props.actions;
+        getGroupRequest(options);
     }
 }
