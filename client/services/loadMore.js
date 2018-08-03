@@ -29,7 +29,8 @@ function getLengthOfItems(enumItem) {
 
 function isScrollDown() {
     const scrollHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
-    return Math.round(window.scrollY) === scrollHeight;
+    const positionOfScroll = window.scrollY;
+    return Math.round(positionOfScroll) === scrollHeight;
 }
 
 function setState(lengthOfItems, enumItem) {
