@@ -10,7 +10,7 @@ import * as groupsActionCreators from '../../actions/action_creators/groups';
 import {handleChangeState, showForms, getValidOptions} from '../../services/formsOperations';
 import {getErrorMessage} from '../../services/getErrorMessage';
 import {groupSearchUsersRequest} from '../../services/searchOperation';
-import {loadMore} from '../../services/loadMore';
+import {checkRemovedItems, loadMore} from '../../services/loadMore';
 
 class User extends Component {
     constructor(props) {
@@ -38,6 +38,10 @@ class User extends Component {
         window.addEventListener('scroll', this.loadMore);
     }
 
+    componentWillUnmount() {
+        window.removeEventListener('scroll', this.loadMore);
+    }
+
     componentWillReceiveProps(nextProps) {
         const {error, isUpdated} = nextProps.group;
         const errorMessage = getErrorMessage(nextProps.group);
@@ -51,8 +55,10 @@ class User extends Component {
         isUpdated && toastr.success('Success!', 'Ok!');
     }
 
-    componentWillUnmount() {
-        window.removeEventListener('scroll', this.loadMore);
+    componentDidUpdate(prevProps) {
+        const currentCountUsers = this.props.users.length;
+        const prevCountUsers = prevProps.users.length;
+        checkRemovedItems.call(this, prevCountUsers, currentCountUsers);
     }
 
     goToUser = (id) => (e) => {

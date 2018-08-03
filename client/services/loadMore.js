@@ -7,6 +7,17 @@ export function loadMore(enumItem) {
     }
 }
 
+export function checkRemovedItems(prevCount, currentCount) {
+    if (currentCount < prevCount) {
+        this.setState({
+            options: {
+                ...this.state.options,
+                limit: currentCount
+            }
+        }, () => this.loadMore);
+    }
+}
+
 function getLengthOfItems(enumItem) {
     if (enumItem === 'users' || enumItem === 'groups') {
         return enumItem === 'users' ? this.props.users.length : this.props.groups.length

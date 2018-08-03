@@ -11,6 +11,7 @@ import * as groupsActionCreators from '../../actions/action_creators/groups';
 import {handleChangeState, showForms, getValidOptions} from '../../services/formsOperations';
 import {getErrorMessage} from '../../services/getErrorMessage';
 import {userSearchGroupsRequest} from '../../services/searchOperation';
+import {checkRemovedItems, loadMore} from '../../services/loadMore';
 
 class User extends Component {
     constructor(props) {
@@ -30,6 +31,7 @@ class User extends Component {
             isLoadMore: true,
         };
 
+        this.loadMore = loadMore.bind(this, 'user');
         this.handleChangeState = handleChangeState.bind(this);
         this.showForms = showForms.bind(this, this.state.options.id);
     }
@@ -38,6 +40,11 @@ class User extends Component {
         const isJoiningGroup = false;
         this.props.actions.startJoiningGroup(isJoiningGroup);
         this.props.actions.getUserRequest(this.state.options);
+        window.addEventListener('scroll', this.loadMore);
+    }
+
+    componentWillUnmount() {
+        window.removeEventListener('scroll', this.loadMore);
     }
 
     componentWillReceiveProps(nextProps) {
@@ -53,6 +60,12 @@ class User extends Component {
         isJoinedGroup && toastr.success('User joined group', 'Ok!');
         isLeftGroup && toastr.info('User left group', 'Ok!');
         isUpdated && toastr.success('User updated', 'Ok!');
+    }
+
+    componentDidUpdate(prevProps) {
+        const currentCountUsers = this.props.groups.length;
+        const prevCountUsers = prevProps.groups.length;
+        checkRemovedItems.call(this, prevCountUsers, currentCountUsers);
     }
 
     goToGroup = (id) => (e) => {
