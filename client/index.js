@@ -15,10 +15,7 @@ render(
         <Router>
             <div>
                 <Breadcrumb/>
-                {createPortal(
-                    <LoadingSpinner/>,
-                    document.getElementById('portal')
-                )}
+                <LoadingSpinner/>
                 <Routes/>
             </div>
         </Router>
