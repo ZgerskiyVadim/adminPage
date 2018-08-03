@@ -2,10 +2,12 @@ import {
     GET_GROUPS,
     UPDATE_GROUP,
     REMOVE_GROUP,
-    GROUPS_REQUEST_FAILED
+    GROUPS_REQUEST_FAILED,
+    GET_GROUPS_REQUEST
 } from '../actions';
 
 const defaultProps = {
+    isLoading: false,
     isRemoved: false,
     isUpdated: false,
     error: null
@@ -22,9 +24,7 @@ export default function groupsReducer(state = initialState, action) {
             return {
                 ...state,
                 groups: [...action.payload],
-                isRemoved: false,
-                isUpdated: false,
-                error: null
+                ...defaultProps
             };
 
         case UPDATE_GROUP:
@@ -48,6 +48,13 @@ export default function groupsReducer(state = initialState, action) {
                 ...state,
                 ...defaultProps,
                 error: action.payload
+            };
+
+        case GET_GROUPS_REQUEST:
+            return {
+                ...state,
+                ...defaultProps,
+                isLoading: true
             };
 
         default: return state;
