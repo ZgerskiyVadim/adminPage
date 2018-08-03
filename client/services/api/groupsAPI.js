@@ -10,8 +10,9 @@ import axios from 'axios/index';
             .then(groups => groups.data);
     };
 
-    export const getGroup = (id) => {
-        return axios.get(`/api/groups/${id}`)
+    export const getGroup = (options) => {
+        const { id, searchBy, limit} = options;
+        return axios.get(`/api/groups/${id}`, {params: { searchBy, limit }})
             .then(group => group.data);
     };
 

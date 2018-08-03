@@ -25,7 +25,7 @@ import {
 
 function* createUser(action) {
     try {
-        yield call(usersApi.create, action.payload);
+        yield call(usersAPI.create, action.payload);
         yield put({type: USER_CREATED});
     } catch (error) {
         yield put({type: CREATE_USER_REQUEST_FAILED, payload: error});

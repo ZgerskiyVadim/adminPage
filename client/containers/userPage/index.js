@@ -10,7 +10,7 @@ import * as usersActionCreators from '../../actions/action_creators/users';
 import * as groupsActionCreators from '../../actions/action_creators/groups';
 import {handleChangeState, showForms, getValidOptions} from '../../services/formsOperations';
 import {getErrorMessage} from '../../services/getErrorMessage';
-import {searchUserRequest} from '../../services/searchOperation';
+import {userSearchGroupsRequest} from '../../services/searchOperation';
 
 class User extends Component {
     constructor(props) {
@@ -58,7 +58,7 @@ class User extends Component {
     };
 
     search = (event) => {
-        searchUserRequest.call(this, event);
+        userSearchGroupsRequest.call(this, event);
     };
 
     update = () => {
@@ -146,7 +146,7 @@ class User extends Component {
                         </thead>
                         {
                             groups.map((group, index) =>
-                                <tbody key={group._id}>
+                                <tbody key={index}>
                                 <tr onClick={this.goToGroup(group._id)} className={classNames('user__groups-list', {'user--light-grey': group.isLeftGroup})}>
                                     <th>{index + 1}</th>
                                     <td>

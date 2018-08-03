@@ -9,12 +9,12 @@ export function searchGroupsRequest(event) {
     setStateUsersOrGroups.call(this, value, 'groups')
 }
 
-export function searchUserRequest(event) {
+export function userSearchGroupsRequest(event) {
     const {value} = event.target;
     setStateUserOrGroup.call(this, value, 'user')
 }
 
-export function searchGroupRequest(event) {
+export function groupSearchUsersRequest(event) {
     const {value} = event.target;
     setStateUserOrGroup.call(this, value, 'group')
 }

@@ -10,6 +10,7 @@ import './index.scss';
 import * as groupsActionCreators from '../../actions/action_creators/groups';
 import {handleChangeState, showForms, getValidOptions} from '../../services/formsOperations';
 import {getErrorMessage} from '../../services/getErrorMessage';
+import {groupSearchUsersRequest} from "../../services/searchOperation";
 
 class User extends Component {
     constructor(props) {
@@ -18,15 +19,19 @@ class User extends Component {
             showForm: false,
             name: '',
             title: '',
-            id: this.props.match.params.id
+            options: {
+                limit: 20,
+                searchBy: '',
+                id: this.props.match.params.id
+            }
         };
 
-        this.showForms = showForms.bind(this, this.state.id);
+        this.showForms = showForms.bind(this, this.state.options.id);
         this.handleChangeState = handleChangeState.bind(this);
     }
 
     componentDidMount() {
-        this.props.actions.getGroupRequest(this.state.id);
+        this.props.actions.getGroupRequest(this.state.options);
     }
 
     componentWillReceiveProps(nextProps) {
@@ -42,6 +47,14 @@ class User extends Component {
         isUpdated && toastr.success('Success!', 'Ok!');
     }
 
+    goToUser = (id) => (e) => {
+        this.props.history.push(`/users/${id}`);
+    };
+
+    search = (event) => {
+        groupSearchUsersRequest.call(this, event);
+    };
+
     update = () => {
         this.setState({showForm: false});
         const options = getValidOptions(this.state);
@@ -49,8 +62,9 @@ class User extends Component {
     };
 
     removeUser = (id) => (e) => {
+        e.stopPropagation();
         const options = {
-            groupID: this.state.id,
+            groupID: this.state.options.id,
             userID: id
         };
         this.props.actions.removeUserRequest(options);
@@ -81,27 +95,58 @@ class User extends Component {
                 </div>
 
                 <h1 className={isUsers}>Users</h1>
-                {
-                    users.map((user, index) =>
-                        <div key={index} className='group__users col-md-4 col-sm-6'>
-                            <div>
-                                <Link to={`/users/${user._id}`}>
-                                    <h4>username: {user.username}</h4>
-                                </Link>
-                                <Link to={`/users/${user._id}`}>
-                                    <h4>firstName: {user.firstName}</h4>
-                                </Link>
-                                <Link to={`/users/${user._id}`}>
-                                    <h4>lastName: {user.lastName}</h4>
-                                </Link>
-                                <Link to={`/users/${user._id}`}>
-                                    <h4>email: {user.email}</h4>
-                                </Link>
-                            </div>
-                            <button onClick={this.removeUser(user._id)} className='group__remove-user btn btn-outline-danger'>remove user</button>
-                        </div>
-                    )
-                }
+                <div className={classNames('group__users-table', isUsers)}>
+                    <div className='group__search'>
+                        <h2>Search</h2>
+                        <input onChange={this.search} className='form-control col-md-3' type="text"/>
+                    </div>
+                    <table className='table table-hover'>
+                        <thead className='thead-dark'>
+                        <tr>
+                            <th>
+                                <h5>#</h5>
+                            </th>
+                            <th>
+                                <h5>username</h5>
+                            </th>
+                            <th>
+                                <h5>firstName</h5>
+                            </th>
+                            <th>
+                                <h5>lastName</h5>
+                            </th>
+                            <th>
+                                <h5>email</h5>
+                            </th>
+                            <th/>
+                        </tr>
+                        </thead>
+                        {
+                            users.map((user, index) =>
+                                <tbody key={index}>
+                                <tr onClick={this.goToUser(user._id)} className='group__users-list'>
+                                    <th>{index + 1}</th>
+                                    <td>
+                                        <h5>{user.username}</h5>
+                                    </td>
+                                    <td>
+                                        <h5>{user.firstName}</h5>
+                                    </td>
+                                    <td>
+                                        <h5>{user.lastName}</h5>
+                                    </td>
+                                    <td>
+                                        <h5>{user.email}</h5>
+                                    </td>
+                                    <td>
+                                        <button onClick={this.removeUser(user._id)} className='group__remove-user btn btn-outline-danger'>remove user</button>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            )
+                        }
+                    </table>
+                </div>
             </div>
         );
     }
