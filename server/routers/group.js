@@ -8,7 +8,7 @@ router.get('/groups/:id', groupCtrl.getGroupByID);
 
 router.post('/groups/', groupCtrl.createGroup);
 
-router.put('/groups/remove-user/:id', groupCtrl.removeUserFromGroup);
+router.patch('/groups/remove-user/:id', groupCtrl.removeUserFromGroup);
 
 router.patch('/groups/:id', groupCtrl.updateGroup);
 

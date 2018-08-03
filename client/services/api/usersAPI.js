@@ -28,13 +28,13 @@ import axios from 'axios/index';
     };
 
     export const addUserInGroup = (options) => {
-        return axios.put(`/api/users/add-user-in-group`, options)
+        return axios.patch(`/api/users/follow/group`, options)
             .then(updatedGroup => updatedGroup.data);
     };
 
     export const leaveGroup = (action) => {
         const {userID, groupID} = action;
-        return axios.put(`/api/users/leave-group/${userID}`, {groupID})
+        return axios.patch(`/api/users/leave-group/${userID}`, {groupID})
             .then(updatedGroup => updatedGroup.data);
     };
 

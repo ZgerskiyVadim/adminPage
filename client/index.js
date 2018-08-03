@@ -5,6 +5,7 @@ import {BrowserRouter as Router} from 'react-router-dom';
 
 import {configureStore} from './store/configureStore';
 import Breadcrumb from './components/breadcrumb';
+import LoadingExample from './components/pageProgressBar';
 import Routes from './routes';
 
 const store = configureStore();
@@ -14,6 +15,7 @@ render(
         <Router>
             <div>
                 <Breadcrumb/>
+                <LoadingExample/>
                 <Routes/>
             </div>
         </Router>

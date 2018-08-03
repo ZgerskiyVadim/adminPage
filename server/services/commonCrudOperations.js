@@ -121,7 +121,7 @@ export class CommonCrudOperations {
 
             async.waterfall([
                     next => {
-                        Group.findOneAndUpdate({_id: groupID}, { $push: { users: userID } }, {new: true}, (err, group) => {
+                        Group.findOneAndUpdate({_id: groupID}, { $addToSet: { users: userID } }, {new: true}, (err, group) => {
                             if (!group) return done(createError('Group is not found', 404));
                             if (err) return done(err);
                             Group.populate(group, {path: 'groups'}, (err, updatedGroup) => {
@@ -131,7 +131,7 @@ export class CommonCrudOperations {
                         });
                     },
                     (group, next) => {
-                        User.findOneAndUpdate({_id: userID}, { $push: { groups: groupID } }, {new: true}, (err, user) => {
+                        User.findOneAndUpdate({_id: userID}, { $addToSet: { groups: groupID } }, {new: true}, (err, user) => {
                             if (!user) return done(createError('User is not found', 404));
                             if (err) return done(err);
                             User.populate(user, {path: 'users'}, (err, updatedUser) => {
