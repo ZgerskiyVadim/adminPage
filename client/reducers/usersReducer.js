@@ -1,6 +1,9 @@
 import {
+    GET_USERS_REQUEST,
     GET_USERS,
+    UPDATE_USER_REQUEST,
     UPDATE_USER,
+    REMOVE_USER_REQUEST,
     REMOVE_USER,
     USERS_REQUEST_FAILED
 } from '../actions';
@@ -8,6 +11,7 @@ import {
 const defaultProps = {
     isRemoved: false,
     isUpdated: false,
+    isLoading: false,
     error: null
 };
 
@@ -18,11 +22,25 @@ const initialState = {
 
 export default function usersReducer(state = initialState, action) {
     switch (action.type) {
+        case GET_USERS_REQUEST:
+            return {
+                ...state,
+                ...defaultProps,
+                isLoading: true
+            };
+
         case GET_USERS:
             return {
                 ...state,
                 users: [...action.payload],
                 ...defaultProps
+            };
+
+        case UPDATE_USER_REQUEST:
+            return {
+                ...state,
+                ...defaultProps,
+                isLoading: true
             };
 
         case UPDATE_USER:
@@ -31,6 +49,13 @@ export default function usersReducer(state = initialState, action) {
                 users: state.users.map(user => (user._id === action.payload._id) ? action.payload : user),
                 ...defaultProps,
                 isUpdated: true
+            };
+
+        case REMOVE_USER_REQUEST:
+            return {
+                ...state,
+                ...defaultProps,
+                isLoading: true
             };
 
         case REMOVE_USER:

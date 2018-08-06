@@ -1,15 +1,17 @@
 import {
+    GET_GROUPS_REQUEST,
     GET_GROUPS,
+    UPDATE_GROUP_REQUEST,
     UPDATE_GROUP,
+    REMOVE_GROUP_REQUEST,
     REMOVE_GROUP,
     GROUPS_REQUEST_FAILED,
-    GET_GROUPS_REQUEST
 } from '../actions';
 
 const defaultProps = {
-    isLoading: false,
     isRemoved: false,
     isUpdated: false,
+    isLoading: false,
     error: null
 };
 
@@ -20,11 +22,25 @@ const initialState = {
 
 export default function groupsReducer(state = initialState, action) {
     switch (action.type) {
+        case GET_GROUPS_REQUEST:
+            return {
+                ...state,
+                ...defaultProps,
+                isLoading: true
+            };
+
         case GET_GROUPS:
             return {
                 ...state,
                 groups: [...action.payload],
                 ...defaultProps
+            };
+
+        case UPDATE_GROUP_REQUEST:
+            return {
+                ...state,
+                ...defaultProps,
+                isLoading: true
             };
 
         case UPDATE_GROUP:
@@ -33,6 +49,13 @@ export default function groupsReducer(state = initialState, action) {
                 groups: state.groups.map(group => (group._id === action.payload._id) ? action.payload : group),
                 ...defaultProps,
                 isUpdated: true
+            };
+
+        case REMOVE_GROUP_REQUEST:
+            return {
+                ...state,
+                ...defaultProps,
+                isLoading: true
             };
 
         case REMOVE_GROUP:
@@ -48,13 +71,6 @@ export default function groupsReducer(state = initialState, action) {
                 ...state,
                 ...defaultProps,
                 error: action.payload
-            };
-
-        case GET_GROUPS_REQUEST:
-            return {
-                ...state,
-                ...defaultProps,
-                isLoading: true
             };
 
         default: return state;
