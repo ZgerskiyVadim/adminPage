@@ -44,12 +44,12 @@ export default function userReducer(state = initialState, action) {
         case GET_USER:
             return {
                 ...state,
+                ...defaultProps,
                 user: {
                     ...state.user,
                     ...action.payload
                 },
                 groups: [...action.payload.groups],
-                ...defaultProps
             };
 
         case UPDATE_USER_REQUEST:
@@ -62,11 +62,11 @@ export default function userReducer(state = initialState, action) {
         case UPDATE_USER:
             return {
                 ...state,
+                ...defaultProps,
                 user: {
                     ...state.user,
                     ...action.payload
                 },
-                ...defaultProps,
                 isUpdated: true,
             };
 
@@ -80,8 +80,8 @@ export default function userReducer(state = initialState, action) {
         case USER_JOINED_GROUP:
             return {
                 ...state,
-                groups: state.groups.map(group => group._id === action.payload._id ? {...action.payload, isLeftGroup: false} : group),
                 ...defaultProps,
+                groups: state.groups.map(group => group._id === action.payload._id ? {...action.payload, isLeftGroup: false} : group),
                 isJoinedGroup: true,
             };
 
@@ -95,19 +95,19 @@ export default function userReducer(state = initialState, action) {
         case USER_LEFT_GROUP:
             return {
                 ...state,
-                groups: state.groups.map(group => group._id === action.payload._id ? {...action.payload, isLeftGroup: true} : group),
                 ...defaultProps,
+                groups: state.groups.map(group => group._id === action.payload._id ? {...action.payload, isLeftGroup: true} : group),
                 isLeftGroup: true,
             };
 
         case IS_USER_WANT_JOIN_GROUP:
             return {
                 ...state,
+                ...defaultProps,
                 user: {
                     ...state.user,
                     isJoiningGroup: action.payload
                 },
-                ...defaultProps
             };
 
         case USER_REQUEST_FAILED:

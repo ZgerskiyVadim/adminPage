@@ -12,6 +12,7 @@ import {handleChangeState, showForms, getValidOptions} from '../../services/form
 import {getErrorMessage} from '../../services/getErrorMessage';
 import {userSearchGroupsRequest} from '../../services/searchOperation';
 import {checkRemovedItems, loadMore} from '../../services/loadMore';
+import LoadingSpinner from '../../components/loadingSpinner';
 
 class User extends Component {
     constructor(props) {
@@ -29,6 +30,7 @@ class User extends Component {
                 id: this.props.match.params.id
             },
             isLoadMore: true,
+            isLoading: false
         };
 
         this.loadMore = loadMore.bind(this, 'user');
@@ -48,14 +50,18 @@ class User extends Component {
     }
 
     componentWillReceiveProps(nextProps) {
-        const {error, isLeftGroup, isUpdated, isJoinedGroup} = nextProps.userStore;
+        const {error, isLoading, isLeftGroup, isUpdated, isJoinedGroup} = nextProps.userStore;
         const errorMessage = getErrorMessage(nextProps.userStore);
+        this.setState({
+            isLoading
+        });
 
         const status = error && (error.response.data.status || error.response.status);
         if (status === 404) {
             toastr.error('User not found!', 'Opps!');
             return this.props.history.push('/');
         }
+
         error && toastr.error(errorMessage, 'Opps!');
         isJoinedGroup && toastr.success('User joined group', 'Ok!');
         isLeftGroup && toastr.info('User left group', 'Ok!');
@@ -110,7 +116,7 @@ class User extends Component {
     render() {
         const {username, firstName, lastName, email} = this.props.userStore.user;
         const {groups} = this.props;
-        const {showForm, ...state} = this.state;
+        const {showForm, isLoading, ...state} = this.state;
 
         const hiddenForm = classNames({'user--hide': !showForm});
         const shownForm = classNames('user--margin-right btn btn-outline-primary', {'user--hide': showForm});
@@ -183,6 +189,7 @@ class User extends Component {
                         }
                     </table>
                 </div>
+                <LoadingSpinner isLoading={isLoading}/>
             </div>
         );
     }

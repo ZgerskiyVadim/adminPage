@@ -8,6 +8,7 @@ import './index.scss';
 import * as groupsActionCreators from '../../actions/action_creators/groups';
 import {handleChangeState} from '../../services/formsOperations';
 import {getErrorMessage} from '../../services/getErrorMessage';
+import LoadingSpinner from '../../components/loadingSpinner';
 
 class CreateGroup extends Component {
     constructor(props) {
@@ -15,17 +16,22 @@ class CreateGroup extends Component {
 
         this.state = {
             name: '',
-            title: ''
+            title: '',
+            isLoading: false
         };
         this.handleChangeState = handleChangeState.bind(this);
     }
 
     componentWillReceiveProps(nextProps) {
-        const {error, isGroupCreated} = nextProps.createGroupStore;
+        const {error, isLoading, isGroupCreated} = nextProps.createGroupStore;
         const errorMessage = getErrorMessage(nextProps.createGroupStore);
+        this.setState({
+            isLoading
+        });
 
         error && toastr.error(errorMessage, 'Opps!');
         isGroupCreated && toastr.info('Group created', 'Ok!');
+
     }
 
     sendGroup = () => {
@@ -33,7 +39,7 @@ class CreateGroup extends Component {
     };
 
     render() {
-        const {name, title} = this.state;
+        const {isLoading, name, title} = this.state;
 
         return (
             <div className='create-group'>
@@ -48,6 +54,7 @@ class CreateGroup extends Component {
 
                     <button onClick={this.sendGroup} className='create-group__send btn btn-outline-primary'>Send</button>
                 </div>
+                <LoadingSpinner isLoading={isLoading}/>
             </div>
         );
     }

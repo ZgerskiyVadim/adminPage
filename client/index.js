@@ -1,11 +1,10 @@
 import React from 'react';
-import {render, createPortal} from 'react-dom';
+import {render} from 'react-dom';
 import {Provider} from 'react-redux';
 import {BrowserRouter as Router} from 'react-router-dom';
 
 import {configureStore} from './store/configureStore';
 import Breadcrumb from './components/breadcrumb';
-import LoadingSpinner from './components/loadingSpinner';
 import Routes from './routes';
 
 const store = configureStore();
@@ -15,7 +14,6 @@ render(
         <Router>
             <div>
                 <Breadcrumb/>
-                <LoadingSpinner/>
                 <Routes/>
             </div>
         </Router>

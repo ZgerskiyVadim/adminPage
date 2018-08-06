@@ -11,6 +11,7 @@ import {loadMore, checkRemovedItems} from '../../services/loadMore';
 import {searchUsersRequest} from '../../services/searchOperation';
 import {getErrorMessage} from '../../services/getErrorMessage';
 import User from '../../components/user-item/user';
+import LoadingSpinner from '../../components/loadingSpinner';
 
 class Users extends Component {
     constructor(props) {
@@ -22,7 +23,7 @@ class Users extends Component {
                 searchBy: ''
             },
             isLoadMore: true,
-            isMounted: false
+            isLoading: false
         };
         this.loadMore = loadMore.bind(this, 'users');
     }
@@ -38,9 +39,12 @@ class Users extends Component {
     }
 
     componentWillReceiveProps(nextProps) {
-        const {error, isUpdated, isRemoved} = nextProps.usersStore;
+        const {error, isLoading, isUpdated, isRemoved} = nextProps.usersStore;
         const errorMessage = getErrorMessage(nextProps.usersStore);
-
+        this.setState({
+            isLoading
+        });
+        
         error && toastr.error(errorMessage, 'Opps!');
         isUpdated && toastr.success('User updated', 'Ok!');
         isRemoved && toastr.info('User deleted', 'Ok!');
@@ -74,7 +78,7 @@ class Users extends Component {
     };
 
     render() {
-        const {isLoadMore} = this.state;
+        const {isLoadMore, isLoading} = this.state;
         const marginBottom = classNames({'users--margin-bottom': !isLoadMore});
 
         return (
@@ -117,6 +121,7 @@ class Users extends Component {
                             />)
                     }
                 </table>
+                <LoadingSpinner isLoading={isLoading}/>
             </div>
         );
     }

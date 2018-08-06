@@ -8,6 +8,7 @@ import './index.scss';
 import * as usersActionCreators from '../../actions/action_creators/users';
 import {handleChangeState} from '../../services/formsOperations';
 import {getErrorMessage} from '../../services/getErrorMessage';
+import LoadingSpinner from '../../components/loadingSpinner';
 
 class CreateUser extends Component {
     constructor(props) {
@@ -17,14 +18,18 @@ class CreateUser extends Component {
             username: '',
             firstName: '',
             lastName: '',
-            email: ''
+            email: '',
+            isLoading: false
         };
         this.handleChangeState = handleChangeState.bind(this);
     }
 
     componentWillReceiveProps(nextProps) {
-        const {error, isUserCreated} = nextProps.createUserStore;
+        const {error, isLoading, isUserCreated} = nextProps.createUserStore;
         const errorMessage = getErrorMessage(nextProps.createUserStore);
+        this.setState({
+            isLoading
+        });
 
         error && toastr.error(errorMessage, 'Opps!');
         isUserCreated && toastr.info('User created', 'Ok!');
@@ -35,7 +40,7 @@ class CreateUser extends Component {
     };
 
     render() {
-        const {username, firstName, lastName, email} = this.state;
+        const {isLoading, username, firstName, lastName, email} = this.state;
 
         return (
             <div className='create-user'>
@@ -54,6 +59,7 @@ class CreateUser extends Component {
 
                     <button onClick={this.sendUser} className='create-user__send btn btn-outline-primary'>Send</button>
                 </div>
+                <LoadingSpinner isLoading={isLoading}/>
             </div>
         );
     }

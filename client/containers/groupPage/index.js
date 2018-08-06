@@ -11,6 +11,7 @@ import {handleChangeState, showForms, getValidOptions} from '../../services/form
 import {getErrorMessage} from '../../services/getErrorMessage';
 import {groupSearchUsersRequest} from '../../services/searchOperation';
 import {checkRemovedItems, loadMore} from '../../services/loadMore';
+import LoadingSpinner from '../../components/loadingSpinner';
 
 class User extends Component {
     constructor(props) {
@@ -26,6 +27,7 @@ class User extends Component {
                 id: this.props.match.params.id
             },
             isLoadMore: true,
+            isLoading: false
         };
 
         this.loadMore = loadMore.bind(this, 'group');
@@ -43,14 +45,18 @@ class User extends Component {
     }
 
     componentWillReceiveProps(nextProps) {
-        const {error, isUpdated} = nextProps.group;
+        const {error, isLoading, isUpdated} = nextProps.group;
         const errorMessage = getErrorMessage(nextProps.group);
+        this.setState({
+            isLoading
+        });
 
         const status = error && (error.response.data.status || error.response.status);
         if (status === 404) {
             toastr.error('Group not found!', 'Opps!');
             return this.props.history.push('/');
         }
+
         error && toastr.error(errorMessage, 'Opps!');
         isUpdated && toastr.success('Success!', 'Ok!');
     }
@@ -87,7 +93,7 @@ class User extends Component {
     render() {
         const {name, title} = this.props.group;
         const {users} = this.props;
-        const {showForm, ...state} = this.state;
+        const {showForm, isLoading, ...state} = this.state;
 
         const hiddenForm = classNames({'group--hide': !showForm});
         const shownForm = classNames({'group--hide': showForm});
@@ -161,6 +167,7 @@ class User extends Component {
                         }
                     </table>
                 </div>
+                <LoadingSpinner isLoading={isLoading}/>
             </div>
         );
     }

@@ -11,6 +11,7 @@ import {checkRemovedItems, loadMore} from '../../services/loadMore';
 import {searchGroupsRequest} from '../../services/searchOperation';
 import {getErrorMessage} from '../../services/getErrorMessage';
 import Group from '../../components/group-item/group';
+import LoadingSpinner from '../../components/loadingSpinner';
 
 class Groups extends Component {
     constructor(props) {
@@ -22,7 +23,8 @@ class Groups extends Component {
                 searchBy: ''
             },
             isLoadMore: true,
-            isSearching: false
+            isSearching: false,
+            isLoading: false
         };
         this.loadMore = loadMore.bind(this, 'groups');
     }
@@ -38,8 +40,11 @@ class Groups extends Component {
     }
 
     componentWillReceiveProps(nextProps) {
-        const {error, isUpdated, isRemoved} = nextProps.groupsStore;
+        const {error, isLoading, isUpdated, isRemoved} = nextProps.groupsStore;
         const errorMessage = getErrorMessage(nextProps.groupsStore);
+        this.setState({
+            isLoading
+        });
 
         error && toastr.error(errorMessage, 'Opps!');
         isUpdated && toastr.success('Success!', 'Ok!');
@@ -99,7 +104,7 @@ class Groups extends Component {
 
     render() {
         const {isJoiningGroup, groups, user} = this.props;
-        const {isLoadMore} = this.state;
+        const {isLoadMore, isLoading} = this.state;
 
         const isJoinGroup = classNames({'groups--hide': !isJoiningGroup});
         const marginBottom = classNames({'groups--margin-bottom': !isLoadMore});
@@ -159,6 +164,7 @@ class Groups extends Component {
                                 />)
                     }
                 </table>
+                <LoadingSpinner isLoading={isLoading}/>
             </div>
         );
     }
