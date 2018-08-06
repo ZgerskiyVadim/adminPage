@@ -1,7 +1,6 @@
 import Group from '../models/group/group';
 import User from '../models/user/user';
-import {CommonCrudOperations} from '../services/commonCrudOperations';
-const commonCrudOperations = new CommonCrudOperations();
+import commonCrudOperations from '../services/commonCrudOperations';
 
 export const getGroups = commonCrudOperations.getAll(Group, User, 'users');
 

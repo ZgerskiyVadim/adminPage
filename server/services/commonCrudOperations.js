@@ -3,7 +3,7 @@ import createError from '../services/error';
 import User from '../models/user/user';
 import Group from '../models/group/group';
 
-export class CommonCrudOperations {
+class CommonCrudOperations {
 
     getAll = (Model, ModelPopulate, path) => (
         (req, res, done) => {
@@ -145,6 +145,8 @@ export class CommonCrudOperations {
         }
     );
 }
+
+export default new CommonCrudOperations();
 
 function searchFields(searchBy, fieldsBy) {
     searchBy = searchBy ? searchBy : '';
