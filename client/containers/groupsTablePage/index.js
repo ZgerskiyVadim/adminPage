@@ -12,6 +12,7 @@ import {searchGroupsRequest} from '../../services/searchOperation';
 import {getErrorMessage} from '../../services/getErrorMessage';
 import Group from '../../components/group-item/group';
 import LoadingSpinner from '../../components/loadingSpinner';
+import ModalWindow from '../../components/modalWindow';
 
 class Groups extends Component {
     constructor(props) {
@@ -24,7 +25,9 @@ class Groups extends Component {
             },
             isLoadMore: true,
             isSearching: false,
-            isLoading: false
+            isLoading: false,
+            showModal: false,
+            groupID: ''
         };
         this.loadMore = loadMore.bind(this, 'groups');
     }
@@ -98,13 +101,26 @@ class Groups extends Component {
     };
 
     remove = (id) => (e) => {
-        e.stopPropagation();
         this.props.actions.removeGroupRequest(id);
+    };
+
+    showModal = (id, e) => {
+        e.stopPropagation();
+        this.setState({
+            showModal: true,
+            groupID: id
+        })
+    };
+
+    closeModal = () => {
+        this.setState({
+            showModal: false
+        })
     };
 
     render() {
         const {isJoiningGroup, groups, user} = this.props;
-        const {isLoadMore, isLoading} = this.state;
+        const {isLoadMore, isLoading, showModal, groupID} = this.state;
 
         const isJoinGroup = classNames({'groups--hide': !isJoiningGroup});
         const marginBottom = classNames({'groups--margin-bottom': !isLoadMore});
@@ -147,8 +163,6 @@ class Groups extends Component {
                                     isJoinedUserInGroup={group.isJoinedUserInGroup}
                                     isJoiningGroup={true}
                                     joinGroup={this.joinGroup}
-                                    update={this.update}
-                                    remove={this.remove}
                                     leaveGroup={this.leaveGroup}
                                 />) :
 
@@ -160,11 +174,16 @@ class Groups extends Component {
                                     history={this.props.history}
                                     isJoiningGroup={false}
                                     update={this.update}
-                                    remove={this.remove}
+                                    showModal={this.showModal}
                                 />)
                     }
                 </table>
                 <LoadingSpinner isLoading={isLoading}/>
+                <ModalWindow
+                    isShow={showModal}
+                    remove={this.remove(groupID)}
+                    closeModal={this.closeModal}
+                />
             </div>
         );
     }

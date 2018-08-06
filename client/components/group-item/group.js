@@ -47,6 +47,10 @@ class Group extends Component {
         userID && this.props.leaveGroup({userID, groupID});
     };
 
+    remove = (id) => (e) => {
+        this.props.showModal(id, e);
+    };
+
     render() {
         const { isJoiningGroup, isJoinedUserInGroup, index } = this.props;
         const {users, name, title, _id} = this.props.group;
@@ -76,7 +80,7 @@ class Group extends Component {
                 <td>
                     <button onClick={this.showForms} className={classNames('groups--margin-right btn btn-outline-primary', shownForm, notJoiningGroup)}>Update</button>
                     <button onClick={this.sendOptionsUpdate} className={classNames('groups--margin-right btn btn-outline-primary', hiddenForm)}>Save</button>
-                    <button onClick={this.props.remove(_id)} className={classNames('btn btn-outline-danger', notJoiningGroup)}>Remove</button>
+                    <button onClick={this.remove(_id)} className={classNames('btn btn-outline-danger', notJoiningGroup)}>Remove</button>
                     <button onClick={this.sendOptionsJoinGroup(_id)} className={classNames('btn btn-outline-info', userAlreadyInGroup)}>Join group</button>
                     <button onClick={this.sendOptionsLeaveGroup(_id)} className={classNames('btn btn-outline-danger', userNotInGroup)}>Leave group</button>
                 </td>
@@ -88,8 +92,8 @@ class Group extends Component {
 
 Group.propTypes = {
     group: PropTypes.object.isRequired,
-    update: PropTypes.func.isRequired,
-    remove: PropTypes.func.isRequired,
+    update: PropTypes.func,
+    remove: PropTypes.func,
     joinGroup: PropTypes.func,
     leaveGroup: PropTypes.func
 };

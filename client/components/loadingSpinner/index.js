@@ -11,7 +11,7 @@ class LoadingSpinner extends Component {
             <div className={classNames('cover', {'loader--hide': !isLoading})}>
                 <div className="loader"/>
             </div>,
-            document.getElementById('portal')
+            document.getElementById('spinner')
         )
     }
 }
