@@ -3,15 +3,22 @@ import Group from '../models/group';
 import commonCrudOperations from '../services/commonCrudOperations';
 import config from '../../config';
 
-export const getUsers = commonCrudOperations.getAll(User, Group, 'groups');
+const options = {
+    Model: User,
+    searchFields: 'users',
+    ModelPopulateOrUpdate: Group,
+    pathPopulate: 'groups',
+};
 
-export const getUserByID = commonCrudOperations.getByID(User, Group, 'groups');
+export const getUsers = commonCrudOperations.getAll(options);
+
+export const getUserByID = commonCrudOperations.getByID(options);
 
 export const createUser = commonCrudOperations.create(User);
 
-export const updateUser = commonCrudOperations.update(User, Group, 'groups');
+export const updateUser = commonCrudOperations.update(options);
 
-export const removeUser = commonCrudOperations.remove(User, Group, 'groups');
+export const removeUser = commonCrudOperations.remove(options);
 
 export const removeUserFromGroup = commonCrudOperations.removeUserFromGroup();
 

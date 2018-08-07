@@ -5,15 +5,14 @@ import Group from '../models/group';
 
 class CommonCrudOperations {
 
-    getAll = (Model, ModelPopulate, path) => (
+    getAll = ({Model, ModelPopulateOrUpdate, pathPopulate, searchFields}) => (
         (req, res, done) => {
             const { skip, limit, searchBy } = req.query;
 
             if (searchBy) {
-                const fieldsBy = path === 'users' ? path : 'users';
-                Model.find({'$or': searchFields(searchBy, fieldsBy)}, null, {skip: Number(skip), limit: Number(limit)}, (err, data) => {
+                Model.find({'$or': getSearchFields(searchBy, searchFields)}, null, {skip: Number(skip), limit: Number(limit)}, (err, data) => {
                     if (err) return done(err);
-                    ModelPopulate.populate(data, {path}, (err, docs) => {
+                    ModelPopulateOrUpdate.populate(data, {path: pathPopulate}, (err, docs) => {
                         if (err) return done(err);
                         res.json(docs);
                     })
@@ -21,7 +20,7 @@ class CommonCrudOperations {
             } else {
                 Model.find({}, null, {skip: Number(skip), limit: Number(limit)}, (err, data) => {
                     if (err) return done(err);
-                    ModelPopulate.populate(data, {path}, (err, docs) => {
+                    ModelPopulateOrUpdate.populate(data, {path: pathPopulate}, (err, docs) => {
                         if (err) return done(err);
                         res.json(docs);
                     })
@@ -30,17 +29,17 @@ class CommonCrudOperations {
         }
     );
 
-    getByID = (Model, ModelPopulate, pathPopulate) => (
+    getByID = ({Model, ModelPopulateOrUpdate, pathPopulate, searchFields}) => (
         (req, res, done) => {
             const { skip, limit, searchBy } = req.query;
 
             Model.findOne({_id: req.params.id}, (err, user) => {
                 if (!user) return done(createError('Not Found', 404));
                 if (err) return done(err);
-                ModelPopulate.populate(user,
+                ModelPopulateOrUpdate.populate(user,
                     {
                         path: pathPopulate,
-                        match: {'$or': searchFields(searchBy, pathPopulate)},
+                        match: {'$or': getSearchFields(searchBy, searchFields)},
                         options: {skip: Number(skip), limit: Number(limit)}
                     },
                     (err, docs) => {
@@ -60,11 +59,11 @@ class CommonCrudOperations {
         }
     );
 
-    update = (Model, ModelPopulate, path) => (
+    update = ({Model, ModelPopulateOrUpdate, pathPopulate}) => (
         (req, res, done) => {
             Model.findOneAndUpdate({_id: req.params.id}, req.body, {runValidators: true, new: true}, (err, data) => {
                 if (err) return done(err);
-                ModelPopulate.populate(data, {path}, (err, docs) => {
+                ModelPopulateOrUpdate.populate(data, {path: pathPopulate}, (err, docs) => {
                     if (err) return done(err);
                     res.json(docs);
                 })
@@ -72,12 +71,12 @@ class CommonCrudOperations {
         }
     );
 
-    remove = (Model, ModelRemoveItem, path) => (
+    remove = ({Model, ModelPopulateOrUpdate, pathPopulate}) => (
         (req, res, done) => {
             Model.findOneAndRemove({_id: req.params.id}, (err, data) => {
                 if (!data) return done(createError('Is not exist', 404));
                 if (err) return done(err);
-                ModelRemoveItem.update({}, {$pull: {[path]: data.id}}, {multi: true}, (err, modification) => {
+                ModelPopulateOrUpdate.update({}, {$pull: {[pathPopulate]: data.id}}, {multi: true}, (err, modification) => {
                     if (err) return done(err);
                     const message = 'Successfully deleted';
                     res.status(200).json(message);
@@ -148,7 +147,7 @@ class CommonCrudOperations {
 
 export default new CommonCrudOperations();
 
-function searchFields(searchBy, fieldsBy) {
+function getSearchFields(searchBy, fieldsBy) {
     searchBy = searchBy ? searchBy : '';
     return (
         fieldsBy === 'groups' ?
@@ -156,11 +155,13 @@ function searchFields(searchBy, fieldsBy) {
                 {name: {$regex: searchBy, $options: 'i'}},
                 {title: {$regex: searchBy, $options: 'i'}}
             ] :
-            [
-                {username: {$regex: searchBy, $options: 'i'}},
-                {firstName: {$regex: searchBy, $options: 'i'}},
-                {lastName: {$regex: searchBy, $options: 'i'}},
-                {email: {$regex: searchBy, $options: 'i'}}
-            ]
+            fieldsBy === 'users' ?
+                [
+                    {username: {$regex: searchBy, $options: 'i'}},
+                    {firstName: {$regex: searchBy, $options: 'i'}},
+                    {lastName: {$regex: searchBy, $options: 'i'}},
+                    {email: {$regex: searchBy, $options: 'i'}}
+                ] :
+                null
     );
 }
