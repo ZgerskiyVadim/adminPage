@@ -12,6 +12,8 @@ import {getErrorMessage} from '../../services/getErrorMessage';
 import {groupSearchUsersRequest} from '../../services/searchOperation';
 import {checkRemovedItems, loadMore} from '../../services/loadMore';
 import LoadingSpinner from '../../components/loadingSpinner';
+import ModalWindow from '../../components/modalWindow';
+import SearchComponent from '../../components/search';
 
 class User extends Component {
     constructor(props) {
@@ -27,7 +29,9 @@ class User extends Component {
                 id: this.props.match.params.id
             },
             isLoadMore: true,
-            isLoading: false
+            isLoading: false,
+            showModal: false,
+            userID: ''
         };
 
         this.loadMore = loadMore.bind(this, 'group');
@@ -82,7 +86,6 @@ class User extends Component {
     };
 
     removeUser = (id) => (e) => {
-        e.stopPropagation();
         const options = {
             groupID: this.state.options.id,
             userID: id
@@ -90,14 +93,28 @@ class User extends Component {
         this.props.actions.removeUserRequest(options);
     };
 
+    showModal = (id) => (e) => {
+        e.stopPropagation();
+        this.setState({
+            showModal: true,
+            userID: id
+        })
+    };
+
+    closeModal = () => {
+        this.setState({
+            showModal: false
+        })
+    };
+
     render() {
         const {name, title} = this.props.group;
         const {users} = this.props;
-        const {showForm, isLoading, ...state} = this.state;
+        const {showForm, isLoading, showModal, userID, ...state} = this.state;
 
         const hiddenForm = classNames({'group--hide': !showForm});
         const shownForm = classNames({'group--hide': showForm});
-        const isUsers = classNames({'group--hide': !users.length});
+        const isUsers = classNames({'group--hide': !users.length && !state.options.searchBy});
 
         return (
             <div className='group'>
@@ -116,10 +133,7 @@ class User extends Component {
 
                 <h1 className={isUsers}>Users</h1>
                 <div className={classNames('group__users-table', isUsers)}>
-                    <div className='group__search'>
-                        <h2>Search</h2>
-                        <input onChange={this.search} className='form-control col-md-3' type="text"/>
-                    </div>
+                    <SearchComponent search={this.search}/>
                     <table className='table table-hover'>
                         <thead className='thead-dark'>
                         <tr>
@@ -159,7 +173,7 @@ class User extends Component {
                                         <h5>{user.email}</h5>
                                     </td>
                                     <td>
-                                        <button onClick={this.removeUser(user._id)} className='group__remove-user btn btn-outline-danger'>remove user</button>
+                                        <button onClick={this.showModal(user._id)} className='group__remove-user btn btn-outline-danger'>remove user</button>
                                     </td>
                                 </tr>
                                 </tbody>
@@ -168,6 +182,11 @@ class User extends Component {
                     </table>
                 </div>
                 <LoadingSpinner isLoading={isLoading}/>
+                <ModalWindow
+                    isShow={showModal}
+                    remove={this.removeUser(userID)}
+                    closeModal={this.closeModal}
+                />
             </div>
         );
     }

@@ -13,6 +13,7 @@ import {getErrorMessage} from '../../services/getErrorMessage';
 import Group from '../../components/group-item/group';
 import LoadingSpinner from '../../components/loadingSpinner';
 import ModalWindow from '../../components/modalWindow';
+import SearchComponent from '../../components/search';
 
 class Groups extends Component {
     constructor(props) {
@@ -127,11 +128,11 @@ class Groups extends Component {
 
         return (
             <div className='groups'>
-                <div className='groups__search'>
-                    <h2>Search</h2>
-                    <input onChange={this.search} className='form-control col-md-3' type="text"/>
-                    <button onClick={this.cancelJoinGroup} className={classNames('btn btn-outline-danger', isJoinGroup)}>Cancel join group</button>
-                </div>
+                <SearchComponent
+                    search={this.search}
+                    handleButtonClick={this.cancelJoinGroup}
+                    style={classNames('btn btn-outline-danger', isJoinGroup)}
+                />
                 <table className={classNames('groups__table table table-hover', marginBottom)}>
                     <thead className='thead-dark'>
                     <tr>

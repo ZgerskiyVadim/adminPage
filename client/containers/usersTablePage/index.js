@@ -12,6 +12,8 @@ import {searchUsersRequest} from '../../services/searchOperation';
 import {getErrorMessage} from '../../services/getErrorMessage';
 import User from '../../components/user-item/user';
 import LoadingSpinner from '../../components/loadingSpinner';
+import ModalWindow from '../../components/modalWindow';
+import SearchComponent from '../../components/search';
 
 class Users extends Component {
     constructor(props) {
@@ -23,7 +25,9 @@ class Users extends Component {
                 searchBy: ''
             },
             isLoadMore: true,
-            isLoading: false
+            isLoading: false,
+            showModal: false,
+            userID: ''
         };
         this.loadMore = loadMore.bind(this, 'users');
     }
@@ -73,20 +77,30 @@ class Users extends Component {
     };
 
     remove = (id) => (e) => {
-        e.stopPropagation();
         this.props.actions.removeUserRequest(id);
     };
 
+    showModal = (id, e) => {
+        e.stopPropagation();
+        this.setState({
+            showModal: true,
+            userID: id
+        })
+    };
+
+    closeModal = () => {
+        this.setState({
+            showModal: false
+        })
+    };
+
     render() {
-        const {isLoadMore, isLoading} = this.state;
+        const {isLoadMore, isLoading, showModal, userID} = this.state;
         const marginBottom = classNames({'users--margin-bottom': !isLoadMore});
 
         return (
             <div className='users'>
-                <div className='users__search'>
-                    <h2>Search</h2>
-                    <input onChange={this.search} className='form-control col-md-3' type="text"/>
-                </div>
+                <SearchComponent search={this.search}/>
                 <table className={classNames('users__table table table-hover', marginBottom)}>
                     <thead className='thead-dark'>
                     <tr>
@@ -117,11 +131,16 @@ class Users extends Component {
                                 key={user._id}
                                 isJoining={user.isJoining}
                                 update={this.update}
-                                remove={this.remove}
+                                showModal={this.showModal}
                             />)
                     }
                 </table>
                 <LoadingSpinner isLoading={isLoading}/>
+                <ModalWindow
+                    isShow={showModal}
+                    remove={this.remove(userID)}
+                    closeModal={this.closeModal}
+                />
             </div>
         );
     }

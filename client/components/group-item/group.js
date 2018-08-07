@@ -93,7 +93,7 @@ class Group extends Component {
 Group.propTypes = {
     group: PropTypes.object.isRequired,
     update: PropTypes.func,
-    remove: PropTypes.func,
+    showModal: PropTypes.func,
     joinGroup: PropTypes.func,
     leaveGroup: PropTypes.func
 };

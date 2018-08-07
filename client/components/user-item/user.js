@@ -36,6 +36,10 @@ class User extends Component {
         this.props.update(options)
     };
 
+    remove = (id) => (e) => {
+        this.props.showModal(id, e);
+    };
+
     render() {
         const {username, firstName, lastName, email, _id} = this.props.user;
         const { isJoining, index } = this.props;
@@ -68,7 +72,7 @@ class User extends Component {
                     <td>
                         <button onClick={this.showForms} className={classNames('users--margin-right btn btn-outline-primary', shownForm)}>Update</button>
                         <button onClick={this.sendOptionsUpdate} className={classNames('users--margin-right btn btn-outline-primary', hiddenForm)}>Save</button>
-                        <button onClick={this.props.remove(_id)} className={classNames('btn btn-outline-danger', isJoiningUser)}>Remove</button>
+                        <button onClick={this.remove(_id)} className={classNames('btn btn-outline-danger', isJoiningUser)}>Remove</button>
                     </td>
                 </tr>
 
@@ -80,7 +84,7 @@ class User extends Component {
 User.propTypes = {
     user: PropTypes.object.isRequired,
     update: PropTypes.func.isRequired,
-    remove: PropTypes.func.isRequired
+    showModal: PropTypes.func.isRequired
 };
 
 export default User;

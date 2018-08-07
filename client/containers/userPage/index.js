@@ -13,6 +13,7 @@ import {getErrorMessage} from '../../services/getErrorMessage';
 import {userSearchGroupsRequest} from '../../services/searchOperation';
 import {checkRemovedItems, loadMore} from '../../services/loadMore';
 import LoadingSpinner from '../../components/loadingSpinner';
+import SearchComponent from '../../components/search';
 
 class User extends Component {
     constructor(props) {
@@ -120,7 +121,7 @@ class User extends Component {
 
         const hiddenForm = classNames({'user--hide': !showForm});
         const shownForm = classNames('user--margin-right btn btn-outline-primary', {'user--hide': showForm});
-        const isGroups = classNames({'user--hide': !groups.length});
+        const isGroups = classNames({'user--hide': !groups.length && !state.options.searchBy});
 
         return (
             <div className='user'>
@@ -143,10 +144,7 @@ class User extends Component {
 
                 <h1 className={isGroups}>Groups</h1>
                 <div className={classNames('user__groups-table', isGroups)}>
-                    <div className='user__search'>
-                        <h2>Search</h2>
-                        <input onChange={this.search} className='form-control col-md-3' type="text"/>
-                    </div>
+                    <SearchComponent search={this.search}/>
                     <table className='table table-hover'>
                         <thead className='thead-dark'>
                         <tr>
