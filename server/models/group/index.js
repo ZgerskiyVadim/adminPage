@@ -1,6 +1,6 @@
 import mongoose from 'mongoose';
 import * as validator from './validator';
-import User from '../user/user';
+import User from '../user';
 
 const Schema = mongoose.Schema;
 

@@ -1,6 +1,6 @@
 import mongoose from 'mongoose';
 import * as validator from './validator';
-import Group from '../group/group';
+import Group from '../group';
 
 const Schema = mongoose.Schema;
 
@@ -25,6 +25,7 @@ const userSchema = new Schema({
             validator: validator.email,
             message: 'Provided email is invalid.'
         }},
+    password: {type: String, required: true, minlength: 4, maxlength: 20},
     groups: [{type: Schema.Types.ObjectId, ref: Group}]
 });
 

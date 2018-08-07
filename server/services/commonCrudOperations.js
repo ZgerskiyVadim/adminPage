@@ -1,7 +1,7 @@
 import async from 'async';
 import createError from '../services/error';
-import User from '../models/user/user';
-import Group from '../models/group/group';
+import User from '../models/user';
+import Group from '../models/group';
 
 class CommonCrudOperations {
 

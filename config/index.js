@@ -3,5 +3,7 @@ export default {
     loggerFileName: 'logInfo.log',
     dbName: 'mongodb://localhost/adminPage',
     static: '../client',
-    favicon: '../client/asserts/favicon.ico'
+    favicon: '../client/asserts/favicon.ico',
+    sessionName: 'userSession',
+    sessionSecret: 'secretKey'
 };
