@@ -3,13 +3,12 @@ import {connect} from 'react-redux';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import {bindActionCreators} from 'redux';
-import toastr from 'toastr';
 
 import './index.scss';
 import * as usersActionCreators from '../../actions/action_creators/users';
 import {loadMore, checkRemovedItems} from '../../services/loadMore';
 import {searchUsersRequest} from '../../services/searchOperation';
-import {getErrorMessage} from '../../services/getErrorMessage';
+import {toastrMessages} from '../../services/toastrMessages';
 import User from '../../components/user-item/user';
 import LoadingSpinner from '../../components/loadingSpinner';
 import ModalWindow from '../../components/modalWindow';
@@ -43,15 +42,12 @@ class Users extends Component {
     }
 
     componentWillReceiveProps(nextProps) {
-        const {error, isLoading, isUpdated, isRemoved} = nextProps.usersStore;
-        const errorMessage = getErrorMessage(nextProps.usersStore);
+        const {isLoading} = nextProps.usersStore;
         this.setState({
             isLoading
         });
-        
-        error && toastr.error(errorMessage, 'Opps!');
-        isUpdated && toastr.success('User updated', 'Ok!');
-        isRemoved && toastr.info('User deleted', 'Ok!');
+
+        toastrMessages(nextProps.usersStore);
     }
 
     componentDidUpdate(prevProps) {

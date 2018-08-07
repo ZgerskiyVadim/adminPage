@@ -2,12 +2,11 @@ import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
 import {bindActionCreators} from 'redux';
-import toastr from 'toastr';
 
 import './index.scss';
 import * as usersActionCreators from '../../actions/action_creators/users';
 import {handleChangeState} from '../../services/formsOperations';
-import {getErrorMessage} from '../../services/getErrorMessage';
+import {toastrMessages} from '../../services/toastrMessages';
 import LoadingSpinner from '../../components/loadingSpinner';
 
 class CreateUser extends Component {
@@ -25,14 +24,12 @@ class CreateUser extends Component {
     }
 
     componentWillReceiveProps(nextProps) {
-        const {error, isLoading, isUserCreated} = nextProps.createUserStore;
-        const errorMessage = getErrorMessage(nextProps.createUserStore);
+        const {isLoading} = nextProps.createUserStore;
         this.setState({
             isLoading
         });
 
-        error && toastr.error(errorMessage, 'Opps!');
-        isUserCreated && toastr.info('User created', 'Ok!');
+        toastrMessages(nextProps.createUserStore);
     }
 
     sendUser = () => {

@@ -3,13 +3,12 @@ import {connect} from 'react-redux';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import {bindActionCreators} from 'redux';
-import toastr from 'toastr';
 
 import './index.scss';
 import * as groupsActionCreators from '../../actions/action_creators/groups';
 import {checkRemovedItems, loadMore} from '../../services/loadMore';
 import {searchGroupsRequest} from '../../services/searchOperation';
-import {getErrorMessage} from '../../services/getErrorMessage';
+import {toastrMessages} from '../../services/toastrMessages';
 import Group from '../../components/group-item/group';
 import LoadingSpinner from '../../components/loadingSpinner';
 import ModalWindow from '../../components/modalWindow';
@@ -44,15 +43,12 @@ class Groups extends Component {
     }
 
     componentWillReceiveProps(nextProps) {
-        const {error, isLoading, isUpdated, isRemoved} = nextProps.groupsStore;
-        const errorMessage = getErrorMessage(nextProps.groupsStore);
+        const {isLoading} = nextProps.groupsStore;
         this.setState({
             isLoading
         });
 
-        error && toastr.error(errorMessage, 'Opps!');
-        isUpdated && toastr.success('Success!', 'Ok!');
-        isRemoved && toastr.info('Group deleted', 'Ok!');
+        toastrMessages(nextProps.groupsStore);
     }
 
     componentDidUpdate(prevProps) {

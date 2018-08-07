@@ -2,12 +2,11 @@ import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
 import {bindActionCreators} from 'redux';
-import toastr from 'toastr';
 
 import './index.scss';
 import * as groupsActionCreators from '../../actions/action_creators/groups';
 import {handleChangeState} from '../../services/formsOperations';
-import {getErrorMessage} from '../../services/getErrorMessage';
+import {toastrMessages} from '../../services/toastrMessages';
 import LoadingSpinner from '../../components/loadingSpinner';
 
 class CreateGroup extends Component {
@@ -23,15 +22,12 @@ class CreateGroup extends Component {
     }
 
     componentWillReceiveProps(nextProps) {
-        const {error, isLoading, isGroupCreated} = nextProps.createGroupStore;
-        const errorMessage = getErrorMessage(nextProps.createGroupStore);
+        const {isLoading} = nextProps.createGroupStore;
         this.setState({
             isLoading
         });
 
-        error && toastr.error(errorMessage, 'Opps!');
-        isGroupCreated && toastr.info('Group created', 'Ok!');
-
+        toastrMessages(nextProps.createGroupStore);
     }
 
     sendGroup = () => {

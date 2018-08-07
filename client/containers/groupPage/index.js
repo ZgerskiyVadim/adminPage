@@ -3,12 +3,11 @@ import {connect} from 'react-redux';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import {bindActionCreators} from 'redux';
-import toastr from 'toastr';
 
 import './index.scss';
 import * as groupsActionCreators from '../../actions/action_creators/groups';
 import {handleChangeState, showForms, getValidOptions} from '../../services/formsOperations';
-import {getErrorMessage} from '../../services/getErrorMessage';
+import {toastrMessages} from '../../services/toastrMessages';
 import {groupSearchUsersRequest} from '../../services/searchOperation';
 import {checkRemovedItems, loadMore} from '../../services/loadMore';
 import LoadingSpinner from '../../components/loadingSpinner';
@@ -49,20 +48,12 @@ class User extends Component {
     }
 
     componentWillReceiveProps(nextProps) {
-        const {error, isLoading, isUpdated} = nextProps.group;
-        const errorMessage = getErrorMessage(nextProps.group);
+        const {isLoading} = nextProps.group;
         this.setState({
             isLoading
         });
 
-        const status = error && (error.response.data.status || error.response.status);
-        if (status === 404) {
-            toastr.error('Group not found!', 'Opps!');
-            return this.props.history.push('/');
-        }
-
-        error && toastr.error(errorMessage, 'Opps!');
-        isUpdated && toastr.success('Success!', 'Ok!');
+        toastrMessages.call(this, nextProps.group);
     }
 
     componentDidUpdate(prevProps) {
