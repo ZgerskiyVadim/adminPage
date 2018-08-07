@@ -1,7 +1,6 @@
 import User from '../models/user';
 import Group from '../models/group';
 import commonCrudOperations from '../services/commonCrudOperations';
-import config from '../../config';
 
 const options = {
     Model: User,
