@@ -1,5 +1,15 @@
 import axios from 'axios/index';
 
+    export const login = (options) => {
+        return axios.post('/api/login', options)
+            .then();
+    };
+
+    export const logout = () => {
+        return axios.get('/api/logout')
+            .then();
+    };
+
     export const create = (options) => {
         return axios.post('/api/users', options)
             .then(users => users.data);

@@ -20,8 +20,31 @@ import {
     ADD_USER_IN_GROUP_REQUEST,
     USER_JOINED_GROUP,
     LEAVE_GROUP_REQUEST,
-    GROUPS_REQUEST_FAILED
+    GROUPS_REQUEST_FAILED,
+    LOGIN_REQUEST,
+    USER_LOGGED,
+    LOGOUT_REQUEST,
+    USER_LOGOUT,
+    AUTHENTICATE_REQUEST_FAILED
 } from '../actions';
+
+function* login(action) {
+    try {
+        yield call(usersAPI.login, action.payload);
+        yield put({type: USER_LOGGED});
+    } catch (error) {
+        yield put({type: AUTHENTICATE_REQUEST_FAILED, payload: error});
+    }
+}
+
+function* logout() {
+    try {
+        yield call(usersAPI.logout);
+        yield put({type: USER_LOGOUT});
+    } catch (error) {
+        yield put({type: AUTHENTICATE_REQUEST_FAILED, payload: error});
+    }
+}
 
 function* createUser(action) {
     try {
@@ -109,6 +132,8 @@ export default function* usersSaga() {
         takeEvery(GET_USER_REQUEST, getUser),
         takeEvery(UPDATE_USER_REQUEST, updateUser),
         takeEvery(ADD_USER_IN_GROUP_REQUEST, addUserInGroup),
-        takeEvery(LEAVE_GROUP_REQUEST, leaveGroup)
+        takeEvery(LEAVE_GROUP_REQUEST, leaveGroup),
+        takeEvery(LOGIN_REQUEST, login),
+        takeEvery(LOGOUT_REQUEST, logout)
     ]);
 }

@@ -77,7 +77,7 @@ class Group extends Component {
                 <td>
                     <h5>{users.length}</h5>
                 </td>
-                <td>
+                <td className='groups__buttons'>
                     <button onClick={this.showForms} className={classNames('groups--margin-right btn btn-outline-primary', shownForm, notJoiningGroup)}>Update</button>
                     <button onClick={this.sendOptionsUpdate} className={classNames('groups--margin-right btn btn-outline-primary', hiddenForm)}>Save</button>
                     <button onClick={this.remove(_id)} className={classNames('btn btn-outline-danger', notJoiningGroup)}>Remove</button>

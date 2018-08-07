@@ -69,13 +69,12 @@ class User extends Component {
                         <h5>{email}</h5>
                         <input onChange={this.handleChangeState} onClick={this.handleClick} value={state.email} className={classNames('form-control', hiddenForm)} name='email' type="text"/>
                     </td>
-                    <td>
+                    <td className='users__buttons'>
                         <button onClick={this.showForms} className={classNames('users--margin-right btn btn-outline-primary', shownForm)}>Update</button>
                         <button onClick={this.sendOptionsUpdate} className={classNames('users--margin-right btn btn-outline-primary', hiddenForm)}>Save</button>
                         <button onClick={this.remove(_id)} className={classNames('btn btn-outline-danger', isJoiningUser)}>Remove</button>
                     </td>
                 </tr>
-
             </tbody>
         );
     }

@@ -8,6 +8,10 @@
 .users__table {
     margin-top: 2em;
 }
+.users__buttons {
+    display: flex;
+    justify-content: flex-end;
+}
 .users--cursor {
     cursor: pointer;
 }

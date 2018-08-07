@@ -8,6 +8,10 @@
 .groups__table {
   margin-top: 2em;
 }
+.groups__buttons {
+  display: flex;
+  justify-content: flex-end;
+}
 .groups--margin-bottom {
   margin-bottom: 5em;
 }

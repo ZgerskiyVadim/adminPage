@@ -6,7 +6,9 @@ import {
     IS_USER_WANT_JOIN_GROUP,
     LEAVE_GROUP_REQUEST,
     USER_CREATE_REQUEST,
-    GET_USER_REQUEST
+    GET_USER_REQUEST,
+    LOGIN_REQUEST,
+    LOGOUT_REQUEST
 } from '../index';
 
 export const createUserRequest = (data) => ({
@@ -47,4 +49,13 @@ export const updateUserRequest = (data) => ({
 export const removeUserRequest = (data) => ({
     type: REMOVE_USER_REQUEST,
     payload: data
+});
+
+export const login = (data) => ({
+    type: LOGIN_REQUEST,
+    payload: data
+});
+
+export const logout = () => ({
+    type: LOGOUT_REQUEST
 });

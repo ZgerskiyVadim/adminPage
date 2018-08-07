@@ -5,6 +5,7 @@ import GroupPage from './containers/groupPage';
 import Users from './containers/usersTablePage';
 import UserPage from './containers/userPage';
 import Home from './containers/home';
+import LoginPage from './containers/loginPage';
 import CreateUser from './containers/createUserPage';
 import CreateGroup from './containers/createGroupPage';
 import NotFound from './containers/notFound';
@@ -15,6 +16,7 @@ export default class Routes extends Component {
         return (
             <Switch>
                 <Route exact path="/" component={Home}/>
+                <Route exact path="/login" component={LoginPage}/>
                 <Route exact path="/users" component={Users}/>
                 <Route path="/users/:id" component={UserPage}/>
                 <Route exact path="/groups" component={Groups}/>

@@ -8,7 +8,9 @@ export function toastrMessages(props) {
         isJoinedGroup,
         isLeftGroup,
         isUpdated,
-        isRemoved
+        isRemoved,
+        isLogged,
+        isLogout
     } = props;
     const message = error && error.response.data.message;
     const errmsg = error && error.response.data.errmsg;
@@ -27,4 +29,6 @@ export function toastrMessages(props) {
     isLeftGroup && toastr.info('User left group', 'Ok!');
     isUpdated && toastr.success('Is updated', 'Ok!');
     isRemoved && toastr.info('Is removed', 'Ok!');
+    isLogged && toastr.info('User is logged', 'Ok!');
+    isLogout && toastr.info('User is logout', 'Ok!');
 }
