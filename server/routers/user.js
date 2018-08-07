@@ -1,24 +1,33 @@
 import express from 'express';
 const router = express.Router();
-import * as userCtrl from '../controllers/user';
+import config from "../../config";
 import passport from 'passport';
+import * as userCtrl from '../controllers/user';
+import {handleResponse} from '../services/handleResponse';
 
-router.get('/users/', userCtrl.getUsers);
 
-router.get('/users/:id', userCtrl.getUserByID);
+router.get('/users/', handleResponse(userCtrl.getUsers));
 
-router.get('/logout', userCtrl.logout);
+router.get('/users/:id', handleResponse(userCtrl.getUserByID));
 
-router.post('/login', passport.authenticate('local'), userCtrl.login);
+router.get('/logout', (req, res) => (
+    userCtrl.logout((data) => {
+        res.clearCookie(config.sessionName)
+            .status(200)
+            .json(data);
+    })
+));
 
-router.post('/users/', userCtrl.createUser);
+router.post('/login', passport.authenticate('local'), handleResponse(userCtrl.login));
 
-router.patch('/users/:id', userCtrl.updateUser);
+router.post('/users/', handleResponse(userCtrl.createUser));
 
-router.patch('/users/follow/group', userCtrl.addUserInGroup);
+router.patch('/users/:id', handleResponse(userCtrl.updateUser));
 
-router.patch('/users/leave-group/:id', userCtrl.removeUserFromGroup);
+router.patch('/users/follow/group', handleResponse(userCtrl.addUserInGroup));
 
-router.delete('/users/:id', userCtrl.removeUser);
+router.patch('/users/leave-group/:id', handleResponse(userCtrl.removeUserFromGroup));
+
+router.delete('/users/:id', handleResponse(userCtrl.removeUser));
 
 export default router;

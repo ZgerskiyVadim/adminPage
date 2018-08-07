@@ -5,8 +5,8 @@ import Group from '../models/group';
 
 class CommonCrudOperations {
 
-    getAll = ({Model, ModelPopulateOrUpdate, pathPopulate, searchFields}) => (
-        (req, res, done) => {
+    getAll({Model, ModelPopulateOrUpdate, pathPopulate, searchFields}) {
+        return (req, done) => {
             const { skip, limit, searchBy } = req.query;
 
             if (searchBy) {
@@ -14,7 +14,7 @@ class CommonCrudOperations {
                     if (err) return done(err);
                     ModelPopulateOrUpdate.populate(data, {path: pathPopulate}, (err, docs) => {
                         if (err) return done(err);
-                        res.json(docs);
+                        done(null, docs);
                     })
                 });
             } else {
@@ -22,16 +22,16 @@ class CommonCrudOperations {
                     if (err) return done(err);
                     ModelPopulateOrUpdate.populate(data, {path: pathPopulate}, (err, docs) => {
                         if (err) return done(err);
-                        res.json(docs);
+                        done(null, docs);
                     })
                 });
             }
         }
-    );
+    };
 
-    getByID = ({Model, ModelPopulateOrUpdate, pathPopulate, searchFields}) => (
-        (req, res, done) => {
-            const { skip, limit, searchBy } = req.query;
+    getByID({Model, ModelPopulateOrUpdate, pathPopulate, searchFields}) {
+        return (req, done) => {
+            const {skip, limit, searchBy} = req.query;
 
             Model.findOne({_id: req.params.id}, (err, user) => {
                 if (!user) return done(createError('Not Found', 404));
@@ -44,49 +44,49 @@ class CommonCrudOperations {
                     },
                     (err, docs) => {
                         if (err) return done(err);
-                        res.json(docs);
+                        done(null, docs);
                     });
             });
         }
-    );
+    };
 
-    create = (Model) => (
-        (req, res, done) => {
+    create(Model) {
+        return (req, done) => {
             Model.create(req.body, (err, data) => {
                 if (err) return done(err);
-                res.status(201).json(data);
+                done(null, data, 201);
             });
         }
-    );
+    };
 
-    update = ({Model, ModelPopulateOrUpdate, pathPopulate}) => (
-        (req, res, done) => {
+    update({Model, ModelPopulateOrUpdate, pathPopulate}) {
+        return (req, done) => {
             Model.findOneAndUpdate({_id: req.params.id}, req.body, {runValidators: true, new: true}, (err, data) => {
                 if (err) return done(err);
                 ModelPopulateOrUpdate.populate(data, {path: pathPopulate}, (err, docs) => {
                     if (err) return done(err);
-                    res.json(docs);
+                    done(null, docs);
                 })
             });
         }
-    );
+    };
 
-    remove = ({Model, ModelPopulateOrUpdate, pathPopulate}) => (
-        (req, res, done) => {
+    remove({Model, ModelPopulateOrUpdate, pathPopulate}) {
+        return (req, done) => {
             Model.findOneAndRemove({_id: req.params.id}, (err, data) => {
                 if (!data) return done(createError('Is not exist', 404));
                 if (err) return done(err);
                 ModelPopulateOrUpdate.update({}, {$pull: {[pathPopulate]: data.id}}, {multi: true}, (err, modification) => {
                     if (err) return done(err);
                     const message = 'Successfully deleted';
-                    res.status(200).json(message);
+                    done(null, message, 200);
                 })
             });
         }
-    );
+    };
 
-    removeUserFromGroup = () => (
-        (req, res, done) => {
+    removeUserFromGroup() {
+        return (req, done) => {
             const userID = req.body.userID || req.params.id;
             const groupID = req.body.groupID || req.params.id;
 
@@ -109,13 +109,13 @@ class CommonCrudOperations {
                             })
                         });
                     }
-                ], (user, group) => res.json({user, group})
+                ], (user, group) => done(null, {user, group})
             );
         }
-    );
+    };
 
-    addUserInGroup = () => (
-        (req, res, done) => {
+    addUserInGroup() {
+        return (req, done) => {
             const {userID, groupID} = req.body;
 
             async.waterfall([
@@ -139,10 +139,10 @@ class CommonCrudOperations {
                             })
                         });
                     }
-                ], (user, group) => res.json({ user, group})
+                ], (user, group) => done(null, { user, group})
             );
         }
-    );
+    };
 }
 
 export default new CommonCrudOperations();

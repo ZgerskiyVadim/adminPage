@@ -12,7 +12,7 @@ const options = {
 
 export const getUsers = commonCrudOperations.getAll(options);
 
-export const getUserByID = commonCrudOperations.getByID(options);
+export const getUserByID = commonCrudOperations.getByID({...options, searchFields: 'groups'});
 
 export const createUser = commonCrudOperations.create(User);
 
@@ -24,16 +24,12 @@ export const removeUserFromGroup = commonCrudOperations.removeUserFromGroup();
 
 export const addUserInGroup = commonCrudOperations.addUserInGroup();
 
-export const login = (req, res, done) => {
-    res.json({
+export const login = (req, done) => {
+    done(null, {
         message: 'User loggedIN'
     })
 };
 
-export const logout = (req, res, done) => {
-    res.clearCookie(config.sessionName)
-        .status(200)
-        .json({
-            message: 'User is logout'
-        });
+export const logout = (done) => {
+    done({message: 'User is logout'});
 };
