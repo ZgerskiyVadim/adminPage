@@ -28,7 +28,13 @@ class Users extends Component {
             showModal: false,
             userID: ''
         };
+
         this.loadMore = loadMore.bind(this, 'users');
+        this.search = this.search.bind(this);
+        this.update = this.update.bind(this);
+        this.remove = this.remove.bind(this);
+        this.showModal = this.showModal.bind(this);
+        this.closeModal = this.closeModal.bind(this);
     }
 
     componentDidMount() {
@@ -64,19 +70,19 @@ class Users extends Component {
         }
     }
 
-    search = (event) => {
+    search(event) {
         searchUsersRequest.call(this, event);
     };
 
-    update = (options) => {
+    update(options) {
         this.props.actions.updateUserRequest(options);
     };
 
-    remove = (id) => (e) => {
+    remove(id) {
         this.props.actions.removeUserRequest(id);
     };
 
-    showModal = (id, e) => {
+    showModal(id, e) {
         e.stopPropagation();
         this.setState({
             showModal: true,
@@ -84,7 +90,7 @@ class Users extends Component {
         })
     };
 
-    closeModal = () => {
+    closeModal() {
         this.setState({
             showModal: false
         })
@@ -134,7 +140,7 @@ class Users extends Component {
                 <LoadingSpinner isLoading={isLoading}/>
                 <ModalWindow
                     isShow={showModal}
-                    remove={this.remove(userID)}
+                    remove={() => this.remove(userID)}
                     closeModal={this.closeModal}
                 />
             </div>

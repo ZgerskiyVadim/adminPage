@@ -29,7 +29,16 @@ class Groups extends Component {
             showModal: false,
             groupID: ''
         };
+
         this.loadMore = loadMore.bind(this, 'groups');
+        this.search = this.search.bind(this);
+        this.joinGroup = this.joinGroup.bind(this);
+        this.leaveGroup = this.leaveGroup.bind(this);
+        this.cancelJoinGroup = this.cancelJoinGroup.bind(this);
+        this.update = this.update.bind(this);
+        this.remove = this.remove.bind(this);
+        this.showModal = this.showModal.bind(this);
+        this.closeModal = this.closeModal.bind(this);
     }
 
     componentDidMount() {
@@ -75,33 +84,33 @@ class Groups extends Component {
         });
     }
 
-    search = (event) => {
+    search(event) {
         searchGroupsRequest.call(this, event);
     };
 
-    joinGroup = (options) => {
+    joinGroup(options) {
         this.props.actions.joinGroup(options);
     };
 
-    leaveGroup = (options) => {
+    leaveGroup(options) {
         this.props.actions.removeUserRequest(options);
     };
 
-    cancelJoinGroup = () => {
+    cancelJoinGroup() {
         const isJoiningGroups = false;
         this.props.actions.cancelJoinGroup(isJoiningGroups);
         this.props.history.push(`/users/${this.props.user._id}`);
     };
 
-    update = (options) => {
+    update(options) {
         this.props.actions.updateGroupRequest(options);
     };
 
-    remove = (id) => (e) => {
+    remove(id) {
         this.props.actions.removeGroupRequest(id);
     };
 
-    showModal = (id, e) => {
+    showModal(id, e) {
         e.stopPropagation();
         this.setState({
             showModal: true,
@@ -109,7 +118,7 @@ class Groups extends Component {
         })
     };
 
-    closeModal = () => {
+    closeModal() {
         this.setState({
             showModal: false
         })
@@ -178,7 +187,7 @@ class Groups extends Component {
                 <LoadingSpinner isLoading={isLoading}/>
                 <ModalWindow
                     isShow={showModal}
-                    remove={this.remove(groupID)}
+                    remove={() => this.remove(groupID)}
                     closeModal={this.closeModal}
                 />
             </div>

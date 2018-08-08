@@ -18,25 +18,29 @@ class User extends Component {
 
         this.showForms = showForms.bind(this, this.props.user._id);
         this.handleChangeState = handleChangeState.bind(this);
+        this.goToUser = this.goToUser.bind(this);
+        this.handleClick = this.handleClick.bind(this);
+        this.sendOptionsUpdate = this.sendOptionsUpdate.bind(this);
+        this.remove = this.remove.bind(this);
     }
 
-    goToUser = () => {
+    goToUser() {
         const {_id} = this.props.user;
         this.props.history.push(`/users/${_id}`);
     };
 
-    handleClick = (e) => {
+    handleClick(e) {
         e.stopPropagation();
     };
 
-    sendOptionsUpdate = (e) => {
+    sendOptionsUpdate(e) {
         e.stopPropagation();
         this.setState({showForm: false});
         const options = getValidOptions(this.state);
         this.props.update(options)
     };
 
-    remove = (id) => (e) => {
+    remove(id, e) {
         this.props.showModal(id, e);
     };
 
@@ -72,7 +76,7 @@ class User extends Component {
                     <td className='users__buttons'>
                         <button onClick={this.showForms} className={classNames('users--margin-right btn btn-outline-primary', shownForm)}>Update</button>
                         <button onClick={this.sendOptionsUpdate} className={classNames('users--margin-right btn btn-outline-primary', hiddenForm)}>Save</button>
-                        <button onClick={this.remove(_id)} className={classNames('btn btn-outline-danger', isJoiningUser)}>Remove</button>
+                        <button onClick={(e) => this.remove(_id, e)} className={classNames('btn btn-outline-danger', isJoiningUser)}>Remove</button>
                     </td>
                 </tr>
             </tbody>

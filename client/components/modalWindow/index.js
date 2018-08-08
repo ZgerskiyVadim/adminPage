@@ -6,6 +6,9 @@ import classNames from 'classnames';
 class ModalWindow extends Component {
     constructor(props) {
         super(props);
+
+        this.successModal = this.successModal.bind(this);
+        this.handleClickOutside = this.handleClickOutside.bind(this);
     }
 
     componentDidMount() {
@@ -16,12 +19,12 @@ class ModalWindow extends Component {
         this.modalRoot.removeEventListener('click', this.handleClickOutside);
     }
 
-    successModal = () => {
+    successModal() {
         this.props.remove();
         this.props.closeModal();
     };
 
-    handleClickOutside = (e) => {
+    handleClickOutside(e) {
         e.preventDefault();
         if (!this.modalContent.contains(e.target)) {
             this.props.closeModal();

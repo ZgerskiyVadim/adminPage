@@ -19,6 +19,7 @@ class CreateGroup extends Component {
             isLoading: false
         };
         this.handleChangeState = handleChangeState.bind(this);
+        this.sendGroup = this.sendGroup.bind(this);
     }
 
     componentWillReceiveProps(nextProps) {
@@ -30,7 +31,7 @@ class CreateGroup extends Component {
         toastrMessages(nextProps.createGroupStore);
     }
 
-    sendGroup = () => {
+    sendGroup() {
         this.props.actions.createGroupRequest(this.state)
     };
 

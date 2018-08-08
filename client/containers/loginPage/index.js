@@ -18,7 +18,9 @@ class LoginPage extends Component {
             password: '',
             isLoading: false
         };
+
         this.handleChangeState = handleChangeState.bind(this);
+        this.login = this.login.bind(this);
     }
 
     componentWillReceiveProps(nextProps) {
@@ -30,7 +32,7 @@ class LoginPage extends Component {
         toastrMessages(nextProps.authenticateStore);
     }
 
-    login = () => {
+    login() {
         this.props.actions.login(this.state)
     };
 

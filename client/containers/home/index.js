@@ -15,6 +15,9 @@ export default class Home extends Component {
                     <Link to='/create-user'><h2 className='home--margin-right'>Create user</h2></Link>
                     <Link to='/create-group'><h2>Create group</h2></Link>
                 </div>
+                <div className='home--row'>
+                    <Link to='/login'><h2>Login</h2></Link>
+                </div>
             </div>
         );
     }

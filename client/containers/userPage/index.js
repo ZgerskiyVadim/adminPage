@@ -36,6 +36,12 @@ class User extends Component {
         this.loadMore = loadMore.bind(this, 'user');
         this.handleChangeState = handleChangeState.bind(this);
         this.showForms = showForms.bind(this, this.state.options.id);
+        this.goToGroup = this.goToGroup.bind(this);
+        this.search = this.search.bind(this);
+        this.update = this.update.bind(this);
+        this.startJoiningGroup = this.startJoiningGroup.bind(this);
+        this.joinGroup = this.joinGroup.bind(this);
+        this.leaveGroup = this.leaveGroup.bind(this);
     }
 
     componentDidMount() {
@@ -64,28 +70,28 @@ class User extends Component {
         checkRemovedItems.call(this, prevCountUsers, currentCountUsers);
     }
 
-    goToGroup = (id) => (e) => {
+    goToGroup(id) {
         this.props.history.push(`/groups/${id}`);
     };
 
-    search = (event) => {
+    search(event) {
         userSearchGroupsRequest.call(this, event);
     };
 
-    update = () => {
+    update() {
         this.setState({showForm: false});
         const options = getValidOptions(this.state);
         this.props.actions.updateUserRequest(options);
     };
 
-    startJoiningGroup = (e) => {
+    startJoiningGroup(e) {
         e.stopPropagation();
         const isJoiningGroup = true;
         this.props.actions.startJoiningGroup(isJoiningGroup);
         this.props.history.push('/groups');
     };
 
-    joinGroup = (id) => (e) => {
+    joinGroup(id, e) {
         e.stopPropagation();
         const options = {
             userID: this.state.options.id,
@@ -94,7 +100,7 @@ class User extends Component {
         this.props.actions.joinGroup(options);
     };
 
-    leaveGroup = (id) => (e) => {
+    leaveGroup(id, e) {
         e.stopPropagation();
         const options = {
             userID: this.state.options.id,
@@ -155,7 +161,7 @@ class User extends Component {
                         {
                             groups.map((group, index) =>
                                 <tbody key={index}>
-                                <tr onClick={this.goToGroup(group._id)} className={classNames('user__groups-list', {'user--light-grey': group.isLeftGroup})}>
+                                <tr onClick={() => this.goToGroup(group._id)} className={classNames('user__groups-list', {'user--light-grey': group.isLeftGroup})}>
                                     <th>{index + 1}</th>
                                     <td>
                                         <h5>{group.name}</h5>
@@ -167,8 +173,8 @@ class User extends Component {
                                         <h5>{group.users.length}</h5>
                                     </td>
                                     <td>
-                                        <button onClick={this.leaveGroup(group._id)} className={classNames('user__leave-group btn btn-outline-danger', {'user--hide': group.isLeftGroup})}>leave group</button>
-                                        <button onClick={this.joinGroup(group._id)} className={classNames('user__leave-group btn btn-outline-info', {'user--hide': !group.isLeftGroup})}>join group</button>
+                                        <button onClick={(e) => this.leaveGroup(group._id, e)} className={classNames('user__leave-group btn btn-outline-danger', {'user--hide': group.isLeftGroup})}>leave group</button>
+                                        <button onClick={(e) => this.joinGroup(group._id, e)} className={classNames('user__leave-group btn btn-outline-info', {'user--hide': !group.isLeftGroup})}>join group</button>
                                     </td>
                                 </tr>
                                 </tbody>

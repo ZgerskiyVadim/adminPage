@@ -21,6 +21,7 @@ class CreateUser extends Component {
             isLoading: false
         };
         this.handleChangeState = handleChangeState.bind(this);
+        this.sendUser = this.sendUser.bind(this);
     }
 
     componentWillReceiveProps(nextProps) {
@@ -32,7 +33,7 @@ class CreateUser extends Component {
         toastrMessages(nextProps.createUserStore);
     }
 
-    sendUser = () => {
+    sendUser() {
         this.props.actions.createUserRequest(this.state)
     };
 

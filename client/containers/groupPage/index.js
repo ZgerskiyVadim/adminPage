@@ -36,6 +36,12 @@ class User extends Component {
         this.loadMore = loadMore.bind(this, 'group');
         this.showForms = showForms.bind(this, this.state.options.id);
         this.handleChangeState = handleChangeState.bind(this);
+        this.goToUser = this.goToUser.bind(this);
+        this.search = this.search.bind(this);
+        this.update = this.update.bind(this);
+        this.removeUser = this.removeUser.bind(this);
+        this.showModal = this.showModal.bind(this);
+        this.closeModal = this.closeModal.bind(this);
     }
 
     componentDidMount() {
@@ -62,21 +68,21 @@ class User extends Component {
         checkRemovedItems.call(this, prevCountUsers, currentCountUsers);
     }
 
-    goToUser = (id) => (e) => {
+    goToUser(id) {
         this.props.history.push(`/users/${id}`);
     };
 
-    search = (event) => {
+    search(event) {
         groupSearchUsersRequest.call(this, event);
     };
 
-    update = () => {
+    update() {
         this.setState({showForm: false});
         const options = getValidOptions(this.state);
         this.props.actions.updateGroupRequest(options);
     };
 
-    removeUser = (id) => (e) => {
+    removeUser(id) {
         const options = {
             groupID: this.state.options.id,
             userID: id
@@ -84,7 +90,7 @@ class User extends Component {
         this.props.actions.removeUserRequest(options);
     };
 
-    showModal = (id) => (e) => {
+    showModal(id, e) {
         e.stopPropagation();
         this.setState({
             showModal: true,
@@ -92,7 +98,7 @@ class User extends Component {
         })
     };
 
-    closeModal = () => {
+    closeModal() {
         this.setState({
             showModal: false
         })
@@ -149,7 +155,7 @@ class User extends Component {
                         {
                             users.map((user, index) =>
                                 <tbody key={index}>
-                                <tr onClick={this.goToUser(user._id)} className='group__users-list'>
+                                <tr onClick={() => this.goToUser(user._id)} className='group__users-list'>
                                     <th>{index + 1}</th>
                                     <td>
                                         <h5>{user.username}</h5>
@@ -164,7 +170,7 @@ class User extends Component {
                                         <h5>{user.email}</h5>
                                     </td>
                                     <td>
-                                        <button onClick={this.showModal(user._id)} className='group__remove-user btn btn-outline-danger'>remove user</button>
+                                        <button onClick={(e) => this.showModal(user._id, e)} className='group__remove-user btn btn-outline-danger'>remove user</button>
                                     </td>
                                 </tr>
                                 </tbody>
@@ -175,7 +181,7 @@ class User extends Component {
                 <LoadingSpinner isLoading={isLoading}/>
                 <ModalWindow
                     isShow={showModal}
-                    remove={this.removeUser(userID)}
+                    remove={() => this.removeUser(userID)}
                     closeModal={this.closeModal}
                 />
             </div>

@@ -4,6 +4,11 @@ import classNames from 'classnames';
 import './index.scss';
 
 class Breadcrumb extends Component {
+    constructor(props) {
+        super(props);
+
+        this.goToPath = this.goToPath.bind(this)
+    }
 
     locationPath() {
         const locationPath = this.props.location.pathname;
@@ -27,7 +32,7 @@ class Breadcrumb extends Component {
             });
     }
 
-    goToPath = (location) => (e) => {
+    goToPath(location) {
         this.props.history.push(location);
     };
 
@@ -37,14 +42,16 @@ class Breadcrumb extends Component {
         return (
             <nav className="breadcrumb-root" aria-label="breadcrumb">
                 <ol className="breadcrumb">
-                    <li onClick={this.goToPath('/')} className={classNames('breadcrumb--cursor breadcrumb-item', isPathHomeActive)}>
+                    <li onClick={() => this.goToPath('/')} className={classNames('breadcrumb--cursor breadcrumb-item', isPathHomeActive)}>
                         home
                     </li>
                     {
                         this.locationPath().map((item, index) => {
                             return (
-                                <li onClick={!item.islastPath ? this.goToPath(item.location) : null} className={classNames('breadcrumb--cursor breadcrumb-item', {'breadcrumb--blue': !item.islastPath, 'active': item.islastPath})} key={index}>
-                                    {item.path}
+                                <li onClick={() => !item.islastPath ? this.goToPath(item.location) : null}
+                                    className={classNames('breadcrumb--cursor breadcrumb-item', {'breadcrumb--blue': !item.islastPath, 'active': item.islastPath})}
+                                    key={index}>
+                                        {item.path}
                                 </li>
                             );
                         })
