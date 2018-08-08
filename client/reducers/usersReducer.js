@@ -11,7 +11,7 @@ import {
 const defaultProps = {
     isRemoved: false,
     isUpdated: false,
-    isLoading: false,
+    loading: false,
     error: null
 };
 
@@ -26,7 +26,7 @@ export default function Users(state = initialState, action) {
             return {
                 ...state,
                 ...defaultProps,
-                isLoading: true
+                loading: true
             };
 
         case GET_USERS:
@@ -40,7 +40,7 @@ export default function Users(state = initialState, action) {
             return {
                 ...state,
                 ...defaultProps,
-                isLoading: true
+                loading: true
             };
 
         case UPDATE_USER:
@@ -55,7 +55,7 @@ export default function Users(state = initialState, action) {
             return {
                 ...state,
                 ...defaultProps,
-                isLoading: true
+                loading: true
             };
 
         case REMOVE_USER:

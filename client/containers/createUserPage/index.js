@@ -18,16 +18,17 @@ class CreateUser extends Component {
             firstName: '',
             lastName: '',
             email: '',
-            isLoading: false
+            password: '',
+            loading: false
         };
         this.handleChangeState = handleChangeState.bind(this);
         this.sendUser = this.sendUser.bind(this);
     }
 
     componentWillReceiveProps(nextProps) {
-        const {isLoading} = nextProps.createUserStore;
+        const {loading} = nextProps.createUserStore;
         this.setState({
-            isLoading
+            loading
         });
 
         toastrMessages(nextProps.createUserStore);
@@ -38,7 +39,7 @@ class CreateUser extends Component {
     };
 
     render() {
-        const {isLoading, username, firstName, lastName, email} = this.state;
+        const {loading, username, firstName, lastName, email, password} = this.state;
 
         return (
             <div className='create-user'>
@@ -53,11 +54,13 @@ class CreateUser extends Component {
                         <input onChange={this.handleChangeState} value={lastName} name='lastName' className='form-control' type="text"/>
                         <h3>email</h3>
                         <input onChange={this.handleChangeState} value={email} name='email' className='form-control' type="text"/>
+                        <h3>password</h3>
+                        <input onChange={this.handleChangeState} value={password} name='password' className='form-control' type="password"/>
                     </div>
 
                     <button onClick={this.sendUser} className='create-user__send btn btn-outline-primary'>Send</button>
                 </div>
-                <LoadingSpinner isLoading={isLoading}/>
+                <LoadingSpinner loading={loading}/>
             </div>
         );
     }

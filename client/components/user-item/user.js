@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
+import { withRouter } from 'react-router';
 
 import {handleChangeState, showForms, getValidOptions} from '../../services/formsOperations';
 import classNames from "classnames";
@@ -90,4 +91,4 @@ User.propTypes = {
     showModal: PropTypes.func.isRequired
 };
 
-export default User;
+export default withRouter(User);

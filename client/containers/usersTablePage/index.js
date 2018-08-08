@@ -24,7 +24,7 @@ class Users extends Component {
                 searchBy: ''
             },
             isLoadMore: true,
-            isLoading: false,
+            loading: false,
             showModal: false,
             userID: ''
         };
@@ -48,9 +48,9 @@ class Users extends Component {
     }
 
     componentWillReceiveProps(nextProps) {
-        const {isLoading} = nextProps.usersStore;
+        const {loading} = nextProps.usersStore;
         this.setState({
-            isLoading
+            loading
         });
 
         toastrMessages(nextProps.usersStore);
@@ -97,7 +97,7 @@ class Users extends Component {
     };
 
     render() {
-        const {isLoadMore, isLoading, showModal, userID} = this.state;
+        const {isLoadMore, loading, showModal, userID} = this.state;
         const marginBottom = classNames({'users--margin-bottom': !isLoadMore});
 
         return (
@@ -129,7 +129,6 @@ class Users extends Component {
                             <User
                                 user={user}
                                 index={index}
-                                history={this.props.history}
                                 key={user._id}
                                 isJoining={user.isJoining}
                                 update={this.update}
@@ -137,7 +136,7 @@ class Users extends Component {
                             />)
                     }
                 </table>
-                <LoadingSpinner isLoading={isLoading}/>
+                <LoadingSpinner loading={loading}/>
                 <ModalWindow
                     isShow={showModal}
                     remove={() => this.remove(userID)}

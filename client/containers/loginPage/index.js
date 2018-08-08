@@ -16,7 +16,7 @@ class LoginPage extends Component {
         this.state = {
             username: '',
             password: '',
-            isLoading: false
+            loading: false
         };
 
         this.handleChangeState = handleChangeState.bind(this);
@@ -24,12 +24,17 @@ class LoginPage extends Component {
     }
 
     componentWillReceiveProps(nextProps) {
-        const {isLoading} = nextProps.authenticateStore;
+        const {loading, isLogged} = nextProps.authenticateStore;
         this.setState({
-            isLoading
+            loading
         });
 
         toastrMessages(nextProps.authenticateStore);
+        isLogged && this.goHome();
+    }
+
+    goHome() {
+        this.props.history.push(`/`);
     }
 
     login() {
@@ -37,7 +42,7 @@ class LoginPage extends Component {
     };
 
     render() {
-        const {isLoading, username, password} = this.state;
+        const {loading, username, password} = this.state;
 
         return (
             <div className='login'>
@@ -47,12 +52,12 @@ class LoginPage extends Component {
                         <h3>username</h3>
                         <input onChange={this.handleChangeState} value={username} name='username' className='form-control' type="text"/>
                         <h3>password</h3>
-                        <input onChange={this.handleChangeState} value={password} name='password' className='form-control' type="text"/>
+                        <input onChange={this.handleChangeState} value={password} name='password' className='form-control' type="password"/>
                     </div>
 
                     <button onClick={this.login} className='login__send btn btn-outline-primary'>Send</button>
                 </div>
-                <LoadingSpinner isLoading={isLoading}/>
+                <LoadingSpinner loading={loading}/>
             </div>
         );
     }

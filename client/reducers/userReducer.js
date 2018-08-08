@@ -15,7 +15,7 @@ const defaultProps = {
     isJoinedGroup: false,
     isLeftGroup: false,
     isUpdated: false,
-    isLoading: false,
+    loading: false,
     error: null
 };
 
@@ -38,7 +38,7 @@ export default function User(state = initialState, action) {
             return {
                 ...state,
                 ...defaultProps,
-                isLoading: true
+                loading: true
             };
 
         case GET_USER:
@@ -56,7 +56,7 @@ export default function User(state = initialState, action) {
             return {
                 ...state,
                 ...defaultProps,
-                isLoading: true
+                loading: true
             };
 
         case UPDATE_USER:
@@ -74,7 +74,7 @@ export default function User(state = initialState, action) {
             return {
                 ...state,
                 ...defaultProps,
-                isLoading: true
+                loading: true
             };
 
         case USER_JOINED_GROUP:
@@ -89,7 +89,7 @@ export default function User(state = initialState, action) {
             return {
                 ...state,
                 ...defaultProps,
-                isLoading: true
+                loading: true
             };
 
         case USER_LEFT_GROUP:

@@ -16,16 +16,16 @@ class CreateGroup extends Component {
         this.state = {
             name: '',
             title: '',
-            isLoading: false
+            loading: false
         };
         this.handleChangeState = handleChangeState.bind(this);
         this.sendGroup = this.sendGroup.bind(this);
     }
 
     componentWillReceiveProps(nextProps) {
-        const {isLoading} = nextProps.createGroupStore;
+        const {loading} = nextProps.createGroupStore;
         this.setState({
-            isLoading
+            loading
         });
 
         toastrMessages(nextProps.createGroupStore);
@@ -36,7 +36,7 @@ class CreateGroup extends Component {
     };
 
     render() {
-        const {isLoading, name, title} = this.state;
+        const {loading, name, title} = this.state;
 
         return (
             <div className='create-group'>
@@ -51,7 +51,7 @@ class CreateGroup extends Component {
 
                     <button onClick={this.sendGroup} className='create-group__send btn btn-outline-primary'>Send</button>
                 </div>
-                <LoadingSpinner isLoading={isLoading}/>
+                <LoadingSpinner loading={loading}/>
             </div>
         );
     }

@@ -5,7 +5,7 @@ import {
 } from '../actions';
 
 const defaultProps = {
-    isLoading: false,
+    loading: false,
     error: null
 };
 
@@ -20,7 +20,7 @@ export default function CreateUser(state = initialState, action) {
             return {
                 ...state,
                 ...defaultProps,
-                isLoading: true
+                loading: true
             };
 
         case USER_CREATED:

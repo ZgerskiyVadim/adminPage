@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
+import { withRouter } from 'react-router';
 
 import {handleChangeState, showForms, getValidOptions} from '../../services/formsOperations';
 
@@ -104,4 +105,4 @@ Group.propTypes = {
     leaveGroup: PropTypes.func
 };
 
-export default Group;
+export default withRouter(Group);

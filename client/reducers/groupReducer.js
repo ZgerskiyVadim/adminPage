@@ -8,7 +8,7 @@ import {
 
 const defaultProps = {
     isUpdated: false,
-    isLoading: false,
+    loading: false,
     error: null
 };
 
@@ -25,7 +25,7 @@ export default function Group(state = initialState, action) {
             return {
                 ...state,
                 ...defaultProps,
-                isLoading: true
+                loading: true
             };
 
         case GET_GROUP:
@@ -39,16 +39,16 @@ export default function Group(state = initialState, action) {
             return {
                 ...state,
                 ...defaultProps,
-                isLoading: true
+                loading: true
             };
 
         case UPDATE_GROUP:
             return {
                 ...state,
+                ...defaultProps,
                 name: action.payload.name,
                 title: action.payload.title,
                 users: action.payload.users,
-                ...defaultProps,
                 isUpdated: true,
             };
 

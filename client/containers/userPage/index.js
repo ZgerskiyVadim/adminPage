@@ -30,7 +30,7 @@ class User extends Component {
                 id: this.props.match.params.id
             },
             isLoadMore: true,
-            isLoading: false
+            loading: false
         };
 
         this.loadMore = loadMore.bind(this, 'user');
@@ -56,9 +56,9 @@ class User extends Component {
     }
 
     componentWillReceiveProps(nextProps) {
-        const {isLoading} = nextProps.user;
+        const {loading} = nextProps.user;
         this.setState({
-            isLoading
+            loading
         });
 
         toastrMessages.call(this, nextProps.user);
@@ -112,7 +112,7 @@ class User extends Component {
     render() {
         const {username, firstName, lastName, email} = this.props.user.user;
         const {groups} = this.props;
-        const {showForm, isLoading, ...state} = this.state;
+        const {showForm, loading, ...state} = this.state;
 
         const hiddenForm = classNames({'user--hide': !showForm});
         const shownForm = classNames('user--margin-right btn btn-outline-primary', {'user--hide': showForm});
@@ -182,7 +182,7 @@ class User extends Component {
                         }
                     </table>
                 </div>
-                <LoadingSpinner isLoading={isLoading}/>
+                <LoadingSpinner loading={loading}/>
             </div>
         );
     }

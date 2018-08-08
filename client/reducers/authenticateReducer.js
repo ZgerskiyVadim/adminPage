@@ -9,7 +9,7 @@ import {
 const defaultProps = {
     isLogged: false,
     isLogout: false,
-    isLoading: false,
+    loading: false,
     error: null
 };
 
@@ -37,14 +37,14 @@ export default function Authenticate(state = initialState, action) {
             return {
                 ...state,
                 ...defaultProps,
-                isLoading: true
+                loading: true
             };
 
         case LOGOUT_REQUEST:
             return {
                 ...state,
                 ...defaultProps,
-                isLoading: true
+                loading: true
             };
 
         case AUTHENTICATE_REQUEST_FAILED:

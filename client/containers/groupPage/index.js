@@ -28,7 +28,7 @@ class User extends Component {
                 id: this.props.match.params.id
             },
             isLoadMore: true,
-            isLoading: false,
+            loading: false,
             showModal: false,
             userID: ''
         };
@@ -54,9 +54,9 @@ class User extends Component {
     }
 
     componentWillReceiveProps(nextProps) {
-        const {isLoading} = nextProps.group;
+        const {loading} = nextProps.group;
         this.setState({
-            isLoading
+            loading
         });
 
         toastrMessages.call(this, nextProps.group);
@@ -107,7 +107,7 @@ class User extends Component {
     render() {
         const {name, title} = this.props.group;
         const {users} = this.props;
-        const {showForm, isLoading, showModal, userID, ...state} = this.state;
+        const {showForm, loading, showModal, userID, ...state} = this.state;
 
         const hiddenForm = classNames({'group--hide': !showForm});
         const shownForm = classNames({'group--hide': showForm});
@@ -178,7 +178,7 @@ class User extends Component {
                         }
                     </table>
                 </div>
-                <LoadingSpinner isLoading={isLoading}/>
+                <LoadingSpinner loading={loading}/>
                 <ModalWindow
                     isShow={showModal}
                     remove={() => this.removeUser(userID)}

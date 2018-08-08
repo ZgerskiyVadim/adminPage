@@ -11,7 +11,7 @@ import {
 const defaultProps = {
     isRemoved: false,
     isUpdated: false,
-    isLoading: false,
+    loading: false,
     error: null
 };
 
@@ -26,28 +26,28 @@ export default function Groups(state = initialState, action) {
             return {
                 ...state,
                 ...defaultProps,
-                isLoading: true
+                loading: true
             };
 
         case GET_GROUPS:
             return {
                 ...state,
+                ...defaultProps,
                 groups: [...action.payload],
-                ...defaultProps
             };
 
         case UPDATE_GROUP_REQUEST:
             return {
                 ...state,
                 ...defaultProps,
-                isLoading: true
+                loading: true
             };
 
         case UPDATE_GROUP:
             return {
                 ...state,
-                groups: state.groups.map(group => (group._id === action.payload._id) ? action.payload : group),
                 ...defaultProps,
+                groups: state.groups.map(group => (group._id === action.payload._id) ? action.payload : group),
                 isUpdated: true
             };
 
@@ -55,14 +55,14 @@ export default function Groups(state = initialState, action) {
             return {
                 ...state,
                 ...defaultProps,
-                isLoading: true
+                loading: true
             };
 
         case REMOVE_GROUP:
             return {
                 ...state,
-                groups: state.groups.filter(group => group._id !== action.payload),
                 ...defaultProps,
+                groups: state.groups.filter(group => group._id !== action.payload),
                 isRemoved: true,
             };
 

@@ -25,7 +25,7 @@ class Groups extends Component {
             },
             isLoadMore: true,
             isSearching: false,
-            isLoading: false,
+            loading: false,
             showModal: false,
             groupID: ''
         };
@@ -52,9 +52,9 @@ class Groups extends Component {
     }
 
     componentWillReceiveProps(nextProps) {
-        const {isLoading} = nextProps.groupsStore;
+        const {loading} = nextProps.groupsStore;
         this.setState({
-            isLoading
+            loading
         });
 
         toastrMessages(nextProps.groupsStore);
@@ -126,7 +126,7 @@ class Groups extends Component {
 
     render() {
         const {isJoiningGroup, groups, user} = this.props;
-        const {isLoadMore, isLoading, showModal, groupID} = this.state;
+        const {isLoadMore, loading, showModal, groupID} = this.state;
 
         const isJoinGroup = classNames({'groups--hide': !isJoiningGroup});
         const marginBottom = classNames({'groups--margin-bottom': !isLoadMore});
@@ -165,7 +165,6 @@ class Groups extends Component {
                                     group={group}
                                     index={index}
                                     userID={user._id}
-                                    history={this.props.history}
                                     isJoinedUserInGroup={group.isJoinedUserInGroup}
                                     isJoiningGroup={true}
                                     joinGroup={this.joinGroup}
@@ -177,14 +176,13 @@ class Groups extends Component {
                                     key={group._id}
                                     group={group}
                                     index={index}
-                                    history={this.props.history}
                                     isJoiningGroup={false}
                                     update={this.update}
                                     showModal={this.showModal}
                                 />)
                     }
                 </table>
-                <LoadingSpinner isLoading={isLoading}/>
+                <LoadingSpinner loading={loading}/>
                 <ModalWindow
                     isShow={showModal}
                     remove={() => this.remove(groupID)}

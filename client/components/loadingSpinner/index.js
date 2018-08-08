@@ -6,9 +6,9 @@ import classNames from 'classnames';
 class LoadingSpinner extends Component {
 
     render() {
-        const {isLoading} = this.props;
+        const {loading} = this.props;
         return createPortal(
-            <div className={classNames('cover', {'loader--hide': !isLoading})}>
+            <div className={classNames('cover', {'loader--hide': !loading})}>
                 <div className="loader"/>
             </div>,
             document.getElementById('spinner')
