@@ -1,12 +1,12 @@
 import axios from 'axios/index';
 
     export const login = (options) => {
-        return axios.post('/api/login', options)
+        return axios.post('/auth/login', options)
             .then();
     };
 
     export const logout = () => {
-        return axios.get('/api/logout')
+        return axios.get('/auth/logout')
             .then();
     };
 

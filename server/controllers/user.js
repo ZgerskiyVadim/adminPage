@@ -24,9 +24,7 @@ export const removeUserFromGroup = commonCrudOperations.removeUserFromGroup();
 export const addUserInGroup = commonCrudOperations.addUserInGroup();
 
 export const login = (req, done) => {
-    done(null, {
-        message: 'User loggedIN'
-    })
+    done(null, {message: 'User logged-in'})
 };
 
 export const logout = (done) => {

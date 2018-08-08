@@ -23,7 +23,7 @@ app.use(session);
 app.use(passport.initialize());
 app.use(passport.session());
 
-app.use('/', routerAuthenticate);
+app.use('/auth', routerAuthenticate);
 app.use('/api', isAuthenticated, routers);
 app.use(errorHandler);
 
