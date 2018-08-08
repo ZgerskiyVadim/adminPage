@@ -1,9 +1,9 @@
 import {
-    USER_LOGGED,
-    LOGIN_REQUEST,
-    USER_LOGOUT,
-    LOGOUT_REQUEST,
-    AUTHENTICATE_REQUEST_FAILED
+    USER_LOGGED_SUCCESS,
+    LOGIN_PENDING,
+    USER_LOGOUT_SUCCESS,
+    LOGOUT_PENDING,
+    AUTHENTICATE_FAILED
 } from '../actions';
 
 const defaultProps = {
@@ -19,35 +19,35 @@ const initialState = {
 
 export default function Authenticate(state = initialState, action) {
     switch (action.type) {
-        case USER_LOGGED:
+        case USER_LOGGED_SUCCESS:
             return {
                 ...state,
                 ...defaultProps,
                 isLogged: true
             };
 
-        case USER_LOGOUT:
+        case USER_LOGOUT_SUCCESS:
             return {
                 ...state,
                 ...defaultProps,
                 isLogout: true,
             };
 
-        case LOGIN_REQUEST:
+        case LOGIN_PENDING:
             return {
                 ...state,
                 ...defaultProps,
                 loading: true
             };
 
-        case LOGOUT_REQUEST:
+        case LOGOUT_PENDING:
             return {
                 ...state,
                 ...defaultProps,
                 loading: true
             };
 
-        case AUTHENTICATE_REQUEST_FAILED:
+        case AUTHENTICATE_FAILED:
             return {
                 ...state,
                 ...defaultProps,

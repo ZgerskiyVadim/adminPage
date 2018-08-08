@@ -1,9 +1,9 @@
 import {
-    GET_GROUP,
-    GET_GROUP_REQUEST,
-    GROUP_REQUEST_FAILED,
-    UPDATE_GROUP,
-    UPDATE_GROUP_REQUEST
+    GET_GROUP_SUCCESS,
+    GET_GROUP_PENDING,
+    GROUP_FAIL,
+    UPDATE_GROUP_SUCCESS,
+    UPDATE_GROUP_PENDING
 } from '../actions';
 
 const defaultProps = {
@@ -21,28 +21,28 @@ const initialState = {
 
 export default function Group(state = initialState, action) {
     switch (action.type) {
-        case GET_GROUP_REQUEST:
+        case GET_GROUP_PENDING:
             return {
                 ...state,
                 ...defaultProps,
                 loading: true
             };
 
-        case GET_GROUP:
+        case GET_GROUP_SUCCESS:
             return {
                 ...state,
                 ...action.payload,
                 ...defaultProps
             };
 
-        case UPDATE_GROUP_REQUEST:
+        case UPDATE_GROUP_PENDING:
             return {
                 ...state,
                 ...defaultProps,
                 loading: true
             };
 
-        case UPDATE_GROUP:
+        case UPDATE_GROUP_SUCCESS:
             return {
                 ...state,
                 ...defaultProps,
@@ -52,7 +52,7 @@ export default function Group(state = initialState, action) {
                 isUpdated: true,
             };
 
-        case GROUP_REQUEST_FAILED:
+        case GROUP_FAIL:
             return {
                 ...state,
                 ...defaultProps,

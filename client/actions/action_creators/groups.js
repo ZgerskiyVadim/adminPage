@@ -1,47 +1,47 @@
 import {
-    GET_GROUPS_REQUEST,
-    SEARCH_GROUPS_REQUEST,
-    UPDATE_GROUP_REQUEST,
-    REMOVE_GROUP_REQUEST,
-    ADD_USER_IN_GROUP_REQUEST,
+    GET_GROUPS_PENDING,
+    SEARCH_GROUPS_PENDING,
+    UPDATE_GROUP_PENDING,
+    REMOVE_GROUP_PENDING,
+    ADD_USER_IN_GROUP_PENDING,
     IS_USER_WANT_JOIN_GROUP,
-    REMOVE_USER_FROM_GROUP,
-    GROUP_CREATE_REQUEST,
-    GET_GROUP_REQUEST
+    REMOVE_USER_FROM_GROUP_SUCCESS,
+    GROUP_CREATE_PENDING,
+    GET_GROUP_PENDING
 } from '../index';
 
 export const createGroupRequest = (data) => ({
-    type: GROUP_CREATE_REQUEST,
+    type: GROUP_CREATE_PENDING,
     payload: data
 });
 
 export const getGroupRequest = (data) => ({
-    type: GET_GROUP_REQUEST,
+    type: GET_GROUP_PENDING,
     payload: data
 });
 
 export const getGroupsRequest = (data) => ({
-    type: GET_GROUPS_REQUEST,
+    type: GET_GROUPS_PENDING,
     payload: data
 });
 
 export const searchGroupsRequest = (data) => ({
-    type: SEARCH_GROUPS_REQUEST,
+    type: SEARCH_GROUPS_PENDING,
     payload: data
 });
 
 export const updateGroupRequest = (data) => ({
-    type: UPDATE_GROUP_REQUEST,
+    type: UPDATE_GROUP_PENDING,
     payload: data
 });
 
 export const removeGroupRequest = (data) => ({
-    type: REMOVE_GROUP_REQUEST,
+    type: REMOVE_GROUP_PENDING,
     payload: data
 });
 
 export const joinGroup = (data) => ({
-    type: ADD_USER_IN_GROUP_REQUEST,
+    type: ADD_USER_IN_GROUP_PENDING,
     payload: data
 });
 
@@ -51,6 +51,6 @@ export const cancelJoinGroup = (data) => ({
 });
 
 export const removeUserRequest = (data) => ({
-    type: REMOVE_USER_FROM_GROUP,
+    type: REMOVE_USER_FROM_GROUP_SUCCESS,
     payload: data
 });

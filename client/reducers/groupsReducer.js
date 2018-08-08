@@ -1,11 +1,11 @@
 import {
-    GET_GROUPS_REQUEST,
-    GET_GROUPS,
-    UPDATE_GROUP_REQUEST,
-    UPDATE_GROUP,
-    REMOVE_GROUP_REQUEST,
-    REMOVE_GROUP,
-    GROUPS_REQUEST_FAILED,
+    GET_GROUPS_PENDING,
+    GET_GROUPS_SUCCESS,
+    UPDATE_GROUP_PENDING,
+    UPDATE_GROUP_SUCCESS,
+    REMOVE_GROUP_PENDING,
+    REMOVE_GROUP_SUCCESS,
+    GROUPS_FAIL,
 } from '../actions';
 
 const defaultProps = {
@@ -22,28 +22,28 @@ const initialState = {
 
 export default function Groups(state = initialState, action) {
     switch (action.type) {
-        case GET_GROUPS_REQUEST:
+        case GET_GROUPS_PENDING:
             return {
                 ...state,
                 ...defaultProps,
                 loading: true
             };
 
-        case GET_GROUPS:
+        case GET_GROUPS_SUCCESS:
             return {
                 ...state,
                 ...defaultProps,
                 groups: [...action.payload],
             };
 
-        case UPDATE_GROUP_REQUEST:
+        case UPDATE_GROUP_PENDING:
             return {
                 ...state,
                 ...defaultProps,
                 loading: true
             };
 
-        case UPDATE_GROUP:
+        case UPDATE_GROUP_SUCCESS:
             return {
                 ...state,
                 ...defaultProps,
@@ -51,14 +51,14 @@ export default function Groups(state = initialState, action) {
                 isUpdated: true
             };
 
-        case REMOVE_GROUP_REQUEST:
+        case REMOVE_GROUP_PENDING:
             return {
                 ...state,
                 ...defaultProps,
                 loading: true
             };
 
-        case REMOVE_GROUP:
+        case REMOVE_GROUP_SUCCESS:
             return {
                 ...state,
                 ...defaultProps,
@@ -66,7 +66,7 @@ export default function Groups(state = initialState, action) {
                 isRemoved: true,
             };
 
-        case GROUPS_REQUEST_FAILED:
+        case GROUPS_FAIL:
             return {
                 ...state,
                 ...defaultProps,

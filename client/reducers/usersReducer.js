@@ -1,11 +1,11 @@
 import {
-    GET_USERS_REQUEST,
-    GET_USERS,
-    UPDATE_USER_REQUEST,
-    UPDATE_USER,
-    REMOVE_USER_REQUEST,
-    REMOVE_USER,
-    USERS_REQUEST_FAILED
+    GET_USERS_PENDING,
+    GET_USERS_SUCCESS,
+    UPDATE_USER_PENDING,
+    UPDATE_USER_SUCCESS,
+    REMOVE_USER_PENDING,
+    REMOVE_USER_SUCCESS,
+    USERS_FAIL
 } from '../actions';
 
 const defaultProps = {
@@ -22,28 +22,28 @@ const initialState = {
 
 export default function Users(state = initialState, action) {
     switch (action.type) {
-        case GET_USERS_REQUEST:
+        case GET_USERS_PENDING:
             return {
                 ...state,
                 ...defaultProps,
                 loading: true
             };
 
-        case GET_USERS:
+        case GET_USERS_SUCCESS:
             return {
                 ...state,
                 users: [...action.payload],
                 ...defaultProps
             };
 
-        case UPDATE_USER_REQUEST:
+        case UPDATE_USER_PENDING:
             return {
                 ...state,
                 ...defaultProps,
                 loading: true
             };
 
-        case UPDATE_USER:
+        case UPDATE_USER_SUCCESS:
             return {
                 ...state,
                 users: state.users.map(user => (user._id === action.payload._id) ? action.payload : user),
@@ -51,14 +51,14 @@ export default function Users(state = initialState, action) {
                 isUpdated: true
             };
 
-        case REMOVE_USER_REQUEST:
+        case REMOVE_USER_PENDING:
             return {
                 ...state,
                 ...defaultProps,
                 loading: true
             };
 
-        case REMOVE_USER:
+        case REMOVE_USER_SUCCESS:
             return {
                 ...state,
                 users: state.users.filter(user => user._id !== action.payload),
@@ -66,7 +66,7 @@ export default function Users(state = initialState, action) {
                 isRemoved: true,
             };
 
-        case USERS_REQUEST_FAILED:
+        case USERS_FAIL:
             return {
                 ...state,
                 ...defaultProps,

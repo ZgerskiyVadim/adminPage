@@ -1,7 +1,7 @@
 import {
-    USER_CREATED,
-    USER_CREATE_REQUEST,
-    CREATE_USER_REQUEST_FAILED
+    USER_CREATED_SUCCESS,
+    USER_CREATE_PENDING,
+    CREATE_USER_FAIL
 } from '../actions';
 
 const defaultProps = {
@@ -16,21 +16,21 @@ const initialState = {
 
 export default function CreateUser(state = initialState, action) {
     switch (action.type) {
-        case USER_CREATE_REQUEST:
+        case USER_CREATE_PENDING:
             return {
                 ...state,
                 ...defaultProps,
                 loading: true
             };
 
-        case USER_CREATED:
+        case USER_CREATED_SUCCESS:
             return {
                 ...state,
                 ...defaultProps,
                 isUserCreated: true
             };
 
-        case CREATE_USER_REQUEST_FAILED:
+        case CREATE_USER_FAIL:
             return {
                 ...state,
                 ...defaultProps,

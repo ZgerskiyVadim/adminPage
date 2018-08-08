@@ -1,7 +1,7 @@
 import {
-    GROUP_CREATED,
-    GROUP_CREATE_REQUEST,
-    CREATE_GROUP_REQUEST_FAILED
+    GROUP_CREATED_SUCCESS,
+    GROUP_CREATE_PENDING,
+    CREATE_GROUP_FAIL
 } from '../actions';
 
 const defaultProps = {
@@ -16,21 +16,21 @@ const initialState = {
 
 export default function CreateGroup(state = initialState, action) {
     switch (action.type) {
-        case GROUP_CREATE_REQUEST:
+        case GROUP_CREATE_PENDING:
             return {
                 ...state,
                 ...defaultProps,
                 loading: true
             };
 
-        case GROUP_CREATED:
+        case GROUP_CREATED_SUCCESS:
             return {
                 ...state,
                 ...defaultProps,
                 isGroupCreated: true,
             };
 
-        case CREATE_GROUP_REQUEST_FAILED:
+        case CREATE_GROUP_FAIL:
             return {
                 ...state,
                 ...defaultProps,

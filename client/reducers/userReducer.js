@@ -1,14 +1,14 @@
 import {
-    GET_USER,
-    GET_USER_REQUEST,
-    UPDATE_USER,
-    UPDATE_USER_REQUEST,
-    USER_LEFT_GROUP,
-    LEAVE_GROUP_REQUEST,
-    USER_JOINED_GROUP,
-    ADD_USER_IN_GROUP_REQUEST,
+    GET_USER_SUCCESS,
+    GET_USER_PENDING,
+    UPDATE_USER_SUCCESS,
+    UPDATE_USER_PENDING,
+    USER_LEFT_GROUP_SUCCESS,
+    LEAVE_GROUP_PENDING,
+    USER_JOINED_GROUP_SUCCESS,
+    ADD_USER_IN_GROUP_PENDING,
     IS_USER_WANT_JOIN_GROUP,
-    USER_REQUEST_FAILED
+    USER_FAIL
 } from '../actions';
 
 const defaultProps = {
@@ -34,14 +34,14 @@ const initialState = {
 
 export default function User(state = initialState, action) {
     switch (action.type) {
-        case GET_USER_REQUEST:
+        case GET_USER_PENDING:
             return {
                 ...state,
                 ...defaultProps,
                 loading: true
             };
 
-        case GET_USER:
+        case GET_USER_SUCCESS:
             return {
                 ...state,
                 ...defaultProps,
@@ -52,14 +52,14 @@ export default function User(state = initialState, action) {
                 groups: [...action.payload.groups],
             };
 
-        case UPDATE_USER_REQUEST:
+        case UPDATE_USER_PENDING:
             return {
                 ...state,
                 ...defaultProps,
                 loading: true
             };
 
-        case UPDATE_USER:
+        case UPDATE_USER_SUCCESS:
             return {
                 ...state,
                 ...defaultProps,
@@ -70,14 +70,14 @@ export default function User(state = initialState, action) {
                 isUpdated: true,
             };
 
-        case ADD_USER_IN_GROUP_REQUEST:
+        case ADD_USER_IN_GROUP_PENDING:
             return {
                 ...state,
                 ...defaultProps,
                 loading: true
             };
 
-        case USER_JOINED_GROUP:
+        case USER_JOINED_GROUP_SUCCESS:
             return {
                 ...state,
                 ...defaultProps,
@@ -85,14 +85,14 @@ export default function User(state = initialState, action) {
                 isJoinedGroup: true,
             };
 
-        case LEAVE_GROUP_REQUEST:
+        case LEAVE_GROUP_PENDING:
             return {
                 ...state,
                 ...defaultProps,
                 loading: true
             };
 
-        case USER_LEFT_GROUP:
+        case USER_LEFT_GROUP_SUCCESS:
             return {
                 ...state,
                 ...defaultProps,
@@ -110,7 +110,7 @@ export default function User(state = initialState, action) {
                 },
             };
 
-        case USER_REQUEST_FAILED:
+        case USER_FAIL:
             return {
                 ...state,
                 ...defaultProps,
