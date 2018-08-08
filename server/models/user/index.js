@@ -1,4 +1,5 @@
 import mongoose from 'mongoose';
+import bcrypt from 'bcrypt';
 import * as validator from './validator';
 import Group from '../group';
 
@@ -25,8 +26,49 @@ const userSchema = new Schema({
             validator: validator.email,
             message: 'Provided email is invalid.'
         }},
-    password: {type: String, required: true, minlength: 4, maxlength: 20},
+    password: {type: String, required: true, minlength: 4},
     groups: [{type: Schema.Types.ObjectId, ref: Group}]
 });
+
+userSchema.pre('save', function(next) {
+    const user = this;
+    if (!user.isModified('password')) return next();
+
+    hashPassword(user.password, (err, hashedPassword) => {
+        if (err) return next(err);
+        user.password = hashedPassword;
+        next();
+    });
+});
+
+userSchema.pre('findOneAndUpdate', function(next) {
+    let { password } = this.getUpdate();
+
+    password ?
+        hashPassword(password, (err, hashedPassword) => {
+            this.findOneAndUpdate({}, { password: hashedPassword });
+            next();
+        }) :
+        next()
+});
+
+userSchema.methods.comparePassword = function(candidatePassword, cb) {
+    bcrypt.compare(candidatePassword, this.password, function(err, isMatch) {
+        if (err) return cb(err);
+        cb(null, isMatch);
+    });
+};
+
+function hashPassword(password, cb) {
+    const SALT_BCRYPT = 10;
+
+    bcrypt.genSalt(SALT_BCRYPT, function(err, salt) {
+        if (err) return cb(err);
+        bcrypt.hash(password, salt, function(err, hash) {
+            if (err) return cb(err);
+            cb(null, hash);
+        });
+    });
+}
 
 export default mongoose.model('User', userSchema);

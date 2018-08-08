@@ -1,6 +1,6 @@
 import createError from './createError';
 
 export default function isAuthenticated(req, res, done) {
-    const message = 'Authenticated failed';
+    const message = 'Please login';
     req.isAuthenticated() ? done() : done(createError(message));
 }

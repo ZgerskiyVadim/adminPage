@@ -8,8 +8,12 @@ passport.use(new LocalStrategy(
         User.findOne({ username }, function (err, user) {
             if (err) return done(err);
             if (!user) return done(null, false);
-            if (user.password !== password) return done(null, false);
-            return done(null, user);
+            user.comparePassword(password, function (err, isMatch) {
+                if (err) return done(err);
+                isMatch ?
+                    done(null, user) :
+                    done(null, false);
+            });
         });
     }
 ));

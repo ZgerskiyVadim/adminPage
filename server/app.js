@@ -12,6 +12,7 @@ import dbConnection from './services/mongoose';
 import isAuthenticated from './services/isAuthenticated';
 import session from './middlewares/session';
 import routers from './routers';
+import routerAuthenticate from './routers/authenticate';
 const app = express();
 
 app.use(bodyParser.urlencoded({extended: false}));
@@ -22,6 +23,7 @@ app.use(session);
 app.use(passport.initialize());
 app.use(passport.session());
 
+app.use('/', routerAuthenticate);
 app.use('/api', isAuthenticated, routers);
 app.use(errorHandler);
 
