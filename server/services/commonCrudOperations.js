@@ -1,5 +1,5 @@
 import async from 'async';
-import createError from '../services/error';
+import createError from './createError';
 import User from '../models/user';
 import Group from '../models/group';
 
