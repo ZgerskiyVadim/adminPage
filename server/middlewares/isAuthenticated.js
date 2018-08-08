@@ -1,4 +1,4 @@
-import createError from './createError';
+import createError from '../services/createError';
 
 export default function isAuthenticated(req, res, done) {
     const message = 'Please login';

@@ -9,7 +9,7 @@ import { errorHandler } from './middlewares/errorHandler';
 import { sendHtmlFile } from './middlewares/sendHtmlFile';
 import { runServer } from './middlewares/runServer';
 import dbConnection from './services/mongoose';
-import isAuthenticated from './services/isAuthenticated';
+import isAuthenticated from './middlewares/isAuthenticated';
 import session from './middlewares/session';
 import routers from './routers';
 import routerAuthenticate from './routers/authenticate';
