@@ -14,7 +14,7 @@ const initialState = {
     ...defaultProps
 };
 
-export default function createUserReducer(state = initialState, action) {
+export default function CreateUser(state = initialState, action) {
     switch (action.type) {
         case USER_CREATE_REQUEST:
             return {

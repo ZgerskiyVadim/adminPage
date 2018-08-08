@@ -14,7 +14,7 @@ const initialState = {
     ...defaultProps
 };
 
-export default function createGroupReducer(state = initialState, action) {
+export default function CreateGroup(state = initialState, action) {
     switch (action.type) {
         case GROUP_CREATE_REQUEST:
             return {

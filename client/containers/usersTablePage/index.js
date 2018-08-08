@@ -156,10 +156,10 @@ Users.propTypes = {
 };
 
 const mapStateToProps = (state) => ({
-    usersStore: state.usersReducer,
-    users: state.usersReducer.users,
-    user: state.userReducer.user,
-    isJoiningGroup: state.userReducer.user.isJoiningGroup
+    usersStore: state.Users,
+    users: state.Users.users,
+    user: state.User.user,
+    isJoiningGroup: state.User.user.isJoiningGroup
 });
 
 const mapDispatchToProps = (dispatch) => ({

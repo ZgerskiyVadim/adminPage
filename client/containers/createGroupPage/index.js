@@ -62,7 +62,7 @@ CreateGroup.propTypes = {
 };
 
 const mapStateToProps = (state) => ({
-    createGroupStore: state.createGroupReducer
+    createGroupStore: state.CreateGroup
 });
 
 const mapDispatchToProps = (dispatch) => ({

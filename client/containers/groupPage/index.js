@@ -195,8 +195,8 @@ User.propTypes = {
 };
 
 const mapStateToProps = (state) => ({
-    group: state.groupReducer,
-    users: state.groupReducer.users
+    group: state.Group,
+    users: state.Group.users
 });
 
 const mapDispatchToProps = (dispatch) => ({

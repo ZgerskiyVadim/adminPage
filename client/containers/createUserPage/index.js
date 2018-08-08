@@ -68,7 +68,7 @@ CreateUser.propTypes = {
 };
 
 const mapStateToProps = (state) => ({
-    createUserStore: state.createUserReducer
+    createUserStore: state.CreateUser
 });
 
 const mapDispatchToProps = (dispatch) => ({

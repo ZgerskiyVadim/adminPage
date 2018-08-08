@@ -1,20 +1,20 @@
 import { combineReducers } from 'redux';
-import groupsReducer from './groupsReducer';
-import groupReducer from './groupReducer';
-import usersReducer from './usersReducer';
-import userReducer from './userReducer';
-import createUserReducer from './createUserReducer';
-import createGroupReducer from './createGroupReducer';
-import authenticateReducer from './authenticateReducer';
+import Groups from './groupsReducer';
+import Group from './groupReducer';
+import Users from './usersReducer';
+import User from './userReducer';
+import CreateUser from './createUserReducer';
+import CreateGroup from './createGroupReducer';
+import Authenticate from './authenticateReducer';
 
 const rootReducer = combineReducers({
-    authenticateReducer,
-    groupsReducer,
-    groupReducer,
-    usersReducer,
-    userReducer,
-    createUserReducer,
-    createGroupReducer
+    Authenticate,
+    Groups,
+    Group,
+    Users,
+    User,
+    CreateUser,
+    CreateGroup
 });
 
 export default rootReducer;

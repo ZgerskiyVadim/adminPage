@@ -20,7 +20,7 @@ const initialState = {
     ...defaultProps
 };
 
-export default function usersReducer(state = initialState, action) {
+export default function Users(state = initialState, action) {
     switch (action.type) {
         case GET_USERS_REQUEST:
             return {

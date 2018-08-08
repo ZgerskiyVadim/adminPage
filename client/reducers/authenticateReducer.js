@@ -17,7 +17,7 @@ const initialState = {
     ...defaultProps
 };
 
-export default function authenticateReducer(state = initialState, action) {
+export default function Authenticate(state = initialState, action) {
     switch (action.type) {
         case USER_LOGGED:
             return {

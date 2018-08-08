@@ -63,7 +63,7 @@ LoginPage.propTypes = {
 };
 
 const mapStateToProps = (state) => ({
-    authenticateStore: state.authenticateReducer
+    authenticateStore: state.Authenticate
 });
 
 const mapDispatchToProps = (dispatch) => ({

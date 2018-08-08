@@ -56,12 +56,12 @@ class User extends Component {
     }
 
     componentWillReceiveProps(nextProps) {
-        const {isLoading} = nextProps.userStore;
+        const {isLoading} = nextProps.user;
         this.setState({
             isLoading
         });
 
-        toastrMessages.call(this, nextProps.userStore);
+        toastrMessages.call(this, nextProps.user);
     }
 
     componentDidUpdate(prevProps) {
@@ -110,7 +110,7 @@ class User extends Component {
     };
 
     render() {
-        const {username, firstName, lastName, email} = this.props.userStore.user;
+        const {username, firstName, lastName, email} = this.props.user.user;
         const {groups} = this.props;
         const {showForm, isLoading, ...state} = this.state;
 
@@ -189,13 +189,13 @@ class User extends Component {
 }
 
 User.propTypes = {
-    userStore: PropTypes.object.isRequired,
+    user: PropTypes.object.isRequired,
     groups: PropTypes.array.isRequired
 };
 
 const mapStateToProps = (state) => ({
-    userStore: state.userReducer,
-    groups: state.userReducer.groups
+    user: state.User,
+    groups: state.User.groups
 });
 
 const mapDispatchToProps = (dispatch) => ({

@@ -203,10 +203,10 @@ Groups.propTypes = {
 };
 
 const mapStateToProps = (state) => ({
-    groupsStore: state.groupsReducer,
-    groups: state.groupsReducer.groups,
-    user: state.userReducer.user,
-    isJoiningGroup: state.userReducer.user.isJoiningGroup
+    groupsStore: state.Groups,
+    groups: state.Groups.groups,
+    user: state.User.user,
+    isJoiningGroup: state.User.user.isJoiningGroup
 });
 
 const mapDispatchToProps = (dispatch) => ({
