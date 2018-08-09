@@ -1,3 +1,6 @@
+import async from 'async';
+import User from '../../models/user';
+import ObjectId from 'mongoose';
 import resetDB from './db';
 import fakeUsers from "../../fixtures/users";
 

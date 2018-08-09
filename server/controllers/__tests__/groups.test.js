@@ -11,39 +11,6 @@ describe('Group controller', () => {
         resetDB(done);
     });
 
-    describe('POST', () => {
-        it('user login', done => {
-            const data = fakeUsers[0];
-
-            json('post', '/auth/login')
-                .send(data)
-                .end(function(err, result) {
-                    if (err) throw err;
-
-                    expect(result.statusCode).toBe(200);
-                    expect(err).toBe(null);
-                    expect(result.body.message).toEqual('User logged-in');
-                    done();
-                });
-        });
-
-        it('should create new group', done => {
-            const data = { name: 'new-name', title: 'new-title' };
-
-            json('post', '/api/groups')
-                .send(data)
-                .end(function(err, result) {
-                    if (err) throw err;
-
-                    expect(result.statusCode).toBe(201);
-                    expect(err).toBe(null);
-                    expect(result.body.title).toEqual(data.title);
-                    expect(result.body.name).toEqual(data.name);
-                    done();
-                });
-        });
-    });
-
     describe('GET', () => {
 
         it('should get groups', done => {
@@ -100,10 +67,45 @@ describe('Group controller', () => {
         });
     });
 
+    describe('POST', () => {
+        it('user login', done => {
+            const data = fakeUsers[1];
+
+            json('post', '/auth/login')
+                .send(data)
+                .end(function(err, result) {
+                    if (err) throw err;
+
+                    console.log('resultn', result);
+                    console.log('.headers.cookie', result.headers['set-cookie'][0]);
+                    expect(result.statusCode).toBe(200);
+                    expect(err).toBe(null);
+                    expect(result.body.message).toEqual('User logged-in');
+                    done();
+                });
+        });
+
+        it('should create new group', done => {
+            const data = { name: 'new-name', title: 'new-title' };
+
+            json('post', '/api/groups')
+                .send(data)
+                .end(function(err, result) {
+                    if (err) throw err;
+
+                    expect(result.statusCode).toBe(201);
+                    expect(err).toBe(null);
+                    expect(result.body.title).toEqual(data.title);
+                    expect(result.body.name).toEqual(data.name);
+                    done();
+                });
+        });
+    });
+
     describe('PATCH', () => {
         it('should update group', done => {
             const updates = { name: 'updated-name' };
-            const id = fakeGroups[0]._id;
+            const id = fakeGroups[1]._id;
 
             json('patch', `/api/groups/${id}`)
                 .send(updates)
