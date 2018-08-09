@@ -34,7 +34,7 @@ class CommonCrudOperations {
             const {skip, limit, searchBy} = req.query;
 
             Model.findOne({_id: req.params.id}, (err, user) => {
-                if (!user) return done(createError('Not Found', 404));
+                if (!user) return done(createError('Not found!', 404));
                 if (err) return done(err);
                 ModelPopulateOrUpdate.populate(user,
                     {
