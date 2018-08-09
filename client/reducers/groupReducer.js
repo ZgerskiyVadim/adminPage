@@ -1,22 +1,15 @@
 import {
     GET_GROUP_SUCCESS,
     GET_GROUP_PENDING,
-    GROUP_FAIL,
+    GET_GROUP_FAIL,
     UPDATE_GROUP_SUCCESS,
-    UPDATE_GROUP_PENDING
+    UPDATE_GROUP_PENDING,
+    UPDATE_GROUP_FAIL
 } from '../actions';
 
-const defaultProps = {
-    isUpdated: false,
-    loading: false,
-    error: null
-};
-
 const initialState = {
-    name: '',
-    title: '',
-    users: [],
-    ...defaultProps
+    group: {data: {}, loading: false, error: null},
+    updatedGroup: {data: {}, loading: false, error: null}
 };
 
 export default function Group(state = initialState, action) {
@@ -24,39 +17,63 @@ export default function Group(state = initialState, action) {
         case GET_GROUP_PENDING:
             return {
                 ...state,
-                ...defaultProps,
-                loading: true
+                group: {
+                    ...state.group,
+                    loading: true,
+                    error: null
+                }
             };
 
         case GET_GROUP_SUCCESS:
             return {
                 ...state,
-                ...action.payload,
-                ...defaultProps
+                group: {
+                    ...state.group,
+                    data: {...action.payload},
+                    loading: false,
+                    error: false
+                }
+            };
+
+        case GET_GROUP_FAIL:
+            return {
+                ...state,
+                group: {
+                    ...state.group,
+                    loading: false,
+                    error: action.payload
+                }
             };
 
         case UPDATE_GROUP_PENDING:
             return {
                 ...state,
-                ...defaultProps,
-                loading: true
+                updatedGroup: {
+                    ...state.updatedGroup,
+                    loading: true,
+                    error: null
+                }
             };
 
         case UPDATE_GROUP_SUCCESS:
             return {
                 ...state,
-                ...defaultProps,
-                name: action.payload.name,
-                title: action.payload.title,
-                users: action.payload.users,
-                isUpdated: true,
+                updatedGroup: {
+                    ...state.updatedGroup,
+                    data: action.payload,
+                    loading: false,
+                    error: false
+                }
             };
 
-        case GROUP_FAIL:
+        case UPDATE_GROUP_FAIL:
             return {
                 ...state,
-                ...defaultProps,
-                error: action.payload
+                updatedGroup: {
+                    ...state.updatedGroup,
+                    loading: false,
+                    error: action.payload
+                }
             };
 
         default: return state;

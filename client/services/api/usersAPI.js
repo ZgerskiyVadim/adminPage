@@ -33,7 +33,8 @@ import axios from 'axios/index';
     };
 
     export const updateUser = (options) => {
-        return axios.patch(`/api/users/${options.id}`, options)
+        const {id, username, firstName, lastName, email, password} = options;
+        return axios.patch(`/api/users/${id}`, {username, firstName, lastName, email, password})
             .then(users => users.data);
     };
 

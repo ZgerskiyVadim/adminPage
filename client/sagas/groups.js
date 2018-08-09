@@ -14,8 +14,9 @@ import {
     GET_GROUP_PENDING,
     UPDATE_GROUP_SUCCESS,
     UPDATE_GROUP_PENDING,
-    REMOVE_USER_FROM_GROUP_SUCCESS,
-    GROUP_FAIL
+    REMOVE_USER_FROM_GROUP_PENDING,
+    UPDATE_GROUP_FAIL,
+    GET_GROUP_FAIL
 } from '../actions';
 
 
@@ -60,7 +61,7 @@ function* getGroup(action) {
         const group = yield call(groupsAPI.getGroup, action.payload);
         yield put({type: GET_GROUP_SUCCESS, payload: group});
     } catch (error) {
-        yield put({type: GROUP_FAIL, payload: error});
+        yield put({type: GET_GROUP_FAIL, payload: error});
     }
 }
 
@@ -69,7 +70,7 @@ function* updateGroup(action) {
         const group = yield call(groupsAPI.updateGroup, action.payload);
         yield put({type: UPDATE_GROUP_SUCCESS, payload: group});
     } catch (error) {
-        yield put({type: GROUP_FAIL, payload: error});
+        yield put({type: UPDATE_GROUP_FAIL, payload: error});
         yield put({type: GROUPS_FAIL, payload: error});
     }
 }
@@ -79,7 +80,7 @@ function* removeUserFromGroup(action) {
         const updated = yield call(groupsAPI.removeUserFromGroup, action.payload);
         yield put({type: UPDATE_GROUP_SUCCESS, payload: updated.group});
     } catch (error) {
-        yield put({type: GROUP_FAIL, payload: error});
+        yield put({type: UPDATE_GROUP_FAIL, payload: error});
     }
 }
 
@@ -91,6 +92,6 @@ export default function* groupsSaga() {
         takeEvery(REMOVE_GROUP_PENDING, removeGroup),
         takeEvery(GET_GROUP_PENDING, getGroup),
         takeEvery(UPDATE_GROUP_PENDING, updateGroup),
-        takeEvery(REMOVE_USER_FROM_GROUP_SUCCESS, removeUserFromGroup)
+        takeEvery(REMOVE_USER_FROM_GROUP_PENDING, removeUserFromGroup)
     ]);
 }

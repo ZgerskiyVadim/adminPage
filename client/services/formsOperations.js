@@ -17,9 +17,7 @@ export function showForms(id, e) {
 export function getValidOptions(state) {
     const options = {};
     for (const prop in state) {
-        if (state[prop]) {
-            options[prop] = state[prop];
-        }
+        state[prop] ? options[prop] = state[prop] : null
     }
     return options;
 }

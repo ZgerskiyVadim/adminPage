@@ -5,7 +5,7 @@ import {
     REMOVE_GROUP_PENDING,
     ADD_USER_IN_GROUP_PENDING,
     IS_USER_WANT_JOIN_GROUP,
-    REMOVE_USER_FROM_GROUP_SUCCESS,
+    REMOVE_USER_FROM_GROUP_PENDING,
     GROUP_CREATE_PENDING,
     GET_GROUP_PENDING
 } from '../index';
@@ -51,6 +51,6 @@ export const cancelJoinGroup = (data) => ({
 });
 
 export const removeUserRequest = (data) => ({
-    type: REMOVE_USER_FROM_GROUP_SUCCESS,
+    type: REMOVE_USER_FROM_GROUP_PENDING,
     payload: data
 });

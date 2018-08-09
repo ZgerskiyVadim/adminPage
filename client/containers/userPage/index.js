@@ -23,6 +23,7 @@ class User extends Component {
             firstName: '',
             lastName: '',
             email: '',
+            password: '',
             options: {
                 limit: 10,
                 loadNext: 10,
@@ -131,6 +132,8 @@ class User extends Component {
                         <input onChange={this.handleChangeState} value={state.lastName} className={classNames('form-control', hiddenForm)} name='lastName' type="text"/>
                         <h3>email: {email}</h3>
                         <input onChange={this.handleChangeState} value={state.email} className={classNames('form-control', hiddenForm)} name='email' type="text"/>
+                        <h3>password: ****</h3>
+                        <input onChange={this.handleChangeState} value={state.password} className={classNames('form-control', hiddenForm)} name='password' type="password"/>
                     </div>
                     <button onClick={this.showForms} className={shownForm}>Update</button>
                     <button onClick={this.update} className={classNames('user--margin-right btn btn-outline-primary', hiddenForm)}>Save</button>

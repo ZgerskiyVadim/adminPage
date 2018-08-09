@@ -14,7 +14,7 @@ import LoadingSpinner from '../../components/loadingSpinner';
 import ModalWindow from '../../components/modalWindow';
 import SearchComponent from '../../components/search';
 
-class User extends Component {
+class Group extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -54,7 +54,7 @@ class User extends Component {
     }
 
     componentWillReceiveProps(nextProps) {
-        const {loading} = nextProps.group;
+        const loading = nextProps.group.loading || nextProps.updatedGroup.loading;
         this.setState({
             loading
         });
@@ -105,12 +105,12 @@ class User extends Component {
     };
 
     render() {
-        const {name, title} = this.props.group;
+        const {name, title} = this.props.group.data;
         const {users} = this.props;
-        const {showForm, loading, showModal, userID, ...state} = this.state;
+        const {...state} = this.state;
 
-        const hiddenForm = classNames({'group--hide': !showForm});
-        const shownForm = classNames({'group--hide': showForm});
+        const hiddenForm = classNames({'group--hide': !state.showForm});
+        const shownForm = classNames({'group--hide': state.showForm});
         const isUsers = classNames({'group--hide': !users.length && !state.options.searchBy});
 
         return (
@@ -178,10 +178,10 @@ class User extends Component {
                         }
                     </table>
                 </div>
-                <LoadingSpinner loading={loading}/>
+                <LoadingSpinner loading={state.loading}/>
                 <ModalWindow
-                    isShow={showModal}
-                    remove={() => this.removeUser(userID)}
+                    isShow={state.showModal}
+                    remove={() => this.removeUser(state.userID)}
                     closeModal={this.closeModal}
                 />
             </div>
@@ -189,14 +189,16 @@ class User extends Component {
     }
 }
 
-User.propTypes = {
+Group.propTypes = {
     group: PropTypes.object.isRequired,
+    updatedGroup: PropTypes.object.isRequired,
     users: PropTypes.array.isRequired
 };
 
 const mapStateToProps = (state) => ({
-    group: state.Group,
-    users: state.Group.users
+    group: state.Group.group,
+    updatedGroup: state.Group.updatedGroup,
+    users: state.Group.group.data.users || []
 });
 
 const mapDispatchToProps = (dispatch) => ({
@@ -205,4 +207,4 @@ const mapDispatchToProps = (dispatch) => ({
     }, dispatch)
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(User);
+export default connect(mapStateToProps, mapDispatchToProps)(Group);

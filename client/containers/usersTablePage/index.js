@@ -121,6 +121,9 @@ class Users extends Component {
                         <th>
                             <h5>email</h5>
                         </th>
+                        <th>
+                            <h5>password</h5>
+                        </th>
                         <th/>
                     </tr>
                     </thead>

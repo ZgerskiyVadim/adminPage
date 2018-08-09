@@ -14,6 +14,7 @@ class User extends Component {
             firstName: '',
             lastName: '',
             email: '',
+            password: '',
             id: ''
         };
 
@@ -73,6 +74,8 @@ class User extends Component {
                     <td>
                         <h5>{email}</h5>
                         <input onChange={this.handleChangeState} onClick={this.handleClick} value={state.email} className={classNames('form-control', hiddenForm)} name='email' type="text"/>
+                        <h5>****</h5>
+                        <input onChange={this.handleChangeState} onClick={this.handleClick} value={state.password} className={classNames('form-control', hiddenForm)} name='password' type="password"/>
                     </td>
                     <td className='users__buttons'>
                         <button onClick={this.showForms} className={classNames('users--margin-right btn btn-outline-primary', shownForm)}>Update</button>

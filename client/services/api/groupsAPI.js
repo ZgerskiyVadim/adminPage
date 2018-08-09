@@ -23,7 +23,8 @@ import axios from 'axios/index';
     };
 
     export const updateGroup = (options) => {
-        return axios.patch(`/api/groups/${options.id}`, options)
+        const {id, name, title} = options;
+        return axios.patch(`/api/groups/${id}`, {name, title})
             .then(groups => groups.data);
     };
 
