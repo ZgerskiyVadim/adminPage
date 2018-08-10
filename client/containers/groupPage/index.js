@@ -196,7 +196,7 @@ Group.propTypes = {
 };
 
 const mapStateToProps = (state) => ({
-    group: state.Group.group,
+    group: state.Group.group.data,
     updatedGroup: state.Group.updatedGroup,
     users: state.Group.group.data.users || []
 });
