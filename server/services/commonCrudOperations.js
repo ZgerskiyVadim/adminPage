@@ -111,7 +111,7 @@ class CommonCrudOperations {
                             })
                         });
                     }
-                ], (user, group) => done(null, { user, group})
+                ], (user, group) => done(null, {user, group})
             );
         }
     };

@@ -105,7 +105,7 @@ class Group extends Component {
     };
 
     render() {
-        const {name, title} = this.props.group.data;
+        const {name, title} = this.props.group;
         const {users} = this.props;
         const {...state} = this.state;
 

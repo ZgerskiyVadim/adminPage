@@ -57,7 +57,7 @@ class User extends Component {
     }
 
     componentWillReceiveProps(nextProps) {
-        const {loading} = nextProps.user;
+        const loading = nextProps.user.loading || nextProps.updatedUser.loading || nextProps.userJoinedGroup.loading || nextProps.userLeftGroup.loading;
         this.setState({
             loading
         });
@@ -111,7 +111,7 @@ class User extends Component {
     };
 
     render() {
-        const {username, firstName, lastName, email} = this.props.user.user;
+        const {username, firstName, lastName, email} = this.props.user;
         const {groups} = this.props;
         const {showForm, loading, ...state} = this.state;
 
@@ -197,8 +197,11 @@ User.propTypes = {
 };
 
 const mapStateToProps = (state) => ({
-    user: state.User,
-    groups: state.User.groups
+    user: state.User.user.data,
+    groups: state.User.user.data.groups || [],
+    updatedUser: state.User.updatedUser,
+    userJoinedGroup: state.User.userJoinedGroup,
+    userLeftGroup: state.User.userLeftGroup
 });
 
 const mapDispatchToProps = (dispatch) => ({

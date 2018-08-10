@@ -3,7 +3,7 @@ import {
     SEARCH_GROUPS_PENDING,
     UPDATE_GROUP_PENDING,
     REMOVE_GROUP_PENDING,
-    ADD_USER_IN_GROUP_PENDING,
+    USER_JOIN_GROUP_PENDING,
     IS_USER_WANT_JOIN_GROUP,
     REMOVE_USER_FROM_GROUP_PENDING,
     GROUP_CREATE_PENDING,
@@ -41,7 +41,7 @@ export const removeGroupRequest = (data) => ({
 });
 
 export const joinGroup = (data) => ({
-    type: ADD_USER_IN_GROUP_PENDING,
+    type: USER_JOIN_GROUP_PENDING,
     payload: data
 });
 

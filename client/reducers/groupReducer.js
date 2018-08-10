@@ -29,7 +29,7 @@ export default function Group(state = initialState, action) {
                 ...state,
                 group: {
                     ...state.group,
-                    data: {...action.payload},
+                    data: action.payload,
                     loading: false,
                     error: false
                 }
@@ -58,6 +58,10 @@ export default function Group(state = initialState, action) {
         case UPDATE_GROUP_SUCCESS:
             return {
                 ...state,
+                group: {
+                    ...state.group,
+                    data: action.payload
+                },
                 updatedGroup: {
                     ...state.updatedGroup,
                     data: action.payload,

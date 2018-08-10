@@ -4,7 +4,7 @@ import {
     UPDATE_USER_PENDING,
     REMOVE_USER_PENDING,
     IS_USER_WANT_JOIN_GROUP,
-    LEAVE_GROUP_PENDING,
+    USER_LEAVE_GROUP_PENDING,
     USER_CREATE_PENDING,
     GET_USER_PENDING,
     LOGIN_PENDING,
@@ -27,7 +27,7 @@ export const startJoiningGroup = (data) => ({
 });
 
 export const leaveGroupRequest = (data) => ({
-    type: LEAVE_GROUP_PENDING,
+    type: USER_LEAVE_GROUP_PENDING,
     payload: data
 });
 
