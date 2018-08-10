@@ -9,6 +9,8 @@ const db = mongoose.connection;
 
 db.on('error', err => log.error(`Connection error: ${err.message}`));
 
-db.once('open', () => log.info('Connected to DB!'));
+if (process.env.NODE_ENV !== 'test') {
+    db.once('open', () => log.info('Connected to DB!'));
+}
 
 export default db;

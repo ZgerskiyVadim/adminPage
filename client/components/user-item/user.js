@@ -57,32 +57,34 @@ class User extends Component {
 
         return (
             <tbody>
-                <tr onClick={this.goToUser} className='users--cursor'>
-                    <th>{index + 1}</th>
-                    <td>
-                        <h5>{username}</h5>
-                        <input onChange={this.handleChangeState} onClick={this.handleClick} value={state.username} className={classNames('form-control', hiddenForm)} name='username' type="text"/>
-                    </td>
-                    <td>
-                        <h5>{firstName}</h5>
-                        <input onChange={this.handleChangeState} onClick={this.handleClick} value={state.firstName} className={classNames('form-control', hiddenForm)} name='firstName' type="text"/>
-                    </td>
-                    <td>
-                        <h5>{lastName}</h5>
-                        <input onChange={this.handleChangeState} onClick={this.handleClick} value={state.lastName} className={classNames('form-control', hiddenForm)} name='lastName' type="text"/>
-                    </td>
-                    <td>
-                        <h5>{email}</h5>
-                        <input onChange={this.handleChangeState} onClick={this.handleClick} value={state.email} className={classNames('form-control', hiddenForm)} name='email' type="text"/>
-                        <h5>****</h5>
-                        <input onChange={this.handleChangeState} onClick={this.handleClick} value={state.password} className={classNames('form-control', hiddenForm)} name='password' type="password"/>
-                    </td>
-                    <td className='users__buttons'>
-                        <button onClick={this.showForms} className={classNames('users--margin-right btn btn-outline-primary', shownForm)}>Update</button>
-                        <button onClick={this.sendOptionsUpdate} className={classNames('users--margin-right btn btn-outline-primary', hiddenForm)}>Save</button>
-                        <button onClick={(e) => this.remove(_id, e)} className={classNames('btn btn-outline-danger', isJoiningUser)}>Remove</button>
-                    </td>
-                </tr>
+            <tr onClick={this.goToUser} className='users--cursor'>
+                <th>{index + 1}</th>
+                <td>
+                    <h5>{username}</h5>
+                    <input onChange={this.handleChangeState} onClick={this.handleClick} value={state.username} className={classNames('form-control', hiddenForm)} name='username' type="text"/>
+                </td>
+                <td>
+                    <h5>{firstName}</h5>
+                    <input onChange={this.handleChangeState} onClick={this.handleClick} value={state.firstName} className={classNames('form-control', hiddenForm)} name='firstName' type="text"/>
+                </td>
+                <td>
+                    <h5>{lastName}</h5>
+                    <input onChange={this.handleChangeState} onClick={this.handleClick} value={state.lastName} className={classNames('form-control', hiddenForm)} name='lastName' type="text"/>
+                </td>
+                <td>
+                    <h5>{email}</h5>
+                    <input onChange={this.handleChangeState} onClick={this.handleClick} value={state.email} className={classNames('form-control', hiddenForm)} name='email' type="text"/>
+                </td>
+                <td>
+                    <h5>****</h5>
+                    <input onChange={this.handleChangeState} onClick={this.handleClick} value={state.password} className={classNames('form-control', hiddenForm)} name='password' type="password"/>
+                </td>
+                <td className='users__buttons'>
+                    <button onClick={this.showForms} className={classNames('users--margin-right btn btn-outline-primary', shownForm)}>Update</button>
+                    <button onClick={this.sendOptionsUpdate} className={classNames('users--margin-right btn btn-outline-primary', hiddenForm)}>Save</button>
+                    <button onClick={(e) => this.remove(_id, e)} className={classNames('btn btn-outline-danger', isJoiningUser)}>Remove</button>
+                </td>
+            </tr>
             </tbody>
         );
     }
