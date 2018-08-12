@@ -37,15 +37,6 @@ global.resetDB = function(done) {
 };
 
 global.dropDB = function (done) {
-    // mongoose.connection.collections[config.dbForTestsName].drop( function(err) {
-    //     console.log('collection dropped');
-    //     done();
-    // });
-    async.series(
-        [
-            next => mongoose.connection.collections['groups'].drop(next),
-            next => mongoose.connection.collections['users'].drop(next)
-        ],
-        done
-    );
+    mongoose.disconnect();
+    done()
 };
