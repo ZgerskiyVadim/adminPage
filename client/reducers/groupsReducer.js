@@ -5,19 +5,15 @@ import {
     UPDATE_GROUP_SUCCESS,
     REMOVE_GROUP_PENDING,
     REMOVE_GROUP_SUCCESS,
-    GROUPS_FAIL,
+    GET_GROUPS_FAIL,
+    UPDATE_GROUP_FAIL,
+    REMOVE_GROUP_FAIL
 } from '../actions';
 
-const defaultProps = {
-    isRemoved: false,
-    isUpdated: false,
-    loading: false,
-    error: null
-};
-
 const initialState = {
-    groups: [],
-    ...defaultProps
+    groups: {data: [], loading: false, error: null},
+    updatedGroup: {data: {}, loading: false, error: null},
+    removedGroup: {data: {}, loading: false, error: null}
 };
 
 export default function Groups(state = initialState, action) {
@@ -25,52 +21,101 @@ export default function Groups(state = initialState, action) {
         case GET_GROUPS_PENDING:
             return {
                 ...state,
-                ...defaultProps,
-                loading: true
+                groups: {
+                    ...state.groups,
+                    loading: true,
+                    error: null
+                }
             };
 
         case GET_GROUPS_SUCCESS:
             return {
                 ...state,
-                ...defaultProps,
-                groups: [...action.payload],
+                groups: {
+                    data: action.payload,
+                    loading: false,
+                    error: null
+                }
+            };
+
+        case GET_GROUPS_FAIL:
+            return {
+                ...state,
+                groups: {
+                    ...state.groups,
+                    loading: false,
+                    error: action.payload || 'Get groups failed'
+                }
             };
 
         case UPDATE_GROUP_PENDING:
             return {
                 ...state,
-                ...defaultProps,
-                loading: true
+                updatedGroup: {
+                    ...state.updatedGroup,
+                    loading: true,
+                    error: null
+                }
             };
 
         case UPDATE_GROUP_SUCCESS:
             return {
                 ...state,
-                ...defaultProps,
-                groups: state.groups.map(group => (group._id === action.payload._id) ? action.payload : group),
-                isUpdated: true
+                groups: {
+                    ...state.groups,
+                    data: state.groups.data.map(group => (group._id === action.payload._id) ? action.payload : group)
+                },
+                updatedGroup: {
+                    ...state.updatedGroup,
+                    data: action.payload,
+                    loading: false,
+                    error: null
+                }
+            };
+
+        case UPDATE_GROUP_FAIL:
+            return {
+                ...state,
+                updatedGroup: {
+                    ...state.updatedGroup,
+                    loading: false,
+                    error: action.payload || 'Update group failed'
+                }
             };
 
         case REMOVE_GROUP_PENDING:
             return {
                 ...state,
-                ...defaultProps,
-                loading: true
+                removedGroup: {
+                    ...state.removedGroup,
+                    loading: true,
+                    error: null
+                }
             };
 
         case REMOVE_GROUP_SUCCESS:
             return {
                 ...state,
-                ...defaultProps,
-                groups: state.groups.filter(group => group._id !== action.payload),
-                isRemoved: true,
+                groups: {
+                    ...state.groups,
+                    data: state.groups.data.filter(group => group._id !== action.payload)
+                },
+                removedGroup: {
+                    ...state.removedGroup,
+                    data: action.payload,
+                    loading: false,
+                    error: null
+                }
             };
 
-        case GROUPS_FAIL:
+        case REMOVE_GROUP_FAIL:
             return {
                 ...state,
-                ...defaultProps,
-                error: action.payload
+                removedGroup: {
+                    ...state.removedGroup,
+                    loading: false,
+                    error: action.payload || 'Remove group failed'
+                }
             };
 
         default: return state;

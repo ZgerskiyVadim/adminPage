@@ -8,7 +8,7 @@ import './index.scss';
 import * as usersActionCreators from '../../actions/action_creators/users';
 import * as groupsActionCreators from '../../actions/action_creators/groups';
 import {handleChangeState, showForms, getValidOptions} from '../../services/formsOperations';
-import {toastrMessages} from '../../services/toastrMessages';
+import toastrMessage from '../../services/toastrMessages';
 import {userSearchGroupsRequest} from '../../services/searchOperation';
 import {checkRemovedItems, loadMore} from '../../services/loadMore';
 import LoadingSpinner from '../../components/loadingSpinner';
@@ -58,11 +58,13 @@ class User extends Component {
 
     componentWillReceiveProps(nextProps) {
         const loading = nextProps.user.loading || nextProps.updatedUser.loading || nextProps.userJoinedGroup.loading || nextProps.userLeftGroup.loading;
+        const error = nextProps.user.error || nextProps.updatedUser.error || nextProps.userJoinedGroup.error || nextProps.userLeftGroup.error;
         this.setState({
             loading
         });
 
-        toastrMessages.call(this, nextProps.user);
+        toastrMessage.error.call(this, error);
+        // toastrMessages.call(this, nextProps.user);
     }
 
     componentDidUpdate(prevProps) {
@@ -111,7 +113,7 @@ class User extends Component {
     };
 
     render() {
-        const {username, firstName, lastName, email} = this.props.user;
+        const {username, firstName, lastName, email} = this.props.user.data;
         const {groups} = this.props;
         const {showForm, loading, ...state} = this.state;
 
@@ -197,7 +199,7 @@ User.propTypes = {
 };
 
 const mapStateToProps = (state) => ({
-    user: state.User.user.data,
+    user: state.User.user,
     groups: state.User.user.data.groups || [],
     updatedUser: state.User.updatedUser,
     userJoinedGroup: state.User.userJoinedGroup,

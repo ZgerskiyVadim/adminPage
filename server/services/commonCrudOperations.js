@@ -34,8 +34,8 @@ class CommonCrudOperations {
             const {skip, limit, searchBy} = req.query;
 
             Model.findOne({_id: req.params.id}, (err, data) => {
-                if (!data) return done(createError('Not found!', 404));
                 if (err) return done(err);
+                if (!data) return done(createError('Not found!', 404));
                 ModelPopulateOrUpdate.populate(data,
                     {
                         path: pathPopulate,
@@ -62,8 +62,8 @@ class CommonCrudOperations {
     update({Model, ModelPopulateOrUpdate, pathPopulate}) {
         return (req, done) => {
             Model.findOneAndUpdate({_id: req.params.id}, req.body, {runValidators: true, new: true}, (err, data) => {
-                if (!data) return done(createError('Not found!', 404));
                 if (err) return done(err);
+                if (!data) return done(createError('Not found!', 404));
                 ModelPopulateOrUpdate.populate(data, {path: pathPopulate}, (err, docs) => {
                     if (err) return done(err);
                     done(null, docs);
@@ -75,8 +75,8 @@ class CommonCrudOperations {
     remove({Model, ModelPopulateOrUpdate, pathPopulate}) {
         return (req, done) => {
             Model.findOneAndRemove({_id: req.params.id}, (err, data) => {
-                if (!data) return done(createError('Not found!', 404));
                 if (err) return done(err);
+                if (!data) return done(createError('Not found!', 404));
                 ModelPopulateOrUpdate.update({}, {$pull: {[pathPopulate]: data.id}}, {multi: true}, (err, modification) => {
                     if (err) return done(err);
                     const message = {message: 'Successfully deleted'};
@@ -93,8 +93,8 @@ class CommonCrudOperations {
             async.waterfall([
                     next => {
                         Group.findOneAndUpdate({_id: groupID}, { $addToSet: { users: userID } }, {new: true}, (err, group) => {
-                            if (!group) return done(createError('Group is not found', 404));
                             if (err) return done(err);
+                            if (!group) return done(createError('Group is not found', 404));
                             Group.populate(group, {path: 'groups'}, (err, updatedGroup) => {
                                 if (err) return done(err);
                                 next(null, updatedGroup);
@@ -103,8 +103,8 @@ class CommonCrudOperations {
                     },
                     (group, next) => {
                         User.findOneAndUpdate({_id: userID}, { $addToSet: { groups: groupID } }, {new: true}, (err, user) => {
-                            if (!user) return done(createError('User is not found', 404));
                             if (err) return done(err);
+                            if (!user) return done(createError('User is not found', 404));
                             User.populate(user, {path: 'users'}, (err, updatedUser) => {
                                 if (err) return done(err);
                                 next(updatedUser, group);
@@ -124,8 +124,8 @@ class CommonCrudOperations {
             async.waterfall([
                     next => {
                         User.findOneAndUpdate({_id: userID}, {$pull: {groups: groupID}}, {new: true}, (err, user) => {
-                            if (!user) return done(createError('User is not found', 404));
                             if (err) return done(err);
+                            if (!user) return done(createError('User is not found', 404));
                             Group.populate(user, {path: 'groups'}, (err, updatedUser) => {
                                 if (err) return done(err);
                                 next(null, updatedUser);
@@ -134,8 +134,8 @@ class CommonCrudOperations {
                     },
                     (user, next) => {
                         Group.findOneAndUpdate({_id: groupID}, {$pull: {users: userID}}, {new: true}, (err, group) => {
-                            if (!group) return done(createError('Group is not found', 404));
                             if (err) return done(err);
+                            if (!group) return done(createError('Group is not found', 404));
                             User.populate(group, {path: 'users'}, (err, updatedGroup) => {
                                 if (err) return done(err);
                                 next(user, updatedGroup);

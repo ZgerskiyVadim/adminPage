@@ -9,7 +9,6 @@ import {
     SEARCH_USERS_PENDING,
     REMOVE_USER_SUCCESS,
     REMOVE_USER_PENDING,
-    USERS_FAIL,
     GET_USER_SUCCESS,
     UPDATE_USER_SUCCESS,
     UPDATE_GROUP_SUCCESS,
@@ -19,24 +18,27 @@ import {
     USER_JOIN_GROUP_PENDING,
     USER_JOIN_GROUP_SUCCESS,
     USER_LEAVE_GROUP_PENDING,
-    GROUPS_FAIL,
-    LOGIN_PENDING,
-    USER_LOGGED_SUCCESS,
-    LOGOUT_PENDING,
+    UPDATE_GROUP_FAIL,
+    USER_LOGIN_PENDING,
+    USER_LOGIN_SUCCESS,
+    USER_LOGOUT_PENDING,
     USER_LOGOUT_SUCCESS,
-    AUTHENTICATE_FAILED,
     GET_USER_FAIL,
     USER_JOIN_GROUP_FAIL,
     UPDATE_USER_FAIL,
-    USER_LEAVE_GROUP_FAIL
+    USER_LEAVE_GROUP_FAIL,
+    USER_LOGIN_FAIL,
+    USER_LOGOUT_FAIL,
+    GET_USERS_FAIL,
+    REMOVE_USER_FAIL
 } from '../actions';
 
 function* login(action) {
     try {
         yield call(usersAPI.login, action.payload);
-        yield put({type: USER_LOGGED_SUCCESS});
+        yield put({type: USER_LOGIN_SUCCESS});
     } catch (error) {
-        yield put({type: AUTHENTICATE_FAILED, payload: error});
+        yield put({type: USER_LOGIN_FAIL, payload: error});
     }
 }
 
@@ -45,7 +47,7 @@ function* logout() {
         yield call(usersAPI.logout);
         yield put({type: USER_LOGOUT_SUCCESS});
     } catch (error) {
-        yield put({type: AUTHENTICATE_FAILED, payload: error});
+        yield put({type: USER_LOGOUT_FAIL, payload: error});
     }
 }
 
@@ -63,7 +65,7 @@ function* getUsers(action) {
         const users = yield call(usersAPI.getUsers, action.payload);
         yield put({type: GET_USERS_SUCCESS, payload: users});
     } catch (error) {
-        yield put({type: USERS_FAIL, payload: error});
+        yield put({type: GET_USERS_FAIL, payload: error});
     }
 }
 
@@ -72,7 +74,7 @@ function* searchUsers(action) {
         const users = yield call(usersAPI.searchUsers, action.payload);
         yield put({type: GET_USERS_SUCCESS, payload: users});
     } catch (error) {
-        yield put({type: USERS_FAIL, payload: error});
+        yield put({type: GET_USERS_FAIL, payload: error});
     }
 }
 
@@ -81,7 +83,7 @@ function* removeUser(action) {
         const id = yield call(usersAPI.removeUser, action.payload);
         yield put({type: REMOVE_USER_SUCCESS, payload: id});
     } catch (error) {
-        yield put({type: USERS_FAIL, payload: error});
+        yield put({type: REMOVE_USER_FAIL, payload: error});
     }
 }
 
@@ -100,7 +102,6 @@ function* updateUser(action) {
         yield put({type: UPDATE_USER_SUCCESS, payload: user});
     } catch (error) {
         yield put({type: UPDATE_USER_FAIL, payload: error});
-        yield put({type: USERS_FAIL, payload: error});
     }
 }
 
@@ -110,7 +111,7 @@ function* addUserInGroup(action) {
         yield put({type: UPDATE_GROUP_SUCCESS, payload: updated.group});
         yield put({type: USER_JOIN_GROUP_SUCCESS, payload: updated});
     } catch (error) {
-        yield put({type: GROUPS_FAIL, payload: error});
+        yield put({type: UPDATE_GROUP_FAIL, payload: error});
         yield put({type: USER_JOIN_GROUP_FAIL, payload: error});
     }
 }
@@ -122,7 +123,7 @@ function* leaveGroup(action) {
         yield put({type: USER_LEAVE_GROUP_SUCCESS, payload: updated});
     } catch (error) {
         yield put({type: USER_LEAVE_GROUP_FAIL, payload: error});
-        yield put({type: GROUPS_FAIL, payload: error});
+        yield put({type: UPDATE_GROUP_FAIL, payload: error});
     }
 }
 
@@ -137,7 +138,7 @@ export default function* usersSaga() {
         takeEvery(UPDATE_USER_PENDING, updateUser),
         takeEvery(USER_JOIN_GROUP_PENDING, addUserInGroup),
         takeEvery(USER_LEAVE_GROUP_PENDING, leaveGroup),
-        takeEvery(LOGIN_PENDING, login),
-        takeEvery(LOGOUT_PENDING, logout)
+        takeEvery(USER_LOGIN_PENDING, login),
+        takeEvery(USER_LOGOUT_PENDING, logout)
     ]);
 }

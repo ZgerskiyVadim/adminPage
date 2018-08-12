@@ -1,4 +1,5 @@
 import async from 'async';
+import mongoose from 'mongoose';
 import ObjectId from 'mongoose';
 import fakeUsers from "../../fixtures/users";
 import fakeGroups from "../../fixtures/groups";
@@ -9,6 +10,12 @@ describe('User controller', () => {
     beforeEach(done => {
         resetDB(done);
     });
+
+    afterEach(done => {
+        dropDB(done);
+    });
+
+    afterAll(() => mongoose.disconnect());
 
     describe('POST', () => {
         it('user login', done => {

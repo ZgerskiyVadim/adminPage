@@ -7,7 +7,7 @@ import {bindActionCreators} from 'redux';
 import './index.scss';
 import * as groupsActionCreators from '../../actions/action_creators/groups';
 import {handleChangeState, showForms, getValidOptions} from '../../services/formsOperations';
-import {toastrMessages} from '../../services/toastrMessages';
+import toastrMessage from '../../services/toastrMessages';
 import {groupSearchUsersRequest} from '../../services/searchOperation';
 import {checkRemovedItems, loadMore} from '../../services/loadMore';
 import LoadingSpinner from '../../components/loadingSpinner';
@@ -55,11 +55,13 @@ class Group extends Component {
 
     componentWillReceiveProps(nextProps) {
         const loading = nextProps.group.loading || nextProps.updatedGroup.loading;
+        const error = nextProps.group.error || nextProps.updatedGroup.error;
         this.setState({
             loading
         });
 
-        toastrMessages.call(this, nextProps.group);
+        toastrMessage.error.call(this, error);
+        // toastrMessages.call(this, nextProps.group);
     }
 
     componentDidUpdate(prevProps) {
@@ -105,7 +107,7 @@ class Group extends Component {
     };
 
     render() {
-        const {name, title} = this.props.group;
+        const {name, title} = this.props.group.data;
         const {users} = this.props;
         const {...state} = this.state;
 

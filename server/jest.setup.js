@@ -26,10 +26,26 @@ global.json = function(verb, url, cookie) {
 
 global.resetDB = function(done) {
     async.series(
-        [next => mongoose.connect(config.dbForTestsName, {useMongoClient: true}, next),
+        [
+            next => mongoose.connect(config.dbForTestsName, {useMongoClient: true}, next),
             next => Group.remove({}, next),
             next => User.remove({}, next),
-            next => loadFixtures(next)],
+            next => loadFixtures(next)
+        ],
+        done
+    );
+};
+
+global.dropDB = function (done) {
+    // mongoose.connection.collections[config.dbForTestsName].drop( function(err) {
+    //     console.log('collection dropped');
+    //     done();
+    // });
+    async.series(
+        [
+            next => mongoose.connection.collections['groups'].drop(next),
+            next => mongoose.connection.collections['users'].drop(next)
+        ],
         done
     );
 };

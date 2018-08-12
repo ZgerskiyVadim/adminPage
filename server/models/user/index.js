@@ -1,5 +1,6 @@
 import mongoose from 'mongoose';
 import bcrypt from 'bcrypt';
+import config from '../../../config';
 import * as validator from './validator';
 import Group from '../group';
 
@@ -60,9 +61,7 @@ userSchema.methods.comparePassword = function(candidatePassword, cb) {
 };
 
 function hashPassword(password, cb) {
-    const SALT_BCRYPT = 10;
-
-    bcrypt.genSalt(SALT_BCRYPT, function(err, salt) {
+    bcrypt.genSalt(config.saltBcrypt, function(err, salt) {
         if (err) return cb(err);
         bcrypt.hash(password, salt, function(err, hash) {
             if (err) return cb(err);

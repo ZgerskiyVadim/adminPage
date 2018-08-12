@@ -6,7 +6,7 @@ import {bindActionCreators} from "redux";
 import './index.scss';
 import * as usersActionCreators from "../../actions/action_creators/users";
 import {handleChangeState} from "../../services/formsOperations";
-import {toastrMessages} from "../../services/toastrMessages";
+import toastrMessage from "../../services/toastrMessages";
 import LoadingSpinner from '../../components/loadingSpinner';
 
 class LoginPage extends Component {
@@ -29,7 +29,7 @@ class LoginPage extends Component {
             loading
         });
 
-        toastrMessages(nextProps.authenticateStore);
+        // toastrMessages(nextProps.authenticateStore);
         isLogged && this.goHome();
     }
 

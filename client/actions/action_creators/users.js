@@ -7,8 +7,8 @@ import {
     USER_LEAVE_GROUP_PENDING,
     USER_CREATE_PENDING,
     GET_USER_PENDING,
-    LOGIN_PENDING,
-    LOGOUT_PENDING
+    USER_LOGIN_PENDING,
+    USER_LOGOUT_PENDING
 } from '../index';
 
 export const createUserRequest = (data) => ({
@@ -52,10 +52,10 @@ export const removeUserRequest = (data) => ({
 });
 
 export const login = (data) => ({
-    type: LOGIN_PENDING,
+    type: USER_LOGIN_PENDING,
     payload: data
 });
 
 export const logout = () => ({
-    type: LOGOUT_PENDING
+    type: USER_LOGOUT_PENDING
 });
