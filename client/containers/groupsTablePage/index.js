@@ -203,7 +203,7 @@ Groups.propTypes = {
 const mapStateToProps = (state) => ({
     groupsStore: state.Groups,
     groups: state.Groups.groups,
-    user: state.User.user.data,
+    user: state.User.user,
     isJoiningGroup: state.User.user.isJoiningGroup
 });
 
