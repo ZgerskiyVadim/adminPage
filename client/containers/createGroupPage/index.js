@@ -6,8 +6,8 @@ import {bindActionCreators} from 'redux';
 import './index.scss';
 import * as groupsActionCreators from '../../actions/action_creators/groups';
 import {handleChangeState} from '../../services/formsOperations';
-import {handleError} from '../../services/handleError';
 import LoadingSpinner from '../../components/loadingSpinner';
+import toastrShowMessage from "../../services/toastrShowMessage";
 
 class CreateGroup extends Component {
     constructor(props) {
@@ -28,7 +28,7 @@ class CreateGroup extends Component {
             loading
         });
 
-        handleError(error);
+        error && toastrShowMessage.error(error);
         // toastrMessages(nextProps.createGroupStore);
     }
 

@@ -6,8 +6,8 @@ import {bindActionCreators} from 'redux';
 import './index.scss';
 import * as usersActionCreators from '../../actions/action_creators/users';
 import {handleChangeState} from '../../services/formsOperations';
-import {handleError} from '../../services/handleError';
 import LoadingSpinner from '../../components/loadingSpinner';
+import toastrShowMessage from "../../services/toastrShowMessage";
 
 class CreateUser extends Component {
     constructor(props) {
@@ -31,7 +31,7 @@ class CreateUser extends Component {
             loading
         });
 
-        handleError(error);
+        error && toastrShowMessage.error(error);
         // toastrMessages(nextProps.createUserStore);
     }
 

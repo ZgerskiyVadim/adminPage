@@ -8,6 +8,7 @@ import Header from './components/header';
 import Breadcrumb from './components/breadcrumb';
 import Routes from './routes';
 import history from './services/history';
+import {configureAxios} from './services/configureAxios';
 
 const store = configureStore();
 
@@ -23,3 +24,5 @@ render(
     </Provider>,
     document.getElementById('root')
 );
+
+configureAxios();

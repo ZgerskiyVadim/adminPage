@@ -8,11 +8,11 @@ import './index.scss';
 import * as usersActionCreators from '../../actions/action_creators/users';
 import {loadMore, checkRemovedItems} from '../../services/loadMore';
 import searchOperation from '../../services/searchOperation';
-import {handleError} from '../../services/handleError';
 import User from '../../components/user-item/user';
 import LoadingSpinner from '../../components/loadingSpinner';
 import ModalWindow from '../../components/modalWindow';
 import SearchComponent from '../../components/search';
+import toastrShowMessage from "../../services/toastrShowMessage";
 
 class Users extends Component {
     constructor(props) {
@@ -54,7 +54,7 @@ class Users extends Component {
             loading
         });
 
-        handleError(error);
+        error && toastrShowMessage.error(error);
         // toastrMessages(nextProps.usersStore);
     }
 

@@ -8,12 +8,12 @@ import './index.scss';
 import * as groupsActionCreators from '../../actions/action_creators/groups';
 import {checkRemovedItems, loadMore} from '../../services/loadMore';
 import searchOperation from '../../services/searchOperation';
-import {handleError} from '../../services/handleError';
 import redirectOnPage from '../../services/redirectOnPage';
 import Group from '../../components/group-item/group';
 import LoadingSpinner from '../../components/loadingSpinner';
 import ModalWindow from '../../components/modalWindow';
 import SearchComponent from '../../components/search';
+import toastrShowMessage from "../../services/toastrShowMessage";
 
 class Groups extends Component {
     constructor(props) {
@@ -59,7 +59,7 @@ class Groups extends Component {
             loading
         });
 
-        handleError(error);
+        error && toastrShowMessage.error(error);
         // toastrMessages(nextProps.groupsStore);
     }
 

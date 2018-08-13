@@ -8,12 +8,12 @@ import './index.scss';
 import * as usersActionCreators from '../../actions/action_creators/users';
 import * as groupsActionCreators from '../../actions/action_creators/groups';
 import {handleChangeState, showForms, getValidOptions} from '../../services/formsOperations';
-import {handleError} from '../../services/handleError';
 import searchOperation from '../../services/searchOperation';
 import {checkRemovedItems, loadMore} from '../../services/loadMore';
 import redirectOnPage from '../../services/redirectOnPage';
 import LoadingSpinner from '../../components/loadingSpinner';
 import SearchComponent from '../../components/search';
+import toastrShowMessage from "../../services/toastrShowMessage";
 
 class User extends Component {
     constructor(props) {
@@ -64,7 +64,7 @@ class User extends Component {
             loading
         });
 
-        handleError.call(error);
+        error && toastrShowMessage.error(error);
         // toastrMessages.call(this, nextProps.user);
     }
 

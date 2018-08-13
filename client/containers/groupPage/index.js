@@ -7,13 +7,13 @@ import {bindActionCreators} from 'redux';
 import './index.scss';
 import * as groupsActionCreators from '../../actions/action_creators/groups';
 import {handleChangeState, showForms, getValidOptions} from '../../services/formsOperations';
-import {handleError} from '../../services/handleError';
 import searchOperation from '../../services/searchOperation';
 import {checkRemovedItems, loadMore} from '../../services/loadMore';
 import redirectOnPage from '../../services/redirectOnPage';
 import LoadingSpinner from '../../components/loadingSpinner';
 import ModalWindow from '../../components/modalWindow';
 import SearchComponent from '../../components/search';
+import toastrShowMessage from "../../services/toastrShowMessage";
 
 class Group extends Component {
     constructor(props) {
@@ -61,7 +61,7 @@ class Group extends Component {
             loading
         });
 
-        handleError(error);
+        error && toastrShowMessage.error(error);
         // toastrMessages.call(this, nextProps.group);
     }
 
