@@ -14,14 +14,14 @@ import {
     USER_LEAVE_GROUP_FAIL
 } from '../actions';
 
-const initialState = {
+export const initialState = {
     user: {data: {}, loading: false, error: null, isJoiningGroup: false},
     updatedUser: {data: {}, loading: false, error: null},
     userJoinedGroup: {date: {}, loading: false, error: null},
     userLeftGroup: {date: {}, loading: false, error: null}
 };
 
-export default function User(state = initialState, action) {
+export function User(state = initialState, action) {
     switch (action.type) {
         case GET_USER_PENDING:
             return {
@@ -42,7 +42,7 @@ export default function User(state = initialState, action) {
                     data: action.payload,
                     isJoiningGroup: false,
                     loading: false,
-                    error: false
+                    error: null
                 }
             };
 
@@ -78,7 +78,7 @@ export default function User(state = initialState, action) {
                     ...state.updatedUser,
                     data: action.payload,
                     loading: false,
-                    error: false
+                    error: null
                 }
             };
 

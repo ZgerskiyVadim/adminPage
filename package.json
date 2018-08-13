@@ -7,7 +7,8 @@
     "start": "npm run serve | npm run dev",
     "serve": "nodemon --exec babel-node server/app.js",
     "dev": "webpack-dev-server --config client/webpack.config.js",
-    "test-serve": "NODE_ENV=test jest  --detectOpenHandles --runInBand"
+    "test-serve": "NODE_ENV=test jest --detectOpenHandles --runInBand --config ./jest-serve.config.js",
+    "test-dev": "jest --watchAll --config ./jest-dev.config.js"
   },
   "author": "",
   "license": "ISC",

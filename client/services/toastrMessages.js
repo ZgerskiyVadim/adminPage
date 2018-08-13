@@ -7,7 +7,6 @@ class ToastrMessage {
     }
 
     showError(error) {
-        console.log(error);
         const message = error && error.response && error.response.data.message;
         const errmsg = error && error.response && error.response.data.errmsg;
         const errorMessage = error && (message || errmsg || error.message || error);

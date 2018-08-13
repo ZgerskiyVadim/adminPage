@@ -10,13 +10,13 @@ import {
     REMOVE_USER_FAIL
 } from '../actions';
 
-const initialState = {
+export const initialState = {
     users: {data: [], loading: false, error: null},
     updatedUser: {data: {}, loading: false, error: null},
     removedUser: {data: {}, loading: false, error: null}
 };
 
-export default function Users(state = initialState, action) {
+export function Users(state = initialState, action) {
     switch (action.type) {
         case GET_USERS_PENDING:
             return {
@@ -99,7 +99,7 @@ export default function Users(state = initialState, action) {
                 ...state,
                 users: {
                     ...state.users,
-                    data: state.users.data.filter(user => user._id !== action.payload)
+                    data: state.users.data.filter(user => user._id !== action.payload._id)
                 },
                 removedUser: {
                     ...state.removedUser,

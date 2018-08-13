@@ -36,5 +36,5 @@ import axios from 'axios/index';
 
     export const removeGroup = (id) => {
         return axios.delete(`/api/groups/${id}`)
-            .then(group => id);
+            .then(group => group.data);
     };

@@ -2,7 +2,7 @@ module.exports = {
     "testEnvironment": "node",
     forceExit: true,
     "testMatch": [
-        "**/(*.)test.js"
+        "**/server/**/(*.)test.js"
     ],
     "setupFiles": [
         "./server/jest.setup.js"

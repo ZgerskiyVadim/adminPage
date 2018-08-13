@@ -241,7 +241,7 @@ describe('Group controller', () => {
 
     describe('DELETE', () => {
         it('should delete group', done => {
-            const id = fakeGroups[0]._id;
+            const id = fakeGroups[1]._id;
 
             async.waterfall(
                 [
@@ -252,7 +252,9 @@ describe('Group controller', () => {
 
                                 expect(result.statusCode).toBe(200);
                                 expect(err).toBe(null);
-                                expect(result.body.message).toEqual('Successfully deleted');
+                                expect(result.body.name).toEqual(fakeGroups[1].name);
+                                expect(result.body.title).toEqual(fakeGroups[1].title);
+                                expect(result.body._id).toEqual(fakeGroups[1]._id.toString());
                                 next();
                             });
                     },

@@ -274,7 +274,7 @@ describe('User controller', () => {
 
     describe('DELETE', () => {
         it('should delete user', done => {
-            const id = fakeUsers[0]._id;
+            const id = fakeUsers[1]._id;
 
             async.waterfall(
                 [
@@ -284,7 +284,11 @@ describe('User controller', () => {
 
                             expect(result.statusCode).toBe(200);
                             expect(err).toBe(null);
-                            expect(result.body.message).toEqual('Successfully deleted');
+                            expect(result.body.username).toEqual(fakeUsers[1].username);
+                            expect(result.body.firstName).toEqual(fakeUsers[1].firstName);
+                            expect(result.body.lastName).toEqual(fakeUsers[1].lastName);
+                            expect(result.body.email).toEqual(fakeUsers[1].email);
+                            expect(result.body._id).toEqual(fakeUsers[1]._id.toString());
                             next();
                         });
                     },

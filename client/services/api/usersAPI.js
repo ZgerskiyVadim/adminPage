@@ -51,5 +51,5 @@ import axios from 'axios/index';
 
     export const removeUser = (id) => {
         return axios.delete(`/api/users/${id}`)
-            .then(user => id);
+            .then(user => user.data);
     };

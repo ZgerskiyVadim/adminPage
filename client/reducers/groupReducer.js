@@ -7,12 +7,12 @@ import {
     UPDATE_GROUP_FAIL
 } from '../actions';
 
-const initialState = {
+export const initialState = {
     group: {data: {}, loading: false, error: null},
     updatedGroup: {data: {}, loading: false, error: null}
 };
 
-export default function Group(state = initialState, action) {
+export function Group(state = initialState, action) {
     switch (action.type) {
         case GET_GROUP_PENDING:
             return {
@@ -31,7 +31,7 @@ export default function Group(state = initialState, action) {
                     ...state.group,
                     data: action.payload,
                     loading: false,
-                    error: false
+                    error: null
                 }
             };
 
@@ -66,7 +66,7 @@ export default function Group(state = initialState, action) {
                     ...state.updatedGroup,
                     data: action.payload,
                     loading: false,
-                    error: false
+                    error: null
                 }
             };
 

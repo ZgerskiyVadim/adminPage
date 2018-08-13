@@ -4,13 +4,13 @@ import {
     CREATE_GROUP_FAIL
 } from '../actions';
 
-const initialState = {
+export const initialState = {
     isGroupCreated: false,
     loading: false,
     error: null
 };
 
-export default function CreateGroup(state = initialState, action) {
+export function CreateGroup(state = initialState, action) {
     switch (action.type) {
         case GROUP_CREATE_PENDING:
             return {

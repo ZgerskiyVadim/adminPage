@@ -8,13 +8,13 @@ import {
 } from '../actions';
 
 
-const initialState = {
+export const initialState = {
     isLogged: false,
     loading: false,
     error: null
 };
 
-export default function Authenticate(state = initialState, action) {
+export function Authenticate(state = initialState, action) {
     switch (action.type) {
         case USER_LOGIN_PENDING:
             return {

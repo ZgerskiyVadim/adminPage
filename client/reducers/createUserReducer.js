@@ -5,13 +5,13 @@ import {
 } from '../actions';
 
 
-const initialState = {
+export const initialState = {
     isUserCreated: false,
     loading: false,
     error: null
 };
 
-export default function CreateUser(state = initialState, action) {
+export function CreateUser(state = initialState, action) {
     switch (action.type) {
         case USER_CREATE_PENDING:
             return {

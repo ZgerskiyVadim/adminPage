@@ -79,8 +79,7 @@ class CommonCrudOperations {
                 if (!data) return done(createError('Not found!', 404));
                 ModelPopulateOrUpdate.update({}, {$pull: {[pathPopulate]: data.id}}, {multi: true}, (err, modification) => {
                     if (err) return done(err);
-                    const message = {message: 'Successfully deleted'};
-                    done(null, message, 200);
+                    done(null, data);
                 })
             });
         }

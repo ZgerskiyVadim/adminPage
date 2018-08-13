@@ -24,7 +24,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 app.use('/auth', routerAuthenticate);
-app.use('/api', isAuthenticated, routers);
+app.use('/api', routers); //isAuthenticated
 app.use(errorHandler);
 
 app.get('*', sendHtmlFile);

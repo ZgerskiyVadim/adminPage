@@ -10,13 +10,13 @@ import {
     REMOVE_GROUP_FAIL
 } from '../actions';
 
-const initialState = {
+export const initialState = {
     groups: {data: [], loading: false, error: null},
     updatedGroup: {data: {}, loading: false, error: null},
     removedGroup: {data: {}, loading: false, error: null}
 };
 
-export default function Groups(state = initialState, action) {
+export function Groups(state = initialState, action) {
     switch (action.type) {
         case GET_GROUPS_PENDING:
             return {
@@ -98,7 +98,7 @@ export default function Groups(state = initialState, action) {
                 ...state,
                 groups: {
                     ...state.groups,
-                    data: state.groups.data.filter(group => group._id !== action.payload)
+                    data: state.groups.data.filter(group => group._id !== action.payload._id)
                 },
                 removedGroup: {
                     ...state.removedGroup,
