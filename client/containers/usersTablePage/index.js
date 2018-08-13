@@ -7,7 +7,7 @@ import {bindActionCreators} from 'redux';
 import './index.scss';
 import * as usersActionCreators from '../../actions/action_creators/users';
 import {loadMore, checkRemovedItems} from '../../services/loadMore';
-import {searchUsersRequest} from '../../services/searchOperation';
+import searchOperation from '../../services/searchOperation';
 import {handleError} from '../../services/handleError';
 import User from '../../components/user-item/user';
 import LoadingSpinner from '../../components/loadingSpinner';
@@ -73,7 +73,8 @@ class Users extends Component {
     }
 
     search(event) {
-        searchUsersRequest.call(this, event);
+        const {searchUsersRequest} = this.props.actions;
+        searchOperation.getItems.call(this, event, searchUsersRequest);
     };
 
     update(options) {

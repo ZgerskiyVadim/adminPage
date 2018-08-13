@@ -9,7 +9,7 @@ import * as usersActionCreators from '../../actions/action_creators/users';
 import * as groupsActionCreators from '../../actions/action_creators/groups';
 import {handleChangeState, showForms, getValidOptions} from '../../services/formsOperations';
 import {handleError} from '../../services/handleError';
-import {userSearchGroupsRequest} from '../../services/searchOperation';
+import searchOperation from '../../services/searchOperation';
 import {checkRemovedItems, loadMore} from '../../services/loadMore';
 import redirectOnPage from '../../services/redirectOnPage';
 import LoadingSpinner from '../../components/loadingSpinner';
@@ -79,7 +79,8 @@ class User extends Component {
     };
 
     search(event) {
-        userSearchGroupsRequest.call(this, event);
+        const {getUserRequest} = this.props.actions;
+        searchOperation.getItem.call(this, event, getUserRequest);
     };
 
     update(e) {

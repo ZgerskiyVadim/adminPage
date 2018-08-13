@@ -8,7 +8,7 @@ import './index.scss';
 import * as groupsActionCreators from '../../actions/action_creators/groups';
 import {handleChangeState, showForms, getValidOptions} from '../../services/formsOperations';
 import {handleError} from '../../services/handleError';
-import {groupSearchUsersRequest} from '../../services/searchOperation';
+import searchOperation from '../../services/searchOperation';
 import {checkRemovedItems, loadMore} from '../../services/loadMore';
 import redirectOnPage from '../../services/redirectOnPage';
 import LoadingSpinner from '../../components/loadingSpinner';
@@ -76,7 +76,8 @@ class Group extends Component {
     };
 
     search(event) {
-        groupSearchUsersRequest.call(this, event);
+        const {getGroupRequest} = this.props.actions;
+        searchOperation.getItem.call(this, event, getGroupRequest);
     };
 
     update(e) {

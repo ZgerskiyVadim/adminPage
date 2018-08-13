@@ -18,6 +18,8 @@ export function checkRemovedItems(prevCount, currentCount) {
     }
 }
 
+
+
 function getLengthOfItems(enumItem) {
     if (enumItem === 'users' || enumItem === 'groups') {
         return enumItem === 'users' ? this.props.users.data.length : this.props.groups.data.length

@@ -7,7 +7,7 @@ import {bindActionCreators} from 'redux';
 import './index.scss';
 import * as groupsActionCreators from '../../actions/action_creators/groups';
 import {checkRemovedItems, loadMore} from '../../services/loadMore';
-import {searchGroupsRequest} from '../../services/searchOperation';
+import searchOperation from '../../services/searchOperation';
 import {handleError} from '../../services/handleError';
 import redirectOnPage from '../../services/redirectOnPage';
 import Group from '../../components/group-item/group';
@@ -88,7 +88,8 @@ class Groups extends Component {
     }
 
     search(event) {
-        searchGroupsRequest.call(this, event);
+        const {searchGroupsRequest} = this.props.actions;
+        searchOperation.getItems.call(this, event, searchGroupsRequest);
     };
 
     joinGroup(options) {
