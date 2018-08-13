@@ -8,7 +8,7 @@ import PropTypes from "prop-types";
 import './index.scss';
 import * as usersActionCreators from "../../actions/action_creators/users";
 import classNames from 'classnames';
-import isAuthenticated from '../../services/authenticationService';
+import AuthenticationService from '../../services/authenticationService';
 
 class Header extends Component {
     constructor(props) {
@@ -22,13 +22,13 @@ class Header extends Component {
 
     componentDidMount() {
         this.setState({
-            isAuthenticated: isAuthenticated()
+            isAuthenticated: AuthenticationService.isAuthenticated()
         });
     }
 
     componentWillReceiveProps() {
         this.setState({
-            isAuthenticated: isAuthenticated()
+            isAuthenticated: AuthenticationService.isAuthenticated()
         });
     }
 
@@ -55,7 +55,12 @@ Header.propTypes = {
 };
 
 const mapStateToProps = (state) => ({
-    state,
+    users: state.Users.users,
+    user: state.User.user,
+    createUser: state.CreateUser,
+    groups: state.Groups.groups,
+    group: state.Group.group,
+    createGroup: state.CreateGroup,
     authenticateStore: state.Authenticate
 });
 

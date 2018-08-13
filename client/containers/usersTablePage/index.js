@@ -54,7 +54,7 @@ class Users extends Component {
             loading
         });
 
-        toastrMessage.error(error);
+        toastrMessage.showError(error);
         // toastrMessages(nextProps.usersStore);
     }
 

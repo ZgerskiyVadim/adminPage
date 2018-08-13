@@ -58,7 +58,7 @@ class Groups extends Component {
             loading
         });
 
-        toastrMessage.error(error);
+        toastrMessage.showError(error);
         // toastrMessages(nextProps.groupsStore);
     }
 

@@ -60,7 +60,7 @@ class Group extends Component {
             loading
         });
 
-        toastrMessage.error.call(this, error);
+        toastrMessage.showError(error);
         // toastrMessages.call(this, nextProps.group);
     }
 
@@ -78,7 +78,8 @@ class Group extends Component {
         groupSearchUsersRequest.call(this, event);
     };
 
-    update() {
+    update(e) {
+        e.preventDefault();
         this.setState({showForm: false});
         const options = getValidOptions(this.state);
         this.props.actions.updateGroupRequest(options);
@@ -118,7 +119,7 @@ class Group extends Component {
         return (
             <div className='group'>
                 <h1>GROUP</h1>
-                <div className='group__info'>
+                <form className='group__info'>
                     <div className='group--margin-right'>
                         <h3>name: {name}</h3>
                         <input onChange={this.handleChangeState} value={state.name} className={classNames('form-control', hiddenForm)} name='name' type="text"/>
@@ -127,8 +128,8 @@ class Group extends Component {
                     </div>
 
                     <button onClick={this.showForms} className={classNames('btn btn-outline-primary', shownForm)}>Update</button>
-                    <button onClick={this.update} className={classNames('btn btn-outline-primary', hiddenForm)}>Save</button>
-                </div>
+                    <button onClick={this.update} className={classNames('btn btn-outline-primary', hiddenForm)} type='submit'>Save</button>
+                </form>
 
                 <h1 className={isUsers}>Users</h1>
                 <div className={classNames('group__users-table', isUsers)}>

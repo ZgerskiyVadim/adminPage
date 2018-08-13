@@ -23,15 +23,17 @@ class CreateGroup extends Component {
     }
 
     componentWillReceiveProps(nextProps) {
-        const {loading} = nextProps.createGroupStore;
+        const {loading, error} = nextProps.createGroupStore;
         this.setState({
             loading
         });
 
+        toastrMessage.showError(error);
         // toastrMessages(nextProps.createGroupStore);
     }
 
-    sendGroup() {
+    sendGroup(e) {
+        e.preventDefault();
         this.props.actions.createGroupRequest(this.state)
     };
 
@@ -41,7 +43,7 @@ class CreateGroup extends Component {
         return (
             <div className='create-group'>
                 <h2>Create Group</h2>
-                <div className='create-group--row'>
+                <form className='create-group--row'>
                     <div className='col-md-6'>
                         <h3>name</h3>
                         <input onChange={this.handleChangeState} value={name} name='name' className='form-control' type="text"/>
@@ -49,8 +51,8 @@ class CreateGroup extends Component {
                         <input onChange={this.handleChangeState} value={title} name='title' className='form-control' type="text"/>
                     </div>
 
-                    <button onClick={this.sendGroup} className='create-group__send btn btn-outline-primary'>Send</button>
-                </div>
+                    <button onClick={this.sendGroup} className='create-group__send btn btn-outline-primary' type='submit'>Send</button>
+                </form>
                 <LoadingSpinner loading={loading}/>
             </div>
         );

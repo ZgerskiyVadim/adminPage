@@ -53,7 +53,7 @@ export default function Authenticate(state = initialState, action) {
                 ...state,
                 isLogged: false,
                 error: null,
-                loading: true
+                loading: false
             };
 
         case USER_LOGOUT_FAIL:

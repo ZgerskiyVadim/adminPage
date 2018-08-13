@@ -24,11 +24,12 @@ class LoginPage extends Component {
     }
 
     componentWillReceiveProps(nextProps) {
-        const {loading, isLogged} = nextProps.authenticateStore;
+        const {loading, isLogged, error} = nextProps.authenticateStore;
         this.setState({
             loading
         });
 
+        toastrMessage.showError(error);
         // toastrMessages(nextProps.authenticateStore);
         isLogged && this.goHome();
     }

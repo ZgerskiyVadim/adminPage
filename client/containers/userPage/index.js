@@ -63,7 +63,7 @@ class User extends Component {
             loading
         });
 
-        toastrMessage.error.call(this, error);
+        toastrMessage.showError.call(error);
         // toastrMessages.call(this, nextProps.user);
     }
 
@@ -81,7 +81,8 @@ class User extends Component {
         userSearchGroupsRequest.call(this, event);
     };
 
-    update() {
+    update(e) {
+        e.preventDefault();
         this.setState({showForm: false});
         const options = getValidOptions(this.state);
         this.props.actions.updateUserRequest(options);
@@ -124,7 +125,7 @@ class User extends Component {
         return (
             <div className='user'>
                 <h1>USER</h1>
-                <div className='user__info'>
+                <form className='user__info'>
                     <div className='user--margin-right'>
                         <h3>username: {username}</h3>
                         <input onChange={this.handleChangeState} value={state.username} className={classNames('form-control', hiddenForm)} name='username' type="text"/>
@@ -138,9 +139,9 @@ class User extends Component {
                         <input onChange={this.handleChangeState} value={state.password} className={classNames('form-control', hiddenForm)} name='password' type="password"/>
                     </div>
                     <button onClick={this.showForms} className={shownForm}>Update</button>
-                    <button onClick={this.update} className={classNames('user--margin-right btn btn-outline-primary', hiddenForm)}>Save</button>
+                    <button onClick={this.update} className={classNames('user--margin-right btn btn-outline-primary', hiddenForm)} type='submit'>Save</button>
                     <button onClick={this.startJoiningGroup} className='btn btn-outline-info'>Join group</button>
-                </div>
+                </form>
 
                 <h1 className={isGroups}>Groups</h1>
                 <div className={classNames('user__groups-table', isGroups)}>
