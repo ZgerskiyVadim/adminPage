@@ -1,7 +1,10 @@
-import { createHashHistory } from 'history';
-const history = createHashHistory();
+import history from './history';
 
 class RedirectOnPage {
+
+    path(path) {
+        history.push(path)
+    }
 
     home() {
         history.push('/')

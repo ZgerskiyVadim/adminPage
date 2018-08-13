@@ -11,6 +11,7 @@ import {handleChangeState, showForms, getValidOptions} from '../../services/form
 import {handleError} from '../../services/handleError';
 import {userSearchGroupsRequest} from '../../services/searchOperation';
 import {checkRemovedItems, loadMore} from '../../services/loadMore';
+import redirectOnPage from '../../services/redirectOnPage';
 import LoadingSpinner from '../../components/loadingSpinner';
 import SearchComponent from '../../components/search';
 
@@ -74,7 +75,7 @@ class User extends Component {
     }
 
     goToGroup(id) {
-        this.props.history.push(`/groups/${id}`);
+        redirectOnPage.path(`/groups/${id}`);
     };
 
     search(event) {
@@ -92,7 +93,7 @@ class User extends Component {
         e.stopPropagation();
         const isJoiningGroup = true;
         this.props.actions.startJoiningGroup(isJoiningGroup);
-        this.props.history.push('/groups');
+        redirectOnPage.path('/groups');
     };
 
     joinGroup(id, e) {

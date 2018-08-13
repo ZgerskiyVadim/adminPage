@@ -9,6 +9,7 @@ import * as groupsActionCreators from '../../actions/action_creators/groups';
 import {checkRemovedItems, loadMore} from '../../services/loadMore';
 import {searchGroupsRequest} from '../../services/searchOperation';
 import {handleError} from '../../services/handleError';
+import redirectOnPage from '../../services/redirectOnPage';
 import Group from '../../components/group-item/group';
 import LoadingSpinner from '../../components/loadingSpinner';
 import ModalWindow from '../../components/modalWindow';
@@ -101,7 +102,7 @@ class Groups extends Component {
     cancelJoinGroup() {
         const isJoiningGroups = false;
         this.props.actions.cancelJoinGroup(isJoiningGroups);
-        this.props.history.push(`/users/${this.props.user.data._id}`);
+        redirectOnPage.path(`/users/${this.props.user.data._id}`);
     };
 
     update(options) {

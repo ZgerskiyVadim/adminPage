@@ -4,6 +4,7 @@ import { withRouter } from 'react-router';
 import classNames from "classnames";
 
 import {handleChangeState, showForms, getValidOptions} from '../../services/formsOperations';
+import redirectOnPage from '../../services/redirectOnPage';
 
 class User extends Component {
     constructor(props) {
@@ -28,7 +29,7 @@ class User extends Component {
 
     goToUser() {
         const {_id} = this.props.user;
-        this.props.history.push(`/users/${_id}`);
+        redirectOnPage.path(`/users/${_id}`);
     };
 
     handleClick(e) {

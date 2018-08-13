@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { withRouter } from 'react-router';
 import classNames from 'classnames';
 import './index.scss';
+import redirectOnPage from '../../services/redirectOnPage';
 
 class Breadcrumb extends Component {
     constructor(props) {
@@ -33,7 +34,7 @@ class Breadcrumb extends Component {
     }
 
     goToPath(location) {
-        this.props.history.push(location);
+        redirectOnPage.path(location);
     };
 
     render() {

@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import { withRouter } from 'react-router';
 
 import {handleChangeState, showForms, getValidOptions} from '../../services/formsOperations';
+import redirectOnPage from '../../services/redirectOnPage';
 
 class Group extends Component {
     constructor(props) {
@@ -28,7 +29,7 @@ class Group extends Component {
 
     goToGroup() {
         const {_id} = this.props.group;
-        this.props.history.push(`/groups/${_id}`);
+        redirectOnPage.path(`/groups/${_id}`);
     };
 
     handleClick(e) {

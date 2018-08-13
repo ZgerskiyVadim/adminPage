@@ -10,6 +10,7 @@ import {handleChangeState, showForms, getValidOptions} from '../../services/form
 import {handleError} from '../../services/handleError';
 import {groupSearchUsersRequest} from '../../services/searchOperation';
 import {checkRemovedItems, loadMore} from '../../services/loadMore';
+import redirectOnPage from '../../services/redirectOnPage';
 import LoadingSpinner from '../../components/loadingSpinner';
 import ModalWindow from '../../components/modalWindow';
 import SearchComponent from '../../components/search';
@@ -71,7 +72,7 @@ class Group extends Component {
     }
 
     goToUser(id) {
-        this.props.history.push(`/users/${id}`);
+        redirectOnPage.path(`/users/${id}`);
     };
 
     search(event) {
