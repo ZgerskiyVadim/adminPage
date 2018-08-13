@@ -6,7 +6,7 @@ import {bindActionCreators} from 'redux';
 import './index.scss';
 import * as groupsActionCreators from '../../actions/action_creators/groups';
 import {handleChangeState} from '../../services/formsOperations';
-import toastrMessage from '../../services/toastrMessages';
+import {handleError} from '../../services/handleError';
 import LoadingSpinner from '../../components/loadingSpinner';
 
 class CreateGroup extends Component {
@@ -28,7 +28,7 @@ class CreateGroup extends Component {
             loading
         });
 
-        toastrMessage.showError(error);
+        handleError(error);
         // toastrMessages(nextProps.createGroupStore);
     }
 
@@ -43,7 +43,7 @@ class CreateGroup extends Component {
         return (
             <div className='create-group'>
                 <h2>Create Group</h2>
-                <form className='create-group--row'>
+                <div className='create-group--row'>
                     <div className='col-md-6'>
                         <h3>name</h3>
                         <input onChange={this.handleChangeState} value={name} name='name' className='form-control' type="text"/>
@@ -51,8 +51,8 @@ class CreateGroup extends Component {
                         <input onChange={this.handleChangeState} value={title} name='title' className='form-control' type="text"/>
                     </div>
 
-                    <button onClick={this.sendGroup} className='create-group__send btn btn-outline-primary' type='submit'>Send</button>
-                </form>
+                    <button onClick={this.sendGroup} className='create-group__send btn btn-outline-primary'>Send</button>
+                </div>
                 <LoadingSpinner loading={loading}/>
             </div>
         );

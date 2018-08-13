@@ -1,9 +1,9 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router';
+import classNames from "classnames";
 
 import {handleChangeState, showForms, getValidOptions} from '../../services/formsOperations';
-import classNames from "classnames";
 
 class User extends Component {
     constructor(props) {

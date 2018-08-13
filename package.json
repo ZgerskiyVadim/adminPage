@@ -7,8 +7,9 @@
     "start": "npm run serve | npm run dev",
     "serve": "nodemon --exec babel-node server/app.js",
     "dev": "webpack-dev-server --config client/webpack.config.js",
+    "test": "npm run test-dev | npm run test-serve",
     "test-serve": "NODE_ENV=test jest --detectOpenHandles --runInBand --config ./jest-serve.config.js",
-    "test-dev": "jest --watchAll --config ./jest-dev.config.js"
+    "test-dev": "jest --config ./jest-dev.config.js"
   },
   "author": "",
   "license": "ISC",
@@ -28,6 +29,7 @@
     "css-loader": "^1.0.0",
     "express": "^4.16.3",
     "express-session": "^1.15.6",
+    "history": "^4.7.2",
     "jest": "^23.4.2",
     "mongoose": "^4.13.14",
     "node-sass": "^4.9.2",

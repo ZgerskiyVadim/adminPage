@@ -8,7 +8,7 @@ import './index.scss';
 import * as usersActionCreators from '../../actions/action_creators/users';
 import {loadMore, checkRemovedItems} from '../../services/loadMore';
 import {searchUsersRequest} from '../../services/searchOperation';
-import toastrMessage from '../../services/toastrMessages';
+import {handleError} from '../../services/handleError';
 import User from '../../components/user-item/user';
 import LoadingSpinner from '../../components/loadingSpinner';
 import ModalWindow from '../../components/modalWindow';
@@ -54,7 +54,7 @@ class Users extends Component {
             loading
         });
 
-        toastrMessage.showError(error);
+        handleError(error);
         // toastrMessages(nextProps.usersStore);
     }
 

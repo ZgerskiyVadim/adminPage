@@ -1,13 +1,9 @@
 import React, {Component} from 'react';
-import {connect} from "react-redux";
-import PropTypes from "prop-types";
-import {bindActionCreators} from "redux";
 
 import './index.scss';
-import * as usersActionCreators from "../../actions/action_creators/users";
 import {handleChangeState} from "../../services/formsOperations";
-import toastrMessage from "../../services/toastrMessages";
 import LoadingSpinner from '../../components/loadingSpinner';
+import AuthenticationService from "../../services/authenticationService";
 
 class LoginPage extends Component {
     constructor(props) {
@@ -23,23 +19,8 @@ class LoginPage extends Component {
         this.login = this.login.bind(this);
     }
 
-    componentWillReceiveProps(nextProps) {
-        const {loading, isLogged, error} = nextProps.authenticateStore;
-        this.setState({
-            loading
-        });
-
-        toastrMessage.showError(error);
-        // toastrMessages(nextProps.authenticateStore);
-        isLogged && this.goHome();
-    }
-
-    goHome() {
-        this.props.history.push(`/`);
-    }
-
     login() {
-        this.props.actions.login(this.state)
+        AuthenticationService.login(this.state);
     };
 
     render() {
@@ -64,18 +45,4 @@ class LoginPage extends Component {
     }
 }
 
-LoginPage.propTypes = {
-    authenticateStore: PropTypes.object.isRequired
-};
-
-const mapStateToProps = (state) => ({
-    authenticateStore: state.Authenticate
-});
-
-const mapDispatchToProps = (dispatch) => ({
-    actions: bindActionCreators({
-        ...usersActionCreators
-    }, dispatch)
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(LoginPage);
+export default LoginPage;

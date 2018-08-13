@@ -5,10 +5,8 @@ import {Users} from './usersReducer';
 import {User} from './userReducer';
 import {CreateUser} from './createUserReducer';
 import {CreateGroup} from './createGroupReducer';
-import {Authenticate} from './authenticateReducer';
 
 const rootReducer = combineReducers({
-    Authenticate,
     Groups,
     Group,
     Users,

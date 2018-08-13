@@ -8,7 +8,7 @@ import './index.scss';
 import * as groupsActionCreators from '../../actions/action_creators/groups';
 import {checkRemovedItems, loadMore} from '../../services/loadMore';
 import {searchGroupsRequest} from '../../services/searchOperation';
-import toastrMessage from '../../services/toastrMessages';
+import {handleError} from '../../services/handleError';
 import Group from '../../components/group-item/group';
 import LoadingSpinner from '../../components/loadingSpinner';
 import ModalWindow from '../../components/modalWindow';
@@ -58,7 +58,7 @@ class Groups extends Component {
             loading
         });
 
-        toastrMessage.showError(error);
+        handleError(error);
         // toastrMessages(nextProps.groupsStore);
     }
 
@@ -72,7 +72,7 @@ class Groups extends Component {
         return this.props.groups.data.map(group => {
             for (let i = 0; i < group.users.length; i++ ) {
                 const userID = group.users[i]._id ? group.users[i]._id : group.users[i];
-                if (userID === this.props.user._id) {
+                if (userID === this.props.user.data._id) {
                     return {
                         ...group,
                         isJoinedUserInGroup: true
@@ -101,7 +101,7 @@ class Groups extends Component {
     cancelJoinGroup() {
         const isJoiningGroups = false;
         this.props.actions.cancelJoinGroup(isJoiningGroups);
-        this.props.history.push(`/users/${this.props.user._id}`);
+        this.props.history.push(`/users/${this.props.user.data._id}`);
     };
 
     update(options) {
@@ -166,7 +166,7 @@ class Groups extends Component {
                                     key={group._id}
                                     group={group}
                                     index={index}
-                                    userID={user._id}
+                                    userID={user.data._id}
                                     isJoinedUserInGroup={group.isJoinedUserInGroup}
                                     isJoiningGroup={true}
                                     joinGroup={this.joinGroup}

@@ -34,7 +34,7 @@ export const REMOVE_GROUP_DATA = {
     _id: 1
 };
 
-export const ACTIONS = {
+export const actionsReducer = {
     uploadGroups: {
         pending: {
             type: GET_GROUPS_PENDING,

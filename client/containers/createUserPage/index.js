@@ -6,7 +6,7 @@ import {bindActionCreators} from 'redux';
 import './index.scss';
 import * as usersActionCreators from '../../actions/action_creators/users';
 import {handleChangeState} from '../../services/formsOperations';
-import toastrMessage from '../../services/toastrMessages';
+import {handleError} from '../../services/handleError';
 import LoadingSpinner from '../../components/loadingSpinner';
 
 class CreateUser extends Component {
@@ -31,7 +31,7 @@ class CreateUser extends Component {
             loading
         });
 
-        toastrMessage.showError(error);
+        handleError(error);
         // toastrMessages(nextProps.createUserStore);
     }
 
@@ -46,7 +46,7 @@ class CreateUser extends Component {
         return (
             <div className='create-user'>
                 <h2>Create User</h2>
-                <form className='create-user--row'>
+                <div className='create-user--row'>
                     <div className='col-md-6'>
                         <h3>username</h3>
                         <input onChange={this.handleChangeState} value={username} name='username' className='form-control' type="text"/>
@@ -60,8 +60,8 @@ class CreateUser extends Component {
                         <input onChange={this.handleChangeState} value={password} name='password' className='form-control' type="password"/>
                     </div>
 
-                    <button onClick={this.sendUser} className='create-user__send btn btn-outline-primary' type='submit'>Send</button>
-                </form>
+                    <button onClick={this.sendUser} className='create-user__send btn btn-outline-primary'>Send</button>
+                </div>
                 <LoadingSpinner loading={loading}/>
             </div>
         );

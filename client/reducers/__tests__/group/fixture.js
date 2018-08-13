@@ -19,7 +19,7 @@ export const UPDATE_GROUP_DATA = {
     users: []
 };
 
-export const ACTIONS = {
+export const actionsReducer = {
     uploadGroup: {
         pending: {
             type: GET_GROUP_PENDING,
