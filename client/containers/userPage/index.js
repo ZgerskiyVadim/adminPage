@@ -8,7 +8,7 @@ import './index.scss';
 import * as usersActionCreators from '../../actions/action_creators/users';
 import * as groupsActionCreators from '../../actions/action_creators/groups';
 import {handleChangeState, showForms, getValidOptions} from '../../services/formsOperations';
-import {toastrMessages} from '../../services/toastrMessages';
+import toastrMessage from '../../services/toastrMessages';
 import {userSearchGroupsRequest} from '../../services/searchOperation';
 import {checkRemovedItems, loadMore} from '../../services/loadMore';
 import LoadingSpinner from '../../components/loadingSpinner';
@@ -58,11 +58,13 @@ class User extends Component {
 
     componentWillReceiveProps(nextProps) {
         const loading = nextProps.user.loading || nextProps.updatedUser.loading || nextProps.userJoinedGroup.loading || nextProps.userLeftGroup.loading;
+        const error = nextProps.user.error || nextProps.updatedUser.error || nextProps.userJoinedGroup.error || nextProps.userLeftGroup.error;
         this.setState({
             loading
         });
 
-        toastrMessages.call(this, nextProps.user);
+        toastrMessage.showError.call(error);
+        // toastrMessages.call(this, nextProps.user);
     }
 
     componentDidUpdate(prevProps) {
@@ -79,7 +81,8 @@ class User extends Component {
         userSearchGroupsRequest.call(this, event);
     };
 
-    update() {
+    update(e) {
+        e.preventDefault();
         this.setState({showForm: false});
         const options = getValidOptions(this.state);
         this.props.actions.updateUserRequest(options);
@@ -111,7 +114,7 @@ class User extends Component {
     };
 
     render() {
-        const {username, firstName, lastName, email} = this.props.user;
+        const {username, firstName, lastName, email} = this.props.user.data;
         const {groups} = this.props;
         const {showForm, loading, ...state} = this.state;
 
@@ -122,7 +125,7 @@ class User extends Component {
         return (
             <div className='user'>
                 <h1>USER</h1>
-                <div className='user__info'>
+                <form className='user__info'>
                     <div className='user--margin-right'>
                         <h3>username: {username}</h3>
                         <input onChange={this.handleChangeState} value={state.username} className={classNames('form-control', hiddenForm)} name='username' type="text"/>
@@ -136,9 +139,9 @@ class User extends Component {
                         <input onChange={this.handleChangeState} value={state.password} className={classNames('form-control', hiddenForm)} name='password' type="password"/>
                     </div>
                     <button onClick={this.showForms} className={shownForm}>Update</button>
-                    <button onClick={this.update} className={classNames('user--margin-right btn btn-outline-primary', hiddenForm)}>Save</button>
+                    <button onClick={this.update} className={classNames('user--margin-right btn btn-outline-primary', hiddenForm)} type='submit'>Save</button>
                     <button onClick={this.startJoiningGroup} className='btn btn-outline-info'>Join group</button>
-                </div>
+                </form>
 
                 <h1 className={isGroups}>Groups</h1>
                 <div className={classNames('user__groups-table', isGroups)}>
@@ -197,7 +200,7 @@ User.propTypes = {
 };
 
 const mapStateToProps = (state) => ({
-    user: state.User.user.data,
+    user: state.User.user,
     groups: state.User.user.data.groups || [],
     updatedUser: state.User.updatedUser,
     userJoinedGroup: state.User.userJoinedGroup,

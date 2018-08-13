@@ -10,6 +10,10 @@ describe('Group controller', () => {
         resetDB(done);
     });
 
+    afterEach(done => {
+        dropDB(done);
+    });
+
     describe('POST', () => {
         it('user login', done => {
             const data = fakeUsers[1];

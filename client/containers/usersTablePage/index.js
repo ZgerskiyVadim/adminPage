@@ -8,7 +8,7 @@ import './index.scss';
 import * as usersActionCreators from '../../actions/action_creators/users';
 import {loadMore, checkRemovedItems} from '../../services/loadMore';
 import {searchUsersRequest} from '../../services/searchOperation';
-import {toastrMessages} from '../../services/toastrMessages';
+import toastrMessage from '../../services/toastrMessages';
 import User from '../../components/user-item/user';
 import LoadingSpinner from '../../components/loadingSpinner';
 import ModalWindow from '../../components/modalWindow';
@@ -48,25 +48,27 @@ class Users extends Component {
     }
 
     componentWillReceiveProps(nextProps) {
-        const {loading} = nextProps.usersStore;
+        const loading = nextProps.users.loading || nextProps.updatedUser.loading || nextProps.removedUser.loading;
+        const error = nextProps.users.error || nextProps.updatedUser.error || nextProps.removedUser.error;
         this.setState({
             loading
         });
 
-        toastrMessages(nextProps.usersStore);
+        toastrMessage.showError(error);
+        // toastrMessages(nextProps.usersStore);
     }
 
     componentDidUpdate(prevProps) {
-        const currentCountUsers = this.props.users.length;
-        const prevCountUsers = prevProps.users.length;
+        const currentCountUsers = this.props.users.data.length;
+        const prevCountUsers = prevProps.users.data.length;
         checkRemovedItems.call(this, prevCountUsers, currentCountUsers);
     }
 
     getUsers() {
         if (this.props.isJoiningGroup) {
-            return this.props.users.map(user => user._id === this.props.user._id ? {...user, isJoining: true} : user); //Hide remove button for joining user
+            return this.props.users.data.map(user => user._id === this.props.user._id ? {...user, isJoining: true} : user); //Hide remove button for joining user
         } else {
-            return this.props.users;
+            return this.props.users.data;
         }
     }
 
@@ -151,15 +153,17 @@ class Users extends Component {
 }
 
 Users.propTypes = {
-    usersStore: PropTypes.object.isRequired,
-    users: PropTypes.array.isRequired,
+    users: PropTypes.object.isRequired,
+    updatedUser: PropTypes.object.isRequired,
+    removedUser: PropTypes.object.isRequired,
     user: PropTypes.object.isRequired,
     isJoiningGroup: PropTypes.bool.isRequired
 };
 
 const mapStateToProps = (state) => ({
-    usersStore: state.Users,
     users: state.Users.users,
+    updatedUser: state.Users.updatedUser,
+    removedUser: state.Users.removedUser,
     user: state.User.user,
     isJoiningGroup: state.User.user.isJoiningGroup
 });

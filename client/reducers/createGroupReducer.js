@@ -4,14 +4,10 @@ import {
     CREATE_GROUP_FAIL
 } from '../actions';
 
-const defaultProps = {
-    loading: false,
-    error: null
-};
-
 const initialState = {
     isGroupCreated: false,
-    ...defaultProps
+    loading: false,
+    error: null
 };
 
 export default function CreateGroup(state = initialState, action) {
@@ -19,23 +15,25 @@ export default function CreateGroup(state = initialState, action) {
         case GROUP_CREATE_PENDING:
             return {
                 ...state,
-                ...defaultProps,
+                isGroupCreated: false,
+                error: null,
                 loading: true
             };
 
         case GROUP_CREATED_SUCCESS:
             return {
                 ...state,
-                ...defaultProps,
+                error: null,
+                loading: false,
                 isGroupCreated: true,
             };
 
         case CREATE_GROUP_FAIL:
             return {
                 ...state,
-                ...defaultProps,
+                loading: false,
                 isGroupCreated: false,
-                error: action.payload
+                error: action.payload || 'Create group failed'
             };
         default: return state;
     }

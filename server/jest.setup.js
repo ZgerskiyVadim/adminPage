@@ -26,10 +26,17 @@ global.json = function(verb, url, cookie) {
 
 global.resetDB = function(done) {
     async.series(
-        [next => mongoose.connect(config.dbForTestsName, {useMongoClient: true}, next),
+        [
+            next => mongoose.connect(config.dbForTestsName, {useMongoClient: true}, next),
             next => Group.remove({}, next),
             next => User.remove({}, next),
-            next => loadFixtures(next)],
+            next => loadFixtures(next)
+        ],
         done
     );
+};
+
+global.dropDB = function (done) {
+    mongoose.disconnect();
+    done()
 };

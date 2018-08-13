@@ -6,5 +6,6 @@ export default {
     static: '../client',
     favicon: '../client/asserts/favicon.ico',
     sessionName: 'userSession',
-    sessionSecret: 'secretKey'
+    sessionSecret: 'secretKey',
+    saltBcrypt: 10
 };

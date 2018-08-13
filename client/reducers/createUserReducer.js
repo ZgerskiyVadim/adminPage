@@ -4,14 +4,11 @@ import {
     CREATE_USER_FAIL
 } from '../actions';
 
-const defaultProps = {
-    loading: false,
-    error: null
-};
 
 const initialState = {
     isUserCreated: false,
-    ...defaultProps
+    loading: false,
+    error: null
 };
 
 export default function CreateUser(state = initialState, action) {
@@ -19,23 +16,25 @@ export default function CreateUser(state = initialState, action) {
         case USER_CREATE_PENDING:
             return {
                 ...state,
-                ...defaultProps,
+                isUserCreated: false,
+                error: null,
                 loading: true
             };
 
         case USER_CREATED_SUCCESS:
             return {
                 ...state,
-                ...defaultProps,
+                loading: false,
+                error: null,
                 isUserCreated: true
             };
 
         case CREATE_USER_FAIL:
             return {
                 ...state,
-                ...defaultProps,
                 isUserCreated: false,
-                error: action.payload
+                loading: false,
+                error: action.payload || 'Create user failed'
             };
         default: return state;
     }

@@ -41,7 +41,7 @@ export default function Group(state = initialState, action) {
                 group: {
                     ...state.group,
                     loading: false,
-                    error: action.payload
+                    error: action.payload || 'Get group failed'
                 }
             };
 
@@ -76,7 +76,7 @@ export default function Group(state = initialState, action) {
                 updatedGroup: {
                     ...state.updatedGroup,
                     loading: false,
-                    error: action.payload
+                    error: action.payload || 'Update group failed'
                 }
             };
 

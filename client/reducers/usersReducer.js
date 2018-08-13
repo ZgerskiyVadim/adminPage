@@ -5,19 +5,15 @@ import {
     UPDATE_USER_SUCCESS,
     REMOVE_USER_PENDING,
     REMOVE_USER_SUCCESS,
-    USERS_FAIL
+    GET_USERS_FAIL,
+    UPDATE_USER_FAIL,
+    REMOVE_USER_FAIL
 } from '../actions';
 
-const defaultProps = {
-    isRemoved: false,
-    isUpdated: false,
-    loading: false,
-    error: null
-};
-
 const initialState = {
-    users: [],
-    ...defaultProps
+    users: {data: [], loading: false, error: null},
+    updatedUser: {data: {}, loading: false, error: null},
+    removedUser: {data: {}, loading: false, error: null}
 };
 
 export default function Users(state = initialState, action) {
@@ -25,52 +21,102 @@ export default function Users(state = initialState, action) {
         case GET_USERS_PENDING:
             return {
                 ...state,
-                ...defaultProps,
-                loading: true
+                users: {
+                    ...state.users,
+                    loading: true,
+                    error: null
+                }
             };
 
         case GET_USERS_SUCCESS:
             return {
                 ...state,
-                users: [...action.payload],
-                ...defaultProps
+                users: {
+                    ...state.users,
+                    data: action.payload,
+                    loading: false,
+                    error: null
+                }
+            };
+
+        case GET_USERS_FAIL:
+            return {
+                ...state,
+                users: {
+                    ...state.users,
+                    loading: false,
+                    error: action.payload
+                }
             };
 
         case UPDATE_USER_PENDING:
             return {
                 ...state,
-                ...defaultProps,
-                loading: true
+                updatedUser: {
+                    ...state.updatedUser,
+                    loading: true,
+                    error: null
+                }
             };
 
         case UPDATE_USER_SUCCESS:
             return {
                 ...state,
-                users: state.users.map(user => (user._id === action.payload._id) ? action.payload : user),
-                ...defaultProps,
-                isUpdated: true
+                users: {
+                    ...state.users,
+                    data: state.users.data.map(user => (user._id === action.payload._id) ? action.payload : user)
+                },
+                updatedUser: {
+                    ...state.updatedUser,
+                    data: action.payload,
+                    loading: false,
+                    error: null
+                }
+            };
+
+        case UPDATE_USER_FAIL:
+            return {
+                ...state,
+                updatedUser: {
+                    ...state.updatedUser,
+                    loading: false,
+                    error: action.payload
+                }
             };
 
         case REMOVE_USER_PENDING:
             return {
                 ...state,
-                ...defaultProps,
-                loading: true
+                removedUser: {
+                    ...state.removedUser,
+                    loading: true,
+                    error: null
+                }
             };
 
         case REMOVE_USER_SUCCESS:
             return {
                 ...state,
-                users: state.users.filter(user => user._id !== action.payload),
-                ...defaultProps,
-                isRemoved: true,
+                users: {
+                    ...state.users,
+                    data: state.users.data.filter(user => user._id !== action.payload)
+                },
+                removedUser: {
+                    ...state.removedUser,
+                    data: action.payload,
+                    loading: false,
+                    error: null
+                }
             };
 
-        case USERS_FAIL:
+        case REMOVE_USER_FAIL:
             return {
                 ...state,
-                ...defaultProps,
-                error: action.payload
+                removedUser: {
+                    ...state.removedUser,
+                    loading: false,
+                    error: action.payload
+                }
             };
 
         default: return state;

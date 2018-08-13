@@ -9,14 +9,15 @@ import {
     SEARCH_GROUPS_PENDING,
     REMOVE_GROUP_SUCCESS,
     REMOVE_GROUP_PENDING,
-    GROUPS_FAIL,
     GET_GROUP_SUCCESS,
     GET_GROUP_PENDING,
     UPDATE_GROUP_SUCCESS,
     UPDATE_GROUP_PENDING,
     REMOVE_USER_FROM_GROUP_PENDING,
     UPDATE_GROUP_FAIL,
-    GET_GROUP_FAIL
+    GET_GROUP_FAIL,
+    GET_GROUPS_FAIL,
+    REMOVE_GROUP_FAIL
 } from '../actions';
 
 
@@ -34,7 +35,7 @@ function* getGroups(action) {
         const groups = yield call(groupsAPI.getGroups, action.payload);
         yield put({type: GET_GROUPS_SUCCESS, payload: groups});
     } catch (error) {
-        yield put({type: GROUPS_FAIL, payload: error});
+        yield put({type: GET_GROUPS_FAIL, payload: error});
     }
 }
 
@@ -43,7 +44,7 @@ function* searchGroups(action) {
         const groups = yield call(groupsAPI.searchGroups, action.payload);
         yield put({type: GET_GROUPS_SUCCESS, payload: groups});
     } catch (error) {
-        yield put({type: GROUPS_FAIL, payload: error});
+        yield put({type: GET_GROUPS_FAIL, payload: error});
     }
 }
 
@@ -52,7 +53,7 @@ function* removeGroup(action) {
         const id = yield call(groupsAPI.removeGroup, action.payload);
         yield put({type: REMOVE_GROUP_SUCCESS, payload: id});
     } catch (error) {
-        yield put({type: GROUPS_FAIL, payload: error});
+        yield put({type: REMOVE_GROUP_FAIL, payload: error});
     }
 }
 
@@ -71,7 +72,6 @@ function* updateGroup(action) {
         yield put({type: UPDATE_GROUP_SUCCESS, payload: group});
     } catch (error) {
         yield put({type: UPDATE_GROUP_FAIL, payload: error});
-        yield put({type: GROUPS_FAIL, payload: error});
     }
 }
 

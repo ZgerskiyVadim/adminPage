@@ -1,57 +1,67 @@
 import {
-    USER_LOGGED_SUCCESS,
-    LOGIN_PENDING,
+    USER_LOGIN_SUCCESS,
+    USER_LOGIN_PENDING,
     USER_LOGOUT_SUCCESS,
-    LOGOUT_PENDING,
-    AUTHENTICATE_FAILED
+    USER_LOGOUT_PENDING,
+    USER_LOGIN_FAIL,
+    USER_LOGOUT_FAIL
 } from '../actions';
 
-const defaultProps = {
+
+const initialState = {
     isLogged: false,
-    isLogout: false,
     loading: false,
     error: null
 };
 
-const initialState = {
-    ...defaultProps
-};
-
 export default function Authenticate(state = initialState, action) {
     switch (action.type) {
-        case USER_LOGGED_SUCCESS:
+        case USER_LOGIN_PENDING:
             return {
                 ...state,
-                ...defaultProps,
+                isLogged: false,
+                error: null,
+                loading: true
+            };
+
+        case USER_LOGIN_SUCCESS:
+            return {
+                ...state,
+                loading: false,
+                error: null,
                 isLogged: true
+            };
+
+        case USER_LOGIN_FAIL:
+            return {
+                ...state,
+                isLogged: false,
+                loading: false,
+                error: action.payload || 'User login failed'
+            };
+
+        case USER_LOGOUT_PENDING:
+            return {
+                ...state,
+                isLogged: false,
+                error: null,
+                loading: true
             };
 
         case USER_LOGOUT_SUCCESS:
             return {
                 ...state,
-                ...defaultProps,
-                isLogout: true,
+                isLogged: false,
+                error: null,
+                loading: false
             };
 
-        case LOGIN_PENDING:
+        case USER_LOGOUT_FAIL:
             return {
                 ...state,
-                ...defaultProps,
-                loading: true
-            };
-
-        case LOGOUT_PENDING:
-            return {
-                ...state,
-                ...defaultProps,
-                loading: true
-            };
-
-        case AUTHENTICATE_FAILED:
-            return {
-                ...state,
-                ...defaultProps,
-                error: action.payload
+                isLogged: false,
+                loading: false,
+                error: action.payload || 'User logout failed'
             };
 
         default: return state;

@@ -10,6 +10,10 @@ describe('User controller', () => {
         resetDB(done);
     });
 
+    afterEach(done => {
+        dropDB(done);
+    });
+
     describe('POST', () => {
         it('user login', done => {
             const data = {

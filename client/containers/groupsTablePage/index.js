@@ -8,7 +8,7 @@ import './index.scss';
 import * as groupsActionCreators from '../../actions/action_creators/groups';
 import {checkRemovedItems, loadMore} from '../../services/loadMore';
 import {searchGroupsRequest} from '../../services/searchOperation';
-import {toastrMessages} from '../../services/toastrMessages';
+import toastrMessage from '../../services/toastrMessages';
 import Group from '../../components/group-item/group';
 import LoadingSpinner from '../../components/loadingSpinner';
 import ModalWindow from '../../components/modalWindow';
@@ -52,22 +52,24 @@ class Groups extends Component {
     }
 
     componentWillReceiveProps(nextProps) {
-        const {loading} = nextProps.groupsStore;
+        const loading = nextProps.groups.loading || nextProps.updatedGroup.loading || nextProps.removedGroup.loading;
+        const error = nextProps.groups.error || nextProps.updatedGroup.error || nextProps.removedGroup.error;
         this.setState({
             loading
         });
 
-        toastrMessages(nextProps.groupsStore);
+        toastrMessage.showError(error);
+        // toastrMessages(nextProps.groupsStore);
     }
 
     componentDidUpdate(prevProps) {
-        const currentCountUsers = this.props.groups.length;
-        const prevCountUsers = prevProps.groups.length;
+        const currentCountUsers = this.props.groups.data.length;
+        const prevCountUsers = prevProps.groups.data.length;
         checkRemovedItems.call(this, prevCountUsers, currentCountUsers);
     }
 
     isJoinedUserInGroup() {
-        return this.props.groups.map(group => {
+        return this.props.groups.data.map(group => {
             for (let i = 0; i < group.users.length; i++ ) {
                 const userID = group.users[i]._id ? group.users[i]._id : group.users[i];
                 if (userID === this.props.user._id) {
@@ -171,7 +173,7 @@ class Groups extends Component {
                                     leaveGroup={this.leaveGroup}
                                 />) :
 
-                            groups.map((group, index) =>
+                            groups.data.map((group, index) =>
                                 <Group
                                     key={group._id}
                                     group={group}
@@ -194,15 +196,17 @@ class Groups extends Component {
 }
 
 Groups.propTypes = {
-    groupsStore: PropTypes.object.isRequired,
-    groups: PropTypes.array.isRequired,
+    groups: PropTypes.object.isRequired,
+    updatedGroup: PropTypes.object.isRequired,
+    removedGroup: PropTypes.object.isRequired,
     user: PropTypes.object.isRequired,
     isJoiningGroup: PropTypes.bool.isRequired
 };
 
 const mapStateToProps = (state) => ({
-    groupsStore: state.Groups,
     groups: state.Groups.groups,
+    updatedGroup: state.Groups.updatedGroup,
+    removedGroup: state.Groups.removedGroup,
     user: state.User.user,
     isJoiningGroup: state.User.user.isJoiningGroup
 });

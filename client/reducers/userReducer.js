@@ -53,7 +53,7 @@ export default function User(state = initialState, action) {
                     ...state.user,
                     loading: false,
                     isJoiningGroup: false,
-                    error: action.payload
+                    error: action.payload || 'Get user failed'
                 }
             };
 
@@ -88,7 +88,7 @@ export default function User(state = initialState, action) {
                 updatedUser: {
                     ...state.updatedUser,
                     loading: false,
-                    error: action.payload
+                    error: action.payload || 'Update user failed'
                 }
             };
 
@@ -126,7 +126,7 @@ export default function User(state = initialState, action) {
                 userJoinedGroup: {
                     ...state.userJoinedGroup,
                     loading: false,
-                    error: action.payload
+                    error: action.payload || 'User join group failed'
                 }
             };
 
@@ -164,7 +164,7 @@ export default function User(state = initialState, action) {
                 userLeftGroup: {
                     ...state.userLeftGroup,
                     loading: false,
-                    error: action.payload
+                    error: action.payload || 'User leave group failed'
                 }
             };
 
