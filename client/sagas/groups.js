@@ -6,7 +6,6 @@ import {
     CREATE_GROUP_FAIL,
     GET_GROUPS_SUCCESS,
     GET_GROUPS_PENDING,
-    SEARCH_GROUPS_PENDING,
     REMOVE_GROUP_SUCCESS,
     REMOVE_GROUP_PENDING,
     GET_GROUP_SUCCESS,
@@ -31,15 +30,6 @@ function* createGroup(action) {
 }
 
 function* getGroups(action) {
-    try {
-        const groups = yield call(groupsAPI.getGroups, action.payload);
-        yield put({type: GET_GROUPS_SUCCESS, payload: groups});
-    } catch (error) {
-        yield put({type: GET_GROUPS_FAIL, payload: error});
-    }
-}
-
-function* searchGroups(action) {
     try {
         const groups = yield call(groupsAPI.getGroups, action.payload);
         yield put({type: GET_GROUPS_SUCCESS, payload: groups});
@@ -88,7 +78,6 @@ export default function* groupsSaga() {
     yield all([
         takeEvery(GROUP_CREATE_PENDING, createGroup),
         takeEvery(GET_GROUPS_PENDING, getGroups),
-        takeEvery(SEARCH_GROUPS_PENDING, searchGroups),
         takeEvery(REMOVE_GROUP_PENDING, removeGroup),
         takeEvery(GET_GROUP_PENDING, getGroup),
         takeEvery(UPDATE_GROUP_PENDING, updateGroup),

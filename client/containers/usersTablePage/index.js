@@ -74,8 +74,8 @@ class Users extends Component {
     }
 
     search(event) {
-        const {searchUsersRequest} = this.props.actions;
-        searchOperation.getItems.call(this, event, searchUsersRequest);
+        const {getUsersRequest} = this.props.actions;
+        searchOperation.getItems.call(this, event, getUsersRequest);
     };
 
     update(options) {

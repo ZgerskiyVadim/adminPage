@@ -6,7 +6,6 @@ import {
     CREATE_USER_FAIL,
     GET_USERS_SUCCESS,
     GET_USERS_PENDING,
-    SEARCH_USERS_PENDING,
     REMOVE_USER_SUCCESS,
     REMOVE_USER_PENDING,
     GET_USER_SUCCESS,
@@ -37,15 +36,6 @@ function* createUser(action) {
 }
 
 function* getUsers(action) {
-    try {
-        const users = yield call(usersAPI.getUsers, action.payload);
-        yield put({type: GET_USERS_SUCCESS, payload: users});
-    } catch (error) {
-        yield put({type: GET_USERS_FAIL, payload: error});
-    }
-}
-
-function* searchUsers(action) {
     try {
         const users = yield call(usersAPI.getUsers, action.payload);
         yield put({type: GET_USERS_SUCCESS, payload: users});
@@ -108,7 +98,6 @@ export default function* usersSaga() {
     yield all([
         takeEvery(USER_CREATE_PENDING, createUser),
         takeEvery(GET_USERS_PENDING, getUsers),
-        takeEvery(SEARCH_USERS_PENDING, searchUsers),
         takeEvery(REMOVE_USER_PENDING, removeUser),
         takeEvery(GET_USER_PENDING, getUser),
         takeEvery(UPDATE_USER_PENDING, updateUser),

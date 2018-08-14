@@ -1,6 +1,5 @@
 import {
     GET_USERS_PENDING,
-    SEARCH_USERS_PENDING,
     UPDATE_USER_PENDING,
     REMOVE_USER_PENDING,
     IS_USER_WANT_JOIN_GROUP,
@@ -9,42 +8,51 @@ import {
     GET_USER_PENDING
 } from '../index';
 
-export const createUserRequest = (data) => ({
-    type: USER_CREATE_PENDING,
-    payload: data
-});
+export function createUserRequest(data) {
+    return {
+        type: USER_CREATE_PENDING,
+        payload: data
+    }
+}
 
-export const getUserRequest = (data) => ({
-    type: GET_USER_PENDING,
-    payload: data
-});
+export function getUserRequest(data) {
+    return {
+        type: GET_USER_PENDING,
+        payload: data
+    }
+}
 
-export const startJoiningGroup = (data) => ({
-    type: IS_USER_WANT_JOIN_GROUP,
-    payload: data
-});
+export function startJoiningGroup(data) {
+    return {
+        type: IS_USER_WANT_JOIN_GROUP,
+        payload: data
+    }
+}
 
-export const leaveGroupRequest = (data) => ({
-    type: USER_LEAVE_GROUP_PENDING,
-    payload: data
-});
+export function leaveGroupRequest(data) {
+    return {
+        type: USER_LEAVE_GROUP_PENDING,
+        payload: data
+    }
+}
 
-export const getUsersRequest = (data) => ({
-    type: GET_USERS_PENDING,
-    payload: data
-});
+export function getUsersRequest(data) {
+    return {
+        type: GET_USERS_PENDING,
+        payload: data
+    }
+}
 
-export const searchUsersRequest = (data) => ({
-    type: SEARCH_USERS_PENDING,
-    payload: data
-});
+export function updateUserRequest(data) {
+    return {
+        type: UPDATE_USER_PENDING,
+        payload: data
+    }
+}
 
-export const updateUserRequest = (data) => ({
-    type: UPDATE_USER_PENDING,
-    payload: data
-});
-
-export const removeUserRequest = (data) => ({
-    type: REMOVE_USER_PENDING,
-    payload: data
-});
+export function removeUserRequest(data) {
+    return {
+        type: REMOVE_USER_PENDING,
+        payload: data
+    }
+}

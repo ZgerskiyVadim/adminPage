@@ -48,8 +48,9 @@ class Breadcrumb extends Component {
                     </li>
                     {
                         this.locationPath().map((item, index) => {
+                            const isGoToPath = !item.islastPath ? this.goToPath(item.location) : null;
                             return (
-                                <li onClick={() => !item.islastPath ? this.goToPath(item.location) : null}
+                                <li onClick={() => isGoToPath}
                                     className={classNames('breadcrumb--cursor breadcrumb-item', {'breadcrumb--blue': !item.islastPath, 'active': item.islastPath})}
                                     key={index}>
                                         {item.path}
