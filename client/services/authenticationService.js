@@ -13,7 +13,7 @@ class AuthenticationService {
         const {username, password} = options;
         axios.post('/auth/login', {username, password})
             .then(() => {
-                redirectOnPage.home();
+                redirectOnPage.path('/users');
                 showToastrMessage.success('Successfully logged!');
             })
             .catch(error => showToastrMessage.error(error))

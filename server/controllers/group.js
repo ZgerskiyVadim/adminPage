@@ -4,9 +4,8 @@ import commonCrudOperations from '../services/commonCrudOperations';
 
 const options = {
     Model: Group,
-    searchFields: 'groups',
-    ModelPopulate: User,
     pathPopulate: 'users',
+    searchFields: 'groups'
 };
 
 const optionsRemove = {

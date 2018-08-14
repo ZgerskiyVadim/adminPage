@@ -6,11 +6,15 @@ import User from '../../models/user';
 let cookie = '';
 
 describe('User controller', () => {
+    beforeAll(done => {
+        connectDB(done)
+    });
+
     beforeEach(done => {
         resetDB(done);
     });
 
-    afterEach(done => {
+    afterAll(done => {
         dropDB(done);
     });
 
@@ -175,11 +179,11 @@ describe('User controller', () => {
                     expect(result.body.user.lastName).toEqual(fakeUsers[1].lastName);
                     expect(result.body.user.email).toEqual(fakeUsers[1].email);
                     expect(result.body.user._id).toEqual(fakeUsers[1]._id.toString());
-                    expect(result.body.user.groups[0]).toEqual(fakeGroups[1]._id.toString());
+                    expect(result.body.user.groups[0]._id).toEqual(fakeGroups[1]._id.toString());
                     expect(result.body.group.name).toEqual(fakeGroups[1].name);
                     expect(result.body.group.title).toEqual(fakeGroups[1].title);
                     expect(result.body.group._id).toEqual(fakeGroups[1]._id.toString());
-                    expect(result.body.group.users[0]).toEqual(fakeUsers[1]._id.toString());
+                    expect(result.body.group.users[0]._id).toEqual(fakeUsers[1]._id.toString());
                     done();
                 });
         });
@@ -241,7 +245,7 @@ describe('User controller', () => {
 
                     expect(result.statusCode).toBe(404);
                     expect(err).toBe(null);
-                    expect(result.body.message).toEqual('User is not found');
+                    expect(result.body.message).toEqual('User is not found!');
                     done();
                 });
         });
@@ -274,7 +278,7 @@ describe('User controller', () => {
 
                             expect(result.statusCode).toBe(404);
                             expect(err).toBe(null);
-                            expect(result.body.message).toEqual('User is not found');
+                            expect(result.body.message).toEqual('User is not found!');
                             done();
                         });
                 });

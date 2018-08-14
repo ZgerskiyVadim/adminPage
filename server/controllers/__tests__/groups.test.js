@@ -6,11 +6,15 @@ import fakeUsers from "../../fixtures/users";
 let cookie = '';
 
 describe('Group controller', () => {
+    beforeAll(done => {
+        connectDB(done)
+    });
+
     beforeEach(done => {
         resetDB(done);
     });
 
-    afterEach(done => {
+    afterAll(done => {
         dropDB(done);
     });
 
@@ -183,7 +187,7 @@ describe('Group controller', () => {
 
                     expect(result.statusCode).toBe(404);
                     expect(err).toBe(null);
-                    expect(result.body.message).toEqual('Group is not found');
+                    expect(result.body.message).toEqual('Group is not found!');
                     done();
                 });
         });
@@ -216,7 +220,7 @@ describe('Group controller', () => {
 
                             expect(result.statusCode).toBe(404);
                             expect(err).toBe(null);
-                            expect(result.body.message).toEqual('Group is not found');
+                            expect(result.body.message).toEqual('Group is not found!');
                             done();
                         });
                 });

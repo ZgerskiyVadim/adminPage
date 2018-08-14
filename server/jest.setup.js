@@ -24,10 +24,14 @@ global.json = function(verb, url, cookie) {
 
 };
 
+global.connectDB = function(done) {
+    mongoose.connect(config.dbForTestsName, {useMongoClient: true});
+    done()
+};
+
 global.resetDB = function(done) {
     async.series(
         [
-            next => mongoose.connect(config.dbForTestsName, {useMongoClient: true}, next),
             next => Group.remove({}, next),
             next => User.remove({}, next),
             next => loadFixtures(next)

@@ -28,7 +28,7 @@ const userSchema = new Schema({
             message: 'Provided email is invalid.'
         }},
     password: {type: String, required: true, minlength: 4},
-    groups: [{type: Schema.Types.ObjectId, ref: Group}]
+    groups: [{type: Schema.Types.ObjectId, ref: 'Group'}]
 });
 
 userSchema.pre('save', function(next) {
