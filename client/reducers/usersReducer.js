@@ -25,8 +25,8 @@ export const initialState = {
     user: {data: {}, loading: false, error: null, isJoiningGroup: false},
     updatedUser: {data: {}, loading: false, error: null},
     removedUser: {data: {}, loading: false, error: null},
-    userJoinedGroup: {date: {}, loading: false, error: null},
-    userLeftGroup: {date: {}, loading: false, error: null}
+    userJoinedGroup: {data: {}, loading: false, error: null},
+    userLeftGroup: {data: {}, loading: false, error: null}
 };
 
 export function Users(state = initialState, action) {

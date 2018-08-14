@@ -6,6 +6,7 @@ import {bindActionCreators} from 'redux';
 
 import './index.scss';
 import * as groupsActionCreators from '../../actions/action_creators/groups';
+import * as usersActionCreators from '../../actions/action_creators/users';
 import scrollPagination from '../../services/scrollPagination';
 import searchOperation from '../../services/searchOperation';
 import redirectOnPage from '../../services/redirectOnPage';
@@ -58,10 +59,13 @@ class Groups extends Component {
     }
 
     componentWillReceiveProps(nextProps) {
-        const error = nextProps.groups.error || nextProps.updatedGroup.error || nextProps.removedGroup.error;
+        const error = nextProps.groups.error || nextProps.updatedGroup.error || nextProps.removedGroup.error || nextProps.userJoinedGroup.error || nextProps.userLeftGroup.error;
 
+        showToastrMessage.compareActions(nextProps.updatedGroup, this.props.updatedGroup, 'Group is updated');
+        showToastrMessage.compareActions(nextProps.removedGroup, this.props.removedGroup, 'Group is removed');
+        showToastrMessage.compareActions(nextProps.userJoinedGroup, this.props.userJoinedGroup, 'User joined group');
+        showToastrMessage.compareActions(nextProps.userLeftGroup, this.props.userLeftGroup, 'User left group');
         error && showToastrMessage.error(error);
-        // toastrMessages(nextProps.groupsStore);
     }
 
     componentDidUpdate(prevProps) {
@@ -98,7 +102,7 @@ class Groups extends Component {
     };
 
     leaveGroup(options) {
-        this.props.actions.removeUserRequest(options);
+        this.props.actions.leaveGroupRequest(options);
     };
 
     cancelJoinGroup() {
@@ -213,6 +217,8 @@ Groups.propTypes = {
     removedGroup: PropTypes.object.isRequired,
     user: PropTypes.object.isRequired,
     isJoiningGroup: PropTypes.bool.isRequired,
+    userJoinedGroup: PropTypes.object.isRequired,
+    userLeftGroup: PropTypes.object.isRequired,
     loading: PropTypes.bool.isRequired
 };
 
@@ -222,12 +228,15 @@ const mapStateToProps = (state) => ({
     removedGroup: state.Groups.removedGroup,
     user: state.Users.user,
     isJoiningGroup: state.Users.user.isJoiningGroup,
-    loading: state.Groups.groups.loading || state.Groups.updatedGroup.loading || state.Groups.removedGroup.loading
+    userJoinedGroup: state.Users.userJoinedGroup,
+    userLeftGroup: state.Users.userLeftGroup,
+    loading: state.Groups.groups.loading || state.Groups.updatedGroup.loading || state.Groups.removedGroup.loading || state.Users.userJoinedGroup.loading || state.Users.userLeftGroup.loading
 });
 
 const mapDispatchToProps = (dispatch) => ({
     actions: bindActionCreators({
-        ...groupsActionCreators
+        ...groupsActionCreators,
+        ...usersActionCreators
     }, dispatch)
 });
 

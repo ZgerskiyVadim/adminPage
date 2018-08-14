@@ -17,6 +17,10 @@ class ShowToastrMessage {
 
         toastr.error(errorMessage, title || 'Oops!');
     }
+
+    compareActions(previousProps, nextProps, message) {
+        (previousProps.data._id !== nextProps.data._id) && this.info(message);
+    }
 }
 
 export default new ShowToastrMessage();

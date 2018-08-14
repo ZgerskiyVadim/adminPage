@@ -56,8 +56,9 @@ class Users extends Component {
     componentWillReceiveProps(nextProps) {
         const error = nextProps.users.error || nextProps.updatedUser.error || nextProps.removedUser.error;
 
+        showToastrMessage.compareActions(nextProps.updatedUser, this.props.updatedUser, 'User is updated');
+        showToastrMessage.compareActions(nextProps.removedUser, this.props.removedUser, 'User is removed');
         error && showToastrMessage.error(error);
-        // toastrMessages(nextProps.usersStore);
     }
 
     componentDidUpdate(prevProps) {
