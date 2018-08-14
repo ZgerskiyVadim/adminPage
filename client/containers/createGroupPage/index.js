@@ -7,7 +7,7 @@ import './index.scss';
 import * as groupsActionCreators from '../../actions/action_creators/groups';
 import {handleChangeState} from '../../services/formsOperations';
 import LoadingSpinner from '../../components/loadingSpinner';
-import toastrShowMessage from "../../services/toastrShowMessage";
+import showToastrMessage from "../../services/showToastrMessage";
 
 class CreateGroup extends Component {
     constructor(props) {
@@ -19,7 +19,7 @@ class CreateGroup extends Component {
             loading: false
         };
         this.handleChangeState = handleChangeState.bind(this);
-        this.sendGroup = this.sendGroup.bind(this);
+        this.createGroup = this.createGroup.bind(this);
     }
 
     componentWillReceiveProps(nextProps) {
@@ -28,12 +28,12 @@ class CreateGroup extends Component {
             loading
         });
 
-        error && toastrShowMessage.error(error);
+        error && showToastrMessage.error(error);
         // toastrMessages(nextProps.createGroup);
     }
 
-    createGroup(e) {
-        e.preventDefault();
+    createGroup(event) {
+        event.preventDefault();
         const {name, title} = this.state;
         const options = {name, title};
         this.props.actions.createGroupRequest(options)

@@ -13,7 +13,7 @@ import redirectOnPage from '../../services/redirectOnPage';
 import LoadingSpinner from '../../components/loadingSpinner';
 import ModalWindow from '../../components/modalWindow';
 import SearchComponent from '../../components/search';
-import toastrShowMessage from "../../services/toastrShowMessage";
+import showToastrMessage from "../../services/showToastrMessage";
 
 class Group extends Component {
     constructor(props) {
@@ -61,7 +61,7 @@ class Group extends Component {
             loading
         });
 
-        error && toastrShowMessage.error(error);
+        error && showToastrMessage.error(error);
         // toastrMessages.call(this, nextProps.group);
     }
 
@@ -80,8 +80,8 @@ class Group extends Component {
         searchOperation.getItems.call(this, event, getGroupRequest);
     };
 
-    update(e) {
-        e.preventDefault();
+    update(event) {
+        event.preventDefault();
         this.setState({showForm: false});
         const options = getValidOptions(this.state);
         this.props.actions.updateGroupRequest(options);
@@ -95,8 +95,8 @@ class Group extends Component {
         this.props.actions.removeUserRequest(options);
     };
 
-    showModal(id, e) {
-        e.stopPropagation();
+    showModal(id, event) {
+        event.stopPropagation();
         this.setState({
             showModal: true,
             userID: id
@@ -175,7 +175,7 @@ class Group extends Component {
                                         <h5>{user.email}</h5>
                                     </td>
                                     <td>
-                                        <button onClick={(e) => this.showModal(user._id, e)} className='group__remove-user btn btn-outline-danger'>remove user</button>
+                                        <button onClick={(event) => this.showModal(user._id, event)} className='group__remove-user btn btn-outline-danger'>remove user</button>
                                     </td>
                                 </tr>
                                 </tbody>

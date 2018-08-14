@@ -5,11 +5,11 @@ import {
 } from "react-router-dom";
 import AuthenticationService from '../../services/authenticationService';
 
-export default ({ component: Component, ...rest }) => (
+const PrivateRoute = ({ component: Component, ...rest }) => (
     <Route
         {...rest}
         render={props =>
-            AuthenticationService.isAuthenticated() ? (
+            AuthenticationService.isHaveSessionCookie() ? (
                 <Component {...props} />
             ) : (
                 <Redirect
@@ -22,3 +22,5 @@ export default ({ component: Component, ...rest }) => (
         }
     />
 );
+
+export default PrivateRoute;

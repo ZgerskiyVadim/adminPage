@@ -1,9 +1,9 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import {createPortal} from "react-dom";
 import './index.scss';
 import classNames from 'classnames';
 
-class ModalWindow extends Component {
+class ModalWindow extends PureComponent {
     constructor(props) {
         super(props);
 
@@ -24,15 +24,15 @@ class ModalWindow extends Component {
         this.props.closeModal();
     };
 
-    handleClickOutside(e) {
-        e.preventDefault();
-        if (!this.modalContent.contains(e.target)) {
+    handleClickOutside(event) {
+        event.preventDefault();
+        if (!this.modalContent.contains(event.target)) {
             this.props.closeModal();
         }
     };
 
     render() {
-        const {isShow} = this.props;
+        const {isShow, closeModal} = this.props;
 
         return createPortal(
             <div ref={node => this.modalRoot = node} className={classNames('modal-root', {'modal--hide': !isShow})}>
@@ -41,13 +41,13 @@ class ModalWindow extends Component {
                         <div ref={node => this.modalContent = node} className={classNames('modal-content', {'modal-content--hide': !isShow})}>
                             <div className="modal-header">
                                 <h5 className="modal-title">Are you sure?</h5>
-                                <button onClick={this.props.closeModal} type="button" className="close" data-dismiss="modal" aria-label="Close">
+                                <button onClick={closeModal} type="button" className="close" data-dismiss="modal" aria-label="Close">
                                     <span aria-hidden="true">&times;</span>
                                 </button>
                             </div>
                             <div className="modal-footer">
                                 <button onClick={this.successModal} type="button" className="btn btn-success">Yes</button>
-                                <button onClick={this.props.closeModal} type="button" className="btn btn-info" data-dismiss="modal">Close</button>
+                                <button onClick={closeModal} type="button" className="btn btn-info" data-dismiss="modal">Close</button>
                             </div>
                         </div>
                     </div>

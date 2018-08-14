@@ -1,6 +1,6 @@
 import toastr from "toastr";
 
-class ToastrShowMessage {
+class ShowToastrMessage {
 
     success(message, title) {
         toastr.success(message, title || 'Ok!');
@@ -19,4 +19,4 @@ class ToastrShowMessage {
     }
 }
 
-export default new ToastrShowMessage();
+export default new ShowToastrMessage();

@@ -1,21 +1,20 @@
-import React, { Component } from 'react';
+import React from 'react';
 import './index.scss';
 
-class SearchComponent extends Component {
+const SearchComponent = (props) => {
+    const {search, style} = props;
 
-    render() {
-        return (
-            <div className='search'>
-                <h2>Search</h2>
-                <input onChange={this.props.search} className='form-control col-md-3' type="text"/>
-                {
-                    this.props.handleButtonClick ?
-                        <button onClick={this.props.handleButtonClick} className={this.props.style}>Cancel join group</button> :
-                        null
-                }
-            </div>
-        )
-    }
-}
+    return (
+        <div className='search'>
+            <h2>Search</h2>
+            <input onChange={search} className='form-control col-md-3' type="text"/>
+            {
+                props.handleButtonClick ?
+                    <button onClick={props.handleButtonClick} className={style}>Cancel join group</button> :
+                    null
+            }
+        </div>
+    )
+};
 
 export default SearchComponent;

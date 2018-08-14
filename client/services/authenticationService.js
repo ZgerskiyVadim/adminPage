@@ -1,11 +1,11 @@
 import axios from 'axios';
 import config from '../../config';
 import redirectOnPage from './redirectOnPage';
-import toastrShowMessage from './toastrShowMessage';
+import showToastrMessage from './showToastrMessage';
 
 class AuthenticationService {
 
-    isAuthenticated() {
+    isHaveSessionCookie() {
         return getCookie(config.sessionName);
     }
 
@@ -14,15 +14,15 @@ class AuthenticationService {
         axios.post('/auth/login', {username, password})
             .then(() => {
                 redirectOnPage.home();
-                toastrShowMessage.success('Successfully logged!');
+                showToastrMessage.success('Successfully logged!');
             })
-            .catch(error => toastrShowMessage.error(error))
+            .catch(error => showToastrMessage.error(error))
     }
 
     logout() {
         axios.get('/auth/logout')
             .then(() =>  redirectOnPage.home())
-            .catch(error => toastrShowMessage.error(error))
+            .catch(error => showToastrMessage.error(error))
     }
 }
 

@@ -8,11 +8,11 @@ import './index.scss';
 import * as usersActionCreators from '../../actions/action_creators/users';
 import {loadMore, checkRemovedItems} from '../../services/loadMore';
 import searchOperation from '../../services/searchOperation';
-import User from '../../components/user-item/user';
+import User from '../../components/userItem/user';
 import LoadingSpinner from '../../components/loadingSpinner';
 import ModalWindow from '../../components/modalWindow';
 import SearchComponent from '../../components/search';
-import toastrShowMessage from "../../services/toastrShowMessage";
+import showToastrMessage from "../../services/showToastrMessage";
 
 class Users extends Component {
     constructor(props) {
@@ -55,7 +55,7 @@ class Users extends Component {
             loading
         });
 
-        error && toastrShowMessage.error(error);
+        error && showToastrMessage.error(error);
         // toastrMessages(nextProps.usersStore);
     }
 
@@ -86,8 +86,8 @@ class Users extends Component {
         this.props.actions.removeUserRequest(id);
     };
 
-    showModal(id, e) {
-        e.stopPropagation();
+    showModal(id, event) {
+        event.stopPropagation();
         this.setState({
             showModal: true,
             userID: id

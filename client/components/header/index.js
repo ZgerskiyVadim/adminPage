@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, {PureComponent} from 'react';
 import {Link} from 'react-router-dom';
 import {connect} from "react-redux";
 import { withRouter } from 'react-router';
@@ -7,7 +7,7 @@ import './index.scss';
 import classNames from 'classnames';
 import AuthenticationService from '../../services/authenticationService';
 
-class Header extends Component {
+class Header extends PureComponent {
     constructor(props) {
         super(props);
         this.state = {
@@ -18,14 +18,16 @@ class Header extends Component {
     }
 
     componentDidMount() {
-        this.setState({
-            isAuthenticated: AuthenticationService.isAuthenticated()
-        });
+        this.setStateAuthenticated();
     }
 
     componentWillReceiveProps() {
+        this.setStateAuthenticated();
+    }
+
+    setStateAuthenticated() {
         this.setState({
-            isAuthenticated: AuthenticationService.isAuthenticated()
+            isAuthenticated: AuthenticationService.isHaveSessionCookie()
         });
     }
 

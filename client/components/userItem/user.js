@@ -32,19 +32,19 @@ class User extends Component {
         redirectOnPage.path(`/users/${_id}`);
     };
 
-    handleClick(e) {
-        e.stopPropagation();
+    handleClick(event) {
+        event.stopPropagation();
     };
 
-    sendOptionsUpdate(e) {
-        e.stopPropagation();
+    sendOptionsUpdate(event) {
+        event.stopPropagation();
         this.setState({showForm: false});
         const options = getValidOptions(this.state);
         this.props.update(options)
     };
 
-    remove(id, e) {
-        this.props.showModal(id, e);
+    remove(id, event) {
+        this.props.showModal(id, event);
     };
 
     render() {
@@ -83,7 +83,7 @@ class User extends Component {
                 <td className='users__buttons'>
                     <button onClick={this.showForms} className={classNames('users--margin-right btn btn-outline-primary', shownForm)}>Update</button>
                     <button onClick={this.sendOptionsUpdate} className={classNames('users--margin-right btn btn-outline-primary', hiddenForm)}>Save</button>
-                    <button onClick={(e) => this.remove(_id, e)} className={classNames('btn btn-outline-danger', isJoiningUser)}>Remove</button>
+                    <button onClick={(event) => this.remove(_id, event)} className={classNames('btn btn-outline-danger', isJoiningUser)}>Remove</button>
                 </td>
             </tr>
             </tbody>

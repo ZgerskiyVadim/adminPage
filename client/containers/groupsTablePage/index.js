@@ -9,11 +9,11 @@ import * as groupsActionCreators from '../../actions/action_creators/groups';
 import {checkRemovedItems, loadMore} from '../../services/loadMore';
 import searchOperation from '../../services/searchOperation';
 import redirectOnPage from '../../services/redirectOnPage';
-import Group from '../../components/group-item/group';
+import Group from '../../components/groupItem/group';
 import LoadingSpinner from '../../components/loadingSpinner';
 import ModalWindow from '../../components/modalWindow';
 import SearchComponent from '../../components/search';
-import toastrShowMessage from "../../services/toastrShowMessage";
+import showToastrMessage from "../../services/showToastrMessage";
 
 class Groups extends Component {
     constructor(props) {
@@ -59,7 +59,7 @@ class Groups extends Component {
             loading
         });
 
-        error && toastrShowMessage.error(error);
+        error && showToastrMessage.error(error);
         // toastrMessages(nextProps.groupsStore);
     }
 
@@ -114,8 +114,8 @@ class Groups extends Component {
         this.props.actions.removeGroupRequest(id);
     };
 
-    showModal(id, e) {
-        e.stopPropagation();
+    showModal(id, event) {
+        event.stopPropagation();
         this.setState({
             showModal: true,
             groupID: id

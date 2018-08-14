@@ -13,7 +13,7 @@ import {checkRemovedItems, loadMore} from '../../services/loadMore';
 import redirectOnPage from '../../services/redirectOnPage';
 import LoadingSpinner from '../../components/loadingSpinner';
 import SearchComponent from '../../components/search';
-import toastrShowMessage from "../../services/toastrShowMessage";
+import showToastrMessage from "../../services/showToastrMessage";
 
 class User extends Component {
     constructor(props) {
@@ -64,7 +64,7 @@ class User extends Component {
             loading
         });
 
-        error && toastrShowMessage.error(error);
+        error && showToastrMessage.error(error);
         // toastrMessages.call(this, nextProps.user);
     }
 
@@ -83,22 +83,22 @@ class User extends Component {
         searchOperation.getItems.call(this, event, getUserRequest);
     };
 
-    update(e) {
-        e.preventDefault();
+    update(event) {
+        event.preventDefault();
         this.setState({showForm: false});
         const options = getValidOptions(this.state);
         this.props.actions.updateUserRequest(options);
     };
 
-    startJoiningGroup(e) {
-        e.stopPropagation();
+    startJoiningGroup(event) {
+        event.stopPropagation();
         const isJoiningGroup = true;
         this.props.actions.startJoiningGroup(isJoiningGroup);
         redirectOnPage.path('/groups');
     };
 
-    joinGroup(id, e) {
-        e.stopPropagation();
+    joinGroup(id, event) {
+        event.stopPropagation();
         const options = {
             userID: this.state.options.id,
             groupID: id
@@ -106,8 +106,8 @@ class User extends Component {
         this.props.actions.joinGroup(options);
     };
 
-    leaveGroup(id, e) {
-        e.stopPropagation();
+    leaveGroup(id, event) {
+        event.stopPropagation();
         const options = {
             userID: this.state.options.id,
             groupID: id
@@ -181,8 +181,8 @@ class User extends Component {
                                         <h5>{group.users.length}</h5>
                                     </td>
                                     <td>
-                                        <button onClick={(e) => this.leaveGroup(group._id, e)} className={classNames('user__leave-group btn btn-outline-danger', {'user--hide': group.isLeftGroup})}>leave group</button>
-                                        <button onClick={(e) => this.joinGroup(group._id, e)} className={classNames('user__leave-group btn btn-outline-info', {'user--hide': !group.isLeftGroup})}>join group</button>
+                                        <button onClick={(event) => this.leaveGroup(group._id, event)} className={classNames('user__leave-group btn btn-outline-danger', {'user--hide': group.isLeftGroup})}>leave group</button>
+                                        <button onClick={(event) => this.joinGroup(group._id, event)} className={classNames('user__leave-group btn btn-outline-info', {'user--hide': !group.isLeftGroup})}>join group</button>
                                     </td>
                                 </tr>
                                 </tbody>

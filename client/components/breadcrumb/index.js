@@ -1,10 +1,10 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import { withRouter } from 'react-router';
 import classNames from 'classnames';
 import './index.scss';
 import redirectOnPage from '../../services/redirectOnPage';
 
-class Breadcrumb extends Component {
+class Breadcrumb extends PureComponent {
     constructor(props) {
         super(props);
 

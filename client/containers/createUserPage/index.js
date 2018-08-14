@@ -7,7 +7,7 @@ import './index.scss';
 import * as usersActionCreators from '../../actions/action_creators/users';
 import {handleChangeState} from '../../services/formsOperations';
 import LoadingSpinner from '../../components/loadingSpinner';
-import toastrShowMessage from "../../services/toastrShowMessage";
+import showToastrMessage from "../../services/showToastrMessage";
 
 class CreateUser extends Component {
     constructor(props) {
@@ -22,7 +22,7 @@ class CreateUser extends Component {
             loading: false
         };
         this.handleChangeState = handleChangeState.bind(this);
-        this.sendUser = this.sendUser.bind(this);
+        this.createUser = this.createUser.bind(this);
     }
 
     componentWillReceiveProps(nextProps) {
@@ -31,12 +31,12 @@ class CreateUser extends Component {
             loading
         });
 
-        error && toastrShowMessage.error(error);
+        error && showToastrMessage.error(error);
         // toastrMessages(nextProps.createUser);
     }
 
-    sendUser(e) {
-        e.preventDefault();
+    createUser(event) {
+        event.preventDefault();
         const options = {
             username : this.state.username,
             firstName : this.state.firstName,
@@ -67,7 +67,7 @@ class CreateUser extends Component {
                         <input onChange={this.handleChangeState} value={password} name='password' className='form-control' type="password"/>
                     </div>
 
-                    <button onClick={this.sendUser} className='create-user__send btn btn-outline-primary'>Send</button>
+                    <button onClick={this.createUser} className='create-user__send btn btn-outline-primary'>Send</button>
                 </div>
                 <LoadingSpinner loading={loading}/>
             </div>

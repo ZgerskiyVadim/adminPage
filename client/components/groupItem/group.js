@@ -32,31 +32,31 @@ class Group extends Component {
         redirectOnPage.path(`/groups/${_id}`);
     };
 
-    handleClick(e) {
-        e.stopPropagation();
+    handleClick(event) {
+        event.stopPropagation();
     };
 
-    sendOptionsUpdate(e) {
-        e.stopPropagation();
+    sendOptionsUpdate(event) {
+        event.stopPropagation();
         this.setState({showForm: false});
         const options = getValidOptions(this.state);
         this.props.update(options)
     };
 
-    sendOptionsJoinGroup(groupID, e) {
-        e.stopPropagation();
+    sendOptionsJoinGroup(groupID, event) {
+        event.stopPropagation();
         const userID = this.state.userID;
         userID && this.props.joinGroup({userID, groupID});
     };
 
-    sendOptionsLeaveGroup(groupID, e) {
-        e.stopPropagation();
+    sendOptionsLeaveGroup(groupID, event) {
+        event.stopPropagation();
         const userID = this.state.userID;
         userID && this.props.leaveGroup({userID, groupID});
     };
 
-    remove(id, e) {
-        this.props.showModal(id, e);
+    remove(id, event) {
+        this.props.showModal(id, event);
     };
 
     render() {
@@ -88,9 +88,9 @@ class Group extends Component {
                 <td className='groups__buttons'>
                     <button onClick={this.showForms} className={classNames('groups--margin-right btn btn-outline-primary', shownForm, notJoiningGroup)}>Update</button>
                     <button onClick={this.sendOptionsUpdate} className={classNames('groups--margin-right btn btn-outline-primary', hiddenForm)}>Save</button>
-                    <button onClick={(e) => this.remove(_id, e)} className={classNames('btn btn-outline-danger', notJoiningGroup)}>Remove</button>
-                    <button onClick={(e) => this.sendOptionsJoinGroup(_id, e)} className={classNames('btn btn-outline-info', userAlreadyInGroup)}>Join group</button>
-                    <button onClick={(e) => this.sendOptionsLeaveGroup(_id, e)} className={classNames('btn btn-outline-danger', userNotInGroup)}>Leave group</button>
+                    <button onClick={(event) => this.remove(_id, event)} className={classNames('btn btn-outline-danger', notJoiningGroup)}>Remove</button>
+                    <button onClick={(event) => this.sendOptionsJoinGroup(_id, event)} className={classNames('btn btn-outline-info', userAlreadyInGroup)}>Join group</button>
+                    <button onClick={(event) => this.sendOptionsLeaveGroup(_id, event)} className={classNames('btn btn-outline-danger', userNotInGroup)}>Leave group</button>
                 </td>
             </tr>
             </tbody>
