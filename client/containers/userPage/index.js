@@ -80,7 +80,7 @@ class User extends Component {
 
     search(event) {
         const {getUserRequest} = this.props.actions;
-        searchOperation.getItem.call(this, event, getUserRequest);
+        searchOperation.getItems.call(this, event, getUserRequest);
     };
 
     update(e) {

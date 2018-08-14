@@ -25,7 +25,6 @@ class Groups extends Component {
                 searchBy: ''
             },
             isLoadMore: true,
-            isSearching: false,
             loading: false,
             showModal: false,
             groupID: ''
@@ -43,8 +42,9 @@ class Groups extends Component {
     }
 
     componentDidMount() {
-        const limit = this.state.options.limit;
-        this.props.actions.getGroupsRequest(limit);
+        const {searchBy, limit} = this.state.options;
+        const options = {searchBy, limit};
+        this.props.actions.getGroupsRequest(options);
         window.addEventListener('scroll', this.loadMore)
     }
 
@@ -88,8 +88,8 @@ class Groups extends Component {
     }
 
     search(event) {
-        const {searchGroupsRequest} = this.props.actions;
-        searchOperation.getItems.call(this, event, searchGroupsRequest);
+        const {getGroupsRequest} = this.props.actions;
+        searchOperation.getItems.call(this, event, getGroupsRequest);
     };
 
     joinGroup(options) {

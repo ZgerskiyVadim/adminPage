@@ -15,8 +15,9 @@ import axios from 'axios/index';
             .then(users => users.data);
     };
 
-    export const getUsers = (limit) => {
-        return axios.get('/api/users', {params: {limit}})
+    export const getUsers = (options) => {
+        const { searchBy, limit} = options;
+        return axios.get('/api/users', {params: {searchBy, limit}})
             .then(users => users.data);
     };
 
@@ -24,12 +25,6 @@ import axios from 'axios/index';
         const { id, searchBy, limit} = options;
         return axios.get(`/api/users/${id}`, {params: {searchBy, limit}})
             .then(user => user.data);
-    };
-
-    export const searchUsers = (options) => {
-        const { searchBy, limit} = options;
-        return axios.get('/api/users', {params: {searchBy, limit}})
-            .then(users => users.data);
     };
 
     export const updateUser = (options) => {

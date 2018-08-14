@@ -77,7 +77,7 @@ class Group extends Component {
 
     search(event) {
         const {getGroupRequest} = this.props.actions;
-        searchOperation.getItem.call(this, event, getGroupRequest);
+        searchOperation.getItems.call(this, event, getGroupRequest);
     };
 
     update(e) {

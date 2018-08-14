@@ -5,8 +5,9 @@ import axios from 'axios/index';
             .then(groups => groups.data);
     };
 
-    export const getGroups = (limit) => {
-        return axios.get('/api/groups', {params: {limit}})
+    export const getGroups = (options) => {
+        const { searchBy, limit } = options;
+        return axios.get('/api/groups', {params: { searchBy, limit }})
             .then(groups => groups.data);
     };
 
@@ -14,12 +15,6 @@ import axios from 'axios/index';
         const { id, searchBy, limit} = options;
         return axios.get(`/api/groups/${id}`, {params: { searchBy, limit }})
             .then(group => group.data);
-    };
-
-    export const searchGroups = (options) => {
-        const { searchBy, limit } = options;
-        return axios.get('/api/groups', {params: { searchBy, limit }})
-            .then(groups => groups.data);
     };
 
     export const updateGroup = (options) => {

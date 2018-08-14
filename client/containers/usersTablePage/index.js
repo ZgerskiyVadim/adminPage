@@ -38,8 +38,9 @@ class Users extends Component {
     }
 
     componentDidMount() {
-        const limit = this.state.options.limit;
-        this.props.actions.getUsersRequest(limit);
+        const {searchBy, limit} = this.state.options;
+        const options = {searchBy, limit};
+        this.props.actions.getUsersRequest(options);
         window.addEventListener('scroll', this.loadMore)
     }
 

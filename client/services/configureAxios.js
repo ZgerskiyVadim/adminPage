@@ -1,5 +1,6 @@
 import axios from 'axios';
 import authenticationService from './authenticationService';
+
 export function configureAxios() {
     axios.interceptors.response.use(null, (error) => {
         const errorMessage = error && error.response && error.response.data.message;

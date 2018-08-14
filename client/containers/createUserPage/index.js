@@ -26,18 +26,25 @@ class CreateUser extends Component {
     }
 
     componentWillReceiveProps(nextProps) {
-        const {loading, error} = nextProps.createUserStore;
+        const {loading, error} = nextProps.createUser;
         this.setState({
             loading
         });
 
         error && toastrShowMessage.error(error);
-        // toastrMessages(nextProps.createUserStore);
+        // toastrMessages(nextProps.createUser);
     }
 
     sendUser(e) {
         e.preventDefault();
-        this.props.actions.createUserRequest(this.state)
+        const options = {
+            username : this.state.username,
+            firstName : this.state.firstName,
+            lastName : this.state.lastName,
+            email : this.state.email,
+            password : this.state.password
+        } = this.state;
+        this.props.actions.createUserRequest(options)
     };
 
     render() {
@@ -69,11 +76,11 @@ class CreateUser extends Component {
 }
 
 CreateUser.propTypes = {
-    createUserStore: PropTypes.object.isRequired
+    createUser: PropTypes.object.isRequired
 };
 
 const mapStateToProps = (state) => ({
-    createUserStore: state.CreateUser
+    createUser: state.CreateUser
 });
 
 const mapDispatchToProps = (dispatch) => ({

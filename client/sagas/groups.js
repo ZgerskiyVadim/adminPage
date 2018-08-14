@@ -41,7 +41,7 @@ function* getGroups(action) {
 
 function* searchGroups(action) {
     try {
-        const groups = yield call(groupsAPI.searchGroups, action.payload);
+        const groups = yield call(groupsAPI.getGroups, action.payload);
         yield put({type: GET_GROUPS_SUCCESS, payload: groups});
     } catch (error) {
         yield put({type: GET_GROUPS_FAIL, payload: error});

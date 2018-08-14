@@ -61,15 +61,15 @@ function requestGetItems(enumItem) {
 }
 
 function sendRequestUsersOrGroups(enumItem) {
-    const {isSearching, options} = this.state;
-    const {limit} = options;
+    const {searchBy, limit} = this.state.options;
+    const options = {searchBy, limit};
 
     if (enumItem === 'users') {
-        const {searchUsersRequest, getUsersRequest} = this.props.actions;
-        isSearching ? searchUsersRequest(options) : getUsersRequest(limit);
+        const {getUsersRequest} = this.props.actions;
+        getUsersRequest(options);
     } else {
-        const {searchGroupsRequest, getGroupsRequest} = this.props.actions;
-        isSearching ? searchGroupsRequest(options) : getGroupsRequest(limit);
+        const {getGroupsRequest} = this.props.actions;
+        getGroupsRequest(options);
     }
 }
 

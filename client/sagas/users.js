@@ -19,37 +19,13 @@ import {
     USER_JOIN_GROUP_SUCCESS,
     USER_LEAVE_GROUP_PENDING,
     UPDATE_GROUP_FAIL,
-    USER_LOGIN_PENDING,
-    USER_LOGIN_SUCCESS,
-    USER_LOGOUT_PENDING,
-    USER_LOGOUT_SUCCESS,
     GET_USER_FAIL,
     USER_JOIN_GROUP_FAIL,
     UPDATE_USER_FAIL,
     USER_LEAVE_GROUP_FAIL,
-    USER_LOGIN_FAIL,
-    USER_LOGOUT_FAIL,
     GET_USERS_FAIL,
     REMOVE_USER_FAIL
 } from '../actions';
-
-function* login(action) {
-    try {
-        yield call(usersAPI.login, action.payload);
-        yield put({type: USER_LOGIN_SUCCESS});
-    } catch (error) {
-        yield put({type: USER_LOGIN_FAIL, payload: error});
-    }
-}
-
-function* logout() {
-    try {
-        yield call(usersAPI.logout);
-        yield put({type: USER_LOGOUT_SUCCESS});
-    } catch (error) {
-        yield put({type: USER_LOGOUT_FAIL, payload: error});
-    }
-}
 
 function* createUser(action) {
     try {
@@ -71,7 +47,7 @@ function* getUsers(action) {
 
 function* searchUsers(action) {
     try {
-        const users = yield call(usersAPI.searchUsers, action.payload);
+        const users = yield call(usersAPI.getUsers, action.payload);
         yield put({type: GET_USERS_SUCCESS, payload: users});
     } catch (error) {
         yield put({type: GET_USERS_FAIL, payload: error});
@@ -137,8 +113,6 @@ export default function* usersSaga() {
         takeEvery(GET_USER_PENDING, getUser),
         takeEvery(UPDATE_USER_PENDING, updateUser),
         takeEvery(USER_JOIN_GROUP_PENDING, addUserInGroup),
-        takeEvery(USER_LEAVE_GROUP_PENDING, leaveGroup),
-        takeEvery(USER_LOGIN_PENDING, login),
-        takeEvery(USER_LOGOUT_PENDING, logout)
+        takeEvery(USER_LEAVE_GROUP_PENDING, leaveGroup)
     ]);
 }

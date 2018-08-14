@@ -6,9 +6,7 @@ import {
     IS_USER_WANT_JOIN_GROUP,
     USER_LEAVE_GROUP_PENDING,
     USER_CREATE_PENDING,
-    GET_USER_PENDING,
-    USER_LOGIN_PENDING,
-    USER_LOGOUT_PENDING
+    GET_USER_PENDING
 } from '../index';
 
 export const createUserRequest = (data) => ({
@@ -49,13 +47,4 @@ export const updateUserRequest = (data) => ({
 export const removeUserRequest = (data) => ({
     type: REMOVE_USER_PENDING,
     payload: data
-});
-
-export const login = (data) => ({
-    type: USER_LOGIN_PENDING,
-    payload: data
-});
-
-export const logout = () => ({
-    type: USER_LOGOUT_PENDING
 });
