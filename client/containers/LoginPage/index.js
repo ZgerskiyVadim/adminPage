@@ -28,7 +28,7 @@ class LoginPage extends Component {
 
         return (
             <div className='login'>
-                <h2>Create Group</h2>
+                <h2>User login</h2>
                 <div className='login--row'>
                     <div className='col-md-6'>
                         <h3>username</h3>

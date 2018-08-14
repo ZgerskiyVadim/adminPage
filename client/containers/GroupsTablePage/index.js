@@ -25,7 +25,6 @@ class Groups extends Component {
                 searchBy: ''
             },
             isLoadMore: true,
-            loading: false,
             showModal: false,
             groupID: ''
         };
@@ -59,11 +58,7 @@ class Groups extends Component {
     }
 
     componentWillReceiveProps(nextProps) {
-        const loading = nextProps.groups.loading || nextProps.updatedGroup.loading || nextProps.removedGroup.loading;
         const error = nextProps.groups.error || nextProps.updatedGroup.error || nextProps.removedGroup.error;
-        this.setState({
-            loading
-        });
 
         error && showToastrMessage.error(error);
         // toastrMessages(nextProps.groupsStore);
@@ -135,8 +130,8 @@ class Groups extends Component {
     };
 
     render() {
-        const {isJoiningGroup, groups, user} = this.props;
-        const {isLoadMore, loading, showModal, groupID} = this.state;
+        const {isJoiningGroup, groups, user, loading} = this.props;
+        const {isLoadMore, showModal, groupID} = this.state;
 
         const isJoinGroup = classNames({'groups--hide': !isJoiningGroup});
         const marginBottom = classNames({'groups--margin-bottom': !isLoadMore});
@@ -203,12 +198,22 @@ class Groups extends Component {
     }
 }
 
+Groups.defaultProps = {
+    groups: {},
+    updatedGroup: {},
+    removedGroup: {},
+    user: {},
+    isJoiningGroup: false,
+    loading: false
+};
+
 Groups.propTypes = {
     groups: PropTypes.object.isRequired,
     updatedGroup: PropTypes.object.isRequired,
     removedGroup: PropTypes.object.isRequired,
     user: PropTypes.object.isRequired,
-    isJoiningGroup: PropTypes.bool.isRequired
+    isJoiningGroup: PropTypes.bool.isRequired,
+    loading: PropTypes.bool.isRequired
 };
 
 const mapStateToProps = (state) => ({
@@ -216,7 +221,8 @@ const mapStateToProps = (state) => ({
     updatedGroup: state.Groups.updatedGroup,
     removedGroup: state.Groups.removedGroup,
     user: state.User.user,
-    isJoiningGroup: state.User.user.isJoiningGroup
+    isJoiningGroup: state.User.user.isJoiningGroup,
+    loading: state.Groups.groups.loading || state.Groups.updatedGroup.loading || state.Groups.removedGroup.loading
 });
 
 const mapDispatchToProps = (dispatch) => ({

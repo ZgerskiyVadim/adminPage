@@ -24,7 +24,6 @@ class Users extends Component {
                 searchBy: ''
             },
             isLoadMore: true,
-            loading: false,
             showModal: false,
             userID: ''
         };
@@ -55,11 +54,7 @@ class Users extends Component {
     }
 
     componentWillReceiveProps(nextProps) {
-        const loading = nextProps.users.loading || nextProps.updatedUser.loading || nextProps.removedUser.loading;
         const error = nextProps.users.error || nextProps.updatedUser.error || nextProps.removedUser.error;
-        this.setState({
-            loading
-        });
 
         error && showToastrMessage.error(error);
         // toastrMessages(nextProps.usersStore);
@@ -107,7 +102,8 @@ class Users extends Component {
     };
 
     render() {
-        const {isLoadMore, loading, showModal, userID} = this.state;
+        const {isLoadMore, showModal, userID} = this.state;
+        const {loading} = this.props;
         const marginBottom = classNames({'users--margin-bottom': !isLoadMore});
 
         return (
@@ -160,12 +156,22 @@ class Users extends Component {
     }
 }
 
+Users.defaultProps = {
+    users: {},
+    updatedUser: {},
+    removedUser: {},
+    user: {},
+    isJoiningGroup: false,
+    loading: false
+};
+
 Users.propTypes = {
     users: PropTypes.object.isRequired,
     updatedUser: PropTypes.object.isRequired,
     removedUser: PropTypes.object.isRequired,
     user: PropTypes.object.isRequired,
-    isJoiningGroup: PropTypes.bool.isRequired
+    isJoiningGroup: PropTypes.bool.isRequired,
+    loading: PropTypes.bool.isRequired
 };
 
 const mapStateToProps = (state) => ({
@@ -173,7 +179,8 @@ const mapStateToProps = (state) => ({
     updatedUser: state.Users.updatedUser,
     removedUser: state.Users.removedUser,
     user: state.User.user,
-    isJoiningGroup: state.User.user.isJoiningGroup
+    isJoiningGroup: state.User.user.isJoiningGroup,
+    loading: state.Users.users.loading || state.Users.updatedUser.loading || state.Users.removedUser.loading
 });
 
 const mapDispatchToProps = (dispatch) => ({

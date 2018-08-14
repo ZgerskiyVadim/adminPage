@@ -31,8 +31,7 @@ class User extends Component {
                 searchBy: '',
                 id: this.props.match.params.id
             },
-            isLoadMore: true,
-            loading: false
+            isLoadMore: true
         };
 
         this.loadMore = this.loadMore.bind(this);
@@ -58,11 +57,7 @@ class User extends Component {
     }
 
     componentWillReceiveProps(nextProps) {
-        const loading = nextProps.user.loading || nextProps.updatedUser.loading || nextProps.userJoinedGroup.loading || nextProps.userLeftGroup.loading;
         const error = nextProps.user.error || nextProps.updatedUser.error || nextProps.userJoinedGroup.error || nextProps.userLeftGroup.error;
-        this.setState({
-            loading
-        });
 
         error && showToastrMessage.error(error);
         // toastrMessages.call(this, nextProps.user);
@@ -123,8 +118,8 @@ class User extends Component {
 
     render() {
         const {username, firstName, lastName, email} = this.props.user.data;
-        const {groups} = this.props;
-        const {showForm, loading, ...state} = this.state;
+        const {groups, loading} = this.props;
+        const {showForm, ...state} = this.state;
 
         const hiddenForm = classNames({'user--hide': !showForm});
         const shownForm = classNames('user--margin-right btn btn-outline-primary', {'user--hide': showForm});
@@ -202,17 +197,31 @@ class User extends Component {
     }
 }
 
+User.defaultProps = {
+    user: {},
+    groups: [],
+    updatedUser: {},
+    userJoinedGroup: {},
+    userLeftGroup: {},
+    loading: false
+};
+
 User.propTypes = {
     user: PropTypes.object.isRequired,
-    groups: PropTypes.array.isRequired
+    groups: PropTypes.array.isRequired,
+    updatedUser: PropTypes.object.isRequired,
+    userJoinedGroup: PropTypes.object.isRequired,
+    userLeftGroup: PropTypes.object.isRequired,
+    loading: PropTypes.bool.isRequired
 };
 
 const mapStateToProps = (state) => ({
     user: state.User.user,
-    groups: state.User.user.data.groups || [],
+    groups: state.User.user.data.groups,
     updatedUser: state.User.updatedUser,
     userJoinedGroup: state.User.userJoinedGroup,
-    userLeftGroup: state.User.userLeftGroup
+    userLeftGroup: state.User.userLeftGroup,
+    loading: state.User.user.loading || state.User.updatedUser.loading || state.User.userJoinedGroup.loading || state.User.userLeftGroup.loading
 });
 
 const mapDispatchToProps = (dispatch) => ({

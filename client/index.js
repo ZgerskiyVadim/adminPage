@@ -11,6 +11,7 @@ import history from './services/history';
 import {configureAxios} from './services/configureAxios';
 
 const store = configureStore();
+configureAxios();
 
 render(
     <Provider store={store}>
@@ -25,4 +26,3 @@ render(
     document.getElementById('root')
 );
 
-configureAxios();

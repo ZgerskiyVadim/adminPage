@@ -29,7 +29,6 @@ class Group extends Component {
                 id: this.props.match.params.id
             },
             isLoadMore: true,
-            loading: false,
             showModal: false,
             userID: ''
         };
@@ -55,11 +54,7 @@ class Group extends Component {
     }
 
     componentWillReceiveProps(nextProps) {
-        const loading = nextProps.group.loading || nextProps.updatedGroup.loading;
         const error = nextProps.group.error || nextProps.updatedGroup.error;
-        this.setState({
-            loading
-        });
 
         error && showToastrMessage.error(error);
         // toastrMessages.call(this, nextProps.group);
@@ -117,7 +112,7 @@ class Group extends Component {
 
     render() {
         const {name, title} = this.props.group.data;
-        const {users} = this.props;
+        const {users, loading} = this.props;
         const {...state} = this.state;
 
         const hiddenForm = classNames({'group--hide': !state.showForm});
@@ -189,7 +184,7 @@ class Group extends Component {
                         }
                     </table>
                 </div>
-                <LoadingSpinner loading={state.loading}/>
+                <LoadingSpinner loading={loading}/>
                 <ModalWindow
                     isShow={state.showModal}
                     remove={() => this.removeUser(state.userID)}
@@ -200,16 +195,25 @@ class Group extends Component {
     }
 }
 
+Group.defaultProps = {
+    group: {},
+    updatedGroup: {},
+    users: [],
+    loading: false
+};
+
 Group.propTypes = {
     group: PropTypes.object.isRequired,
     updatedGroup: PropTypes.object.isRequired,
-    users: PropTypes.array.isRequired
+    users: PropTypes.array.isRequired,
+    loading: PropTypes.bool.isRequired
 };
 
 const mapStateToProps = (state) => ({
     group: state.Group.group,
     updatedGroup: state.Group.updatedGroup,
-    users: state.Group.group.data.users || []
+    users: state.Group.group.data.users,
+    loading: state.Group.group.loading || state.Group.updatedGroup.loading
 });
 
 const mapDispatchToProps = (dispatch) => ({
