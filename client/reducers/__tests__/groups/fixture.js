@@ -8,25 +8,25 @@ import {
     REMOVE_GROUP_PENDING,
     REMOVE_GROUP_SUCCESS,
     REMOVE_GROUP_FAIL,
+    GET_GROUP_SUCCESS,
+    GET_GROUP_FAIL,
+    GET_GROUP_PENDING,
 } from "../../../actions";
 
+export const UPLOAD_GROUP = {
+    name: 'name',
+    title: 'title',
+    users: [],
+    _id: 1
+};
+
 export const UPLOAD_GROUPS = [
-    {
-        username: 'username',
-        firstName: 'firstName',
-        lastName: 'lastName',
-        email: 'email@email.com',
-        password: 'password',
-        _id: 1
-    }
+    UPLOAD_GROUP
 ];
 
 export const UPDATE_GROUP_DATA = {
-    username: 'updated-username',
-    firstName: 'updatedFirstName',
-    lastName: 'updatedLastName',
-    email: 'updated-email@email.com',
-    password: 'updated-password',
+    name: 'update-name',
+    title: 'update-title',
     _id: 1
 };
 
@@ -45,6 +45,20 @@ export const actionsReducer = {
         },
         fail: {
             type: GET_GROUPS_FAIL,
+            payload: 'Error Message',
+        },
+    },
+
+    uploadGroup: {
+        pending: {
+            type: GET_GROUP_PENDING,
+        },
+        success: {
+            type: GET_GROUP_SUCCESS,
+            payload: UPLOAD_GROUP,
+        },
+        fail: {
+            type: GET_GROUP_FAIL,
             payload: 'Error Message',
         },
     },

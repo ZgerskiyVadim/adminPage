@@ -3,6 +3,7 @@ import { Users, initialState } from '../../usersReducer';
 import {
     actionsReducer,
     UPLOAD_USERS,
+    UPLOAD_USER,
     UPDATE_USER_DATA,
     REMOVE_USER_DATA
 } from './fixture';
@@ -13,6 +14,12 @@ describe('Users reducer:', () => {
             const result = Users(initialState, actionsReducer.uploadUsers.pending);
             expect(result.users.loading).toBe(true);
             expect(result.users.error).toBe(null);
+        });
+
+        it('should handle GET_USER', () => {
+            const result = Users(initialState, actionsReducer.uploadUser.pending);
+            expect(result.user.loading).toBe(true);
+            expect(result.user.error).toBe(null);
         });
 
         it('should handle UPDATE_USER', () => {
@@ -36,6 +43,13 @@ describe('Users reducer:', () => {
             expect(result.users.data).toEqual(UPLOAD_USERS);
         });
 
+        it('should handle GET_USER', () => {
+            const result = Users(initialState, actionsReducer.uploadUser.success);
+            expect(result.user.loading).toBe(false);
+            expect(result.user.error).toBe(null);
+            expect(result.user.data).toEqual(UPLOAD_USER);
+        });
+
         it('should handle UPDATE_USER', () => {
             const result = Users(initialState, actionsReducer.updateUser.success);
             expect(result.updatedUser.loading).toBe(false);
@@ -56,6 +70,12 @@ describe('Users reducer:', () => {
             const result = Users(initialState, actionsReducer.uploadUsers.fail);
             expect(result.users.loading).toBe(false);
             expect(result.users.error).toBe('Error Message');
+        });
+
+        it('should handle GET_USER', () => {
+            const result = Users(initialState, actionsReducer.uploadUser.fail);
+            expect(result.user.loading).toBe(false);
+            expect(result.user.error).toBe('Error Message');
         });
 
         it('should handle UPDATE_USER', () => {

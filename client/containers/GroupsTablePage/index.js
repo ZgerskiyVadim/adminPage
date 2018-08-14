@@ -220,8 +220,8 @@ const mapStateToProps = (state) => ({
     groups: state.Groups.groups,
     updatedGroup: state.Groups.updatedGroup,
     removedGroup: state.Groups.removedGroup,
-    user: state.User.user,
-    isJoiningGroup: state.User.user.isJoiningGroup,
+    user: state.Users.user,
+    isJoiningGroup: state.Users.user.isJoiningGroup,
     loading: state.Groups.groups.loading || state.Groups.updatedGroup.loading || state.Groups.removedGroup.loading
 });
 

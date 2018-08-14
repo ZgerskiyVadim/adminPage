@@ -8,19 +8,32 @@ import {
     REMOVE_USER_PENDING,
     REMOVE_USER_SUCCESS,
     REMOVE_USER_FAIL,
+    GET_USER_SUCCESS,
+    GET_USER_PENDING,
+    GET_USER_FAIL,
 } from "../../../actions";
 
+
+export const UPLOAD_USER = {
+    username: 'username',
+    firstName: 'firstName',
+    lastName: 'lastName',
+    email: 'test@email.com',
+    password: 'password',
+    groups: [],
+    _id: 1
+};
+
 export const UPLOAD_USERS = [
-    {
-        name: 'name',
-        title: 'title',
-        _id: 1
-    }
+    UPLOAD_USER
 ];
 
 export const UPDATE_USER_DATA = {
-    name: 'updated-name',
-    title: 'updated-title',
+    username: 'updated-username',
+    firstName: 'firstName',
+    lastName: 'lastName',
+    email: 'test@email.com',
+    password: 'password',
     _id: 1
 };
 
@@ -39,6 +52,20 @@ export const actionsReducer = {
         },
         fail: {
             type: GET_USERS_FAIL,
+            payload: 'Error Message',
+        },
+    },
+
+    uploadUser: {
+        pending: {
+            type: GET_USER_PENDING,
+        },
+        success: {
+            type: GET_USER_SUCCESS,
+            payload: UPLOAD_USER,
+        },
+        fail: {
+            type: GET_USER_FAIL,
             payload: 'Error Message',
         },
     },

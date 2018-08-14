@@ -216,12 +216,12 @@ User.propTypes = {
 };
 
 const mapStateToProps = (state) => ({
-    user: state.User.user,
-    groups: state.User.user.data.groups,
-    updatedUser: state.User.updatedUser,
-    userJoinedGroup: state.User.userJoinedGroup,
-    userLeftGroup: state.User.userLeftGroup,
-    loading: state.User.user.loading || state.User.updatedUser.loading || state.User.userJoinedGroup.loading || state.User.userLeftGroup.loading
+    user: state.Users.user,
+    groups: state.Users.user.data.groups,
+    updatedUser: state.Users.updatedUser,
+    userJoinedGroup: state.Users.userJoinedGroup,
+    userLeftGroup: state.Users.userLeftGroup,
+    loading: state.Users.user.loading || state.Users.updatedUser.loading || state.Users.userJoinedGroup.loading || state.Users.userLeftGroup.loading
 });
 
 const mapDispatchToProps = (dispatch) => ({

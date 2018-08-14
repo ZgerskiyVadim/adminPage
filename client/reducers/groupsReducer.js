@@ -7,11 +7,15 @@ import {
     REMOVE_GROUP_SUCCESS,
     GET_GROUPS_FAIL,
     UPDATE_GROUP_FAIL,
-    REMOVE_GROUP_FAIL
+    REMOVE_GROUP_FAIL,
+    GET_GROUP_SUCCESS,
+    GET_GROUP_FAIL,
+    GET_GROUP_PENDING
 } from '../actions';
 
 export const initialState = {
     groups: {data: [], loading: false, error: null},
+    group: {data: {}, loading: false, error: null},
     updatedGroup: {data: {}, loading: false, error: null},
     removedGroup: {data: {}, loading: false, error: null}
 };
@@ -48,6 +52,37 @@ export function Groups(state = initialState, action) {
                 }
             };
 
+        case GET_GROUP_PENDING:
+            return {
+                ...state,
+                group: {
+                    ...state.group,
+                    loading: true,
+                    error: null
+                }
+            };
+
+        case GET_GROUP_SUCCESS:
+            return {
+                ...state,
+                group: {
+                    ...state.group,
+                    data: action.payload,
+                    loading: false,
+                    error: null
+                }
+            };
+
+        case GET_GROUP_FAIL:
+            return {
+                ...state,
+                group: {
+                    ...state.group,
+                    loading: false,
+                    error: action.payload || 'Get group failed'
+                }
+            };
+
         case UPDATE_GROUP_PENDING:
             return {
                 ...state,
@@ -64,6 +99,10 @@ export function Groups(state = initialState, action) {
                 groups: {
                     ...state.groups,
                     data: state.groups.data.map(group => (group._id === action.payload._id) ? action.payload : group)
+                },
+                group: {
+                    ...state.group,
+                    data: action.payload
                 },
                 updatedGroup: {
                     ...state.updatedGroup,

@@ -210,10 +210,10 @@ Group.propTypes = {
 };
 
 const mapStateToProps = (state) => ({
-    group: state.Group.group,
-    updatedGroup: state.Group.updatedGroup,
-    users: state.Group.group.data.users,
-    loading: state.Group.group.loading || state.Group.updatedGroup.loading
+    group: state.Groups.group,
+    updatedGroup: state.Groups.updatedGroup,
+    users: state.Groups.group.data.users,
+    loading: state.Groups.group.loading || state.Groups.updatedGroup.loading
 });
 
 const mapDispatchToProps = (dispatch) => ({
