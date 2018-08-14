@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 
 import './index.scss';
 import {handleChangeState} from "../../services/formsOperations";
-import LoadingSpinner from '../../components/loadingSpinner';
+import LoadingSpinner from '../../components/LoadingSpinner';
 import AuthenticationService from "../../services/authenticationService";
 
 class LoginPage extends Component {

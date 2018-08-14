@@ -1,15 +1,15 @@
 import React, { Component } from 'react';
 import { Route, Switch } from 'react-router-dom';
-import PrivateRoute from './components/privateRoute';
-import Groups from './containers/groupsTablePage';
-import GroupPage from './containers/groupPage';
-import Users from './containers/usersTablePage';
-import UserPage from './containers/userPage';
-import HomePage from './containers/homePage';
-import LoginPage from './containers/loginPage';
-import CreateUser from './containers/createUserPage';
-import CreateGroup from './containers/createGroupPage';
-import NotFoundPage from './containers/notFoundPage';
+import PrivateRoute from './components/PrivateRoute';
+import Groups from './containers/GroupsTablePage';
+import GroupPage from './containers/GroupPage';
+import Users from './containers/UsersTablePage';
+import UserPage from './containers/UserPage';
+import HomePage from './containers/HomePage';
+import LoginPage from './containers/LoginPage';
+import CreateUser from './containers/CreateUserPage';
+import CreateGroup from './containers/CreateGroupPage';
+import NotFoundPage from './containers/NotFoundPage';
 
 
 export default class Routes extends Component {

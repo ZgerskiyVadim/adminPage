@@ -8,10 +8,10 @@ import './index.scss';
 import * as usersActionCreators from '../../actions/action_creators/users';
 import scrollPagination from '../../services/scrollPagination';
 import searchOperation from '../../services/searchOperation';
-import User from '../../components/userItem/user';
-import LoadingSpinner from '../../components/loadingSpinner';
-import ModalWindow from '../../components/modalWindow';
-import SearchComponent from '../../components/search';
+import User from '../../components/UserItem/user';
+import LoadingSpinner from '../../components/LoadingSpinner';
+import ModalWindow from '../../components/ModalWindow';
+import SearchComponent from '../../components/SearchInput';
 import showToastrMessage from "../../services/showToastrMessage";
 
 class Users extends Component {

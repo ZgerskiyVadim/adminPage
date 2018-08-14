@@ -11,8 +11,8 @@ import {handleChangeState, showForms, getValidOptions} from '../../services/form
 import searchOperation from '../../services/searchOperation';
 import scrollPagination from '../../services/scrollPagination';
 import redirectOnPage from '../../services/redirectOnPage';
-import LoadingSpinner from '../../components/loadingSpinner';
-import SearchComponent from '../../components/search';
+import LoadingSpinner from '../../components/LoadingSpinner';
+import SearchComponent from '../../components/SearchInput';
 import showToastrMessage from "../../services/showToastrMessage";
 
 class User extends Component {

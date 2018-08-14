@@ -6,7 +6,7 @@ import {bindActionCreators} from 'redux';
 import './index.scss';
 import * as groupsActionCreators from '../../actions/action_creators/groups';
 import {handleChangeState} from '../../services/formsOperations';
-import LoadingSpinner from '../../components/loadingSpinner';
+import LoadingSpinner from '../../components/LoadingSpinner';
 import showToastrMessage from "../../services/showToastrMessage";
 
 class CreateGroup extends Component {

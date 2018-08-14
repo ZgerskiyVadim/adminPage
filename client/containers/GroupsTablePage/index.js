@@ -9,10 +9,10 @@ import * as groupsActionCreators from '../../actions/action_creators/groups';
 import scrollPagination from '../../services/scrollPagination';
 import searchOperation from '../../services/searchOperation';
 import redirectOnPage from '../../services/redirectOnPage';
-import Group from '../../components/groupItem/group';
-import LoadingSpinner from '../../components/loadingSpinner';
-import ModalWindow from '../../components/modalWindow';
-import SearchComponent from '../../components/search';
+import Group from '../../components/GroupItem/group';
+import LoadingSpinner from '../../components/LoadingSpinner';
+import ModalWindow from '../../components/ModalWindow';
+import SearchComponent from '../../components/SearchInput';
 import showToastrMessage from "../../services/showToastrMessage";
 
 class Groups extends Component {
