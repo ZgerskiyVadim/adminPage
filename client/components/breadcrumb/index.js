@@ -33,8 +33,8 @@ class Breadcrumb extends Component {
             });
     }
 
-    goToPath(location) {
-        redirectOnPage.path(location);
+    goToPath(location, islastPath) {
+        !islastPath && redirectOnPage.path(location);
     };
 
     render() {
@@ -48,9 +48,8 @@ class Breadcrumb extends Component {
                     </li>
                     {
                         this.locationPath().map((item, index) => {
-                            const isGoToPath = !item.islastPath ? this.goToPath(item.location) : null;
                             return (
-                                <li onClick={() => isGoToPath}
+                                <li onClick={() => this.goToPath(item.location, item.islastPath)}
                                     className={classNames('breadcrumb--cursor breadcrumb-item', {'breadcrumb--blue': !item.islastPath, 'active': item.islastPath})}
                                     key={index}>
                                         {item.path}
