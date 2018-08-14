@@ -65,6 +65,7 @@ describe('Users reducer:', () => {
             expect(result.removedUser.data).toEqual(REMOVE_USER_DATA);
         });
     });
+
     describe('Error cases:', () => {
         it('should handle GET_USERS', () => {
             const result = Users(initialState, actionsReducer.uploadUsers.fail);

@@ -65,6 +65,7 @@ describe('Groups reducer:', () => {
             expect(result.removedGroup.data).toEqual(REMOVE_GROUP_DATA);
         });
     });
+    
     describe('Error cases:', () => {
         it('should handle GET_GROUPS', () => {
             const result = Groups(initialState, actionsReducer.uploadGroups.fail);

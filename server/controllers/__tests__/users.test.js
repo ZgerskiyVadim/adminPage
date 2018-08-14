@@ -98,6 +98,31 @@ describe('User controller', () => {
             });
         });
 
+        it('should return error if pass wrong cookie', done => {
+            const fakeCookie = new ObjectId.Types.ObjectId();
+
+            json('get', '/api/users', fakeCookie).end(function (err, result) {
+                if (err) throw err;
+
+                expect(result.statusCode).toBe(401);
+                expect(err).toBe(null);
+                expect(result.body.message).toEqual('Please login');
+                done();
+            });
+        });
+
+        it('should return error if does exist cookie', done => {
+
+            json('get', '/api/users').end(function (err, result) {
+                if (err) throw err;
+
+                expect(result.statusCode).toBe(401);
+                expect(err).toBe(null);
+                expect(result.body.message).toEqual('Please login');
+                done();
+            });
+        });
+
         it('should return error if does not exist user', done => {
             const fakeId = new ObjectId.Types.ObjectId();
 
