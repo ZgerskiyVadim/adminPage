@@ -9,7 +9,7 @@ import * as usersActionCreators from '../../actions/action_creators/users';
 import * as groupsActionCreators from '../../actions/action_creators/groups';
 import {handleChangeState, showForms, getValidOptions} from '../../services/formsOperations';
 import searchOperation from '../../services/searchOperation';
-import {checkRemovedItems, loadMore} from '../../services/loadMore';
+import scrollPagination from '../../services/scrollPagination';
 import redirectOnPage from '../../services/redirectOnPage';
 import LoadingSpinner from '../../components/loadingSpinner';
 import SearchComponent from '../../components/search';
@@ -35,7 +35,7 @@ class User extends Component {
             loading: false
         };
 
-        this.loadMore = loadMore.bind(this, 'user');
+        this.loadMore = this.loadMore.bind(this);
         this.handleChangeState = handleChangeState.bind(this);
         this.showForms = showForms.bind(this, this.state.options.id);
         this.goToGroup = this.goToGroup.bind(this);
@@ -71,7 +71,13 @@ class User extends Component {
     componentDidUpdate(prevProps) {
         const currentCountUsers = this.props.groups.length;
         const prevCountUsers = prevProps.groups.length;
-        checkRemovedItems.call(this, prevCountUsers, currentCountUsers);
+        scrollPagination.checkRemovedItems.call(this, prevCountUsers, currentCountUsers);
+    }
+
+    loadMore() {
+        const lengthOfGroups = this.props.groups.length;
+        const {getUserRequest} = this.props.actions;
+        scrollPagination.loadMore.call(this, lengthOfGroups, getUserRequest);
     }
 
     goToGroup(id) {

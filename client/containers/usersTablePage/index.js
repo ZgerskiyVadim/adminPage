@@ -6,7 +6,7 @@ import {bindActionCreators} from 'redux';
 
 import './index.scss';
 import * as usersActionCreators from '../../actions/action_creators/users';
-import {loadMore, checkRemovedItems} from '../../services/loadMore';
+import scrollPagination from '../../services/scrollPagination';
 import searchOperation from '../../services/searchOperation';
 import User from '../../components/userItem/user';
 import LoadingSpinner from '../../components/loadingSpinner';
@@ -29,12 +29,18 @@ class Users extends Component {
             userID: ''
         };
 
-        this.loadMore = loadMore.bind(this, 'users');
+        this.loadMore = this.loadMore.bind(this);
         this.search = this.search.bind(this);
         this.update = this.update.bind(this);
         this.remove = this.remove.bind(this);
         this.showModal = this.showModal.bind(this);
         this.closeModal = this.closeModal.bind(this);
+    }
+
+    loadMore() {
+        const lengthOfUsers = this.props.users.data.length;
+        const {getUsersRequest} = this.props.actions;
+        scrollPagination.loadMore.call(this, lengthOfUsers, getUsersRequest);
     }
 
     componentDidMount() {
@@ -62,7 +68,7 @@ class Users extends Component {
     componentDidUpdate(prevProps) {
         const currentCountUsers = this.props.users.data.length;
         const prevCountUsers = prevProps.users.data.length;
-        checkRemovedItems.call(this, prevCountUsers, currentCountUsers);
+        scrollPagination.checkRemovedItems.call(this, prevCountUsers, currentCountUsers);
     }
 
     getUsers() {

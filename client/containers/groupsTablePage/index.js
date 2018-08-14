@@ -6,7 +6,7 @@ import {bindActionCreators} from 'redux';
 
 import './index.scss';
 import * as groupsActionCreators from '../../actions/action_creators/groups';
-import {checkRemovedItems, loadMore} from '../../services/loadMore';
+import scrollPagination from '../../services/scrollPagination';
 import searchOperation from '../../services/searchOperation';
 import redirectOnPage from '../../services/redirectOnPage';
 import Group from '../../components/groupItem/group';
@@ -30,7 +30,7 @@ class Groups extends Component {
             groupID: ''
         };
 
-        this.loadMore = loadMore.bind(this, 'groups');
+        this.loadMore = this.loadMore.bind(this);
         this.search = this.search.bind(this);
         this.joinGroup = this.joinGroup.bind(this);
         this.leaveGroup = this.leaveGroup.bind(this);
@@ -39,6 +39,12 @@ class Groups extends Component {
         this.remove = this.remove.bind(this);
         this.showModal = this.showModal.bind(this);
         this.closeModal = this.closeModal.bind(this);
+    }
+
+    loadMore() {
+        const lengthOfGroups = this.props.groups.data.length;
+        const {getGroupsRequest} = this.props.actions;
+        scrollPagination.loadMore.call(this, lengthOfGroups, getGroupsRequest);
     }
 
     componentDidMount() {
@@ -66,7 +72,7 @@ class Groups extends Component {
     componentDidUpdate(prevProps) {
         const currentCountUsers = this.props.groups.data.length;
         const prevCountUsers = prevProps.groups.data.length;
-        checkRemovedItems.call(this, prevCountUsers, currentCountUsers);
+        scrollPagination.checkRemovedItems.call(this, prevCountUsers, currentCountUsers);
     }
 
     isJoinedUserInGroup() {

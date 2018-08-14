@@ -8,7 +8,7 @@ import './index.scss';
 import * as groupsActionCreators from '../../actions/action_creators/groups';
 import {handleChangeState, showForms, getValidOptions} from '../../services/formsOperations';
 import searchOperation from '../../services/searchOperation';
-import {checkRemovedItems, loadMore} from '../../services/loadMore';
+import scrollPagination from '../../services/scrollPagination';
 import redirectOnPage from '../../services/redirectOnPage';
 import LoadingSpinner from '../../components/loadingSpinner';
 import ModalWindow from '../../components/modalWindow';
@@ -34,7 +34,7 @@ class Group extends Component {
             userID: ''
         };
 
-        this.loadMore = loadMore.bind(this, 'group');
+        this.loadMore = this.loadMore.bind(this);
         this.showForms = showForms.bind(this, this.state.options.id);
         this.handleChangeState = handleChangeState.bind(this);
         this.goToUser = this.goToUser.bind(this);
@@ -68,7 +68,13 @@ class Group extends Component {
     componentDidUpdate(prevProps) {
         const currentCountUsers = this.props.users.length;
         const prevCountUsers = prevProps.users.length;
-        checkRemovedItems.call(this, prevCountUsers, currentCountUsers);
+        scrollPagination.checkRemovedItems.call(this, prevCountUsers, currentCountUsers);
+    }
+
+    loadMore() {
+        const lengthOfUsers = this.props.users.length;
+        const {getGroupRequest} = this.props.actions;
+        scrollPagination.loadMore.call(this, lengthOfUsers, getGroupRequest);
     }
 
     goToUser(id) {
