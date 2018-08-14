@@ -5,48 +5,54 @@ import Group from '../models/group';
 
 class CommonCrudOperations {
 
-    getAll({Model, ModelPopulateOrUpdate, pathPopulate, searchFields}) {
+    getAll({Model, ModelPopulate, pathPopulate, searchFields}) {
         return (req, done) => {
             const { skip, limit, searchBy } = req.query;
 
-            if (searchBy) {
-                Model.find({'$or': getSearchFields(searchBy, searchFields)}, null, {skip: Number(skip), limit: Number(limit)}, (err, data) => {
-                    if (err) return done(err);
-                    ModelPopulateOrUpdate.populate(data, {path: pathPopulate}, (err, docs) => {
-                        if (err) return done(err);
-                        done(null, docs);
-                    })
-                });
-            } else {
-                Model.find({}, null, {skip: Number(skip), limit: Number(limit)}, (err, data) => {
-                    if (err) return done(err);
-                    ModelPopulateOrUpdate.populate(data, {path: pathPopulate}, (err, docs) => {
-                        if (err) return done(err);
-                        done(null, docs);
-                    })
-                });
-            }
+            async.waterfall([
+                    next => {
+                        Model.find({'$or': getSearchFields(searchBy, searchFields)}, null, {skip: Number(skip), limit: Number(limit)}, (err, data) => {
+                            if (err) return done(err);
+                            next(null, data)
+                        });
+                    },
+                    (data, next) => {
+                        ModelPopulate.populate(data, {path: pathPopulate}, (err, docs) => {
+                            if (err) return done(err);
+                            next(docs)
+                        })
+                    }
+                ], (docs) => done(null, docs)
+            )
         }
     };
 
-    getByID({Model, ModelPopulateOrUpdate, pathPopulate, searchFields}) {
+    getByID({Model, ModelPopulate, pathPopulate, searchFields}) {
         return (req, done) => {
             const {skip, limit, searchBy} = req.query;
 
-            Model.findOne({_id: req.params.id}, (err, data) => {
-                if (err) return done(err);
-                if (!data) return done(createError('Not found!', 404));
-                ModelPopulateOrUpdate.populate(data,
-                    {
-                        path: pathPopulate,
-                        match: {'$or': getSearchFields(searchBy, searchFields)},
-                        options: {skip: Number(skip), limit: Number(limit)}
+            async.waterfall([
+                    next => {
+                        Model.findOne({_id: req.params.id}, (err, data) => {
+                            if (!data) return done(createError('Not found!', 404));
+                            if (err) return done(err);
+                            next(null, data)
+                        });
                     },
-                    (err, docs) => {
-                        if (err) return done(err);
-                        done(null, docs);
-                    });
-            });
+                    (data, next) => {
+                        ModelPopulate.populate(data,
+                            {
+                                path: pathPopulate,
+                                match: {'$or': getSearchFields(searchBy, searchFields)},
+                                options: {skip: Number(skip), limit: Number(limit)}
+                            },
+                            (err, docs) => {
+                                if (err) return done(err);
+                                next(docs);
+                            });
+                    }
+                ], (docs) => done(null, docs)
+            )
         }
     };
 
@@ -59,29 +65,48 @@ class CommonCrudOperations {
         }
     };
 
-    update({Model, ModelPopulateOrUpdate, pathPopulate}) {
+    update({Model, ModelPopulate, pathPopulate}) {
         return (req, done) => {
-            Model.findOneAndUpdate({_id: req.params.id}, req.body, {runValidators: true, new: true}, (err, data) => {
-                if (err) return done(err);
-                if (!data) return done(createError('Not found!', 404));
-                ModelPopulateOrUpdate.populate(data, {path: pathPopulate}, (err, docs) => {
-                    if (err) return done(err);
-                    done(null, docs);
-                })
-            });
+
+            async.waterfall([
+                    next => {
+                        Model.findOneAndUpdate({_id: req.params.id}, req.body, {runValidators: true, new: true}, (err, data) => {
+                            if (err) return done(err);
+                            if (!data) return done(createError('Not found!', 404));
+                            next(null, data)
+                        });
+                    },
+                    (data, next) => {
+                        ModelPopulate.populate(data, {path: pathPopulate}, (err, docs) => {
+                            if (err) return done(err);
+                            next(docs);
+                        })
+                    }
+                ], (docs) => done(null, docs)
+            );
+
         }
     };
 
-    remove({Model, ModelPopulateOrUpdate, pathPopulate}) {
+    remove({Model, ModelUpdate, pathUpdate}) {
         return (req, done) => {
-            Model.findOneAndRemove({_id: req.params.id}, (err, data) => {
-                if (err) return done(err);
-                if (!data) return done(createError('Not found!', 404));
-                ModelPopulateOrUpdate.update({}, {$pull: {[pathPopulate]: data.id}}, {multi: true}, (err, modification) => {
-                    if (err) return done(err);
-                    done(null, data);
-                })
-            });
+
+            async.waterfall([
+                    next => {
+                        Model.findOneAndRemove({_id: req.params.id}, (err, data) => {
+                            if (!data) return done(createError('Not found!', 404));
+                            if (err) return done(err);
+                            next(null, data);
+                        });
+                    },
+                    (data, next) => {
+                        ModelUpdate.update({}, {$pull: {[pathUpdate]: data.id}}, {multi: true}, (err, modification) => {
+                            if (err) return done(err);
+                            next(data);
+                        })
+                    }
+                ], (data) => done(null, data)
+            );
         }
     };
 
@@ -94,23 +119,29 @@ class CommonCrudOperations {
                         Group.findOneAndUpdate({_id: groupID}, { $addToSet: { users: userID } }, {new: true}, (err, group) => {
                             if (err) return done(err);
                             if (!group) return done(createError('Group is not found', 404));
-                            Group.populate(group, {path: 'groups'}, (err, updatedGroup) => {
-                                if (err) return done(err);
-                                next(null, updatedGroup);
-                            })
+                            next(null, group);
                         });
                     },
                     (group, next) => {
+                        Group.populate(group, {path: 'groups'}, (err, updatedGroup) => {
+                            if (err) return done(err);
+                            next(null, updatedGroup);
+                        })
+                    },
+                    (updatedGroup, next) => {
                         User.findOneAndUpdate({_id: userID}, { $addToSet: { groups: groupID } }, {new: true}, (err, user) => {
                             if (err) return done(err);
                             if (!user) return done(createError('User is not found', 404));
-                            User.populate(user, {path: 'users'}, (err, updatedUser) => {
-                                if (err) return done(err);
-                                next(updatedUser, group);
-                            })
+                            next(null, updatedGroup, user)
                         });
+                    },
+                    (updatedGroup, user, next) => {
+                        User.populate(user, {path: 'users'}, (err, updatedUser) => {
+                            if (err) return done(err);
+                            next(updatedGroup, updatedUser);
+                        })
                     }
-                ], (user, group) => done(null, {user, group})
+                ], (group, user) => done(null, {group, user})
             );
         }
     };
@@ -125,22 +156,28 @@ class CommonCrudOperations {
                         User.findOneAndUpdate({_id: userID}, {$pull: {groups: groupID}}, {new: true}, (err, user) => {
                             if (err) return done(err);
                             if (!user) return done(createError('User is not found', 404));
-                            Group.populate(user, {path: 'groups'}, (err, updatedUser) => {
-                                if (err) return done(err);
-                                next(null, updatedUser);
-                            })
+                            next(null, user);
                         });
                     },
                     (user, next) => {
+                        Group.populate(user, {path: 'groups'}, (err, updatedUser) => {
+                            if (err) return done(err);
+                            next(null, updatedUser);
+                        })
+                    },
+                    (updatedUser, next) => {
                         Group.findOneAndUpdate({_id: groupID}, {$pull: {users: userID}}, {new: true}, (err, group) => {
                             if (err) return done(err);
                             if (!group) return done(createError('Group is not found', 404));
-                            User.populate(group, {path: 'users'}, (err, updatedGroup) => {
-                                if (err) return done(err);
-                                next(user, updatedGroup);
-                            })
+                            next(null, updatedUser, group)
                         });
-                    }
+                    },
+                    (updatedUser, group, next) => {
+                        User.populate(group, {path: 'users'}, (err, updatedGroup) => {
+                            if (err) return done(err);
+                            next(updatedUser, updatedGroup);
+                        })
+                    },
                 ], (user, group) => done(null, {user, group})
             );
         }

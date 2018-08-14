@@ -5,19 +5,25 @@ import commonCrudOperations from '../services/commonCrudOperations';
 const options = {
     Model: User,
     searchFields: 'users',
-    ModelPopulateOrUpdate: Group,
+    ModelPopulate: Group,
     pathPopulate: 'groups',
+};
+
+const optionsRemove = {
+    Model: User,
+    ModelUpdate: Group,
+    pathUpdate: 'users'
 };
 
 export const getUsers = commonCrudOperations.getAll(options);
 
 export const getUserByID = commonCrudOperations.getByID({...options, searchFields: 'groups'});
 
-export const createUser = commonCrudOperations.create(User);
+export const createUser = commonCrudOperations.create(options.User);
 
 export const updateUser = commonCrudOperations.update(options);
 
-export const removeUser = commonCrudOperations.remove(options);
+export const removeUser = commonCrudOperations.remove(optionsRemove);
 
 export const removeUserFromGroup = commonCrudOperations.removeUserFromGroup();
 

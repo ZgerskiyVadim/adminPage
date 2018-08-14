@@ -60,15 +60,15 @@ class Group extends Component {
     };
 
     render() {
-        const { isJoiningGroup, isJoinedUserInGroup, index } = this.props;
+        const { isJoiningGroup, userJoinedGroup, index } = this.props;
         const {users, name, title, _id} = this.props.group;
         const {showForm, ...state} = this.state;
 
         const hiddenForm = classNames({'groups--hide': !showForm});
         const shownForm = classNames({'groups--hide': showForm});
         const notJoiningGroup = classNames({'groups--hide': isJoiningGroup});
-        const userAlreadyInGroup = classNames({'groups--hide': !isJoiningGroup || isJoinedUserInGroup});
-        const userNotInGroup = classNames({'groups--hide': !isJoiningGroup || !isJoinedUserInGroup});
+        const userAlreadyInGroup = classNames({'groups--hide': !isJoiningGroup || userJoinedGroup});
+        const userNotInGroup = classNames({'groups--hide': !isJoiningGroup || !userJoinedGroup});
 
         return (
             <tbody>

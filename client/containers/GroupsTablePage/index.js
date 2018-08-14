@@ -70,20 +70,20 @@ class Groups extends Component {
         scrollPagination.checkRemovedItems.call(this, prevCountUsers, currentCountUsers);
     }
 
-    isJoinedUserInGroup() {
+    groupsShowIsUserJoined() {
         return this.props.groups.data.map(group => {
             for (let i = 0; i < group.users.length; i++ ) {
                 const userID = group.users[i]._id ? group.users[i]._id : group.users[i];
                 if (userID === this.props.user.data._id) {
                     return {
                         ...group,
-                        isJoinedUserInGroup: true
+                        userJoinedGroup: true
                     };
                 }
             }
             return {
                 ...group,
-                isJoinedUserInGroup: false
+                userJoinedGroup: false
             };
         });
     }
@@ -164,13 +164,13 @@ class Groups extends Component {
                     {
                         isJoiningGroup ?
 
-                            this.isJoinedUserInGroup().map((group, index) =>
+                            this.groupsShowIsUserJoined().map((group, index) =>
                                 <Group
                                     key={group._id}
                                     group={group}
                                     index={index}
                                     userID={user.data._id}
-                                    isJoinedUserInGroup={group.isJoinedUserInGroup}
+                                    userJoinedGroup={group.userJoinedGroup}
                                     isJoiningGroup={true}
                                     joinGroup={this.joinGroup}
                                     leaveGroup={this.leaveGroup}
