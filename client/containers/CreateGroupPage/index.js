@@ -15,18 +15,14 @@ class CreateGroup extends Component {
 
         this.state = {
             name: '',
-            title: '',
-            loading: false
+            title: ''
         };
         this.handleChangeState = handleChangeState.bind(this);
         this.createGroup = this.createGroup.bind(this);
     }
 
     componentWillReceiveProps(nextProps) {
-        const {loading, error} = nextProps.createGroup;
-        this.setState({
-            loading
-        });
+        const {error} = nextProps.createGroup;
 
         error && showToastrMessage.error(error);
         // toastrMessages(nextProps.createGroup);
@@ -34,13 +30,12 @@ class CreateGroup extends Component {
 
     createGroup(event) {
         event.preventDefault();
-        const {name, title} = this.state;
-        const options = {name, title};
-        this.props.actions.createGroupRequest(options)
+        this.props.actions.createGroupRequest(this.state)
     };
 
     render() {
-        const {loading, name, title} = this.state;
+        const {name, title} = this.state;
+        const {loading} = this.props;
 
         return (
             <div className='create-group'>
@@ -61,12 +56,19 @@ class CreateGroup extends Component {
     }
 }
 
+CreateGroup.defaultProps = {
+    createGroup: {},
+    loading: false
+};
+
 CreateGroup.propTypes = {
-    createGroup: PropTypes.object.isRequired
+    createGroup: PropTypes.object.isRequired,
+    loading: PropTypes.bool.isRequired
 };
 
 const mapStateToProps = (state) => ({
-    createGroup: state.CreateGroup
+    createGroup: state.CreateGroup,
+    loading: state.CreateGroup.loading
 });
 
 const mapDispatchToProps = (dispatch) => ({

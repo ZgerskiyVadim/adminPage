@@ -2,7 +2,6 @@ import React, {Component} from 'react';
 
 import './index.scss';
 import {handleChangeState} from "../../services/formsOperations";
-import LoadingSpinner from '../../components/LoadingSpinner';
 import AuthenticationService from "../../services/authenticationService";
 
 class LoginPage extends Component {
@@ -11,8 +10,7 @@ class LoginPage extends Component {
 
         this.state = {
             username: '',
-            password: '',
-            loading: false
+            password: ''
         };
 
         this.handleChangeState = handleChangeState.bind(this);
@@ -24,7 +22,7 @@ class LoginPage extends Component {
     };
 
     render() {
-        const {loading, username, password} = this.state;
+        const {username, password} = this.state;
 
         return (
             <div className='login'>
@@ -39,7 +37,6 @@ class LoginPage extends Component {
 
                     <button onClick={this.login} className='login__send btn btn-outline-primary'>Send</button>
                 </div>
-                <LoadingSpinner loading={loading}/>
             </div>
         );
     }

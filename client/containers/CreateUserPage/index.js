@@ -18,18 +18,14 @@ class CreateUser extends Component {
             firstName: '',
             lastName: '',
             email: '',
-            password: '',
-            loading: false
+            password: ''
         };
         this.handleChangeState = handleChangeState.bind(this);
         this.createUser = this.createUser.bind(this);
     }
 
     componentWillReceiveProps(nextProps) {
-        const {loading, error} = nextProps.createUser;
-        this.setState({
-            loading
-        });
+        const {error} = nextProps.createUser;
 
         error && showToastrMessage.error(error);
         // toastrMessages(nextProps.createUser);
@@ -37,18 +33,12 @@ class CreateUser extends Component {
 
     createUser(event) {
         event.preventDefault();
-        const options = {
-            username : this.state.username,
-            firstName : this.state.firstName,
-            lastName : this.state.lastName,
-            email : this.state.email,
-            password : this.state.password
-        } = this.state;
-        this.props.actions.createUserRequest(options)
+        this.props.actions.createUserRequest(this.state)
     };
 
     render() {
-        const {loading, username, firstName, lastName, email, password} = this.state;
+        const {username, firstName, lastName, email, password} = this.state;
+        const {loading} = this.props;
 
         return (
             <div className='create-user'>
@@ -75,12 +65,19 @@ class CreateUser extends Component {
     }
 }
 
+CreateUser.defaultProps = {
+    createUser: {},
+    loading: false
+};
+
 CreateUser.propTypes = {
-    createUser: PropTypes.object.isRequired
+    createUser: PropTypes.object.isRequired,
+    loading: PropTypes.bool.isRequired
 };
 
 const mapStateToProps = (state) => ({
-    createUser: state.CreateUser
+    createUser: state.CreateUser,
+    loading: state.CreateUser.loading
 });
 
 const mapDispatchToProps = (dispatch) => ({
