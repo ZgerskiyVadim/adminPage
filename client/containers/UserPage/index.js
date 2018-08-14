@@ -39,8 +39,8 @@ class User extends Component {
         this.handleChangeState = handleChangeState.bind(this);
         this.showForms = showForms.bind(this, this.state.options.id);
         this.goToGroup = this.goToGroup.bind(this);
-        this.search = this.search.bind(this);
-        this.update = this.update.bind(this);
+        this.searchGroups = this.searchGroups.bind(this);
+        this.updateUser = this.updateUser.bind(this);
         this.startJoiningGroup = this.startJoiningGroup.bind(this);
         this.joinGroup = this.joinGroup.bind(this);
         this.leaveGroup = this.leaveGroup.bind(this);
@@ -84,12 +84,12 @@ class User extends Component {
         redirectOnPage.path(`/groups/${id}`);
     };
 
-    search(event) {
+    searchGroups(event) {
         const {getUserRequest} = this.props.actions;
         searchOperation.getItems.call(this, event, getUserRequest);
     };
 
-    update(event) {
+    updateUser(event) {
         event.preventDefault();
         this.setState({showForm: false});
         const options = getValidOptions(this.state);
@@ -147,13 +147,13 @@ class User extends Component {
                         <input onChange={this.handleChangeState} value={state.password} className={classNames('form-control', hiddenForm)} name='password' type="password"/>
                     </div>
                     <button onClick={this.showForms} className={shownForm}>Update</button>
-                    <button onClick={this.update} className={classNames('user--margin-right btn btn-outline-primary', hiddenForm)}>Save</button>
+                    <button onClick={this.updateUser} className={classNames('user--margin-right btn btn-outline-primary', hiddenForm)}>Save</button>
                     <button onClick={this.startJoiningGroup} className='btn btn-outline-info'>Join group</button>
                 </div>
 
                 <h1 className={isGroups}>Groups</h1>
                 <div className={classNames('user__groups-table', isGroups)}>
-                    <SearchComponent search={this.search}/>
+                    <SearchComponent search={this.searchGroups}/>
                     <table className='table table-hover'>
                         <thead className='thead-dark'>
                         <tr>

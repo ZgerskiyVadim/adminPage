@@ -31,11 +31,11 @@ class Groups extends Component {
         };
 
         this.loadMore = this.loadMore.bind(this);
-        this.search = this.search.bind(this);
+        this.searchGroups = this.searchGroups.bind(this);
         this.joinGroup = this.joinGroup.bind(this);
         this.leaveGroup = this.leaveGroup.bind(this);
         this.cancelJoinGroup = this.cancelJoinGroup.bind(this);
-        this.update = this.update.bind(this);
+        this.updateGroup = this.updateGroup.bind(this);
         this.remove = this.remove.bind(this);
         this.showModal = this.showModal.bind(this);
         this.closeModal = this.closeModal.bind(this);
@@ -93,7 +93,7 @@ class Groups extends Component {
         });
     }
 
-    search(event) {
+    searchGroups(event) {
         const {getGroupsRequest} = this.props.actions;
         searchOperation.getItems.call(this, event, getGroupsRequest);
     };
@@ -112,7 +112,7 @@ class Groups extends Component {
         redirectOnPage.path(`/users/${this.props.user.data._id}`);
     };
 
-    update(options) {
+    updateGroup(options) {
         this.props.actions.updateGroupRequest(options);
     };
 
@@ -144,7 +144,7 @@ class Groups extends Component {
         return (
             <div className='groups'>
                 <SearchComponent
-                    search={this.search}
+                    search={this.searchGroups}
                     handleButtonClick={this.cancelJoinGroup}
                     style={classNames('btn btn-outline-danger', isJoinGroup)}
                 />
@@ -187,7 +187,7 @@ class Groups extends Component {
                                     group={group}
                                     index={index}
                                     isJoiningGroup={false}
-                                    update={this.update}
+                                    update={this.updateGroup}
                                     showModal={this.showModal}
                                 />)
                     }

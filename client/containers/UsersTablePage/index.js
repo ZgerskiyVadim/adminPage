@@ -30,8 +30,8 @@ class Users extends Component {
         };
 
         this.loadMore = this.loadMore.bind(this);
-        this.search = this.search.bind(this);
-        this.update = this.update.bind(this);
+        this.searchUsers = this.searchUsers.bind(this);
+        this.updateUser = this.updateUser.bind(this);
         this.remove = this.remove.bind(this);
         this.showModal = this.showModal.bind(this);
         this.closeModal = this.closeModal.bind(this);
@@ -79,12 +79,12 @@ class Users extends Component {
         }
     }
 
-    search(event) {
+    searchUsers(event) {
         const {getUsersRequest} = this.props.actions;
         searchOperation.getItems.call(this, event, getUsersRequest);
     };
 
-    update(options) {
+    updateUser(options) {
         this.props.actions.updateUserRequest(options);
     };
 
@@ -112,7 +112,7 @@ class Users extends Component {
 
         return (
             <div className='users'>
-                <SearchComponent search={this.search}/>
+                <SearchComponent search={this.searchUsers}/>
                 <table className={classNames('users__table table table-hover', marginBottom)}>
                     <thead className='thead-dark'>
                     <tr>
@@ -144,7 +144,7 @@ class Users extends Component {
                                 index={index}
                                 key={user._id}
                                 isJoining={user.isJoining}
-                                update={this.update}
+                                update={this.updateUser}
                                 showModal={this.showModal}
                             />)
                     }

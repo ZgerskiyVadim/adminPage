@@ -38,8 +38,8 @@ class Group extends Component {
         this.showForms = showForms.bind(this, this.state.options.id);
         this.handleChangeState = handleChangeState.bind(this);
         this.goToUser = this.goToUser.bind(this);
-        this.search = this.search.bind(this);
-        this.update = this.update.bind(this);
+        this.searchUsers = this.searchUsers.bind(this);
+        this.updateGroup = this.updateGroup.bind(this);
         this.removeUser = this.removeUser.bind(this);
         this.showModal = this.showModal.bind(this);
         this.closeModal = this.closeModal.bind(this);
@@ -81,12 +81,12 @@ class Group extends Component {
         redirectOnPage.path(`/users/${id}`);
     };
 
-    search(event) {
+    searchUsers(event) {
         const {getGroupRequest} = this.props.actions;
         searchOperation.getItems.call(this, event, getGroupRequest);
     };
 
-    update(event) {
+    updateGroup(event) {
         event.preventDefault();
         this.setState({showForm: false});
         const options = getValidOptions(this.state);
@@ -136,12 +136,12 @@ class Group extends Component {
                     </div>
 
                     <button onClick={this.showForms} className={classNames('btn btn-outline-primary', shownForm)}>Update</button>
-                    <button onClick={this.update} className={classNames('btn btn-outline-primary', hiddenForm)}>Save</button>
+                    <button onClick={this.updateGroup} className={classNames('btn btn-outline-primary', hiddenForm)}>Save</button>
                 </div>
 
                 <h1 className={isUsers}>Users</h1>
                 <div className={classNames('group__users-table', isUsers)}>
-                    <SearchComponent search={this.search}/>
+                    <SearchComponent search={this.searchUsers}/>
                     <table className='table table-hover'>
                         <thead className='thead-dark'>
                         <tr>
