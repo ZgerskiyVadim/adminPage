@@ -67,8 +67,8 @@ CreateGroup.propTypes = {
 };
 
 const mapStateToProps = (state) => ({
-    createGroup: state.CreateGroup,
-    loading: state.CreateGroup.loading
+    createGroup: state.CreateGroup.createdGroup,
+    loading: state.CreateGroup.createdGroup.loading
 });
 
 const mapDispatchToProps = (dispatch) => ({

@@ -5,9 +5,7 @@ import {
 } from '../actions';
 
 export const initialState = {
-    isGroupCreated: false,
-    loading: false,
-    error: null
+    createdGroup: {data: {}, loading: false, error: null}
 };
 
 export function CreateGroup(state = initialState, action) {
@@ -15,25 +13,32 @@ export function CreateGroup(state = initialState, action) {
         case GROUP_CREATE_PENDING:
             return {
                 ...state,
-                isGroupCreated: false,
-                error: null,
-                loading: true
+                createdGroup: {
+                    ...state.createdGroup,
+                    loading: true,
+                    error: null
+                }
             };
 
         case GROUP_CREATED_SUCCESS:
             return {
                 ...state,
-                error: null,
-                loading: false,
-                isGroupCreated: true,
+                createdGroup: {
+                    ...state.createdGroup,
+                    data: action.payload,
+                    loading: false,
+                    error: null
+                }
             };
 
         case CREATE_GROUP_FAIL:
             return {
                 ...state,
-                loading: false,
-                isGroupCreated: false,
-                error: action.payload || 'Create group failed'
+                createdGroup: {
+                    ...state.createdGroup,
+                    loading: false,
+                    error: action.payload || 'Create group failed'
+                }
             };
         default: return state;
     }

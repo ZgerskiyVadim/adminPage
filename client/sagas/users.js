@@ -28,8 +28,8 @@ import {
 
 function* createUser(action) {
     try {
-        yield call(usersAPI.create, action.payload);
-        yield put({type: USER_CREATED_SUCCESS});
+        const user = yield call(usersAPI.create, action.payload);
+        yield put({type: USER_CREATED_SUCCESS, payload: user});
     } catch (error) {
         yield put({type: CREATE_USER_FAIL, payload: error});
     }

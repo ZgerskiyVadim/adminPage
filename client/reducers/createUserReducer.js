@@ -6,9 +6,7 @@ import {
 
 
 export const initialState = {
-    isUserCreated: false,
-    loading: false,
-    error: null
+    createdUser: {data: {}, loading: false, error: null}
 };
 
 export function CreateUser(state = initialState, action) {
@@ -16,25 +14,32 @@ export function CreateUser(state = initialState, action) {
         case USER_CREATE_PENDING:
             return {
                 ...state,
-                isUserCreated: false,
-                error: null,
-                loading: true
+                createdUser: {
+                    ...state.createdUser,
+                    loading: true,
+                    error: null
+                }
             };
 
         case USER_CREATED_SUCCESS:
             return {
                 ...state,
-                loading: false,
-                error: null,
-                isUserCreated: true
+                createdUser: {
+                    ...state.createdUser,
+                    data: action.payload,
+                    loading: false,
+                    error: null
+                }
             };
 
         case CREATE_USER_FAIL:
             return {
                 ...state,
-                isUserCreated: false,
-                loading: false,
-                error: action.payload || 'Create user failed'
+                createdUser: {
+                    ...state.createdUser,
+                    loading: false,
+                    error: action.payload || 'Create user failed'
+                }
             };
         default: return state;
     }

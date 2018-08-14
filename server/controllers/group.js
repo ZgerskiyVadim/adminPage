@@ -19,7 +19,7 @@ export const getGroups = commonCrudOperations.getAll(options);
 
 export const getGroupByID = commonCrudOperations.getByID({...options, searchFields: 'users'});
 
-export const createGroup = commonCrudOperations.create(options.Group);
+export const createGroup = commonCrudOperations.create(options.Model);
 
 export const updateGroup = commonCrudOperations.update(options);
 

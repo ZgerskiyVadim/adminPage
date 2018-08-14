@@ -22,8 +22,8 @@ import {
 
 function* createGroup(action) {
     try {
-        yield call(groupsAPI.create, action.payload);
-        yield put({type: GROUP_CREATED_SUCCESS});
+        const group = yield call(groupsAPI.create, action.payload);
+        yield put({type: GROUP_CREATED_SUCCESS, payload: group});
     } catch (error) {
         yield put({type: CREATE_GROUP_FAIL, payload: error});
     }
