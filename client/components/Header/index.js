@@ -10,25 +10,7 @@ import AuthenticationService from '../../services/authenticationService';
 class Header extends PureComponent {
     constructor(props) {
         super(props);
-        this.state = {
-            isAuthenticated: false
-        };
-
         this.logout = this.logout.bind(this);
-    }
-
-    componentDidMount() {
-        this.setStateAuthenticated();
-    }
-
-    componentWillReceiveProps() {
-        this.setStateAuthenticated();
-    }
-
-    setStateAuthenticated() {
-        this.setState({
-            isAuthenticated: AuthenticationService.isHaveSessionCookie()
-        });
     }
 
     logout() {
@@ -36,7 +18,7 @@ class Header extends PureComponent {
     }
 
     render() {
-        const {isAuthenticated} = this.state;
+        const isAuthenticated = AuthenticationService.isHaveSessionCookie();
 
         return (
             <div>
