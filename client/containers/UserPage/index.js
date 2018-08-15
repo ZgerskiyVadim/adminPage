@@ -60,7 +60,7 @@ class User extends Component {
     componentWillReceiveProps(nextProps) {
         const error = nextProps.user.error || nextProps.updatedUser.error || nextProps.userJoinedGroup.error || nextProps.userLeftGroup.error;
 
-        !isEqualProps(this.props.updatedUser, nextProps.updatedUser) && showToastrMessage.success('User is updated');
+        !isEqualProps(this.props.updatedUser.data, nextProps.updatedUser.data) && showToastrMessage.success('User is updated');
         error && showToastrMessage.error(error);
     }
 

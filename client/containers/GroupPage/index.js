@@ -57,7 +57,7 @@ class Group extends Component {
     componentWillReceiveProps(nextProps) {
         const error = nextProps.group.error || nextProps.updatedGroup.error;
 
-        !isEqualProps(this.props.updatedGroup, nextProps.updatedGroup) && showToastrMessage.success('Group is updated');
+        !isEqualProps(this.props.updatedGroup.data, nextProps.updatedGroup.data) && showToastrMessage.success('Group is updated');
         error && showToastrMessage.error(error);
     }
 

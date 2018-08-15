@@ -57,8 +57,8 @@ class Users extends Component {
     componentWillReceiveProps(nextProps) {
         const error = nextProps.users.error || nextProps.updatedUser.error || nextProps.removedUser.error;
 
-        !isEqualProps(this.props.updatedUser, nextProps.updatedUser) && showToastrMessage.success('User is updated');
-        !isEqualProps(this.props.removedUser, nextProps.removedUser) && showToastrMessage.success('User is removed');
+        !isEqualProps(this.props.updatedUser.data, nextProps.updatedUser.data) && showToastrMessage.success('User is updated');
+        !isEqualProps(this.props.removedUser.data, nextProps.removedUser.data) && showToastrMessage.success('User is removed');
         error && showToastrMessage.error(error);
     }
 
