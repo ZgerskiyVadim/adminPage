@@ -15,3 +15,10 @@
 .breadcrumb--blue {
   color: darkblue;
 }
+.breadcrumb--row {
+  display: flex;
+  justify-content: center;
+}
+.breadcrumb--margin-right {
+  margin-right: 1em;
+}

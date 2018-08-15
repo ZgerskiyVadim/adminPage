@@ -1,5 +1,6 @@
 import React, { PureComponent } from 'react';
 import { withRouter } from 'react-router';
+import {Link} from 'react-router-dom';
 import classNames from 'classnames';
 import './index.scss';
 import redirectOnPage from '../../services/redirectOnPage';
@@ -41,24 +42,30 @@ class Breadcrumb extends PureComponent {
         const isPathHomeActive = classNames({'breadcrumb--blue': this.locationPath().length, 'active': !this.locationPath().length});
 
         return (
-            <nav className="breadcrumb-root" aria-label="breadcrumb">
-                <ol className="breadcrumb">
-                    <li onClick={() => this.goToPath('/')} className={classNames('breadcrumb--cursor breadcrumb-item', isPathHomeActive)}>
-                        home
-                    </li>
-                    {
-                        this.locationPath().map((item, index) => {
-                            return (
-                                <li onClick={() => this.goToPath(item.location, item.islastPath)}
-                                    className={classNames('breadcrumb--cursor breadcrumb-item', {'breadcrumb--blue': !item.islastPath, 'active': item.islastPath})}
-                                    key={index}>
+            <div>
+                <nav className="breadcrumb-root" aria-label="breadcrumb">
+                    <ol className="breadcrumb">
+                        <li onClick={() => this.goToPath('/')} className={classNames('breadcrumb--cursor breadcrumb-item', isPathHomeActive)}>
+                            home
+                        </li>
+                        {
+                            this.locationPath().map((item, index) => {
+                                return (
+                                    <li onClick={() => this.goToPath(item.location, item.islastPath)}
+                                        className={classNames('breadcrumb--cursor breadcrumb-item', {'breadcrumb--blue': !item.islastPath, 'active': item.islastPath})}
+                                        key={index}>
                                         {item.path}
-                                </li>
-                            );
-                        })
-                    }
-                </ol>
-            </nav>
+                                    </li>
+                                );
+                            })
+                        }
+                    </ol>
+                </nav>
+                <div className='breadcrumb--row'>
+                    <Link to='/users'><h2 className='breadcrumb--margin-right'>Users</h2></Link>
+                    <Link to='/groups'><h2>Groups</h2></Link>
+                </div>
+            </div>
         );
     }
 }
