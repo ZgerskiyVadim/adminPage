@@ -1,10 +1,11 @@
 module.exports = {
-    "testEnvironment": "node",
+    verbose: true,
+    testEnvironment: "node",
     forceExit: true,
-    "testMatch": [
+    testMatch: [
         "**/server/**/(*.)test.js"
     ],
-    "setupFiles": [
+    setupFiles: [
         "./server/jest.setup.js"
     ]
 };

@@ -9,7 +9,9 @@
     "dev": "webpack-dev-server --config client/webpack.config.js",
     "test": "npm run test-dev | npm run test-serve",
     "test-serve": "jest --detectOpenHandles --runInBand --config ./jest-serve.config.js",
-    "test-dev": "jest --config ./jest-dev.config.js"
+    "test-dev": "jest --config ./jest-dev.config.js",
+    "coverage-dev": "jest --coverage --config ./jest-dev.config.js",
+    "coverage-serve": "jest --coverage --detectOpenHandles --runInBand --config ./jest-serve.config.js"
   },
   "author": "",
   "license": "ISC",

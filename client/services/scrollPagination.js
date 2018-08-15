@@ -1,9 +1,18 @@
 class ScrollPagination {
     loadMore(lengthOfItems, getItemsRequest) {
-        const {isLoadMore} = this.state;
+        const {limit, loadNext} = this.state.options;
 
-        if (isLoadMore && scrollDown()) {
-            getItems.call(this, lengthOfItems, getItemsRequest);
+        if (scrollDown() && canLoadMore(lengthOfItems, limit)) {
+            this.setState({
+                options: {
+                    ...this.state.options,
+                    limit: limit + loadNext
+                }
+            }, () => {
+                const {searchBy, limit} = this.state.options;
+                const options = {searchBy, limit};
+                getItemsRequest(options)
+            });
         }
     }
 
@@ -27,23 +36,6 @@ function scrollDown() {
     return Math.round(positionOfScroll) === scrollHeight;
 }
 
-function getItems(lengthOfItems, getItemsRequest) {
-    const {limit, loadNext} = this.state.options;
-
-    if (limit > lengthOfItems) {
-        this.setState({
-            isLoadMore: false
-        })
-    } else {
-        this.setState({
-            options: {
-                ...this.state.options,
-                limit: limit + loadNext
-            }
-        }, () => {
-            const {searchBy, limit} = this.state.options;
-            const options = {searchBy, limit};
-            getItemsRequest(options)
-        });
-    }
+function canLoadMore(lengthOfItems, limit) {
+    return lengthOfItems >= limit
 }
