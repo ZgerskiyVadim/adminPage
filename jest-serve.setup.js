@@ -1,11 +1,11 @@
 import request from 'supertest';
-import app from './app';
-import loadFixtures from "./fixtures";
-import User from "./models/user";
+import app from './server/app';
+import loadFixtures from "./server/fixtures";
+import User from "./server/models/user";
 import async from "async";
 import mongoose from "mongoose";
-import config from "../config";
-import Group from "./models/group";
+import config from "./config";
+import Group from "./server/models/group";
 
 
 global.json = function(verb, url, cookie) {

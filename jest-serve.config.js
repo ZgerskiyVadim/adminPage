@@ -6,6 +6,6 @@ module.exports = {
         "**/server/**/(*.)test.js"
     ],
     setupFiles: [
-        "./server/jest.setup.js"
+        "./jest-serve.setup.js"
     ]
 };
