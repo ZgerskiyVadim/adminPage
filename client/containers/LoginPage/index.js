@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 
 import './index.scss';
-import {handleChangeState} from "../../services/formsOperations";
+import formsOperations from "../../services/formsOperations";
 import AuthenticationService from "../../services/authenticationService";
 
 class LoginPage extends Component {
@@ -13,7 +13,7 @@ class LoginPage extends Component {
             password: ''
         };
 
-        this.handleChangeState = handleChangeState.bind(this);
+        this.handleChange = formsOperations.handleChange.bind(this);
         this.login = this.login.bind(this);
     }
 
@@ -30,9 +30,9 @@ class LoginPage extends Component {
                 <div className='login--row'>
                     <div className='col-md-6'>
                         <h3>username</h3>
-                        <input onChange={this.handleChangeState} value={username} name='username' className='form-control' type="text"/>
+                        <input onChange={this.handleChange} value={username} name='username' className='form-control' type="text"/>
                         <h3>password</h3>
-                        <input onChange={this.handleChangeState} value={password} name='password' className='form-control' type="password"/>
+                        <input onChange={this.handleChange} value={password} name='password' className='form-control' type="password"/>
                     </div>
 
                     <button onClick={this.login} className='login__send btn btn-outline-primary'>Send</button>

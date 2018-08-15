@@ -3,7 +3,7 @@ import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router';
 
-import {handleChangeState, showForms, getValidOptions} from '../../services/formsOperations';
+import formsOperations from '../../services/formsOperations';
 import redirectOnPage from '../../services/redirectOnPage';
 
 class Group extends Component {
@@ -17,8 +17,8 @@ class Group extends Component {
             userID: this.props.userID ? this.props.userID : null
         };
 
-        this.showForms = showForms.bind(this, this.props.group._id);
-        this.handleChangeState = handleChangeState.bind(this);
+        this.showForms = formsOperations.showForms.bind(this, this.props.group._id);
+        this.handleChange = formsOperations.handleChange.bind(this);
         this.goToGroup = this.goToGroup.bind(this);
         this.handleClick = this.handleClick.bind(this);
         this.sendOptionsUpdate = this.sendOptionsUpdate.bind(this);
@@ -39,7 +39,7 @@ class Group extends Component {
     sendOptionsUpdate(event) {
         event.stopPropagation();
         this.setState({showForm: false});
-        const options = getValidOptions(this.state);
+        const options = formsOperations.getValidOptions(this.state);
         this.props.update(options)
     };
 
@@ -76,11 +76,11 @@ class Group extends Component {
                 <th>{index + 1}</th>
                 <td>
                     <h5>{name}</h5>
-                    <input onChange={this.handleChangeState} onClick={this.handleClick} value={state.name} className={classNames('form-control', hiddenForm)} name='name' type="text"/>
+                    <input onChange={this.handleChange} onClick={this.handleClick} value={state.name} className={classNames('form-control', hiddenForm)} name='name' type="text"/>
                 </td>
                 <td>
                     <h5>{title}</h5>
-                    <input onChange={this.handleChangeState} onClick={this.handleClick} value={state.title} className={classNames('form-control', hiddenForm)} name='title' type="text"/>
+                    <input onChange={this.handleChange} onClick={this.handleClick} value={state.title} className={classNames('form-control', hiddenForm)} name='title' type="text"/>
                 </td>
                 <td>
                     <h5>{users.length}</h5>

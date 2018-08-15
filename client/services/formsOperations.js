@@ -1,23 +1,28 @@
-export function handleChangeState(event) {
-    const {value, name} = event.target;
+class FormsOperations {
 
-    this.setState({
-        [name]: value
-    });
-}
+    handleChange(event) {
+        const {value, name} = event.target;
 
-export function showForms(id, event) {
-    event.stopPropagation();
-    this.setState({
-        id,
-        showForm: true
-    });
-}
-
-export function getValidOptions(state) {
-    const options = {};
-    for (const prop in state) {
-        state[prop] ? options[prop] = state[prop] : null
+        this.setState({
+            [name]: value
+        });
     }
-    return options;
+
+    showForms(id, event) {
+        event.stopPropagation();
+        this.setState({
+            id,
+            showForm: true
+        });
+    }
+
+    getValidOptions(state) {
+        const options = {};
+        for (const prop in state) {
+            state[prop] ? options[prop] = state[prop] : null
+        }
+        return options;
+    }
 }
+
+export default new FormsOperations();

@@ -5,7 +5,7 @@ import {bindActionCreators} from 'redux';
 
 import './index.scss';
 import * as usersActionCreators from '../../actions/action_creators/users';
-import {handleChangeState} from '../../services/formsOperations';
+import formsOperations from '../../services/formsOperations';
 import LoadingSpinner from '../../components/LoadingSpinner';
 import showToastrMessage from "../../services/showToastrMessage";
 
@@ -20,7 +20,7 @@ class CreateUser extends Component {
             email: '',
             password: ''
         };
-        this.handleChangeState = handleChangeState.bind(this);
+        this.handleChange = formsOperations.handleChange.bind(this);
         this.createUser = this.createUser.bind(this);
     }
 
@@ -28,7 +28,6 @@ class CreateUser extends Component {
         const {error} = nextProps.createUser;
 
         error && showToastrMessage.error(error);
-        // toastrMessages(nextProps.createUser);
     }
 
     createUser(event) {
@@ -46,15 +45,15 @@ class CreateUser extends Component {
                 <div className='create-user--row'>
                     <div className='col-md-6'>
                         <h3>username</h3>
-                        <input onChange={this.handleChangeState} value={username} name='username' className='form-control' type="text"/>
+                        <input onChange={this.handleChange} value={username} name='username' className='form-control' type="text"/>
                         <h3>firstName</h3>
-                        <input onChange={this.handleChangeState} value={firstName} name='firstName' className='form-control' type="text"/>
+                        <input onChange={this.handleChange} value={firstName} name='firstName' className='form-control' type="text"/>
                         <h3>lastName</h3>
-                        <input onChange={this.handleChangeState} value={lastName} name='lastName' className='form-control' type="text"/>
+                        <input onChange={this.handleChange} value={lastName} name='lastName' className='form-control' type="text"/>
                         <h3>email</h3>
-                        <input onChange={this.handleChangeState} value={email} name='email' className='form-control' type="text"/>
+                        <input onChange={this.handleChange} value={email} name='email' className='form-control' type="text"/>
                         <h3>password</h3>
-                        <input onChange={this.handleChangeState} value={password} name='password' className='form-control' type="password"/>
+                        <input onChange={this.handleChange} value={password} name='password' className='form-control' type="password"/>
                     </div>
 
                     <button onClick={this.createUser} className='create-user__send btn btn-outline-primary'>Send</button>

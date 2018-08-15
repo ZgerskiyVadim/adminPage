@@ -6,7 +6,7 @@ import {bindActionCreators} from 'redux';
 
 import './index.scss';
 import * as groupsActionCreators from '../../actions/action_creators/groups';
-import {handleChangeState, showForms, getValidOptions} from '../../services/formsOperations';
+import formsOperations from '../../services/formsOperations';
 import searchOperation from '../../services/searchOperation';
 import scrollPagination from '../../services/scrollPagination';
 import redirectOnPage from '../../services/redirectOnPage';
@@ -34,8 +34,8 @@ class Group extends Component {
         };
 
         this.loadMore = this.loadMore.bind(this);
-        this.showForms = showForms.bind(this, this.state.options.id);
-        this.handleChangeState = handleChangeState.bind(this);
+        this.showForms = formsOperations.showForms.bind(this, this.state.options.id);
+        this.handleChange = formsOperations.handleChange.bind(this);
         this.goToUser = this.goToUser.bind(this);
         this.searchUsers = this.searchUsers.bind(this);
         this.updateGroup = this.updateGroup.bind(this);
@@ -57,7 +57,6 @@ class Group extends Component {
         const error = nextProps.group.error || nextProps.updatedGroup.error;
 
         error && showToastrMessage.error(error);
-        // toastrMessages.call(this, nextProps.group);
     }
 
     componentDidUpdate(prevProps) {
@@ -84,7 +83,7 @@ class Group extends Component {
     updateGroup(event) {
         event.preventDefault();
         this.setState({showForm: false});
-        const options = getValidOptions(this.state);
+        const options = formsOperations.getValidOptions(this.state);
         this.props.actions.updateGroupRequest(options);
     };
 
@@ -125,9 +124,9 @@ class Group extends Component {
                 <div className='group__info'>
                     <div className='group--margin-right'>
                         <h3>name: {name}</h3>
-                        <input onChange={this.handleChangeState} value={state.name} className={classNames('form-control', hiddenForm)} name='name' type="text"/>
+                        <input onChange={this.handleChange} value={state.name} className={classNames('form-control', hiddenForm)} name='name' type="text"/>
                         <h3>title: {title}</h3>
-                        <input onChange={this.handleChangeState} value={state.title} className={classNames('form-control', hiddenForm)} name='title' type="text"/>
+                        <input onChange={this.handleChange} value={state.title} className={classNames('form-control', hiddenForm)} name='title' type="text"/>
                     </div>
 
                     <button onClick={this.showForms} className={classNames('btn btn-outline-primary', shownForm)}>Update</button>

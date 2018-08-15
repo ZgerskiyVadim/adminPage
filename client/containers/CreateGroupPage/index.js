@@ -5,7 +5,7 @@ import {bindActionCreators} from 'redux';
 
 import './index.scss';
 import * as groupsActionCreators from '../../actions/action_creators/groups';
-import {handleChangeState} from '../../services/formsOperations';
+import formsOperations from '../../services/formsOperations';
 import LoadingSpinner from '../../components/LoadingSpinner';
 import showToastrMessage from "../../services/showToastrMessage";
 
@@ -17,7 +17,7 @@ class CreateGroup extends Component {
             name: '',
             title: ''
         };
-        this.handleChangeState = handleChangeState.bind(this);
+        this.handleChange = formsOperations.handleChange.bind(this);
         this.createGroup = this.createGroup.bind(this);
     }
 
@@ -25,7 +25,6 @@ class CreateGroup extends Component {
         const {error} = nextProps.createGroup;
 
         error && showToastrMessage.error(error);
-        // toastrMessages(nextProps.createGroup);
     }
 
     createGroup(event) {
@@ -43,9 +42,9 @@ class CreateGroup extends Component {
                 <div className='create-group--row'>
                     <div className='col-md-6'>
                         <h3>name</h3>
-                        <input onChange={this.handleChangeState} value={name} name='name' className='form-control' type="text"/>
+                        <input onChange={this.handleChange} value={name} name='name' className='form-control' type="text"/>
                         <h3>title</h3>
-                        <input onChange={this.handleChangeState} value={title} name='title' className='form-control' type="text"/>
+                        <input onChange={this.handleChange} value={title} name='title' className='form-control' type="text"/>
                     </div>
 
                     <button onClick={this.createGroup} className='create-group__send btn btn-outline-primary'>Send</button>
