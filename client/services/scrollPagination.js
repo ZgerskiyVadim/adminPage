@@ -2,7 +2,7 @@ class ScrollPagination {
     loadMore(lengthOfItems, getItemsRequest) {
         const {isLoadMore} = this.state;
 
-        if (isLoadMore && isScrollDown()) {
+        if (isLoadMore && scrollDown()) {
             getItems.call(this, lengthOfItems, getItemsRequest);
         }
     }
@@ -21,7 +21,7 @@ class ScrollPagination {
 
 export default new ScrollPagination;
 
-function isScrollDown() {
+function scrollDown() {
     const scrollHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
     const positionOfScroll = window.scrollY;
     return Math.round(positionOfScroll) === scrollHeight;
