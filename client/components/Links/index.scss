@@ -1,0 +1,12 @@
+.links--row {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 2em;
+  .link {
+    cursor: pointer;
+    color: #007bff;
+  }
+  .link--margin-right {
+    margin-right: 1em;
+  }
+}

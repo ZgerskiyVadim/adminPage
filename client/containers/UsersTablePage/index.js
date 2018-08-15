@@ -13,6 +13,7 @@ import LoadingSpinner from '../../components/LoadingSpinner';
 import ModalWindow from '../../components/ModalWindow';
 import SearchComponent from '../../components/SearchInput';
 import showToastrMessage from "../../services/showToastrMessage";
+import {isEqualProps} from "../../services/isEqualProps";
 
 class Users extends Component {
     constructor(props) {
@@ -56,8 +57,8 @@ class Users extends Component {
     componentWillReceiveProps(nextProps) {
         const error = nextProps.users.error || nextProps.updatedUser.error || nextProps.removedUser.error;
 
-        showToastrMessage.compareActions(nextProps.updatedUser, this.props.updatedUser, 'User is updated');
-        showToastrMessage.compareActions(nextProps.removedUser, this.props.removedUser, 'User is removed');
+        !isEqualProps(this.props.updatedUser, nextProps.updatedUser) && showToastrMessage.success('User is updated');
+        !isEqualProps(this.props.removedUser, nextProps.removedUser) && showToastrMessage.success('User is removed');
         error && showToastrMessage.error(error);
     }
 

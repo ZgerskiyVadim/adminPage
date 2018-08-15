@@ -15,6 +15,7 @@ import LoadingSpinner from '../../components/LoadingSpinner';
 import ModalWindow from '../../components/ModalWindow';
 import SearchComponent from '../../components/SearchInput';
 import showToastrMessage from "../../services/showToastrMessage";
+import {isEqualProps} from "../../services/isEqualProps";
 
 class Groups extends Component {
     constructor(props) {
@@ -61,10 +62,8 @@ class Groups extends Component {
     componentWillReceiveProps(nextProps) {
         const error = nextProps.groups.error || nextProps.updatedGroup.error || nextProps.removedGroup.error || nextProps.userJoinedGroup.error || nextProps.userLeftGroup.error;
 
-        showToastrMessage.compareActions(nextProps.updatedGroup, this.props.updatedGroup, 'Group is updated');
-        showToastrMessage.compareActions(nextProps.removedGroup, this.props.removedGroup, 'Group is removed');
-        showToastrMessage.compareActions(nextProps.userJoinedGroup, this.props.userJoinedGroup, 'User joined group');
-        showToastrMessage.compareActions(nextProps.userLeftGroup, this.props.userLeftGroup, 'User left group');
+        !isEqualProps(this.props.updatedGroup, nextProps.updatedGroup) && showToastrMessage.success('Group is updated');
+        !isEqualProps(this.props.removedGroup, nextProps.removedGroup) && showToastrMessage.success('Group is removed');
         error && showToastrMessage.error(error);
     }
 

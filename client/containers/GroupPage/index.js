@@ -14,6 +14,7 @@ import LoadingSpinner from '../../components/LoadingSpinner';
 import ModalWindow from '../../components/ModalWindow';
 import SearchComponent from '../../components/SearchInput';
 import showToastrMessage from "../../services/showToastrMessage";
+import {isEqualProps} from "../../services/isEqualProps";
 
 class Group extends Component {
     constructor(props) {
@@ -56,6 +57,7 @@ class Group extends Component {
     componentWillReceiveProps(nextProps) {
         const error = nextProps.group.error || nextProps.updatedGroup.error;
 
+        !isEqualProps(this.props.updatedGroup, nextProps.updatedGroup) && showToastrMessage.success('Group is updated');
         error && showToastrMessage.error(error);
     }
 

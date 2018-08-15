@@ -14,6 +14,7 @@ import redirectOnPage from '../../services/redirectOnPage';
 import LoadingSpinner from '../../components/LoadingSpinner';
 import SearchComponent from '../../components/SearchInput';
 import showToastrMessage from "../../services/showToastrMessage";
+import {isEqualProps} from "../../services/isEqualProps";
 
 class User extends Component {
     constructor(props) {
@@ -59,8 +60,7 @@ class User extends Component {
     componentWillReceiveProps(nextProps) {
         const error = nextProps.user.error || nextProps.updatedUser.error || nextProps.userJoinedGroup.error || nextProps.userLeftGroup.error;
 
-        showToastrMessage.compareActions(nextProps.updatedUser, this.props.updatedUser, 'User is updated');
-        showToastrMessage.compareActions(nextProps.userLeftGroup, this.props.userLeftGroup, 'User left group');
+        !isEqualProps(this.props.updatedUser, nextProps.updatedUser) && showToastrMessage.success('User is updated');
         error && showToastrMessage.error(error);
     }
 
@@ -211,6 +211,7 @@ User.propTypes = {
     user: PropTypes.object.isRequired,
     groups: PropTypes.array.isRequired,
     updatedUser: PropTypes.object.isRequired,
+    userJoinedGroup: PropTypes.object.isRequired,
     userLeftGroup: PropTypes.object.isRequired,
     loading: PropTypes.bool.isRequired
 };
@@ -219,6 +220,7 @@ const mapStateToProps = (state) => ({
     user: state.Users.user,
     groups: state.Users.user.data.groups,
     updatedUser: state.Users.updatedUser,
+    userJoinedGroup: state.Users.userJoinedGroup,
     userLeftGroup: state.Users.userLeftGroup,
     loading: state.Users.user.loading || state.Users.updatedUser.loading || state.Users.userJoinedGroup.loading || state.Users.userLeftGroup.loading
 });

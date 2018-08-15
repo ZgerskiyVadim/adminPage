@@ -3,11 +3,11 @@ import toastr from "toastr";
 class ShowToastrMessage {
 
     success(message, title) {
-        toastr.success(message, title || 'Ok!');
+        toastr.success(message || 'Success', title || 'Ok!');
     }
 
     info(message, title) {
-        toastr.info(message, title || 'Ok!');
+        toastr.info(message || 'Success', title || 'Ok!');
     }
 
     error(error, title) {
@@ -15,12 +15,9 @@ class ShowToastrMessage {
         const errmsg = error && error.response && error.response.data.errmsg;
         const errorMessage = error && (message || errmsg || error.message || error);
 
-        toastr.error(errorMessage, title || 'Oops!');
+        toastr.error(errorMessage || 'Something wrong', title || 'Oops!');
     }
 
-    compareActions(previousProps, nextProps, message) {
-        (previousProps.data._id !== nextProps.data._id) && this.info(message);
-    }
 }
 
 export default new ShowToastrMessage();
