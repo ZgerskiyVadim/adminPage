@@ -11,8 +11,6 @@ describe('NotFoundPage component', () => {
     it('should render not found', () => {
         const component = shallow(<NotFoundPage />);
 
-        expect(component).toMatchSnapshot();
-
         expect(component.find('.notFound').length).toBe(1);
     });
 

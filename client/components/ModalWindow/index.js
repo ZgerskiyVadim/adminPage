@@ -7,19 +7,19 @@ class ModalWindow extends PureComponent {
     constructor(props) {
         super(props);
 
-        this.successModal = this.successModal.bind(this);
+        this.removeItem = this.removeItem.bind(this);
         this.handleClickOutside = this.handleClickOutside.bind(this);
     }
 
     componentDidMount() {
-        this.modalRoot && this.modalRoot.addEventListener('click', this.handleClickOutside);
+        document.addEventListener('click', this.handleClickOutside);
     }
 
     componentWillUnmount() {
-        this.modalRoot && this.modalRoot.removeEventListener('click', this.handleClickOutside);
+        document.removeEventListener('click', this.handleClickOutside);
     }
 
-    successModal() {
+    removeItem() {
         const {remove, closeModal} = this.props;
         remove();
         closeModal();
@@ -27,7 +27,7 @@ class ModalWindow extends PureComponent {
 
     handleClickOutside(event) {
         event.preventDefault();
-        if (!this.modalContent.contains(event.target)) {
+        if (!this.modalContent.contains(event.target) && this.modalRoot.contains(event.target)) {
             this.props.closeModal();
         }
     };
@@ -36,7 +36,7 @@ class ModalWindow extends PureComponent {
         const {showModal, closeModal} = this.props;
 
         return (
-            <div ref={node => this.modalRoot = node} className={classNames('modal-root', {'modal--hide': !showModal})}>
+            <div ref={node => this.modalRoot = node} className={classNames('modal-cover', {'modal--hide': !showModal})}>
                 <div className='modal-window'>
                     <div className="modal-dialog" role="document">
                         <div ref={node => this.modalContent = node} className={classNames('modal-content', {'modal-content--hide': !showModal})}>
@@ -47,7 +47,7 @@ class ModalWindow extends PureComponent {
                                 </button>
                             </div>
                             <div className="modal-footer">
-                                <button onClick={this.successModal} type="button" className="btn btn-success">Yes</button>
+                                <button onClick={this.removeItem} type="button" className="btn btn-success">Yes</button>
                                 <button onClick={closeModal} type="button" className="btn btn-info" data-dismiss="modal">Close</button>
                             </div>
                         </div>

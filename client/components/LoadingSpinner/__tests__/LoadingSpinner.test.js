@@ -10,8 +10,6 @@ describe('LoadingSpinner component', () => {
     it('should render cover and loading spinner', () => {
         const component = shallow(<LoadingSpinner />);
 
-        expect(component).toMatchSnapshot();
-
         expect(component.find('.cover').length).toBe(1);
 
         expect(component.find('.loader').length).toBe(1);
@@ -20,15 +18,11 @@ describe('LoadingSpinner component', () => {
     it('should show loading spinner', () => {
         const component = shallow(<LoadingSpinner loading={true} />);
 
-        expect(component).toMatchSnapshot();
-
         expect(component.find('.loader--hide').length).toBe(0);
     });
 
     it('should hide loading spinner', () => {
         const component = shallow(<LoadingSpinner loading={false} />);
-
-        expect(component).toMatchSnapshot();
 
         expect(component.find('.loader--hide').length).toBe(1);
     })

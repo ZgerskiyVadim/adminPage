@@ -10,8 +10,6 @@ describe('Links component', () => {
     it('should render links list', () => {
         const component = shallow(<Links />);
 
-        expect(component).toMatchSnapshot();
-
         expect(component.find('.links--row').length).toBe(1);
 
         expect(component.find('.nav-item').length).toBe(2);
@@ -20,16 +18,12 @@ describe('Links component', () => {
     it('should show active link users', () => {
         const component = shallow(<Links lastBreadCrumb={ {path: 'users'} } />);
 
-        expect(component).toMatchSnapshot();
-
         expect(component.find('.link-users').hasClass('active')).toBe(true);
         expect(component.find('.link-groups').hasClass('active')).toBe(false);
     });
 
     it('should show active link groups', () => {
         const component = shallow(<Links lastBreadCrumb={ {path: 'groups'} } />);
-
-        expect(component).toMatchSnapshot();
 
         expect(component.find('.link-groups').hasClass('active')).toBe(true);
         expect(component.find('.link-users').hasClass('active')).toBe(false);
