@@ -5,7 +5,7 @@ import Groups from './containers/GroupsTablePage';
 import GroupPage from './containers/GroupPage';
 import Users from './containers/UsersTablePage';
 import UserPage from './containers/UserPage';
-import HomePage from './containers/HomePage';
+import CreatePage from './containers/createPage';
 import LoginPage from './containers/LoginPage';
 import CreateUser from './containers/CreateUserPage';
 import CreateGroup from './containers/CreateGroupPage';
@@ -16,8 +16,8 @@ export default class Routes extends Component {
     render() {
         return (
             <Switch>
-                <Route exact path="/" component={HomePage}/>
-                <Route exact path="/login" component={LoginPage}/>
+                <Route exact path="/" component={LoginPage}/>
+                <Route exact path="/create" component={CreatePage}/>
                 <PrivateRoute exact path="/users" component={Users}/>
                 <PrivateRoute path="/users/:id" component={UserPage}/>
                 <PrivateRoute exact path="/groups" component={Groups}/>

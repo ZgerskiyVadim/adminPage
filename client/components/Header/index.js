@@ -5,7 +5,7 @@ import { withRouter } from 'react-router';
 
 import './index.scss';
 import classNames from 'classnames';
-import AuthenticationService from '../../services/authenticationService';
+import authenticationService from '../../services/authenticationService';
 
 class Header extends PureComponent {
     constructor(props) {
@@ -14,16 +14,16 @@ class Header extends PureComponent {
     }
 
     logout() {
-        AuthenticationService.logout();
+        authenticationService.logout();
     }
 
     render() {
-        const isAuthenticated = AuthenticationService.isHaveSessionCookie();
+        const isAuthenticated = authenticationService.isHaveSessionCookie();
 
         return (
             <div>
                 <nav className="navbar navbar-expand-sm bg-dark navbar-dark">
-                    <Link to='/login' className={classNames("navbar-brand", {'header--hide': isAuthenticated})}>Login</Link>
+                    <Link to='/' className={classNames("navbar-brand", {'header--hide': isAuthenticated})}>Login</Link>
                     <span onClick={this.logout} className={classNames("navbar-brand", {'header--hide': !isAuthenticated})}>Logout</span>
                 </nav>
             </div>

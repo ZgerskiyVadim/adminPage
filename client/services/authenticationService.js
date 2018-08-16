@@ -21,7 +21,7 @@ class AuthenticationService {
 
     logout() {
         axios.get('/auth/logout')
-            .then(() =>  redirectOnPage.path('/login'))
+            .then(() =>  redirectOnPage.path('/'))
             .catch(error => showToastrMessage.error(error))
     }
 }

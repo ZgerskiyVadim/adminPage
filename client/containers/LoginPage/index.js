@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 
 import './index.scss';
 import formsOperations from "../../services/formsOperations";
-import AuthenticationService from "../../services/authenticationService";
+import authenticationService from "../../services/authenticationService";
 
 class LoginPage extends Component {
     constructor(props) {
@@ -18,7 +18,7 @@ class LoginPage extends Component {
     }
 
     login() {
-        AuthenticationService.login(this.state);
+        authenticationService.login(this.state);
     };
 
     render() {

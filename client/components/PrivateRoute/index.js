@@ -3,18 +3,18 @@ import {
     Route,
     Redirect,
 } from "react-router-dom";
-import AuthenticationService from '../../services/authenticationService';
+import authenticationService from '../../services/authenticationService';
 
 const PrivateRoute = ({ component: Component, ...rest }) => (
     <Route
         {...rest}
         render={props =>
-            AuthenticationService.isHaveSessionCookie() ? (
+            authenticationService.isHaveSessionCookie() ? (
                 <Component {...props} />
             ) : (
                 <Redirect
                     to={{
-                        pathname: "/login",
+                        pathname: "/",
                         state: { from: props.location }
                     }}
                 />
