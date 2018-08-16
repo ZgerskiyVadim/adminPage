@@ -2,7 +2,7 @@ import React from 'react';
 import { shallow } from 'enzyme';
 import HomePage from '../index';
 
-describe('HomePage component', () => {
+describe('CreatePage component', () => {
     it('renders without errors', () => {
         const component = shallow(<HomePage />);
 

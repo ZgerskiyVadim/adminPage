@@ -6,7 +6,7 @@ import { withRouter } from 'react-router';
 import formsOperations from '../../services/formsOperations';
 import redirectOnPage from '../../services/redirectOnPage';
 
-class Group extends Component {
+export class Group extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -17,7 +17,7 @@ class Group extends Component {
             userID: this.props.userID ? this.props.userID : null
         };
 
-        this.showForms = formsOperations.showForms.bind(this, this.props.group._id);
+        this.showForms = formsOperations.showForms.bind(this);
         this.handleChange = formsOperations.handleChange.bind(this);
         this.goToGroup = this.goToGroup.bind(this);
         this.handleClick = this.handleClick.bind(this);
@@ -86,7 +86,7 @@ class Group extends Component {
                     <h5>{users.length}</h5>
                 </td>
                 <td className='groups__buttons'>
-                    <button onClick={this.showForms} className={classNames('groups--margin-right btn btn-outline-primary', shownForm, notJoiningGroup)}>Update</button>
+                    <button onClick={(event) => this.showForms(_id, event)} className={classNames('groups--margin-right btn btn-outline-primary', shownForm, notJoiningGroup)}>Update</button>
                     <button onClick={this.sendOptionsUpdate} className={classNames('groups--margin-right btn btn-outline-primary', hiddenForm)}>Save</button>
                     <button onClick={(event) => this.remove(_id, event)} className={classNames('btn btn-outline-danger', notJoiningGroup)}>Remove</button>
                     <button onClick={(event) => this.sendOptionsJoinGroup(_id, event)} className={classNames('btn btn-outline-info', userAlreadyInGroup)}>Join group</button>

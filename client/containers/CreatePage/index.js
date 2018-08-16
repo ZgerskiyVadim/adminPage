@@ -3,7 +3,7 @@ import {Link} from 'react-router-dom';
 
 import './index.scss';
 
-export default class Home extends Component {
+export default class CreatePage extends Component {
     render() {
         return (
             <div className='home'>

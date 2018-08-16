@@ -5,7 +5,7 @@ import Groups from './containers/GroupsTablePage';
 import GroupPage from './containers/GroupPage';
 import Users from './containers/UsersTablePage';
 import UserPage from './containers/UserPage';
-import CreatePage from './containers/createPage';
+import CreatePage from './containers/CreatePage';
 import LoginPage from './containers/LoginPage';
 import CreateUser from './containers/CreateUserPage';
 import CreateGroup from './containers/CreateGroupPage';

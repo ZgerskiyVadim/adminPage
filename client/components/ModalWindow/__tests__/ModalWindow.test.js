@@ -40,9 +40,7 @@ describe('ModalWindow component', () => {
             closeModal={closeModal}
         />);
 
-        const closeTab = component.find('.close').at(0);
-
-        closeTab.props().onClick();
+        component.find('.close').at(0).props().onClick();
 
         expect(closeModal).toHaveBeenCalledTimes(1);
     });
@@ -55,12 +53,9 @@ describe('ModalWindow component', () => {
             closeModal={closeModal}
         />);
 
-        const removeTab = component.find('.btn-success').at(0);
-
-        removeTab.props().onClick();
+       component.find('.btn-success').at(0).props().onClick();
 
         expect(remove).toHaveBeenCalledTimes(1);
         expect(closeModal).toHaveBeenCalledTimes(1);
-    })
-
+    });
 });

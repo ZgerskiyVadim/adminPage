@@ -27,6 +27,26 @@ describe('Links component', () => {
 
         expect(component.find('.link-groups').hasClass('active')).toBe(true);
         expect(component.find('.link-users').hasClass('active')).toBe(false);
+    });
+
+    it('should call "goToUsersPage" after click on link users', () => {
+        const component = shallow(<Links />);
+
+        const spy = jest.spyOn(component.instance(), 'goToUsersPage');
+        component.instance().forceUpdate();
+
+        component.find('.link-users').at(0).props().onClick();
+        expect(spy).toHaveBeenCalledTimes(1);
+    });
+
+    it('should call "goToGroupsPage" after click on link groups', () => {
+        const component = shallow(<Links />);
+
+        const spy = jest.spyOn(component.instance(), 'goToGroupsPage');
+        component.instance().forceUpdate();
+
+        component.find('.link-groups').at(0).props().onClick();
+        expect(spy).toHaveBeenCalledTimes(1);
     })
 
 });

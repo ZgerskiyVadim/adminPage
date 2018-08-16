@@ -7,7 +7,7 @@ import './index.scss';
 import classNames from 'classnames';
 import authenticationService from '../../services/authenticationService';
 
-class Header extends PureComponent {
+export class Header extends PureComponent {
     constructor(props) {
         super(props);
         this.logout = this.logout.bind(this);

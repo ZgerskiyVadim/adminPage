@@ -28,7 +28,7 @@ describe('SearchInput component', () => {
             search={search}
         />);
 
-        expect(component.find('.form-control').simulate('change', {},'someValue'));
+        expect(component.find('.form-control').simulate('change'));
 
         expect(search).toHaveBeenCalledTimes(1);
     });
