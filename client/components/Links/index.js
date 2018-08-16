@@ -1,4 +1,5 @@
 import React, {PureComponent} from 'react';
+import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import './index.scss';
 import redirectOnPage from '../../services/redirectOnPage';
@@ -28,10 +29,10 @@ class Links extends PureComponent {
             <div className='links--row'>
                 <ul className='nav nav-pills'>
                     <li className="link nav-item">
-                        <a onClick={this.goToUsersPage} className={classNames("nav-link border border-primary link--margin-right", {'active': lastPathIsUsers})}>Users</a>
+                        <a onClick={this.goToUsersPage} className={classNames("link-users nav-link border border-primary link--margin-right", {'active': lastPathIsUsers})}>Users</a>
                     </li>
                     <li className="link nav-item">
-                        <a onClick={this.goToGroupsPage} className={classNames("nav-link border border-primary", {'active': lastPathIsGroups})}>Groups</a>
+                        <a onClick={this.goToGroupsPage} className={classNames("link-groups nav-link border border-primary", {'active': lastPathIsGroups})}>Groups</a>
                     </li>
                 </ul>
 
@@ -40,5 +41,13 @@ class Links extends PureComponent {
     }
 
 }
+
+Links.defaultProps = {
+    lastBreadCrumb: {}
+};
+
+Links.propTypes = {
+    lastBreadCrumb: PropTypes.object
+};
 
 export default Links;

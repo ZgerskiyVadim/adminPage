@@ -62,7 +62,7 @@ class Groups extends Component {
     componentWillReceiveProps(nextProps) {
         const error = nextProps.groups.error || nextProps.updatedGroup.error || nextProps.removedGroup.error || nextProps.userJoinedGroup.error || nextProps.userLeftGroup.error;
 
-        !isEqualProps(this.props.updatedGroup.data, nextProps.updatedGroup.data) && showToastrMessage.success('Group is updated');
+        !isEqualProps(this.props.updatedGroup.data, nextProps.updatedGroup.data) && showToastrMessage.success();
         !isEqualProps(this.props.removedGroup.data, nextProps.removedGroup.data) && showToastrMessage.success('Group is removed');
         error && showToastrMessage.error(error);
     }
@@ -192,7 +192,7 @@ class Groups extends Component {
                 </table>
                 <LoadingSpinner loading={loading}/>
                 <ModalWindow
-                    isShow={showModal}
+                    showModal={showModal}
                     remove={() => this.remove(groupID)}
                     closeModal={this.closeModal}
                 />

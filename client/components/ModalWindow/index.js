@@ -1,5 +1,5 @@
 import React, { PureComponent } from 'react';
-import {createPortal} from "react-dom";
+import PropTypes from 'prop-types';
 import './index.scss';
 import classNames from 'classnames';
 
@@ -12,16 +12,17 @@ class ModalWindow extends PureComponent {
     }
 
     componentDidMount() {
-        this.modalRoot.addEventListener('click', this.handleClickOutside);
+        this.modalRoot && this.modalRoot.addEventListener('click', this.handleClickOutside);
     }
 
     componentWillUnmount() {
-        this.modalRoot.removeEventListener('click', this.handleClickOutside);
+        this.modalRoot && this.modalRoot.removeEventListener('click', this.handleClickOutside);
     }
 
     successModal() {
-        this.props.remove();
-        this.props.closeModal();
+        const {remove, closeModal} = this.props;
+        remove();
+        closeModal();
     };
 
     handleClickOutside(event) {
@@ -32,13 +33,13 @@ class ModalWindow extends PureComponent {
     };
 
     render() {
-        const {isShow, closeModal} = this.props;
+        const {showModal, closeModal} = this.props;
 
-        return createPortal(
-            <div ref={node => this.modalRoot = node} className={classNames('modal-root', {'modal--hide': !isShow})}>
+        return (
+            <div ref={node => this.modalRoot = node} className={classNames('modal-root', {'modal--hide': !showModal})}>
                 <div className='modal-window'>
                     <div className="modal-dialog" role="document">
-                        <div ref={node => this.modalContent = node} className={classNames('modal-content', {'modal-content--hide': !isShow})}>
+                        <div ref={node => this.modalContent = node} className={classNames('modal-content', {'modal-content--hide': !showModal})}>
                             <div className="modal-header">
                                 <h5 className="modal-title">Are you sure?</h5>
                                 <button onClick={closeModal} type="button" className="close" data-dismiss="modal" aria-label="Close">
@@ -52,10 +53,19 @@ class ModalWindow extends PureComponent {
                         </div>
                     </div>
                 </div>
-            </div>,
-            document.getElementById('modal-window')
+            </div>
         )
     }
 }
+
+ModalWindow.defaultProps = {
+    showModal: false
+};
+
+ModalWindow.propTypes = {
+    showModal: PropTypes.bool,
+    closeModal: PropTypes.func,
+    modalRoot: PropTypes.node
+};
 
 export default ModalWindow;

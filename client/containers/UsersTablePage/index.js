@@ -149,7 +149,7 @@ class Users extends Component {
                 </table>
                 <LoadingSpinner loading={loading}/>
                 <ModalWindow
-                    isShow={showModal}
+                    showModal={showModal}
                     remove={() => this.remove(userID)}
                     closeModal={this.closeModal}
                 />

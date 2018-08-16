@@ -57,7 +57,7 @@ class Group extends Component {
     componentWillReceiveProps(nextProps) {
         const error = nextProps.group.error || nextProps.updatedGroup.error;
 
-        !isEqualProps(this.props.updatedGroup.data, nextProps.updatedGroup.data) && showToastrMessage.success('Group is updated');
+        !isEqualProps(this.props.updatedGroup.data, nextProps.updatedGroup.data) && showToastrMessage.success();
         error && showToastrMessage.error(error);
     }
 
@@ -187,7 +187,7 @@ class Group extends Component {
                 </div>
                 <LoadingSpinner loading={loading}/>
                 <ModalWindow
-                    isShow={state.showModal}
+                    showModal={state.showModal}
                     remove={() => this.removeUser(state.userID)}
                     closeModal={this.closeModal}
                 />
