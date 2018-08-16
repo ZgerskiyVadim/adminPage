@@ -5,7 +5,7 @@ import './index.scss';
 import redirectOnPage from '../../services/redirectOnPage';
 import Links from '../Links';
 
-class Breadcrumb extends PureComponent {
+export class Breadcrumb extends PureComponent {
     constructor(props) {
         super(props);
 

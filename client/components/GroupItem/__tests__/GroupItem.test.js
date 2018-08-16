@@ -31,7 +31,7 @@ describe('GroupItem component', () => {
 
     });
 
-    it('should call "handleChange" after click onChange', () => {
+    it('should call "handleChange" after change form', () => {
 
         const component = shallow(<Group group={group}/>);
 
@@ -42,6 +42,20 @@ describe('GroupItem component', () => {
         expect(component.find('[name="title"]').at(0).simulate('change', event));
 
         expect(spy).toHaveBeenCalledTimes(2);
+    });
+
+    it('should call "handleClick" after click on form', () => {
+        event.stopPropagation = jest.fn();
+        const component = shallow(<Group group={group}/>);
+
+        const spy = jest.spyOn(component.instance(), 'handleClick');
+        component.instance().forceUpdate();
+
+        expect(component.find('[name="name"]').at(0).simulate('click', event));
+        expect(component.find('[name="title"]').at(0).simulate('click', event));
+
+        expect(spy).toHaveBeenCalledTimes(2);
+        expect(event.stopPropagation).toHaveBeenCalledTimes(2);
     });
 
     it('should call "goToGroup" after click component', () => {

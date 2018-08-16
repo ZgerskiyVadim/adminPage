@@ -37,7 +37,7 @@ class User extends Component {
 
         this.loadMore = this.loadMore.bind(this);
         this.handleChange = formsOperations.handleChange.bind(this);
-        this.showForms = formsOperations.showForms.bind(this, this.state.options.id);
+        this.showForms = formsOperations.showForms.bind(this);
         this.goToGroup = this.goToGroup.bind(this);
         this.searchGroups = this.searchGroups.bind(this);
         this.updateUser = this.updateUser.bind(this);
@@ -120,7 +120,7 @@ class User extends Component {
     render() {
         const {username, firstName, lastName, email} = this.props.user.data;
         const {groups, loading} = this.props;
-        const {showForm, ...state} = this.state;
+        const {options, showForm, ...state} = this.state;
 
         const hiddenForm = classNames({'user--hide': !showForm});
         const shownForm = classNames('user--margin-right btn btn-outline-primary', {'user--hide': showForm});
@@ -142,7 +142,7 @@ class User extends Component {
                         <h3>password: ****</h3>
                         <input onChange={this.handleChange} value={state.password} className={classNames('form-control', hiddenForm)} name='password' type="password"/>
                     </div>
-                    <button onClick={this.showForms} className={shownForm}>Update</button>
+                    <button onClick={(event) => this.showForms(options.id, event)} className={shownForm}>Update</button>
                     <button onClick={this.updateUser} className={classNames('user--margin-right btn btn-outline-primary', hiddenForm)}>Save</button>
                     <button onClick={this.startJoiningGroup} className='btn btn-outline-info'>Join group</button>
                 </div>
