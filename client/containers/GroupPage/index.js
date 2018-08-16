@@ -16,7 +16,7 @@ import SearchComponent from '../../components/SearchInput';
 import showToastrMessage from "../../services/showToastrMessage";
 import {isEqualProps} from "../../services/isEqualProps";
 
-class Group extends Component {
+export class Group extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -35,7 +35,7 @@ class Group extends Component {
         };
 
         this.loadMore = this.loadMore.bind(this);
-        this.showForms = formsOperations.showForms.bind(this, this.state.options.id);
+        this.showForms = formsOperations.showForms.bind(this);
         this.handleChange = formsOperations.handleChange.bind(this);
         this.goToUser = this.goToUser.bind(this);
         this.searchUsers = this.searchUsers.bind(this);
@@ -114,11 +114,11 @@ class Group extends Component {
     render() {
         const {name, title} = this.props.group.data;
         const {users, loading} = this.props;
-        const {...state} = this.state;
+        const {options, showForm, ...state} = this.state;
 
-        const hiddenForm = classNames({'group--hide': !state.showForm});
-        const shownForm = classNames({'group--hide': state.showForm});
-        const isUsers = classNames({'group--hide': !users.length && !state.options.searchBy});
+        const hiddenForm = classNames({'group--hide': !showForm});
+        const shownForm = classNames({'group--hide': showForm});
+        const isUsers = classNames({'group--hide': !users.length && !options.searchBy});
 
         return (
             <div className='group'>
@@ -131,7 +131,7 @@ class Group extends Component {
                         <input onChange={this.handleChange} value={state.title} className={classNames('form-control', hiddenForm)} name='title' type="text"/>
                     </div>
 
-                    <button onClick={this.showForms} className={classNames('btn btn-outline-primary', shownForm)}>Update</button>
+                    <button onClick={(event) => this.showForms(options.id, event)} className={classNames('btn btn-outline-primary', shownForm)}>Update</button>
                     <button onClick={this.updateGroup} className={classNames('btn btn-outline-primary', hiddenForm)}>Save</button>
                 </div>
 
