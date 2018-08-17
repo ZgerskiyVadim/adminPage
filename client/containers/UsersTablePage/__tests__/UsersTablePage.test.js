@@ -6,7 +6,7 @@ import * as actions from '../../../actions/action_creators/users';
 import LoadingSpinner from '../../../components/LoadingSpinner';
 import ModalWindow from "../../../components/ModalWindow";
 import SearchInput from "../../../components/SearchInput";
-import {User} from '../../../components/UserItem/user';
+import User from '../../../components/UserItem/user';
 
 const user = {
     username: 'username',
@@ -32,7 +32,7 @@ const event = {
 
 describe('Users component', () => {
 
-    it('renders without errors', () => {
+    it('render Users component', () => {
 
         const component = shallow(<Users
             users={users}
@@ -54,16 +54,17 @@ describe('Users component', () => {
     it('should call fetch when mounted', () => {
         const mockUsersRequest = jest.fn();
 
-        const component = mount(
-            <Router>
-                <Users
-                    users={users}
-                    actions={{...actions, getUsersRequest: mockUsersRequest}}
-                />
-            </Router>);
+        const component = shallow(<Users
+            users={users}
+            actions={{...actions, getUsersRequest: mockUsersRequest}}
+        />);
+        const expectedGetUsers = {
+            searchBy: component.state().options.searchBy,
+            limit: component.state().options.limit
+        };
 
-        expect(component).toBeDefined();
-        expect(mockUsersRequest).toHaveBeenCalledTimes(1);
+        const [call = []] = mockUsersRequest.mock.calls;
+        expect(call).toEqual([expectedGetUsers]);
     });
 
     it('show loading spinner', () => {
@@ -82,110 +83,76 @@ describe('Users component', () => {
 
     it('should call "searchUsers" after onChange form in SearchInput component', () => {
         const mockUsersRequest = jest.fn();
+        const mockEvent = {target: {value: 'search'}};
         const component = shallow(<Users
             users={users}
             actions={{...actions, getUsersRequest: mockUsersRequest}}
         />);
 
-        const spy = jest.spyOn(component.instance(), 'searchUsers');
-        component.instance().forceUpdate();
+        component.find(SearchInput).props().search(mockEvent);
+        expect(component.state().options.searchBy).toBe(mockEvent.target.value);
 
-        const searchInputComponent = shallow(<SearchInput
-            search={component.instance().searchUsers}
-        />);
-
-        expect(searchInputComponent.find('.form-control').simulate('change', event));
-
-        expect(spy).toHaveBeenCalledTimes(1);
         expect(mockUsersRequest).toHaveBeenCalledTimes(2);
     });
 
-    it('should call "remove" after click button "remove" in User component', () => {
+    it('should call "remove" after click "remove" button in User component and click "yes" in ModalWindow component', () => {
         const mockRemoveUserRequest = jest.fn();
-        const closeModal = jest.fn();
+        const expectedRemovedUser = user._id;
         const component = shallow(<Users
             users={users}
             actions={{...actions, removeUserRequest: mockRemoveUserRequest}}
         />);
 
-        const spy = jest.spyOn(component.instance(), 'remove');
-        component.instance().forceUpdate();
+        component.find(User).at(0).props().showModal(user._id, event);
+        component.find(ModalWindow).props().remove();
 
-        const modalWindowComponent =  shallow(<ModalWindow
-            remove={component.instance().remove}
-            closeModal={closeModal}
-        />);
-        expect(modalWindowComponent.find('.btn-success').at(0).simulate('click'));
-
-        expect(spy).toHaveBeenCalledTimes(1);
-        expect(mockRemoveUserRequest).toHaveBeenCalledTimes(1);
+        const [call = []] = mockRemoveUserRequest.mock.calls;
+        expect(call).toEqual([expectedRemovedUser]);
     });
 
-    it('should call "showModal" after click "remove" in User component', () => {
+    it('should call "showModal" after click "remove" button in User component', () => {
         const component = shallow(<Users
             users={users}
             actions={actions}
         />);
 
-        const spy = jest.spyOn(component.instance(), 'showModal');
-        component.instance().forceUpdate();
+        component.find(User).at(0).props().showModal(user._id, event);
 
-        const userComponent = shallow(<User
-            user={user}
-            showModal={component.instance().showModal}
-        />);
-
-        expect(userComponent.find('.btn-outline-danger').at(0).simulate('click', event, user._id));
         expect(component.state().userID).toBe(user._id);
         expect(component.state().showModal).toBe(true);
-
-        expect(spy).toHaveBeenCalledTimes(1);
     });
 
-    it('should call "closeModal" after click "close" in ModalWindow component', () => {
-        const remove = jest.fn();
-
+    it('should call "closeModal" after click "close" button in ModalWindow component', () => {
         const component = shallow(<Users
             users={users}
             actions={actions}
-            showModal={true}
         />);
 
-        const spy = jest.spyOn(component.instance(), 'closeModal');
-        component.instance().forceUpdate();
+        component.find(User).at(0).props().showModal(user._id, event);
+        expect(component.state().showModal).toBe(true);
 
-        const modalWindowComponent = shallow(<ModalWindow
-            remove={remove}
-            closeModal={component.instance().closeModal}
-        />);
-
-        modalWindowComponent.find('.close').at(0).props().onClick();
+        component.find(ModalWindow).props().closeModal(event);
         expect(component.state().showModal).toBe(false);
-
-        expect(spy).toHaveBeenCalledTimes(1);
     });
 
-    it('should call "updateUser" after click "save" in User component', () => {
-        event.stopPropagation = jest.fn();
+    it('should call "updateUser" after click "save" button in User component', () => {
         const mockUpdateUserRequest = jest.fn();
+        const expectedUpdatedUser = {
+            id: user._id,
+            username: 'new username'
+        };
         const component = shallow(<Users
             users={users}
             actions={{...actions, updateUserRequest: mockUpdateUserRequest}}
         />);
 
-        const spy = jest.spyOn(component.instance(), 'updateUser');
-        component.instance().forceUpdate();
+        component.find(User).at(0).props().update({
+            id: user._id,
+            username: 'new username'
+        });
 
-        const userComponent = shallow(<User
-            user={user}
-            update={component.instance().updateUser}
-        />);
-
-        expect(userComponent.find('.btn-outline-primary').at(1).simulate('click', event, user._id));
-
-        expect(spy).toHaveBeenCalledTimes(1);
-        expect(mockUpdateUserRequest).toHaveBeenCalledTimes(1);
-        expect(event.stopPropagation).toHaveBeenCalledTimes(1);
+        const [call = []] = mockUpdateUserRequest.mock.calls;
+        expect(call).toEqual([expectedUpdatedUser]);
     });
 
 });

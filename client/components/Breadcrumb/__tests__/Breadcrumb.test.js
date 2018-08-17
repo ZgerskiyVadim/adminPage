@@ -8,7 +8,7 @@ const location = {
 
 describe('Breadcrumb component', () => {
 
-    it('renders without errors', () => {
+    it('render Breadcrumb component', () => {
 
         const component = shallow(<Breadcrumb location={location} />);
 
@@ -16,9 +16,7 @@ describe('Breadcrumb component', () => {
 
         expect(component.find('.breadcrumb').length).toBe(1);
 
-        expect(component.find('.breadcrumb-item').length).toBe(1);
-
-        expect(component.find('.breadcrumb-item').at(0).text()).toBe('home');
+        expect(component.find('.breadcrumb-item').length).toBe(0);
 
     });
 
@@ -31,9 +29,9 @@ describe('Breadcrumb component', () => {
 
         expect(component.find('.breadcrumb').length).toBe(1);
 
-        expect(component.find('.breadcrumb-item').length).toBe(2);
+        expect(component.find('.breadcrumb-item').length).toBe(1);
 
-        expect(component.find('.breadcrumb-item').at(1).text()).toBe('users');
+        expect(component.find('.breadcrumb-item').at(0).text()).toBe('users');
 
     });
 
@@ -44,7 +42,7 @@ describe('Breadcrumb component', () => {
             const spy = jest.spyOn(component.instance(), 'goToPath');
             component.instance().forceUpdate();
 
-            expect(component.find('.breadcrumb-item').at(0).simulate('click'));
+            component.find('.breadcrumb-item').at(0).simulate('click');
 
             expect(spy).toHaveBeenCalledTimes(1);
     });

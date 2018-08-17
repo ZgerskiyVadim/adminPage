@@ -4,7 +4,7 @@ import LoginPage from '../index';
 
 describe('LoginPage component', () => {
 
-    it('renders without errors', () => {
+    it('render LoginPage component', () => {
         const component = shallow(<LoginPage />);
 
         expect(component.find('.login').length).toBe(1);

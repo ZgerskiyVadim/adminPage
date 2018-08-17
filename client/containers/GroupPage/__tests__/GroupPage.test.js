@@ -42,7 +42,7 @@ const event = {
 
 describe('Group component', () => {
 
-    it('renders without errors', () => {
+    it('render Group component', () => {
 
         const component = shallow(<Group
             match={match}
@@ -124,7 +124,7 @@ describe('Group component', () => {
             remove={component.instance().removeUser}
             closeModal={closeModal}
         />);
-        expect(modalWindowComponent.find('.btn-success').at(0).simulate('click'));
+        modalWindowComponent.find('.btn-success').at(0).simulate('click');
 
         expect(spy).toHaveBeenCalledTimes(1);
         expect(mockRemoveRequest).toHaveBeenCalledTimes(1);
@@ -142,7 +142,7 @@ describe('Group component', () => {
         const spy = jest.spyOn(component.instance(), 'showModal');
         component.instance().forceUpdate();
 
-        expect(component.find('.group__remove-user').at(0).simulate('click', event, group.data._id));
+        component.find('.group__remove-user').at(0).simulate('click', event, group.data._id);
         expect(component.state().showModal).toBe(true);
         expect(component.state().userID).toBe(group.data._id);
 
@@ -172,7 +172,7 @@ describe('Group component', () => {
             closeModal={component.instance().closeModal}
         />);
 
-        expect(component.find('.group__remove-user').at(0).simulate('click', event, group.data._id));
+        component.find('.group__remove-user').at(0).simulate('click', event);
         expect(component.state().showModal).toBe(true);
 
         modalWindowComponent.find('.close').at(0).props().onClick();
@@ -196,7 +196,7 @@ describe('Group component', () => {
             search={component.instance().searchUsers}
         />);
 
-        expect(searchInputComponent.find('.form-control').simulate('change', event));
+        searchInputComponent.find('.form-control').simulate('change', event);
 
         expect(spy).toHaveBeenCalledTimes(1);
         expect(mockGroupRequest).toHaveBeenCalledTimes(2);
@@ -214,7 +214,7 @@ describe('Group component', () => {
         const spy = jest.spyOn(component.instance(), 'goToUser');
         component.instance().forceUpdate();
 
-        expect(component.find('.group__users-list').at(0).simulate('click'));
+        component.find('.group__users-list').at(0).simulate('click');
 
         expect(spy).toHaveBeenCalledTimes(1);
     });
@@ -230,7 +230,7 @@ describe('Group component', () => {
         const spy = jest.spyOn(component.instance(), 'showForms');
         component.instance().forceUpdate();
 
-        expect(component.find('.btn-outline-primary').at(0).simulate('click', event, group.data._id));
+        component.find('.btn-outline-primary').at(0).simulate('click', event);
         expect(component.state().id).toBe(group.data._id);
         expect(component.state().showForm).toBe(true);
 
@@ -251,9 +251,9 @@ describe('Group component', () => {
         const spy = jest.spyOn(component.instance(), 'updateGroup');
         component.instance().forceUpdate();
 
-        expect(component.find('.btn-outline-primary').at(0).simulate('click', event, group.data._id));
+        component.find('.btn-outline-primary').at(0).simulate('click', event);
         expect(component.state().showForm).toBe(true);
-        expect(component.find('.btn-outline-primary').at(1).simulate('click', event));
+        component.find('.btn-outline-primary').at(1).simulate('click', event);
         expect(component.state().showForm).toBe(false);
 
         expect(spy).toHaveBeenCalledTimes(1);
@@ -274,8 +274,8 @@ describe('Group component', () => {
         const spy = jest.spyOn(component.instance(), 'handleChange');
         component.instance().forceUpdate();
 
-        expect(component.find('[name="name"]').at(0).simulate('change', event));
-        expect(component.find('[name="title"]').at(0).simulate('change', event));
+        component.find('[name="name"]').at(0).simulate('change', event);
+        component.find('[name="title"]').at(0).simulate('change', event);
 
         expect(spy).toHaveBeenCalledTimes(2);
     });

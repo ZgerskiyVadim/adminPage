@@ -4,7 +4,7 @@ import ModalWindow from '../index';
 
 describe('ModalWindow component', () => {
 
-    it('renders without errors', () => {
+    it('render ModalWindow component', () => {
         shallow(<ModalWindow />);
     });
 

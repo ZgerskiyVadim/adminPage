@@ -1,7 +1,7 @@
 module.exports = {
     verbose: true,
     bail: true,
-    testURL: "http://localhost/4000",
+    testURL: "http://localhost/",
     testMatch: [
         "**/client/**/(*.)test.js"
     ],

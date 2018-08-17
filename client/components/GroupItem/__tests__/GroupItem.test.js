@@ -19,7 +19,7 @@ const event = {
 
 describe('GroupItem component', () => {
 
-    it('renders without errors', () => {
+    it('render GroupItem component', () => {
 
         const component = shallow(<Group group={group}/>);
 
@@ -38,8 +38,8 @@ describe('GroupItem component', () => {
         const spy = jest.spyOn(component.instance(), 'handleChange');
         component.instance().forceUpdate();
 
-        expect(component.find('[name="name"]').at(0).simulate('change', event));
-        expect(component.find('[name="title"]').at(0).simulate('change', event));
+        component.find('[name="name"]').at(0).simulate('change', event);
+        component.find('[name="title"]').at(0).simulate('change', event);
 
         expect(spy).toHaveBeenCalledTimes(2);
     });
@@ -51,8 +51,8 @@ describe('GroupItem component', () => {
         const spy = jest.spyOn(component.instance(), 'handleClick');
         component.instance().forceUpdate();
 
-        expect(component.find('[name="name"]').at(0).simulate('click', event));
-        expect(component.find('[name="title"]').at(0).simulate('click', event));
+        component.find('[name="name"]').at(0).simulate('click', event);
+        component.find('[name="title"]').at(0).simulate('click', event);
 
         expect(spy).toHaveBeenCalledTimes(2);
         expect(event.stopPropagation).toHaveBeenCalledTimes(2);
@@ -65,7 +65,7 @@ describe('GroupItem component', () => {
         const spy = jest.spyOn(component.instance(), 'goToGroup');
         component.instance().forceUpdate();
 
-        expect(component.find('.groups--cursor').at(0).simulate('click', event));
+        component.find('.groups--cursor').at(0).simulate('click', event);
 
         expect(spy).toHaveBeenCalledTimes(1);
     });
@@ -80,7 +80,7 @@ describe('GroupItem component', () => {
         const spy = jest.spyOn(component.instance(), 'remove');
         component.instance().forceUpdate();
 
-        expect(component.find('.btn-outline-danger').at(0).simulate('click', event, group._id));
+        component.find('.btn-outline-danger').at(0).simulate('click', event);
 
         expect(spy).toHaveBeenCalledTimes(1);
         expect(showModal).toHaveBeenCalledTimes(1);
@@ -97,9 +97,9 @@ describe('GroupItem component', () => {
         const spy = jest.spyOn(component.instance(), 'sendOptionsUpdate');
         component.instance().forceUpdate();
 
-        expect(component.find('.btn-outline-primary').at(0).simulate('click', event, group._id));
+        component.find('.btn-outline-primary').at(0).simulate('click', event);
         expect(component.state().showForm).toBe(true);
-        expect(component.find('.btn-outline-primary').at(1).simulate('click', event));
+        component.find('.btn-outline-primary').at(1).simulate('click', event);
         expect(component.state().showForm).toBe(false);
 
         expect(spy).toHaveBeenCalledTimes(1);
@@ -114,7 +114,7 @@ describe('GroupItem component', () => {
         const spy = jest.spyOn(component.instance(), 'showForms');
         component.instance().forceUpdate();
 
-        expect(component.find('.btn-outline-primary').at(0).simulate('click', event, group._id));
+        component.find('.btn-outline-primary').at(0).simulate('click', event);
         expect(component.state().id).toBe(group._id);
         expect(component.state().showForm).toBe(true);
 
@@ -135,7 +135,7 @@ describe('GroupItem component', () => {
         const spy = jest.spyOn(component.instance(), 'sendOptionsJoinGroup');
         component.instance().forceUpdate();
 
-        expect(component.find('.btn-outline-info').at(0).simulate('click', event, group._id));
+        component.find('.btn-outline-info').at(0).simulate('click', event);
 
         expect(spy).toHaveBeenCalledTimes(1);
         expect(joinGroup).toHaveBeenCalledTimes(1);
@@ -155,7 +155,7 @@ describe('GroupItem component', () => {
         const spy = jest.spyOn(component.instance(), 'sendOptionsLeaveGroup');
         component.instance().forceUpdate();
 
-        expect(component.find('.btn-outline-danger').at(1).simulate('click', event, group._id));
+        component.find('.btn-outline-danger').at(1).simulate('click', event);
 
         expect(spy).toHaveBeenCalledTimes(1);
         expect(leaveGroup).toHaveBeenCalledTimes(1);

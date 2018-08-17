@@ -4,7 +4,7 @@ import NotFoundPage from '../index';
 
 describe('NotFoundPage component', () => {
 
-    it('renders without errors', () => {
+    it('render NotFoundPage component', () => {
         shallow(<NotFoundPage />);
     });
 

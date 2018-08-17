@@ -3,7 +3,7 @@ import { shallow } from 'enzyme';
 import LoadingSpinner from '../index';
 
 describe('LoadingSpinner component', () => {
-    it('renders without errors', () => {
+    it('render LoadingSpinner component', () => {
         shallow(<LoadingSpinner />);
     });
 

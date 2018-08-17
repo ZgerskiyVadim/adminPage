@@ -3,7 +3,7 @@ import { shallow } from 'enzyme';
 import HomePage from '../index';
 
 describe('CreatePage component', () => {
-    it('renders without errors', () => {
+    it('render CreatePage component', () => {
         const component = shallow(<HomePage />);
 
         expect(component.find('.home--row').length).toBe(1);

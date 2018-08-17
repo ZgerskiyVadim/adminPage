@@ -1,6 +1,8 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 import {User} from '../user';
+import {usernameEvent, firstNameEvent, lastNameEvent, emailEvent, passwordEvent} from './data';
+import history from '../../../services/history';
 
 const user = {
     username: 'username',
@@ -19,9 +21,10 @@ const event = {
     stopPropagation: jest.fn()
 };
 
+
 describe('User component', () => {
 
-    it('renders without errors', () => {
+    it('render User component', () => {
 
         const component = shallow(<User user={user}/>);
 
@@ -33,101 +36,120 @@ describe('User component', () => {
 
     });
 
-    it('should call "handleChange" after change form', () => {
-
+    it('should call "handleChange" and set state after change username form', () => {
         const component = shallow(<User user={user}/>);
 
-        const spy = jest.spyOn(component.instance(), 'handleChange');
-        component.instance().forceUpdate();
+        component.find('[name="username"]').at(0).simulate('change', usernameEvent);
+        expect(component.state().username).toBe(usernameEvent.target.value);
 
-        expect(component.find('[name="username"]').at(0).simulate('change', event));
-        expect(component.find('[name="firstName"]').at(0).simulate('change', event));
-        expect(component.find('[name="lastName"]').at(0).simulate('change', event));
-        expect(component.find('[name="email"]').at(0).simulate('change', event));
-        expect(component.find('[name="password"]').at(0).simulate('change', event));
+    });
 
-        expect(spy).toHaveBeenCalledTimes(5);
+    it('should call "handleChange" and set state after change firstName form', () => {
+        const component = shallow(<User user={user}/>);
+
+        component.find('[name="firstName"]').at(0).simulate('change', firstNameEvent);
+        expect(component.state().firstName).toBe(firstNameEvent.target.value);
+    });
+
+    it('should call "handleChange" and set state after change lastName form', () => {
+        const component = shallow(<User user={user}/>);
+
+        component.find('[name="lastName"]').at(0).simulate('change', lastNameEvent);
+        expect(component.state().lastName).toBe(lastNameEvent.target.value);
+    });
+
+    it('should call "handleChange" and set state after change email form', () => {
+        const component = shallow(<User user={user}/>);
+
+        component.find('[name="email"]').at(0).simulate('change', emailEvent);
+        expect(component.state().email).toBe(emailEvent.target.value);
+    });
+
+    it('should call "handleChange" and set state after change password form', () => {
+        const component = shallow(<User user={user}/>);
+
+        component.find('[name="password"]').at(0).simulate('change', passwordEvent);
+        expect(component.state().password).toBe(passwordEvent.target.value);
     });
 
     it('should call "handleClick" after click on form', () => {
         event.stopPropagation = jest.fn();
         const component = shallow(<User user={user}/>);
 
-        const spy = jest.spyOn(component.instance(), 'handleClick');
-        component.instance().forceUpdate();
+        component.find('[name="username"]').at(0).simulate('click', event);
+        component.find('[name="firstName"]').at(0).simulate('click', event);
+        component.find('[name="lastName"]').at(0).simulate('click', event);
+        component.find('[name="email"]').at(0).simulate('click', event);
+        component.find('[name="password"]').at(0).simulate('click', event);
 
-        expect(component.find('[name="username"]').at(0).simulate('click', event));
-        expect(component.find('[name="firstName"]').at(0).simulate('click', event));
-        expect(component.find('[name="lastName"]').at(0).simulate('click', event));
-        expect(component.find('[name="email"]').at(0).simulate('click', event));
-        expect(component.find('[name="password"]').at(0).simulate('click', event));
-
-        expect(spy).toHaveBeenCalledTimes(5);
         expect(event.stopPropagation).toHaveBeenCalledTimes(5);
     });
 
     it('should call "showForms" after click button "update"', () => {
-        event.stopPropagation = jest.fn();
         const component = shallow(<User user={user}/>);
 
-        const spy = jest.spyOn(component.instance(), 'showForms');
-        component.instance().forceUpdate();
-
-        expect(component.find('.btn-outline-primary').at(0).simulate('click', event, user._id));
-        expect(component.state().id).toBe(user._id);
+        expect(component.state().showForm).toBe(false);
+        component.find('.btn-outline-primary').at(0).simulate('click', event);
         expect(component.state().showForm).toBe(true);
-
-        expect(spy).toHaveBeenCalledTimes(1);
-        expect(event.stopPropagation).toHaveBeenCalledTimes(1);
     });
 
-    it('should call "sendOptionsUpdate" after click button "save"', () => {
-        event.stopPropagation = jest.fn();
+    it('should call "update" after click "save" button with correct parameters', () => {
+        const expectedUpdatedUser = {
+            id: user._id,
+            username: usernameEvent.target.value,
+            firstName: firstNameEvent.target.value,
+            lastName: lastNameEvent.target.value,
+            email: emailEvent.target.value,
+            password: passwordEvent.target.value
+        };
         const update = jest.fn();
         const component = shallow(<User
             user={user}
             update={update}
         />);
+        const showFormsButton = component.find('.btn-outline-primary').at(0);
+        const updateButton = component.find('.btn-outline-primary').at(1);
 
-        const spy = jest.spyOn(component.instance(), 'sendOptionsUpdate');
-        component.instance().forceUpdate();
-
-        expect(component.find('.btn-outline-primary').at(0).simulate('click', event, user._id));
+        showFormsButton.simulate('click', event);
         expect(component.state().showForm).toBe(true);
-        expect(component.find('.btn-outline-primary').at(1).simulate('click', event));
+
+        component.find('[name="username"]').at(0).simulate('change', usernameEvent);
+        component.find('[name="firstName"]').at(0).simulate('change', firstNameEvent);
+        component.find('[name="lastName"]').at(0).simulate('change', lastNameEvent);
+        component.find('[name="email"]').at(0).simulate('change', emailEvent);
+        component.find('[name="password"]').at(0).simulate('change', passwordEvent);
+
+        updateButton.simulate('click', event);
         expect(component.state().showForm).toBe(false);
 
-        expect(spy).toHaveBeenCalledTimes(1);
-        expect(update).toHaveBeenCalledTimes(1);
-        expect(event.stopPropagation).toHaveBeenCalledTimes(2);
+        const [call = []] = update.mock.calls;
+        expect(call).toEqual([expectedUpdatedUser]);
     });
 
     it('should call "remove" after click button "remove"', () => {
+        const expectedRemoveUserID = user._id;
+        const expectedRemoveUserEvent = event;
         const showModal = jest.fn();
         const component = shallow(<User
             user={user}
             showModal={showModal}
         />);
+        const removeUserButton = component.find('.btn-outline-danger').at(0);
 
-        const spy = jest.spyOn(component.instance(), 'remove');
-        component.instance().forceUpdate();
+        removeUserButton.simulate('click', event);
 
-        expect(component.find('.btn-outline-danger').at(0).simulate('click', event, user._id));
-
-        expect(spy).toHaveBeenCalledTimes(1);
-        expect(showModal).toHaveBeenCalledTimes(1);
+        const [call = []] = showModal.mock.calls;
+        expect(call).toEqual([expectedRemoveUserID, expectedRemoveUserEvent]);
     });
 
     it('should call "goToUser" after click component', () => {
-
         const component = shallow(<User user={user}/>);
+        const userItem = component.find('.users--cursor').at(0);
 
-        const spy = jest.spyOn(component.instance(), 'goToUser');
-        component.instance().forceUpdate();
+        expect(history.location.pathname).toBe(`/`);
+        userItem.simulate('click', event);
+        expect(history.location.pathname).toBe(`/users/${user._id}`);
 
-        expect(component.find('.users--cursor').at(0).simulate('click', event));
-
-        expect(spy).toHaveBeenCalledTimes(1);
     });
 
 });

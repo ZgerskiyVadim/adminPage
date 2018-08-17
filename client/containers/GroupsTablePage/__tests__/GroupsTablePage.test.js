@@ -41,7 +41,7 @@ const event = {
 
 describe('Groups component', () => {
 
-    it('renders without errors', () => {
+    it('render Groups component', () => {
 
         const component = shallow(<Groups
             groups={groups}
@@ -103,7 +103,7 @@ describe('Groups component', () => {
             search={component.instance().searchGroups}
         />);
 
-        expect(searchInputComponent.find('.form-control').simulate('change', event));
+        searchInputComponent.find('.form-control').simulate('change', event);
 
         expect(spy).toHaveBeenCalledTimes(1);
         expect(mockGroupsRequest).toHaveBeenCalledTimes(2);
@@ -124,7 +124,7 @@ describe('Groups component', () => {
             handleButtonClick={component.instance().cancelJoinGroup}
         />);
 
-        expect(searchInputComponent.find('button').simulate('click'));
+        searchInputComponent.find('button').simulate('click');
 
         expect(spy).toHaveBeenCalledTimes(1);
         expect(mockCancelJoinGroup).toHaveBeenCalledTimes(1);
@@ -145,7 +145,7 @@ describe('Groups component', () => {
             remove={component.instance().remove}
             closeModal={closeModal}
         />);
-        expect(modalWindowComponent.find('.btn-success').at(0).simulate('click'));
+        modalWindowComponent.find('.btn-success').at(0).simulate('click');
 
         expect(spy).toHaveBeenCalledTimes(1);
         expect(mockRemoveGroupRequest).toHaveBeenCalledTimes(1);
@@ -165,7 +165,7 @@ describe('Groups component', () => {
             showModal={component.instance().showModal}
         />);
 
-        expect(groupComponent.find('.btn-outline-danger').at(0).simulate('click', event, group._id));
+        groupComponent.find('.btn-outline-danger').at(0).simulate('click', event, group._id);
         expect(component.state().groupID).toBe(group._id);
         expect(component.state().showModal).toBe(true);
 
@@ -211,7 +211,7 @@ describe('Groups component', () => {
             update={component.instance().updateGroup}
         />);
 
-        expect(groupComponent.find('.btn-outline-primary').at(1).simulate('click', event, group._id));
+        groupComponent.find('.btn-outline-primary').at(1).simulate('click', event, group._id);
 
         expect(spy).toHaveBeenCalledTimes(1);
         expect(mockUpdateGroupRequest).toHaveBeenCalledTimes(1);
@@ -237,7 +237,7 @@ describe('Groups component', () => {
             joinGroup={component.instance().joinGroup}
         />);
 
-        expect(groupComponent.find('.btn-outline-info').at(0).simulate('click', event, group._id));
+        groupComponent.find('.btn-outline-info').at(0).simulate('click', event, group._id);
 
         expect(spy).toHaveBeenCalledTimes(1);
         expect(mockJoinGroup).toHaveBeenCalledTimes(1);
@@ -263,7 +263,7 @@ describe('Groups component', () => {
             leaveGroup={component.instance().leaveGroup}
         />);
 
-        expect(groupComponent.find('.btn-outline-danger').at(1).simulate('click', event, group._id));
+        groupComponent.find('.btn-outline-danger').at(1).simulate('click', event, group._id);
 
         expect(spy).toHaveBeenCalledTimes(1);
         expect(mockLeaveGroupRequest).toHaveBeenCalledTimes(1);

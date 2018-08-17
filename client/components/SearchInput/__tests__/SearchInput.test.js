@@ -3,7 +3,7 @@ import { shallow } from 'enzyme';
 import SearchInput from '../index';
 
 describe('SearchInput component', () => {
-    it('renders without errors', () => {
+    it('render SearchInput component', () => {
         const search = jest.fn();
         const handleButtonClick = jest.fn();
         const style = 'some styles';
@@ -28,7 +28,7 @@ describe('SearchInput component', () => {
             search={search}
         />);
 
-        expect(component.find('.form-control').simulate('change'));
+        component.find('.form-control').simulate('change');
 
         expect(search).toHaveBeenCalledTimes(1);
     });
@@ -40,7 +40,7 @@ describe('SearchInput component', () => {
             handleButtonClick={handleButtonClick}
         />);
 
-        expect(component.find('button').simulate('click'));
+        component.find('button').simulate('click');
 
         expect(handleButtonClick).toHaveBeenCalledTimes(1);
     });

@@ -48,7 +48,7 @@ const event = {
 
 describe('User component', () => {
 
-    it('renders without errors', () => {
+    it('render User component', () => {
 
         const component = shallow(<User
             match={match}
@@ -130,7 +130,7 @@ describe('User component', () => {
             search={component.instance().searchGroups}
         />);
 
-        expect(searchInputComponent.find('.form-control').simulate('change', event));
+        searchInputComponent.find('.form-control').simulate('change', event);
 
         expect(spy).toHaveBeenCalledTimes(1);
         expect(mockUserRequest).toHaveBeenCalledTimes(2);
@@ -150,7 +150,7 @@ describe('User component', () => {
         const spy = jest.spyOn(component.instance(), 'goToGroup');
         component.instance().forceUpdate();
 
-        expect(component.find('.user__groups-list').at(0).simulate('click'));
+        component.find('.user__groups-list').at(0).simulate('click');
 
         expect(spy).toHaveBeenCalledTimes(1);
     });
@@ -167,7 +167,7 @@ describe('User component', () => {
         const spy = jest.spyOn(component.instance(), 'showForms');
         component.instance().forceUpdate();
 
-        expect(component.find('.btn-outline-primary').at(0).simulate('click', event, user.data._id));
+        component.find('.btn-outline-primary').at(0).simulate('click', event);
         expect(component.state().id).toBe(user.data._id);
         expect(component.state().showForm).toBe(true);
 
@@ -189,9 +189,9 @@ describe('User component', () => {
         const spy = jest.spyOn(component.instance(), 'updateUser');
         component.instance().forceUpdate();
 
-        expect(component.find('.btn-outline-primary').at(0).simulate('click', event, user._id));
+        component.find('.btn-outline-primary').at(0).simulate('click', event);
         expect(component.state().showForm).toBe(true);
-        expect(component.find('.btn-outline-primary').at(1).simulate('click', event));
+        component.find('.btn-outline-primary').at(1).simulate('click', event);
         expect(component.state().showForm).toBe(false);
 
         expect(spy).toHaveBeenCalledTimes(1);
@@ -212,7 +212,7 @@ describe('User component', () => {
         const spy = jest.spyOn(component.instance(), 'startJoiningGroup');
         component.instance().forceUpdate();
 
-        expect(component.find('.btn-outline-info').at(0).simulate('click', event));
+        component.find('.btn-outline-info').at(0).simulate('click', event);
 
         expect(spy).toHaveBeenCalledTimes(1);
         expect(mockStartJoiningGroup).toHaveBeenCalledTimes(2);
@@ -232,7 +232,7 @@ describe('User component', () => {
         const spy = jest.spyOn(component.instance(), 'joinGroup');
         component.instance().forceUpdate();
 
-        expect(component.find('.user__join-group').at(0).simulate('click', event));
+        component.find('.user__join-group').at(0).simulate('click', event);
 
         expect(spy).toHaveBeenCalledTimes(1);
         expect(mockJoinGroup).toHaveBeenCalledTimes(1);
@@ -252,7 +252,7 @@ describe('User component', () => {
         const spy = jest.spyOn(component.instance(), 'leaveGroup');
         component.instance().forceUpdate();
 
-        expect(component.find('.user__leave-group').at(0).simulate('click', event));
+        component.find('.user__leave-group').at(0).simulate('click', event);
 
         expect(spy).toHaveBeenCalledTimes(1);
         expect(mockleaveGroupRequest).toHaveBeenCalledTimes(1);
@@ -271,11 +271,11 @@ describe('User component', () => {
         const spy = jest.spyOn(component.instance(), 'handleChange');
         component.instance().forceUpdate();
 
-        expect(component.find('[name="username"]').at(0).simulate('change', event));
-        expect(component.find('[name="firstName"]').at(0).simulate('change', event));
-        expect(component.find('[name="lastName"]').at(0).simulate('change', event));
-        expect(component.find('[name="email"]').at(0).simulate('change', event));
-        expect(component.find('[name="password"]').at(0).simulate('change', event));
+        component.find('[name="username"]').at(0).simulate('change', event);
+        component.find('[name="firstName"]').at(0).simulate('change', event);
+        component.find('[name="lastName"]').at(0).simulate('change', event);
+        component.find('[name="email"]').at(0).simulate('change', event);
+        component.find('[name="password"]').at(0).simulate('change', event);
 
         expect(spy).toHaveBeenCalledTimes(5);
     });

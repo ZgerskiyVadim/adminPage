@@ -3,7 +3,7 @@ import { shallow } from 'enzyme';
 import Links from '../index';
 
 describe('Links component', () => {
-    it('renders without errors', () => {
+    it('render Links component', () => {
         shallow(<Links />);
     });
 

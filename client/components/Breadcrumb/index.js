@@ -41,16 +41,12 @@ export class Breadcrumb extends PureComponent {
 
     render() {
         const countOfBreadcrumbs = this.locationPath().length;
-        const isPathHomeActive = classNames({'breadcrumb--blue': countOfBreadcrumbs, 'active': !countOfBreadcrumbs});
         const lastBreadCrumb = this.locationPath()[countOfBreadcrumbs - 1];
 
         return (
             <div>
                 <nav className="breadcrumb-root" aria-label="breadcrumb">
                     <ol className="breadcrumb">
-                        <li onClick={() => this.goToPath({location: '/'})} className={classNames('breadcrumb--cursor breadcrumb-item', isPathHomeActive)}>
-                            home
-                        </li>
                         {
                             this.locationPath().map((breadcrumb, index) => {
                                 return (

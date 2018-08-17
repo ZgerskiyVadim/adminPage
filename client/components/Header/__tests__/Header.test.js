@@ -4,7 +4,7 @@ import {Header} from '../index';
 
 describe('Header component', () => {
 
-    it('renders without errors', () => {
+    it('render Header component', () => {
         const component = shallow(<Header />);
 
         expect(component.find('.navbar').length).toBe(1);
