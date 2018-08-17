@@ -130,6 +130,30 @@ describe('Group component', () => {
         expect(mockRemoveRequest).toHaveBeenCalledTimes(1);
     });
 
+    it('should call "showModal" after click button "remove user"', () => {
+        event.stopPropagation = jest.fn();
+        const component = shallow(<Group
+            match={match}
+            group={group}
+            actions={actions}
+            users={users}
+        />);
+
+        const spy = jest.spyOn(component.instance(), 'showModal');
+        component.instance().forceUpdate();
+
+        expect(component.find('.group__remove-user').at(0).simulate('click', event, group.data._id));
+        expect(component.state().showModal).toBe(true);
+        expect(component.state().userID).toBe(group.data._id);
+
+        const modalWindow = component.find(ModalWindow);
+
+        expect(modalWindow.props().showModal).toBe(true);
+
+        expect(spy).toHaveBeenCalledTimes(1);
+        expect(event.stopPropagation).toHaveBeenCalledTimes(1);
+    });
+
     it('should call "closeModal" after closeModal in ModalWindow component', () => {
         const remove = jest.fn();
 
@@ -238,29 +262,6 @@ describe('Group component', () => {
         expect(event.stopPropagation).toHaveBeenCalledTimes(1);
     });
 
-    it('should call "showModal" after click button "remove user"', () => {
-        event.stopPropagation = jest.fn();
-        const component = shallow(<Group
-            match={match}
-            group={group}
-            actions={actions}
-            users={users}
-        />);
-
-        const spy = jest.spyOn(component.instance(), 'showModal');
-        component.instance().forceUpdate();
-
-        expect(component.find('.group__remove-user').at(0).simulate('click', event, group.data._id));
-        expect(component.state().showModal).toBe(true);
-        expect(component.state().userID).toBe(group.data._id);
-
-        const modalWindow = component.find(ModalWindow);
-
-        expect(modalWindow.props().showModal).toBe(true);
-
-        expect(spy).toHaveBeenCalledTimes(1);
-        expect(event.stopPropagation).toHaveBeenCalledTimes(1);
-    });
 
     it('should call "handleChange" after change form', () => {
 
