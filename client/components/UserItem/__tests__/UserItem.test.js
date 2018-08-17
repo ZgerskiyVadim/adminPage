@@ -1,7 +1,6 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 import {User} from '../user';
-import {Group} from "../../GroupItem/group";
 
 const user = {
     username: 'username',

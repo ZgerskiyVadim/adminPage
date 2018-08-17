@@ -1,5 +1,5 @@
 import React from 'react';
-import { shallow } from 'enzyme';
+import { shallow, mount } from 'enzyme';
 import {Group} from '../index';
 import * as actions from '../../../actions/action_creators/groups';
 import LoadingSpinner from '../../../components/LoadingSpinner';
@@ -62,6 +62,69 @@ describe('Group component', () => {
         const usersTable = component.find('.group__users-table');
         expect(['group--hide'].every(c => usersTable.hasClass(c))).toBe(true);
 
+    });
+
+    it('should call fetch when mounted', () => {
+        const mockFetch = jest.fn();
+
+        const component = mount(<Group
+            match={match}
+            group={group}
+            actions={{...actions, getGroupRequest: mockFetch}}
+        />);
+
+        expect(component).toBeDefined();
+        expect(mockFetch).toHaveBeenCalledTimes(1);
+    });
+
+    it('should call "removeUser" after success in modal window', () => {
+        const closeModal = jest.fn();
+        const mockRemoveRequest = jest.fn();
+
+        const component = shallow(<Group
+            match={match}
+            group={group}
+            actions={{...actions, removeUserRequest: mockRemoveRequest}}
+        />);
+
+        const spy = jest.spyOn(component.instance(), 'removeUser');
+        component.instance().forceUpdate();
+
+        const modalWindowComponent =  shallow(<ModalWindow
+            remove={component.instance().removeUser}
+            closeModal={closeModal}
+        />);
+        expect(modalWindowComponent.find('.btn-success').at(0).props().onClick());
+
+        expect(spy).toHaveBeenCalledTimes(1);
+        expect(mockRemoveRequest).toHaveBeenCalledTimes(1);
+    });
+
+    it('should call "closeModal" after closeModal in modal window', () => {
+        const remove = jest.fn();
+
+        const component = shallow(<Group
+            match={match}
+            group={group}
+            actions={actions}
+            users={users}
+        />);
+
+        const spy = jest.spyOn(component.instance(), 'closeModal');
+        component.instance().forceUpdate();
+
+        const modalWindowComponent =  shallow(<ModalWindow
+            remove={remove}
+            closeModal={component.instance().closeModal}
+        />);
+
+        expect(component.find('.group__remove-user').at(0).simulate('click', event, user._id));
+        expect(component.state().showModal).toBe(true);
+
+        modalWindowComponent.find('.close').at(0).props().onClick();
+        expect(component.state().showModal).toBe(false);
+
+        expect(spy).toHaveBeenCalledTimes(1);
     });
 
     it('show table if have users in group', () => {
@@ -134,12 +197,13 @@ describe('Group component', () => {
     });
 
     it('should call "updateGroup" after click button save', () => {
+        const mockUpdateRequest = jest.fn();
         event.stopPropagation = jest.fn();
         event.preventDefault = jest.fn();
         const component = shallow(<Group
             match={match}
             group={group}
-            actions={actions}
+            actions={{...actions, updateGroupRequest: mockUpdateRequest}}
         />);
 
         const spy = jest.spyOn(component.instance(), 'updateGroup');
@@ -151,7 +215,9 @@ describe('Group component', () => {
         expect(component.state().showForm).toBe(false);
 
         expect(spy).toHaveBeenCalledTimes(1);
+        expect(mockUpdateRequest).toHaveBeenCalledTimes(1);
         expect(event.preventDefault).toHaveBeenCalledTimes(1);
+        expect(event.stopPropagation).toHaveBeenCalledTimes(1);
         expect(event.stopPropagation).toHaveBeenCalledTimes(1);
     });
 
@@ -178,129 +244,5 @@ describe('Group component', () => {
         expect(spy).toHaveBeenCalledTimes(1);
         expect(event.stopPropagation).toHaveBeenCalledTimes(1);
     });
-
-
-    // it('should call "sendOptionsJoinGroup" after click button join group', () => {
-    //     event.stopPropagation = jest.fn();
-    //     const joinGroup = jest.fn();
-    //     const component = shallow(<Group
-    //         group={group}
-    //         joinGroup={joinGroup}
-    //     />);
-    //
-    //     component.setState({ userID: group._id });
-    //
-    //     const spy = jest.spyOn(component.instance(), 'sendOptionsJoinGroup');
-    //     component.instance().forceUpdate();
-    //
-    //     expect(component.find('.btn-outline-info').at(0).simulate('click', event, group._id));
-    //
-    //     expect(spy).toHaveBeenCalledTimes(1);
-    //     expect(joinGroup).toHaveBeenCalledTimes(1);
-    //     expect(event.stopPropagation).toHaveBeenCalledTimes(1);
-    // });
-
-
-    // it('should call "handleChange" after change form', () => {
-    //
-    //     const component = shallow(<Group group={group}/>);
-    //
-    //     const spy = jest.spyOn(component.instance(), 'handleChange');
-    //     component.instance().forceUpdate();
-    //
-    //     expect(component.find('[name="name"]').at(0).simulate('change', event));
-    //     expect(component.find('[name="title"]').at(0).simulate('change', event));
-    //
-    //     expect(spy).toHaveBeenCalledTimes(2);
-    // });
-    //
-    // it('should call "handleClick" after click on form', () => {
-    //     event.stopPropagation = jest.fn();
-    //     const component = shallow(<Group group={group}/>);
-    //
-    //     const spy = jest.spyOn(component.instance(), 'handleClick');
-    //     component.instance().forceUpdate();
-    //
-    //     expect(component.find('[name="name"]').at(0).simulate('click', event));
-    //     expect(component.find('[name="title"]').at(0).simulate('click', event));
-    //
-    //     expect(spy).toHaveBeenCalledTimes(2);
-    //     expect(event.stopPropagation).toHaveBeenCalledTimes(2);
-    // });
-    //
-
-    //
-    // it('should call "remove" after click button remove', () => {
-    //     const showModal = jest.fn();
-    //     const component = shallow(<Group
-    //         group={group}
-    //         showModal={showModal}
-    //     />);
-    //
-    //     const spy = jest.spyOn(component.instance(), 'remove');
-    //     component.instance().forceUpdate();
-    //
-    //     expect(component.find('.btn-outline-danger').at(0).simulate('click', event, group._id));
-    //
-    //     expect(spy).toHaveBeenCalledTimes(1);
-    //     expect(showModal).toHaveBeenCalledTimes(1);
-    // });
-    //
-
-    //
-    // it('should call "showForms" after click button update', () => {
-    //     event.stopPropagation = jest.fn();
-    //     const component = shallow(<Group group={group}/>);
-    //
-    //     const spy = jest.spyOn(component.instance(), 'showForms');
-    //     component.instance().forceUpdate();
-    //
-    //     expect(component.find('.btn-outline-primary').at(0).simulate('click', event, group._id));
-    //     expect(component.state().id).toBe(group._id);
-    //     expect(component.state().showForm).toBe(true);
-    //
-    //     expect(spy).toHaveBeenCalledTimes(1);
-    //     expect(event.stopPropagation).toHaveBeenCalledTimes(1);
-    // });
-    //
-    // it('should call "sendOptionsJoinGroup" after click button join group', () => {
-    //     event.stopPropagation = jest.fn();
-    //     const joinGroup = jest.fn();
-    //     const component = shallow(<Group
-    //         group={group}
-    //         joinGroup={joinGroup}
-    //     />);
-    //
-    //     component.setState({ userID: group._id });
-    //
-    //     const spy = jest.spyOn(component.instance(), 'sendOptionsJoinGroup');
-    //     component.instance().forceUpdate();
-    //
-    //     expect(component.find('.btn-outline-info').at(0).simulate('click', event, group._id));
-    //
-    //     expect(spy).toHaveBeenCalledTimes(1);
-    //     expect(joinGroup).toHaveBeenCalledTimes(1);
-    //     expect(event.stopPropagation).toHaveBeenCalledTimes(1);
-    // });
-    //
-    // it('should call "sendOptionsLeaveGroup" after click button leave group', () => {
-    //     event.stopPropagation = jest.fn();
-    //     const leaveGroup = jest.fn();
-    //     const component = shallow(<Group
-    //         group={group}
-    //         leaveGroup={leaveGroup}
-    //     />);
-    //
-    //     component.setState({ userID: group._id });
-    //
-    //     const spy = jest.spyOn(component.instance(), 'sendOptionsLeaveGroup');
-    //     component.instance().forceUpdate();
-    //
-    //     expect(component.find('.btn-outline-danger').at(1).simulate('click', event, group._id));
-    //
-    //     expect(spy).toHaveBeenCalledTimes(1);
-    //     expect(leaveGroup).toHaveBeenCalledTimes(1);
-    //     expect(event.stopPropagation).toHaveBeenCalledTimes(1);
-    // });
 
 });
