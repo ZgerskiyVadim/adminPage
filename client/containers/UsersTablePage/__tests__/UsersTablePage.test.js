@@ -21,15 +21,6 @@ const users = {
     data: [user, {...user, _id: 2}]
 };
 
-// const group = {
-//     name: 'name',
-//     title: 'title',
-//     users: [],
-//     _id: 1
-// };
-//
-// const groups = [group, {...group, _id: 2}];
-
 const event = {
     target: {
         name: 'name',

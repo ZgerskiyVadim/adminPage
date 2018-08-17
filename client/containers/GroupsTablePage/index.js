@@ -17,7 +17,7 @@ import SearchComponent from '../../components/SearchInput';
 import showToastrMessage from "../../services/showToastrMessage";
 import {isEqualProps} from "../../services/isEqualProps";
 
-class Groups extends Component {
+export class Groups extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -206,8 +206,10 @@ Groups.defaultProps = {
     updatedGroup: {},
     removedGroup: {},
     user: {},
-    isJoiningGroup: false,
-    loading: false
+    userJoinedGroup: {},
+    userLeftGroup: {},
+    loading: false,
+    isJoiningGroup: false
 };
 
 Groups.propTypes = {
