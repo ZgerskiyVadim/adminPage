@@ -1,12 +1,12 @@
 import React from 'react';
-import { BrowserRouter as Router }    from 'react-router-dom';
-import { shallow, mount } from 'enzyme';
+import { shallow } from 'enzyme';
 import {Groups} from '../index';
 import * as actions from '../../../actions/action_creators/groups';
 import LoadingSpinner from '../../../components/LoadingSpinner';
 import ModalWindow from "../../../components/ModalWindow";
 import SearchInput from "../../../components/SearchInput";
-import {Group} from '../../../components/GroupItem/group';
+import Group from '../../../components/GroupItem/group';
+import history from '../../../services/history';
 
 const user = {
     data: {
@@ -41,6 +41,9 @@ const event = {
 
 describe('Groups component', () => {
 
+
+
+
     it('render Groups component', () => {
 
         const component = shallow(<Groups
@@ -63,16 +66,17 @@ describe('Groups component', () => {
     it('should call fetch when mounted', () => {
         const mockGroupsRequest = jest.fn();
 
-        const component = mount(
-            <Router>
-                <Groups
-                    groups={groups}
-                    actions={{...actions, getGroupsRequest: mockGroupsRequest}}
-                />
-            </Router>);
+        const component = shallow(<Groups
+            groups={groups}
+            actions={{...actions, getGroupsRequest: mockGroupsRequest}}
+        />);
+        const expectedGetGroups = {
+            searchBy: component.state().options.searchBy,
+            limit: component.state().options.limit
+        };
 
-        expect(component).toBeDefined();
-        expect(mockGroupsRequest).toHaveBeenCalledTimes(1);
+        const [call = []] = mockGroupsRequest.mock.calls;
+        expect(call).toEqual([expectedGetGroups]);
     });
 
     it('show loading spinner', () => {
@@ -91,25 +95,79 @@ describe('Groups component', () => {
 
     it('should call "searchGroups" after onChange form in SearchInput component', () => {
         const mockGroupsRequest = jest.fn();
+        const mockEvent = {target: {value: 'search'}};
         const component = shallow(<Groups
             groups={groups}
             actions={{...actions, getGroupsRequest: mockGroupsRequest}}
         />);
 
-        const spy = jest.spyOn(component.instance(), 'searchGroups');
-        component.instance().forceUpdate();
+        component.find(SearchInput).props().search(mockEvent);
+        expect(component.state().options.searchBy).toBe(mockEvent.target.value);
 
-        const searchInputComponent = shallow(<SearchInput
-            search={component.instance().searchGroups}
-        />);
-
-        searchInputComponent.find('.form-control').simulate('change', event);
-
-        expect(spy).toHaveBeenCalledTimes(1);
         expect(mockGroupsRequest).toHaveBeenCalledTimes(2);
     });
 
-    it('should call "cancelJoinGroup" after click button "cancel join group" in SearchInput component', () => {
+    it('should call "remove" after click "remove" button in User component and click "yes" in ModalWindow component', () => {
+        const mockRemoveGroupRequest = jest.fn();
+        const expectedRemovedGroup = group._id;
+        const component = shallow(<Groups
+            groups={groups}
+            actions={{...actions, removeGroupRequest: mockRemoveGroupRequest}}
+        />);
+
+        component.find(Group).at(0).props().showModal(group._id, event);
+        component.find(ModalWindow).props().remove();
+
+        const [call = []] = mockRemoveGroupRequest.mock.calls;
+        expect(call).toEqual([expectedRemovedGroup]);
+    });
+
+    it('should call "showModal" after click "remove" button in Group component', () => {
+        const component = shallow(<Groups
+            groups={groups}
+            actions={actions}
+        />);
+
+        component.find(Group).at(0).props().showModal(group._id, event);
+
+        expect(component.state().groupID).toBe(group._id);
+        expect(component.state().showModal).toBe(true);
+    });
+
+    it('should call "closeModal" after click "close" button in ModalWindow component', () => {
+        const component = shallow(<Groups
+            groups={groups}
+            actions={actions}
+        />);
+
+        component.find(Group).at(0).props().showModal(group._id, event);
+        expect(component.state().showModal).toBe(true);
+
+        component.find(ModalWindow).props().closeModal(event);
+        expect(component.state().showModal).toBe(false);
+    });
+
+    it('should call "updateGroup" after click "save" in Group component', () => {
+        const mockUpdateGroupRequest = jest.fn();
+        const expectedUpdatedGroup = {
+            id: group._id,
+            name: 'new name'
+        };
+        const component = shallow(<Groups
+            groups={groups}
+            actions={{...actions, updateGroupRequest: mockUpdateGroupRequest}}
+        />);
+
+        component.find(Group).at(0).props().update({
+            id: group._id,
+            name: 'new name'
+        });
+
+        const [call = []] = mockUpdateGroupRequest.mock.calls;
+        expect(call).toEqual([expectedUpdatedGroup]);
+    });
+
+    it('should call "cancelJoinGroup" after click "cancel join group" button in SearchInput component', () => {
         const mockCancelJoinGroup = jest.fn();
         const component = shallow(<Groups
             groups={groups}
@@ -117,110 +175,21 @@ describe('Groups component', () => {
             actions={{...actions, cancelJoinGroup: mockCancelJoinGroup}}
         />);
 
-        const spy = jest.spyOn(component.instance(), 'cancelJoinGroup');
-        component.instance().forceUpdate();
+        expect(history.location.pathname).toBe(`/`);
+        component.find(SearchInput).props().handleButtonClick();
+        expect(history.location.pathname).toBe(`/users/${user.data._id}`);
 
-        const searchInputComponent = shallow(<SearchInput
-            handleButtonClick={component.instance().cancelJoinGroup}
-        />);
-
-        searchInputComponent.find('button').simulate('click');
-
-        expect(spy).toHaveBeenCalledTimes(1);
+        const [call = []] = mockCancelJoinGroup.mock.calls;
+        expect(call).toEqual([false]);
         expect(mockCancelJoinGroup).toHaveBeenCalledTimes(1);
     });
 
-    it('should call "remove" after click button "remove" in Group component', () => {
-        const mockRemoveGroupRequest = jest.fn();
-        const closeModal = jest.fn();
-        const component = shallow(<Groups
-            groups={groups}
-            actions={{...actions, removeGroupRequest: mockRemoveGroupRequest}}
-        />);
-
-        const spy = jest.spyOn(component.instance(), 'remove');
-        component.instance().forceUpdate();
-
-        const modalWindowComponent =  shallow(<ModalWindow
-            remove={component.instance().remove}
-            closeModal={closeModal}
-        />);
-        modalWindowComponent.find('.btn-success').at(0).simulate('click');
-
-        expect(spy).toHaveBeenCalledTimes(1);
-        expect(mockRemoveGroupRequest).toHaveBeenCalledTimes(1);
-    });
-
-    it('should call "showModal" after click "remove" in Group component', () => {
-        const component = shallow(<Groups
-            groups={groups}
-            actions={actions}
-        />);
-
-        const spy = jest.spyOn(component.instance(), 'showModal');
-        component.instance().forceUpdate();
-
-        const groupComponent = shallow(<Group
-            group={group}
-            showModal={component.instance().showModal}
-        />);
-
-        groupComponent.find('.btn-outline-danger').at(0).simulate('click', event, group._id);
-        expect(component.state().groupID).toBe(group._id);
-        expect(component.state().showModal).toBe(true);
-
-        expect(spy).toHaveBeenCalledTimes(1);
-    });
-
-    it('should call "closeModal" after click "close" in ModalWindow component', () => {
-        const remove = jest.fn();
-
-        const component = shallow(<Groups
-            groups={groups}
-            actions={actions}
-            showModal={true}
-        />);
-
-        const spy = jest.spyOn(component.instance(), 'closeModal');
-        component.instance().forceUpdate();
-
-        const modalWindowComponent = shallow(<ModalWindow
-            remove={remove}
-            closeModal={component.instance().closeModal}
-        />);
-
-        modalWindowComponent.find('.close').at(0).props().onClick();
-        expect(component.state().showModal).toBe(false);
-
-        expect(spy).toHaveBeenCalledTimes(1);
-    });
-
-    it('should call "updateGroup" after click "save" in Group component', () => {
-        event.stopPropagation = jest.fn();
-        const mockUpdateGroupRequest = jest.fn();
-        const component = shallow(<Groups
-            groups={groups}
-            actions={{...actions, updateGroupRequest: mockUpdateGroupRequest}}
-        />);
-
-        const spy = jest.spyOn(component.instance(), 'updateGroup');
-        component.instance().forceUpdate();
-
-        const groupComponent = shallow(<Group
-            group={group}
-            update={component.instance().updateGroup}
-        />);
-
-        groupComponent.find('.btn-outline-primary').at(1).simulate('click', event, group._id);
-
-        expect(spy).toHaveBeenCalledTimes(1);
-        expect(mockUpdateGroupRequest).toHaveBeenCalledTimes(1);
-        expect(event.stopPropagation).toHaveBeenCalledTimes(1);
-    });
-
-    it('should call "joinGroup" after click "join group" in Group component', () => {
-        event.stopPropagation = jest.fn();
+    it('should call "joinGroup" after click "join group" button in Group component', () => {
         const mockJoinGroup = jest.fn();
+        const expectedJoinedGroup = {
+            userID:user.data._id,
+            groupID: group._id
+        };
         const component = shallow(<Groups
             groups={groups}
             user={user}
@@ -228,25 +197,21 @@ describe('Groups component', () => {
             isJoiningGroup={true}
         />);
 
-        const spy = jest.spyOn(component.instance(), 'joinGroup');
-        component.instance().forceUpdate();
+        component.find(Group).at(0).props().joinGroup({
+            userID: user.data._id,
+            groupID: group._id
+        });
 
-        const groupComponent = shallow(<Group
-            group={group}
-            userID={user.data._id}
-            joinGroup={component.instance().joinGroup}
-        />);
-
-        groupComponent.find('.btn-outline-info').at(0).simulate('click', event, group._id);
-
-        expect(spy).toHaveBeenCalledTimes(1);
-        expect(mockJoinGroup).toHaveBeenCalledTimes(1);
-        expect(event.stopPropagation).toHaveBeenCalledTimes(1);
+        const [call = []] = mockJoinGroup.mock.calls;
+        expect(call).toEqual([expectedJoinedGroup]);
     });
 
-    it('should call "leaveGroup" after click "leave group" in Group component', () => {
-        event.stopPropagation = jest.fn();
+    it('should call "leaveGroup" after click "leave group" button in Group component', () => {
         const mockLeaveGroupRequest = jest.fn();
+        const expectedLeaveGroup = {
+            userID:user.data._id,
+            groupID: group._id
+        };
         const component = shallow(<Groups
             groups={groups}
             user={user}
@@ -254,20 +219,30 @@ describe('Groups component', () => {
             isJoiningGroup={true}
         />);
 
-        const spy = jest.spyOn(component.instance(), 'leaveGroup');
-        component.instance().forceUpdate();
+        component.find(Group).at(0).props().leaveGroup({
+            userID: user.data._id,
+            groupID: group._id
+        });
 
-        const groupComponent = shallow(<Group
-            group={group}
-            userID={user.data._id}
-            leaveGroup={component.instance().leaveGroup}
-        />);
-
-        groupComponent.find('.btn-outline-danger').at(1).simulate('click', event, group._id);
-
-        expect(spy).toHaveBeenCalledTimes(1);
-        expect(mockLeaveGroupRequest).toHaveBeenCalledTimes(1);
-        expect(event.stopPropagation).toHaveBeenCalledTimes(1);
+        const [call = []] = mockLeaveGroupRequest.mock.calls;
+        expect(call).toEqual([expectedLeaveGroup]);
     });
+
+    it('should load more groups on page', () => {
+        const mockGroupsRequest = jest.fn();
+        const component = shallow(<Groups
+            groups={groups}
+            actions={{...actions, getGroupsRequest: mockGroupsRequest}}
+        />);
+        const mockGetGroups = {
+            limit: component.state().options.limit,
+            searchBy: component.state().options.searchBy
+        };
+        component.instance().loadMore();
+
+        const [call = []] = mockGroupsRequest.mock.calls;
+        expect(call).toEqual([mockGetGroups]);
+
+    })
 
 });

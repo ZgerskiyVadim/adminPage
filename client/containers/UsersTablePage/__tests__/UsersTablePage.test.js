@@ -1,6 +1,5 @@
 import React from 'react';
-import { BrowserRouter as Router }    from 'react-router-dom';
-import { shallow, mount } from 'enzyme';
+import { shallow } from 'enzyme';
 import {Users} from '../index';
 import * as actions from '../../../actions/action_creators/users';
 import LoadingSpinner from '../../../components/LoadingSpinner';
@@ -67,20 +66,6 @@ describe('Users component', () => {
         expect(call).toEqual([expectedGetUsers]);
     });
 
-    it('show loading spinner', () => {
-
-        const component = shallow(<Users
-            users={users}
-            actions={actions}
-            loading={true}
-        />);
-
-        const loadingSpinner = component.find(LoadingSpinner);
-
-        expect(loadingSpinner.props().loading).toBe(true);
-
-    });
-
     it('should call "searchUsers" after onChange form in SearchInput component', () => {
         const mockUsersRequest = jest.fn();
         const mockEvent = {target: {value: 'search'}};
@@ -129,10 +114,12 @@ describe('Users component', () => {
         />);
 
         component.find(User).at(0).props().showModal(user._id, event);
-        expect(component.state().showModal).toBe(true);
+        let modalWindow = component.find(ModalWindow);
+        expect(modalWindow.props().showModal).toBe(true);
 
         component.find(ModalWindow).props().closeModal(event);
-        expect(component.state().showModal).toBe(false);
+        modalWindow = component.find(ModalWindow);
+        expect(modalWindow.props().showModal).toBe(false);
     });
 
     it('should call "updateUser" after click "save" button in User component', () => {
@@ -154,5 +141,22 @@ describe('Users component', () => {
         const [call = []] = mockUpdateUserRequest.mock.calls;
         expect(call).toEqual([expectedUpdatedUser]);
     });
+
+    it('should load more users on page', () => {
+        const mockUsersRequest = jest.fn();
+        const component = shallow(<Users
+            users={users}
+            actions={{...actions, getUsersRequest: mockUsersRequest}}
+        />);
+        const mockGetUsers = {
+            limit: component.state().options.limit,
+            searchBy: component.state().options.searchBy
+        };
+        component.instance().loadMore();
+
+        const [call = []] = mockUsersRequest.mock.calls;
+        expect(call).toEqual([mockGetUsers]);
+
+    })
 
 });
