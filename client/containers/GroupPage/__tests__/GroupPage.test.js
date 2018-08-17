@@ -65,17 +65,46 @@ describe('Group component', () => {
 
     });
 
+    it('show table if have users in group', () => {
+
+        const component = shallow(<Group
+            match={match}
+            group={group}
+            users={users}
+            actions={actions}
+        />);
+
+        const usersTable = component.find('.group__users-table');
+        expect(['group--hide'].every(c => usersTable.hasClass(c))).toBe(false);
+
+    });
+
+    it('show loading spinner', () => {
+
+        const component = shallow(<Group
+            match={match}
+            group={group}
+            actions={actions}
+            loading={true}
+        />);
+
+        const loadingSpinner = component.find(LoadingSpinner);
+
+        expect(loadingSpinner.props().loading).toBe(true);
+
+    });
+
     it('should call fetch when mounted', () => {
-        const mockFetch = jest.fn();
+        const mockGroupRequest = jest.fn();
 
         const component = mount(<Group
             match={match}
             group={group}
-            actions={{...actions, getGroupRequest: mockFetch}}
+            actions={{...actions, getGroupRequest: mockGroupRequest}}
         />);
 
         expect(component).toBeDefined();
-        expect(mockFetch).toHaveBeenCalledTimes(1);
+        expect(mockGroupRequest).toHaveBeenCalledTimes(1);
     });
 
     it('should call "removeUser" after success in ModalWindow component', () => {
@@ -119,7 +148,7 @@ describe('Group component', () => {
             closeModal={component.instance().closeModal}
         />);
 
-        expect(component.find('.group__remove-user').at(0).simulate('click', event, user._id));
+        expect(component.find('.group__remove-user').at(0).simulate('click', event, group.data._id));
         expect(component.state().showModal).toBe(true);
 
         modalWindowComponent.find('.close').at(0).props().onClick();
@@ -149,39 +178,6 @@ describe('Group component', () => {
         expect(mockGroupRequest).toHaveBeenCalledTimes(2);
     });
 
-    it('show table if have users in group', () => {
-
-        const component = shallow(<Group
-            match={match}
-            group={group}
-            users={users}
-            actions={actions}
-        />);
-
-        expect(component.find('.group').length).toBe(1);
-
-        expect(component.find('.group__info').length).toBe(1);
-
-        const usersTable = component.find('.group__users-table');
-        expect(['group--hide'].every(c => usersTable.hasClass(c))).toBe(false);
-
-    });
-
-    it('show loading spinner', () => {
-
-        const component = shallow(<Group
-            match={match}
-            group={group}
-            actions={actions}
-            loading={true}
-        />);
-
-        const loadingSpinner = component.find(LoadingSpinner);
-
-        expect(loadingSpinner.props().loading).toBe(true);
-
-    });
-
     it('should call "goToUser" after click on user', () => {
 
         const component = shallow(<Group
@@ -199,7 +195,7 @@ describe('Group component', () => {
         expect(spy).toHaveBeenCalledTimes(1);
     });
 
-    it('should call "showForms" after click button update', () => {
+    it('should call "showForms" after click button "update"', () => {
         event.stopPropagation = jest.fn();
         const component = shallow(<Group
             match={match}
@@ -210,15 +206,15 @@ describe('Group component', () => {
         const spy = jest.spyOn(component.instance(), 'showForms');
         component.instance().forceUpdate();
 
-        expect(component.find('.btn-outline-primary').at(0).simulate('click', event, user._id));
-        expect(component.state().id).toBe(user._id);
+        expect(component.find('.btn-outline-primary').at(0).simulate('click', event, group.data._id));
+        expect(component.state().id).toBe(group.data._id);
         expect(component.state().showForm).toBe(true);
 
         expect(spy).toHaveBeenCalledTimes(1);
         expect(event.stopPropagation).toHaveBeenCalledTimes(1);
     });
 
-    it('should call "updateGroup" after click button save', () => {
+    it('should call "updateGroup" after click button "save"', () => {
         const mockUpdateRequest = jest.fn();
         event.stopPropagation = jest.fn();
         event.preventDefault = jest.fn();
@@ -231,7 +227,7 @@ describe('Group component', () => {
         const spy = jest.spyOn(component.instance(), 'updateGroup');
         component.instance().forceUpdate();
 
-        expect(component.find('.btn-outline-primary').at(0).simulate('click', event, user._id));
+        expect(component.find('.btn-outline-primary').at(0).simulate('click', event, group.data._id));
         expect(component.state().showForm).toBe(true);
         expect(component.find('.btn-outline-primary').at(1).simulate('click', event));
         expect(component.state().showForm).toBe(false);
@@ -240,10 +236,9 @@ describe('Group component', () => {
         expect(mockUpdateRequest).toHaveBeenCalledTimes(1);
         expect(event.preventDefault).toHaveBeenCalledTimes(1);
         expect(event.stopPropagation).toHaveBeenCalledTimes(1);
-        expect(event.stopPropagation).toHaveBeenCalledTimes(1);
     });
 
-    it('should call "showModal" after click button remove user', () => {
+    it('should call "showModal" after click button "remove user"', () => {
         event.stopPropagation = jest.fn();
         const component = shallow(<Group
             match={match}
@@ -255,9 +250,9 @@ describe('Group component', () => {
         const spy = jest.spyOn(component.instance(), 'showModal');
         component.instance().forceUpdate();
 
-        expect(component.find('.group__remove-user').at(0).simulate('click', event, user._id));
+        expect(component.find('.group__remove-user').at(0).simulate('click', event, group.data._id));
         expect(component.state().showModal).toBe(true);
-        expect(component.state().userID).toBe(user._id);
+        expect(component.state().userID).toBe(group.data._id);
 
         const modalWindow = component.find(ModalWindow);
 
@@ -265,6 +260,23 @@ describe('Group component', () => {
 
         expect(spy).toHaveBeenCalledTimes(1);
         expect(event.stopPropagation).toHaveBeenCalledTimes(1);
+    });
+
+    it('should call "handleChange" after change form', () => {
+
+        const component = shallow(<Group
+            match={match}
+            group={group}
+            actions={actions}
+        />);
+
+        const spy = jest.spyOn(component.instance(), 'handleChange');
+        component.instance().forceUpdate();
+
+        expect(component.find('[name="name"]').at(0).simulate('change', event));
+        expect(component.find('[name="title"]').at(0).simulate('change', event));
+
+        expect(spy).toHaveBeenCalledTimes(2);
     });
 
 });

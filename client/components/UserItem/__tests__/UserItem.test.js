@@ -66,7 +66,7 @@ describe('User component', () => {
         expect(event.stopPropagation).toHaveBeenCalledTimes(5);
     });
 
-    it('should call "showForms" after click button update', () => {
+    it('should call "showForms" after click button "update"', () => {
         event.stopPropagation = jest.fn();
         const component = shallow(<User user={user}/>);
 
@@ -81,7 +81,7 @@ describe('User component', () => {
         expect(event.stopPropagation).toHaveBeenCalledTimes(1);
     });
 
-    it('should call "sendOptionsUpdate" after click button save', () => {
+    it('should call "sendOptionsUpdate" after click button "save"', () => {
         event.stopPropagation = jest.fn();
         const update = jest.fn();
         const component = shallow(<User
@@ -102,7 +102,7 @@ describe('User component', () => {
         expect(event.stopPropagation).toHaveBeenCalledTimes(2);
     });
 
-    it('should call "remove" after click button remove', () => {
+    it('should call "remove" after click button "remove"', () => {
         const showModal = jest.fn();
         const component = shallow(<User
             user={user}

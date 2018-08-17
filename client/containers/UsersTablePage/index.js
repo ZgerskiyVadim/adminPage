@@ -15,7 +15,7 @@ import SearchComponent from '../../components/SearchInput';
 import showToastrMessage from "../../services/showToastrMessage";
 import {isEqualProps} from "../../services/isEqualProps";
 
-class Users extends Component {
+export class Users extends Component {
     constructor(props) {
         super(props);
         this.state = {

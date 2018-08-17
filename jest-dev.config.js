@@ -1,5 +1,6 @@
 module.exports = {
     verbose: true,
+    bail: true,
     testURL: "http://localhost/4000",
     testMatch: [
         "**/client/**/(*.)test.js"
@@ -7,10 +8,10 @@ module.exports = {
     setupFiles: [
         "./jest-dev.setup.js"
     ],
-    "snapshotSerializers": [
+    snapshotSerializers: [
         "<rootDir>/node_modules/enzyme-to-json/serializer"
     ],
-    "moduleNameMapper": {
+    moduleNameMapper: {
         "^.+\\.(css|scss)$": "identity-obj-proxy"
     }
 };

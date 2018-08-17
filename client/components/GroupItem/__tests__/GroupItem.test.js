@@ -70,7 +70,7 @@ describe('GroupItem component', () => {
         expect(spy).toHaveBeenCalledTimes(1);
     });
 
-    it('should call "remove" after click button remove', () => {
+    it('should call "remove" after click button "remove"', () => {
         const showModal = jest.fn();
         const component = shallow(<Group
             group={group}
@@ -86,7 +86,7 @@ describe('GroupItem component', () => {
         expect(showModal).toHaveBeenCalledTimes(1);
     });
 
-    it('should call "sendOptionsUpdate" after click button save', () => {
+    it('should call "sendOptionsUpdate" after click button "save"', () => {
         event.stopPropagation = jest.fn();
         const update = jest.fn();
         const component = shallow(<Group
@@ -107,7 +107,7 @@ describe('GroupItem component', () => {
         expect(event.stopPropagation).toHaveBeenCalledTimes(2);
     });
 
-    it('should call "showForms" after click button update', () => {
+    it('should call "showForms" after click button "update"', () => {
         event.stopPropagation = jest.fn();
         const component = shallow(<Group group={group}/>);
 
@@ -122,7 +122,7 @@ describe('GroupItem component', () => {
         expect(event.stopPropagation).toHaveBeenCalledTimes(1);
     });
 
-    it('should call "sendOptionsJoinGroup" after click button join group', () => {
+    it('should call "sendOptionsJoinGroup" after click button "join group"', () => {
         event.stopPropagation = jest.fn();
         const joinGroup = jest.fn();
         const component = shallow(<Group
@@ -142,7 +142,7 @@ describe('GroupItem component', () => {
         expect(event.stopPropagation).toHaveBeenCalledTimes(1);
     });
 
-    it('should call "sendOptionsLeaveGroup" after click button leave group', () => {
+    it('should call "sendOptionsLeaveGroup" after click button "leave group"', () => {
         event.stopPropagation = jest.fn();
         const leaveGroup = jest.fn();
         const component = shallow(<Group

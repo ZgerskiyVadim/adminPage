@@ -16,7 +16,7 @@ import SearchComponent from '../../components/SearchInput';
 import showToastrMessage from "../../services/showToastrMessage";
 import {isEqualProps} from "../../services/isEqualProps";
 
-class User extends Component {
+export class User extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -124,7 +124,7 @@ class User extends Component {
 
         const hiddenForm = classNames({'user--hide': !showForm});
         const shownForm = classNames('user--margin-right btn btn-outline-primary', {'user--hide': showForm});
-        const isGroups = classNames({'user--hide': !groups.length && !state.options.searchBy});
+        const isGroups = classNames({'user--hide': !groups.length && !options.searchBy});
 
         return (
             <div className='user'>
@@ -184,7 +184,7 @@ class User extends Component {
                                     </td>
                                     <td>
                                         <button onClick={(event) => this.leaveGroup(group._id, event)} className={classNames('user__leave-group btn btn-outline-danger', {'user--hide': group.isLeftGroup})}>leave group</button>
-                                        <button onClick={(event) => this.joinGroup(group._id, event)} className={classNames('user__leave-group btn btn-outline-info', {'user--hide': !group.isLeftGroup})}>join group</button>
+                                        <button onClick={(event) => this.joinGroup(group._id, event)} className={classNames('user__join-group btn btn-outline-info', {'user--hide': !group.isLeftGroup})}>join group</button>
                                     </td>
                                 </tr>
                                 </tbody>

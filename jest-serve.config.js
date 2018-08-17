@@ -1,5 +1,6 @@
 module.exports = {
     verbose: true,
+    bail: true,
     testEnvironment: "node",
     forceExit: true,
     testMatch: [
