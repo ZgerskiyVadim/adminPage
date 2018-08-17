@@ -4,6 +4,7 @@ import {Group} from '../index';
 import * as actions from '../../../actions/action_creators/groups';
 import LoadingSpinner from '../../../components/LoadingSpinner';
 import ModalWindow from '../../../components/ModalWindow';
+import SearchInput from "../../../components/SearchInput";
 
 const match = {
     params: {
@@ -77,7 +78,7 @@ describe('Group component', () => {
         expect(mockFetch).toHaveBeenCalledTimes(1);
     });
 
-    it('should call "removeUser" after success in modal window', () => {
+    it('should call "removeUser" after success in ModalWindow component', () => {
         const closeModal = jest.fn();
         const mockRemoveRequest = jest.fn();
 
@@ -94,13 +95,13 @@ describe('Group component', () => {
             remove={component.instance().removeUser}
             closeModal={closeModal}
         />);
-        expect(modalWindowComponent.find('.btn-success').at(0).props().onClick());
+        expect(modalWindowComponent.find('.btn-success').at(0).simulate('click'));
 
         expect(spy).toHaveBeenCalledTimes(1);
         expect(mockRemoveRequest).toHaveBeenCalledTimes(1);
     });
 
-    it('should call "closeModal" after closeModal in modal window', () => {
+    it('should call "closeModal" after closeModal in ModalWindow component', () => {
         const remove = jest.fn();
 
         const component = shallow(<Group
@@ -125,6 +126,27 @@ describe('Group component', () => {
         expect(component.state().showModal).toBe(false);
 
         expect(spy).toHaveBeenCalledTimes(1);
+    });
+
+    it('should call "searchUsers" after onChange form in SearchInput component', () => {
+        const mockGroupRequest = jest.fn();
+        const component = shallow(<Group
+            match={match}
+            group={group}
+            actions={{...actions, getGroupRequest: mockGroupRequest}}
+        />);
+
+        const spy = jest.spyOn(component.instance(), 'searchUsers');
+        component.instance().forceUpdate();
+
+        const searchInputComponent = shallow(<SearchInput
+            search={component.instance().searchUsers}
+        />);
+
+        expect(searchInputComponent.find('.form-control').simulate('change', event));
+
+        expect(spy).toHaveBeenCalledTimes(1);
+        expect(mockGroupRequest).toHaveBeenCalledTimes(2);
     });
 
     it('show table if have users in group', () => {
