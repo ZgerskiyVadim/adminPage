@@ -58,4 +58,25 @@ describe('ModalWindow component', () => {
         expect(remove).toHaveBeenCalledTimes(1);
         expect(closeModal).toHaveBeenCalledTimes(1);
     });
+
+    it('should call "handleClickOutside" after click outside the modal window', () => {
+        const preventDefault = jest.fn();
+        const closeModal = jest.fn();
+        const component = shallow(<ModalWindow
+            showModal={true}
+            closeModal={closeModal}
+        />);
+
+        const coverModal = component.find('.modal-cover');
+        const event = {
+            target: coverModal,
+            preventDefault
+        };
+
+        const spyHandleClickOutside = jest.spyOn(component.instance(), 'handleClickOutside');
+
+        component.instance().handleClickOutside(event);
+        expect(spyHandleClickOutside).toHaveBeenCalledTimes(1);
+
+    })
 });

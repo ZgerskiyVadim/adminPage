@@ -1,8 +1,5 @@
 import React, {Component} from "react";
-import {
-    Route,
-    Redirect,
-} from "react-router-dom";
+import {Route, Redirect} from "react-router-dom";
 import authenticationService from '../../services/authenticationService';
 
 const PrivateRoute = ({ component: Component, ...rest }) => (

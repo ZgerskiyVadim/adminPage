@@ -1,6 +1,7 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 import Links from '../index';
+import history from '../../../services/history';
 
 describe('Links component', () => {
     it('render Links component', () => {
@@ -15,38 +16,46 @@ describe('Links component', () => {
         expect(component.find('.nav-item').length).toBe(2);
     });
 
-    it('should show active link users', () => {
+    it('should show active link users for location path "users"', () => {
         const component = shallow(<Links lastBreadCrumb={ {path: 'users'} } />);
+        const usersLink = component.find('.link-users');
+        const groupsLink = component.find('.link-groups');
 
-        expect(component.find('.link-users').hasClass('active')).toBe(true);
-        expect(component.find('.link-groups').hasClass('active')).toBe(false);
+        expect(usersLink.hasClass('active')).toBe(true);
+        expect(groupsLink.hasClass('active')).toBe(false);
     });
 
-    it('should show active link groups', () => {
+    it('should show active link groups for location path "groups"', () => {
         const component = shallow(<Links lastBreadCrumb={ {path: 'groups'} } />);
+        const usersLink = component.find('.link-users');
+        const groupsLink = component.find('.link-groups');
 
-        expect(component.find('.link-groups').hasClass('active')).toBe(true);
-        expect(component.find('.link-users').hasClass('active')).toBe(false);
+        expect(groupsLink.hasClass('active')).toBe(true);
+        expect(usersLink.hasClass('active')).toBe(false);
     });
 
     it('should call "goToUsersPage" after click on link users', () => {
         const component = shallow(<Links />);
 
-        const spy = jest.spyOn(component.instance(), 'goToUsersPage');
+        const spyGoToUsersPage = jest.spyOn(component.instance(), 'goToUsersPage');
         component.instance().forceUpdate();
+        const usersLink = component.find('.link-users');
 
-        component.find('.link-users').at(0).props().onClick();
-        expect(spy).toHaveBeenCalledTimes(1);
+        usersLink.props().onClick();
+        expect(history.location.pathname).toBe(`/users`);
+        expect(spyGoToUsersPage).toHaveBeenCalledTimes(1);
     });
 
     it('should call "goToGroupsPage" after click on link groups', () => {
         const component = shallow(<Links />);
 
-        const spy = jest.spyOn(component.instance(), 'goToGroupsPage');
+        const spyGoToGroupsPage = jest.spyOn(component.instance(), 'goToGroupsPage');
         component.instance().forceUpdate();
+        const groupsLink = component.find('.link-groups');
 
-        component.find('.link-groups').at(0).props().onClick();
-        expect(spy).toHaveBeenCalledTimes(1);
+        groupsLink.props().onClick();
+        expect(history.location.pathname).toBe(`/groups`);
+        expect(spyGoToGroupsPage).toHaveBeenCalledTimes(1);
     })
 
 });

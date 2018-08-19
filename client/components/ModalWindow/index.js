@@ -27,7 +27,7 @@ class ModalWindow extends PureComponent {
 
     handleClickOutside(event) {
         event.preventDefault();
-        if (!this.modalContent.contains(event.target) && this.modalRoot.contains(event.target)) {
+        if (this.modalContent && !this.modalContent.contains(event.target) && this.modalRoot.contains(event.target)) {
             this.props.closeModal();
         }
     };
