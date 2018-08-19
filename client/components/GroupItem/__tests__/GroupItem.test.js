@@ -162,4 +162,18 @@ describe('GroupItem component', () => {
         expect(event.stopPropagation).toHaveBeenCalledTimes(1);
     });
 
+    it('should hide "remove" and "update" and show "join group" buttons if user joining groups', () => {
+    const component = shallow(<Group
+        group={group}
+        userJoinedGroup={false} // if false show "join group" button, else show "leave group" button
+        isJoiningGroup={true}
+    />);
+        const removeButtons = component.find('.groups__remove');
+        const updateButtons = component.find('.groups__update');
+        const joinGroupButtons = component.find('.btn-outline-info');
+        removeButtons.forEach(button => expect(button.hasClass('groups--hide')).toBe(true));
+        updateButtons.forEach(button => expect(button.hasClass('groups--hide')).toBe(true));
+        joinGroupButtons.forEach(button => expect(button.hasClass('groups--hide')).toBe(false));
+    })
+
 });

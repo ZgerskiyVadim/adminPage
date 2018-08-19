@@ -157,8 +157,9 @@ describe('User component', () => {
             user={user}
             isJoining={true}
         />);
+        const removeHiddenButton = component.find('.users--hide-remove');
 
-        expect(component.find('.users--hide-remove').length).toBe(1);
+        expect(removeHiddenButton.length).toBe(1);
     })
 
 });

@@ -86,9 +86,9 @@ export class Group extends Component {
                     <h5>{users.length}</h5>
                 </td>
                 <td className='groups__buttons'>
-                    <button onClick={(event) => this.showForms(_id, event)} className={classNames('groups--margin-right btn btn-outline-primary', shownForm, notJoiningGroup)}>Update</button>
+                    <button onClick={(event) => this.showForms(_id, event)} className={classNames('groups__update groups--margin-right btn btn-outline-primary', shownForm, notJoiningGroup)}>Update</button>
                     <button onClick={this.sendOptionsUpdate} className={classNames('groups--margin-right btn btn-outline-primary', hiddenForm)}>Save</button>
-                    <button onClick={(event) => this.remove(_id, event)} className={classNames('btn btn-outline-danger', notJoiningGroup)}>Remove</button>
+                    <button onClick={(event) => this.remove(_id, event)} className={classNames('groups__remove btn btn-outline-danger', notJoiningGroup)}>Remove</button>
                     <button onClick={(event) => this.sendOptionsJoinGroup(_id, event)} className={classNames('btn btn-outline-info', userAlreadyInGroup)}>Join group</button>
                     <button onClick={(event) => this.sendOptionsLeaveGroup(_id, event)} className={classNames('btn btn-outline-danger', userNotInGroup)}>Leave group</button>
                 </td>
