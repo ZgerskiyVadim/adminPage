@@ -16,11 +16,11 @@ describe('Header component', () => {
     it('should call "logout" after click on button', () => {
         const component = shallow(<Header />);
 
-        const spy = jest.spyOn(component.instance(), 'logout');
+        const spyLogout = jest.spyOn(component.instance(), 'logout');
         component.instance().forceUpdate();
 
         component.find('span.navbar-brand').at(0).props().onClick();
-        expect(spy).toHaveBeenCalledTimes(1);
+        expect(spyLogout).toHaveBeenCalledTimes(1);
     })
 
 });
