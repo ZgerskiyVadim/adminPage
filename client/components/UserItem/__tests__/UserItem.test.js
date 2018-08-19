@@ -152,4 +152,13 @@ describe('User component', () => {
 
     });
 
+    it('should hide "remove" button if user joining groups', () => {
+        const component = shallow(<User
+            user={user}
+            isJoining={true}
+        />);
+
+        expect(component.find('.users--hide-remove').length).toBe(1);
+    })
+
 });

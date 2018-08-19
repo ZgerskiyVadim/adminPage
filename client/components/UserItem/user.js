@@ -54,7 +54,7 @@ export class User extends Component {
 
         const hiddenForm = classNames({'users--hide': !showForm});
         const shownForm = classNames({'users--hide': showForm});
-        const isJoiningUser = classNames({'users--hide': isJoining});
+        const isJoiningUser = classNames({'users--hide-remove': isJoining});
 
         return (
             <tbody>

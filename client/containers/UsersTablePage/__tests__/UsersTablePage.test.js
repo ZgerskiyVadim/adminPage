@@ -157,6 +157,24 @@ describe('Users component', () => {
         const [call = []] = mockUsersRequest.mock.calls;
         expect(call).toEqual([mockGetUsers]);
 
+    });
+
+    it('should hide "remove" button if user joining groups', () => {
+        const user = {
+            data: {
+                _id: 1
+            }
+        };
+        const component = shallow(<Users
+            users={users}
+            actions={actions}
+            isJoiningGroup={true}
+            user={user}
+        />);
+
+        const userComponent = component.find(User);
+        expect(userComponent.at(0).props().isJoining).toBe(true);
+        expect(userComponent.at(1).props().isJoining).toBe(false);
     })
 
 });

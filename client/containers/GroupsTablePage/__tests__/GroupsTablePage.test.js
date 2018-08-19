@@ -27,7 +27,10 @@ const group = {
 };
 
 const groups = {
-    data: [group, {...group, _id: 2}]
+    data: [group,
+        {...group, _id: 2,
+            users: [{...user.data, _id: 2}]
+        }]
 };
 
 const event = {
@@ -243,6 +246,20 @@ describe('Groups component', () => {
         const [call = []] = mockGroupsRequest.mock.calls;
         expect(call).toEqual([mockGetGroups]);
 
+    });
+
+    it('should show "join group" button if user joining groups', () => {
+        const component = shallow(<Groups
+            groups={groups}
+            actions={actions}
+            isJoiningGroup={true}
+            user={user}
+        />);
+
+        const groupComponent = component.find(Group);
+        expect(groupComponent.at(0).props().isJoiningGroup).toBe(true);
+        expect(groupComponent.at(0).props().userJoinedGroup).toBe(true);
+        expect(groupComponent.at(1).props().userJoinedGroup).toBe(false);
     })
 
 });

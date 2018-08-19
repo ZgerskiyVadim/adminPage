@@ -70,7 +70,7 @@ export class Users extends Component {
 
     getUsers() {
         if (this.props.isJoiningGroup) {
-            return this.props.users.data.map(user => user._id === this.props.user._id ? {...user, isJoining: true} : user); //Hide remove button for joining user
+            return this.props.users.data.map(user => user._id === this.props.user.data._id ? {...user, isJoining: true} : {...user, isJoining: false}); //Hide remove button for joining user
         } else {
             return this.props.users.data;
         }
