@@ -1,6 +1,7 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 import {Group} from '../group';
+import history from '../../../services/history';
 
 const group = {
     users: [1, 2],
@@ -28,6 +29,16 @@ describe('GroupItem component', () => {
         expect(component.find('.groups__buttons').length).toBe(1);
 
         expect(component.find('button').length).toBe(5);
+
+    });
+
+    it('should call "goToGroup" after click component', () => {
+        const component = shallow(<Group group={group} />);
+        const groupItem = component.find('.groups--cursor').at(0);
+
+        expect(history.location.pathname).toBe(`/`);
+        groupItem.simulate('click', event);
+        expect(history.location.pathname).toBe(`/groups/${group._id}`);
 
     });
 
@@ -163,11 +174,11 @@ describe('GroupItem component', () => {
     });
 
     it('should hide "remove" and "update" and show "join group" buttons if user joining groups', () => {
-    const component = shallow(<Group
-        group={group}
-        userJoinedGroup={false} // if false show "join group" button, else show "leave group" button
-        isJoiningGroup={true}
-    />);
+        const component = shallow(<Group
+            group={group}
+            userJoinedGroup={false} // if false show "join group" button, else show "leave group" button
+            isJoiningGroup={true}
+        />);
         const removeButtons = component.find('.groups__remove');
         const updateButtons = component.find('.groups__update');
         const joinGroupButtons = component.find('.btn-outline-info');

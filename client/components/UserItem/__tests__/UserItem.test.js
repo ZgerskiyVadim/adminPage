@@ -36,6 +36,16 @@ describe('User component', () => {
 
     });
 
+    it('should call "goToUser" after click component', () => {
+        const component = shallow(<User user={user}/>);
+        const userItem = component.find('.users--cursor').at(0);
+
+        expect(history.location.pathname).toBe(`/`);
+        userItem.simulate('click', event);
+        expect(history.location.pathname).toBe(`/users/${user._id}`);
+
+    });
+
     it('should call "handleChange" and set state after change username form', () => {
         const component = shallow(<User user={user}/>);
 
@@ -140,16 +150,6 @@ describe('User component', () => {
 
         const [call = []] = showModal.mock.calls;
         expect(call).toEqual([expectedRemoveUserID, expectedRemoveUserEvent]);
-    });
-
-    it('should call "goToUser" after click component', () => {
-        const component = shallow(<User user={user}/>);
-        const userItem = component.find('.users--cursor').at(0);
-
-        expect(history.location.pathname).toBe(`/`);
-        userItem.simulate('click', event);
-        expect(history.location.pathname).toBe(`/users/${user._id}`);
-
     });
 
     it('should hide "remove" button if user joining groups', () => {

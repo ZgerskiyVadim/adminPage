@@ -1,8 +1,9 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 import {Breadcrumb} from '../index';
+import history from '../../../services/history';
 
-const location = {
+let location = {
     pathname: '/'
 };
 
@@ -36,15 +37,20 @@ describe('Breadcrumb component', () => {
     });
 
     it('call "goToPath" after click on breadcrumb', () => {
-
+        const breadcrumb = {
+            location: '/users',
+            islastPath: false
+        };
         const component = shallow(<Breadcrumb location={location} />);
 
-            const spy = jest.spyOn(component.instance(), 'goToPath');
-            component.instance().forceUpdate();
+        component.instance().goToPath(breadcrumb);
+        expect(history.location.pathname).toBe(`/users`);
 
-            component.find('.breadcrumb-item').at(0).simulate('click');
+        const spyGoToPath = jest.spyOn(component.instance(), 'goToPath');
 
-            expect(spy).toHaveBeenCalledTimes(1);
+        component.find('.breadcrumb-item').at(0).simulate('click');
+
+        expect(spyGoToPath).toHaveBeenCalledTimes(1);
     });
 
 });
