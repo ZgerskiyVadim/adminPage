@@ -7,6 +7,8 @@ import './index.scss';
 import * as usersActionCreators from '../../actions/action_creators/users';
 import formsOperations from '../../services/formsOperations';
 import LoadingSpinner from '../../components/LoadingSpinner';
+import {isEqualProps} from "../../services/isEqualProps";
+import showToastrMessage from "../../services/showToastrMessage";
 
 export class CreateUserPage extends Component {
     constructor(props) {
@@ -21,6 +23,13 @@ export class CreateUserPage extends Component {
         };
         this.handleChange = formsOperations.handleChange.bind(this);
         this.createUser = this.createUser.bind(this);
+    }
+
+    componentWillReceiveProps(nextProps) {
+        const error = nextProps.createUser.error;
+
+        !isEqualProps(this.props.createUser.data, nextProps.createUser.data) && showToastrMessage.success();
+        error && showToastrMessage.error(error);
     }
 
     createUser(event) {

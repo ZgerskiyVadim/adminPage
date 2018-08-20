@@ -7,6 +7,8 @@ import './index.scss';
 import * as groupsActionCreators from '../../actions/action_creators/groups';
 import formsOperations from '../../services/formsOperations';
 import LoadingSpinner from '../../components/LoadingSpinner';
+import {isEqualProps} from "../../services/isEqualProps";
+import showToastrMessage from "../../services/showToastrMessage";
 
 export class CreateGroupPage extends Component {
     constructor(props) {
@@ -18,6 +20,13 @@ export class CreateGroupPage extends Component {
         };
         this.handleChange = formsOperations.handleChange.bind(this);
         this.createGroup = this.createGroup.bind(this);
+    }
+
+    componentWillReceiveProps(nextProps) {
+        const error = nextProps.createGroup.error;
+
+        !isEqualProps(this.props.createGroup.data, nextProps.createGroup.data) && showToastrMessage.success();
+        error && showToastrMessage.error(error);
     }
 
     createGroup(event) {
