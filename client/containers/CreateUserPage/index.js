@@ -7,7 +7,6 @@ import './index.scss';
 import * as usersActionCreators from '../../actions/action_creators/users';
 import formsOperations from '../../services/formsOperations';
 import LoadingSpinner from '../../components/LoadingSpinner';
-import showToastrMessage from "../../services/showToastrMessage";
 
 class CreateUser extends Component {
     constructor(props) {
@@ -22,12 +21,6 @@ class CreateUser extends Component {
         };
         this.handleChange = formsOperations.handleChange.bind(this);
         this.createUser = this.createUser.bind(this);
-    }
-
-    componentWillReceiveProps(nextProps) {
-        const {error} = nextProps.createUser;
-
-        error && showToastrMessage.error(error);
     }
 
     createUser(event) {
@@ -75,8 +68,8 @@ CreateUser.propTypes = {
 };
 
 const mapStateToProps = (state) => ({
-    createUser: state.CreateUser.createdUser,
-    loading: state.CreateUser.createdUser.loading
+    createUser: state.Users.createdUser,
+    loading: state.Users.createdUser.loading
 });
 
 const mapDispatchToProps = (dispatch) => ({

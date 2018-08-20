@@ -10,14 +10,18 @@ import {
     REMOVE_GROUP_FAIL,
     GET_GROUP_SUCCESS,
     GET_GROUP_FAIL,
-    GET_GROUP_PENDING
+    GET_GROUP_PENDING,
+    GROUP_CREATE_PENDING,
+    GROUP_CREATED_SUCCESS,
+    CREATE_GROUP_FAIL
 } from '../actions';
 
 export const initialState = {
     groups: {data: [], loading: false, error: null},
     group: {data: {}, loading: false, error: null},
     updatedGroup: {data: {}, loading: false, error: null},
-    removedGroup: {data: {}, loading: false, error: null}
+    removedGroup: {data: {}, loading: false, error: null},
+    createdGroup: {data: {}, loading: false, error: null}
 };
 
 export function Groups(state = initialState, action) {
@@ -154,6 +158,37 @@ export function Groups(state = initialState, action) {
                     ...state.removedGroup,
                     loading: false,
                     error: action.payload || 'Remove group failed'
+                }
+            };
+
+        case GROUP_CREATE_PENDING:
+            return {
+                ...state,
+                createdGroup: {
+                    ...state.createdGroup,
+                    loading: true,
+                    error: null
+                }
+            };
+
+        case GROUP_CREATED_SUCCESS:
+            return {
+                ...state,
+                createdGroup: {
+                    ...state.createdGroup,
+                    data: action.payload,
+                    loading: false,
+                    error: null
+                }
+            };
+
+        case CREATE_GROUP_FAIL:
+            return {
+                ...state,
+                createdGroup: {
+                    ...state.createdGroup,
+                    loading: false,
+                    error: action.payload || 'Create group failed'
                 }
             };
 

@@ -7,7 +7,6 @@ import './index.scss';
 import * as groupsActionCreators from '../../actions/action_creators/groups';
 import formsOperations from '../../services/formsOperations';
 import LoadingSpinner from '../../components/LoadingSpinner';
-import showToastrMessage from "../../services/showToastrMessage";
 
 class CreateGroup extends Component {
     constructor(props) {
@@ -19,12 +18,6 @@ class CreateGroup extends Component {
         };
         this.handleChange = formsOperations.handleChange.bind(this);
         this.createGroup = this.createGroup.bind(this);
-    }
-
-    componentWillReceiveProps(nextProps) {
-        const {error} = nextProps.createGroup;
-
-        error && showToastrMessage.error(error);
     }
 
     createGroup(event) {
@@ -66,8 +59,8 @@ CreateGroup.propTypes = {
 };
 
 const mapStateToProps = (state) => ({
-    createGroup: state.CreateGroup.createdGroup,
-    loading: state.CreateGroup.createdGroup.loading
+    createGroup: state.Groups.createdGroup,
+    loading: state.Groups.createdGroup.loading
 });
 
 const mapDispatchToProps = (dispatch) => ({

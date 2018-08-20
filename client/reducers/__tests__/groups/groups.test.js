@@ -33,6 +33,12 @@ describe('Groups reducer:', () => {
             expect(result.removedGroup.loading).toBe(true);
             expect(result.removedGroup.error).toBe(null);
         });
+
+        it('should handle CREATE_GROUP', () => {
+            const result = Groups(initialState, actionsReducer.createGroup.pending);
+            expect(result.createdGroup.loading).toBe(true);
+            expect(result.createdGroup.error).toBe(null);
+        });
     });
 
     describe('Success cases:', () => {
@@ -64,6 +70,13 @@ describe('Groups reducer:', () => {
             expect(result.groups.data.length).toEqual(0);
             expect(result.removedGroup.data).toEqual(REMOVE_GROUP_DATA);
         });
+
+        it('should handle CREATE_GROUP', () => {
+            const result = Groups(initialState, actionsReducer.createGroup.success);
+            expect(result.createdGroup.loading).toBe(false);
+            expect(result.createdGroup.error).toBe(null);
+            expect(result.createdGroup.data).toEqual(UPDATE_GROUP_DATA);
+        });
     });
     
     describe('Error cases:', () => {
@@ -89,6 +102,12 @@ describe('Groups reducer:', () => {
             const result = Groups(initialState, actionsReducer.removeGroup.fail);
             expect(result.removedGroup.loading).toBe(false);
             expect(result.removedGroup.error).toBe('Error Message');
+        });
+
+        it('should handle CREATE_GROUP', () => {
+            const result = Groups(initialState, actionsReducer.createGroup.fail);
+            expect(result.createdGroup.loading).toBe(false);
+            expect(result.createdGroup.error).toBe('Error Message');
         });
     });
 });

@@ -33,6 +33,24 @@ describe('Users reducer:', () => {
             expect(result.removedUser.loading).toBe(true);
             expect(result.removedUser.error).toBe(null);
         });
+
+        it('should handle USER_JOIN_GROUP', () => {
+            const result = Users(initialState, actionsReducer.userJoinGroup.pending);
+            expect(result.userJoinedGroup.loading).toBe(true);
+            expect(result.userJoinedGroup.error).toBe(null);
+        });
+
+        it('should handle USER_LEAVE_GROUP', () => {
+            const result = Users(initialState, actionsReducer.userLeaveGroup.pending);
+            expect(result.userLeftGroup.loading).toBe(true);
+            expect(result.userLeftGroup.error).toBe(null);
+        });
+
+        it('should handle CREATE_USER', () => {
+            const result = Users(initialState, actionsReducer.createUser.pending);
+            expect(result.createdUser.loading).toBe(true);
+            expect(result.createdUser.error).toBe(null);
+        });
     });
 
     describe('Success cases:', () => {
@@ -64,6 +82,32 @@ describe('Users reducer:', () => {
             expect(result.users.data.length).toEqual(0);
             expect(result.removedUser.data).toEqual(REMOVE_USER_DATA);
         });
+
+        it('should handle USER_IS_JOINING_GROUPS', () => {
+            const result = Users(initialState, actionsReducer.userIsJoiningGroups.success);
+            expect(result.user.isJoiningGroup).toBe(true);
+        });
+
+        // it('should handle USER_JOIN_GROUP', () => {
+        //     const result = Users(initialState, actionsReducer.userJoinGroup.success);
+        //     expect(result.userJoinedGroup.loading).toBe(false);
+        //     expect(result.userJoinedGroup.error).toBe(null);
+        //     expect(result.userJoinedGroup.data).toEqual(UPDATE_USER_DATA);
+        // });
+
+        // it('should handle USER_LEAVE_GROUP', () => {
+        //     const result = Users(initialState, actionsReducer.userLeaveGroup.success);
+        //     expect(result.userLeftGroup.loading).toBe(false);
+        //     expect(result.userLeftGroup.error).toBe(null);
+        //     expect(result.userLeftGroup.data).toEqual(UPDATE_USER_DATA);
+        // });
+
+        it('should handle CREATE_USER', () => {
+            const result = Users(initialState, actionsReducer.createUser.success);
+            expect(result.createdUser.loading).toBe(false);
+            expect(result.createdUser.error).toBe(null);
+            expect(result.createdUser.data).toEqual(UPDATE_USER_DATA);
+        });
     });
 
     describe('Error cases:', () => {
@@ -89,6 +133,24 @@ describe('Users reducer:', () => {
             const result = Users(initialState, actionsReducer.removeUser.fail);
             expect(result.removedUser.loading).toBe(false);
             expect(result.removedUser.error).toBe('Error Message');
+        });
+
+        it('should handle USER_JOIN_GROUP', () => {
+            const result = Users(initialState, actionsReducer.userJoinGroup.fail);
+            expect(result.userJoinedGroup.loading).toBe(false);
+            expect(result.userJoinedGroup.error).toBe('Error Message');
+        });
+
+        it('should handle USER_LEAVE_GROUP', () => {
+            const result = Users(initialState, actionsReducer.userLeaveGroup.fail);
+            expect(result.userLeftGroup.loading).toBe(false);
+            expect(result.userLeftGroup.error).toBe('Error Message');
+        });
+
+        it('should handle CREATE_USER', () => {
+            const result = Users(initialState, actionsReducer.createUser.fail);
+            expect(result.createdUser.loading).toBe(false);
+            expect(result.createdUser.error).toBe('Error Message');
         });
     });
 });
