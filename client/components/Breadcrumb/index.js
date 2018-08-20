@@ -51,7 +51,7 @@ export class Breadcrumb extends PureComponent {
                             this.locationPath().map((breadcrumb, index) => {
                                 return (
                                     <li onClick={() => this.goToPath(breadcrumb)}
-                                        className={classNames('breadcrumb--cursor breadcrumb-item', {'breadcrumb--blue': !breadcrumb.islastPath, 'active': breadcrumb.islastPath})}
+                                        className={classNames('breadcrumb-item', {'breadcrumb--cursor breadcrumb--blue': !breadcrumb.islastPath, 'active': breadcrumb.islastPath})}
                                         key={index}>
                                         {breadcrumb.path}
                                     </li>
