@@ -130,20 +130,21 @@ export class GroupPage extends Component {
 
         return (
             <div className='group'>
-                <h1>GROUP</h1>
+                <h3 className='group-header'>GROUP</h3>
                 <div className='group__info'>
                     <div className='group--margin-right'>
-                        <h3>name: {name}</h3>
+                        <h4>name: {name}</h4>
                         <input onChange={this.handleChange} value={state.name} className={classNames('form-control', hiddenForm)} name='name' type="text"/>
-                        <h3>title: {title}</h3>
+                        <h4>title: {title}</h4>
                         <input onChange={this.handleChange} value={state.title} className={classNames('form-control', hiddenForm)} name='title' type="text"/>
                     </div>
 
-                    <button onClick={this.showForms} className={classNames('btn btn-outline-primary', shownForm)}>Update</button>
-                    <button onClick={this.updateGroup} className={classNames('btn btn-outline-primary', hiddenForm)}>Save</button>
+                    <div className='group__info__buttons'>
+                        <button onClick={this.showForms} className={classNames('btn btn-outline-primary', shownForm)}>Update</button>
+                        <button onClick={this.updateGroup} className={classNames('btn btn-outline-primary', hiddenForm)}>Save</button>
+                    </div>
                 </div>
 
-                <h1 className={isUsers}>Users</h1>
                 <div className={classNames('group__users-table', isUsers)}>
                     <SearchComponent search={this.searchUsers}/>
                     <table className='table table-hover'>

@@ -1,18 +1,43 @@
 .group {
-  margin: 2em 0;
-  h1 {
-    margin-left: 1em;
+  margin: 1em 0;
+  .group-header {
+    font-size: 1.4em;
+    margin-left: 2.9em;
   }
 }
 .group__info {
   display: flex;
-  align-items: center;
-  margin: 0 0 1em 3em;
+  flex-direction: column;
+  align-items: flex-start;
+  margin: 0 0 1em 5em;
+  h4 {
+    font-size: 1.2em;
+    color: #777777;
+    span {
+      color: #212529;
+    }
+  }
+  .group__info__buttons {
+    display: flex;
+    margin-top: 1em;
+  }
 }
 .group__users-table {
   margin: 0 4em;
   .buttons-field {
     text-align: right;
+  }
+  th {
+    vertical-align: baseline;
+    h5 {
+      margin: 0.2em 0;
+    }
+  }
+  td {
+    vertical-align: baseline;
+    h5 {
+      margin: 0;
+    }
   }
 }
 .group__users-list {

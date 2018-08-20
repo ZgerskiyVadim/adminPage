@@ -4,6 +4,9 @@
     display: flex;
     justify-content: center;
   }
+  input[name="username"] {
+    margin-bottom: 1em;
+  }
 }
 .login--row {
   display: flex;
@@ -23,7 +26,4 @@
     background-color: #fff;
     border-color: #007bff;
   }
-}
-input[name="username"] {
-  margin-bottom: 1em;
 }

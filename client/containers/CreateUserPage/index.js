@@ -34,18 +34,18 @@ export class CreateUserPage extends Component {
 
         return (
             <div className='create-user'>
-                <h2>Create User</h2>
+                <h4>Create User</h4>
                 <div className='create-user--row'>
                     <div className='col-md-6'>
-                        <h3>username</h3>
+                        <h5>username</h5>
                         <input onChange={this.handleChange} value={username} name='username' className='form-control' type="text"/>
-                        <h3>firstName</h3>
+                        <h5>firstName</h5>
                         <input onChange={this.handleChange} value={firstName} name='firstName' className='form-control' type="text"/>
-                        <h3>lastName</h3>
+                        <h5>lastName</h5>
                         <input onChange={this.handleChange} value={lastName} name='lastName' className='form-control' type="text"/>
-                        <h3>email</h3>
+                        <h5>email</h5>
                         <input onChange={this.handleChange} value={email} name='email' className='form-control' type="text"/>
-                        <h3>password</h3>
+                        <h5>password</h5>
                         <input onChange={this.handleChange} value={password} name='password' className='form-control' type="password"/>
                     </div>
 

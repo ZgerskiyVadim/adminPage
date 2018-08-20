@@ -1,11 +1,15 @@
 .create-user {
-  margin: 2em 0 0 2em;
+  margin: 1em 0 0 4em;
 }
 .create-user--row {
   display: flex;
-  margin-top: 2em;
+  flex-direction: column;
+  margin-top: 1em;
+  input {
+    margin-bottom: 0.5em;
+  }
 }
 .create-user__send {
-  margin-left: 1em;
-  align-self: center;
+  margin-right: 30em;
+  align-self: flex-end;
 }

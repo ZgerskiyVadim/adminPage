@@ -139,26 +139,27 @@ export class UserPage extends Component {
 
         return (
             <div className='user'>
-                <h1>USER</h1>
+                <h3 className='user-header'>USER</h3>
                 <div className='user__info'>
                     <div className='user--margin-right'>
-                        <h3>username: {username}</h3>
+                        <h4>Username: <span>{username}</span></h4>
                         <input onChange={this.handleChange} value={state.username} className={classNames('form-control', hiddenForm)} name='username' type="text"/>
-                        <h3>firstName: {firstName}</h3>
+                        <h4>FirstName: <span>{firstName}</span></h4>
                         <input onChange={this.handleChange} value={state.firstName} className={classNames('form-control', hiddenForm)} name='firstName' type="text"/>
-                        <h3>lastName: {lastName}</h3>
+                        <h4>LastName: <span>{lastName}</span></h4>
                         <input onChange={this.handleChange} value={state.lastName} className={classNames('form-control', hiddenForm)} name='lastName' type="text"/>
-                        <h3>email: {email}</h3>
+                        <h4>Email: <span>{email}</span></h4>
                         <input onChange={this.handleChange} value={state.email} className={classNames('form-control', hiddenForm)} name='email' type="text"/>
-                        <h3>password: ****</h3>
+                        <h4>Password: <span>****</span></h4>
                         <input onChange={this.handleChange} value={state.password} className={classNames('form-control', hiddenForm)} name='password' type="password"/>
                     </div>
-                    <button onClick={this.showForms} className={shownForm}>Update</button>
-                    <button onClick={this.updateUser} className={classNames('user--margin-right btn btn-outline-primary', hiddenForm)}>Save</button>
-                    <button onClick={this.startJoiningGroup} className='btn btn-outline-info'>Join group</button>
+                    <div className='user__info__buttons'>
+                        <button onClick={this.showForms} className={shownForm}>Update</button>
+                        <button onClick={this.updateUser} className={classNames('user--margin-right btn btn-outline-primary', hiddenForm)}>Save</button>
+                        <button onClick={this.startJoiningGroup} className='btn btn-outline-info'>Join group</button>
+                    </div>
                 </div>
 
-                <h1 className={isGroups}>Groups</h1>
                 <div className={classNames('user__groups-table', isGroups)}>
                     <SearchComponent search={this.searchGroups}/>
                     <table className='table table-hover'>

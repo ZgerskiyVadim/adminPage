@@ -3,7 +3,7 @@ import './index.scss';
 
 const SearchComponent = ({search, style, handleButtonClick}) => (
     <div className='search'>
-        <h2>Search</h2>
+        <h3>Search</h3>
         <input onChange={search} className='form-control col-md-3' type="text"/>
         {
             handleButtonClick ?

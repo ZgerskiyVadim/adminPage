@@ -31,12 +31,12 @@ export class CreateGroupPage extends Component {
 
         return (
             <div className='create-group'>
-                <h2>Create Group</h2>
+                <h4>Create Group</h4>
                 <div className='create-group--row'>
                     <div className='col-md-6'>
-                        <h3>name</h3>
+                        <h5>name</h5>
                         <input onChange={this.handleChange} value={name} name='name' className='form-control' type="text"/>
-                        <h3>title</h3>
+                        <h5>title</h5>
                         <input onChange={this.handleChange} value={title} name='title' className='form-control' type="text"/>
                     </div>
 
