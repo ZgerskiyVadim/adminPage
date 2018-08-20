@@ -6,7 +6,7 @@ import { withRouter } from 'react-router';
 import formsOperations from '../../services/formsOperations';
 import redirectOnPage from '../../services/redirectOnPage';
 
-export class Group extends Component {
+export class GroupItem extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -106,7 +106,7 @@ export class Group extends Component {
     }
 }
 
-Group.propTypes = {
+GroupItem.propTypes = {
     group: PropTypes.object.isRequired,
     update: PropTypes.func,
     showModal: PropTypes.func,
@@ -114,4 +114,4 @@ Group.propTypes = {
     leaveGroup: PropTypes.func
 };
 
-export default withRouter(Group);
+export default withRouter(GroupItem);

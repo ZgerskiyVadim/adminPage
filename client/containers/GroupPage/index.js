@@ -16,7 +16,7 @@ import SearchComponent from '../../components/SearchInput';
 import showToastrMessage from "../../services/showToastrMessage";
 import {isEqualProps} from "../../services/isEqualProps";
 
-export class Group extends Component {
+export class GroupPage extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -204,14 +204,14 @@ export class Group extends Component {
     }
 }
 
-Group.defaultProps = {
+GroupPage.defaultProps = {
     group: {},
     updatedGroup: {},
     users: [],
     loading: false
 };
 
-Group.propTypes = {
+GroupPage.propTypes = {
     group: PropTypes.object.isRequired,
     updatedGroup: PropTypes.object.isRequired,
     users: PropTypes.array.isRequired,
@@ -231,4 +231,4 @@ const mapDispatchToProps = (dispatch) => ({
     }, dispatch)
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(Group);
+export default connect(mapStateToProps, mapDispatchToProps)(GroupPage);

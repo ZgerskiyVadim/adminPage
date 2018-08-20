@@ -1,6 +1,6 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import {User} from '../user';
+import {UserItem} from '../user';
 import {usernameEvent, firstNameEvent, lastNameEvent, emailEvent, passwordEvent} from './data';
 import history from '../../../services/history';
 
@@ -26,7 +26,7 @@ describe('User component', () => {
 
     it('render User component', () => {
 
-        const component = shallow(<User user={user}/>);
+        const component = shallow(<UserItem user={user}/>);
 
         expect(component.find('.users--cursor').length).toBe(1);
 
@@ -37,7 +37,7 @@ describe('User component', () => {
     });
 
     it('should call "goToUser" after click component', () => {
-        const component = shallow(<User user={user}/>);
+        const component = shallow(<UserItem user={user}/>);
         const userItem = component.find('.users--cursor').at(0);
 
         expect(history.location.pathname).toBe(`/`);
@@ -47,7 +47,7 @@ describe('User component', () => {
     });
 
     it('should call "handleChange" and set state after change username form', () => {
-        const component = shallow(<User user={user}/>);
+        const component = shallow(<UserItem user={user}/>);
 
         component.find('[name="username"]').at(0).simulate('change', usernameEvent);
         expect(component.state().username).toBe(usernameEvent.target.value);
@@ -55,28 +55,28 @@ describe('User component', () => {
     });
 
     it('should call "handleChange" and set state after change firstName form', () => {
-        const component = shallow(<User user={user}/>);
+        const component = shallow(<UserItem user={user}/>);
 
         component.find('[name="firstName"]').at(0).simulate('change', firstNameEvent);
         expect(component.state().firstName).toBe(firstNameEvent.target.value);
     });
 
     it('should call "handleChange" and set state after change lastName form', () => {
-        const component = shallow(<User user={user}/>);
+        const component = shallow(<UserItem user={user}/>);
 
         component.find('[name="lastName"]').at(0).simulate('change', lastNameEvent);
         expect(component.state().lastName).toBe(lastNameEvent.target.value);
     });
 
     it('should call "handleChange" and set state after change email form', () => {
-        const component = shallow(<User user={user}/>);
+        const component = shallow(<UserItem user={user}/>);
 
         component.find('[name="email"]').at(0).simulate('change', emailEvent);
         expect(component.state().email).toBe(emailEvent.target.value);
     });
 
     it('should call "handleChange" and set state after change password form', () => {
-        const component = shallow(<User user={user}/>);
+        const component = shallow(<UserItem user={user}/>);
 
         component.find('[name="password"]').at(0).simulate('change', passwordEvent);
         expect(component.state().password).toBe(passwordEvent.target.value);
@@ -84,7 +84,7 @@ describe('User component', () => {
 
     it('should call "handleClick" after click on form', () => {
         event.stopPropagation = jest.fn();
-        const component = shallow(<User user={user}/>);
+        const component = shallow(<UserItem user={user}/>);
 
         component.find('[name="username"]').at(0).simulate('click', event);
         component.find('[name="firstName"]').at(0).simulate('click', event);
@@ -96,7 +96,7 @@ describe('User component', () => {
     });
 
     it('should call "showForms" after click button "update"', () => {
-        const component = shallow(<User user={user}/>);
+        const component = shallow(<UserItem user={user}/>);
         const showFormsButton = component.find('.btn-outline-primary').at(0);
 
         expect(component.state().showForm).toBe(false);
@@ -114,7 +114,7 @@ describe('User component', () => {
             password: passwordEvent.target.value
         };
         const update = jest.fn();
-        const component = shallow(<User
+        const component = shallow(<UserItem
             user={user}
             update={update}
         />);
@@ -141,7 +141,7 @@ describe('User component', () => {
         const expectedRemoveUserID = user._id;
         const expectedRemoveUserEvent = event;
         const showModal = jest.fn();
-        const component = shallow(<User
+        const component = shallow(<UserItem
             user={user}
             showModal={showModal}
         />);
@@ -154,7 +154,7 @@ describe('User component', () => {
     });
 
     it('should hide "remove" button if user joining groups', () => {
-        const component = shallow(<User
+        const component = shallow(<UserItem
             user={user}
             isJoining={true}
         />);

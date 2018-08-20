@@ -1,10 +1,10 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import HomePage from '../index';
+import CreatePage from '../index';
 
 describe('CreatePage component', () => {
     it('render CreatePage component', () => {
-        const component = shallow(<HomePage />);
+        const component = shallow(<CreatePage />);
 
         expect(component.find('.home--row').length).toBe(1);
 

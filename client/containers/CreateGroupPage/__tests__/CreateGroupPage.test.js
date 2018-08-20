@@ -1,6 +1,6 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import {CreateGroup} from '../index';
+import {CreateGroupPage} from '../index';
 import * as actions from '../../../actions/action_creators/groups';
 import {nameEvent, titleEvent} from "./data";
 
@@ -12,7 +12,7 @@ const event = {
 
 describe('CreateGroupPage component', () => {
     it('render CreateGroupPage component', () => {
-        const component = shallow(<CreateGroup />);
+        const component = shallow(<CreateGroupPage />);
 
         expect(component.find('.create-group').length).toBe(1);
 
@@ -20,14 +20,14 @@ describe('CreateGroupPage component', () => {
     });
 
     it('should call "handleChange" and set state after change name form', () => {
-        const component = shallow(<CreateGroup />);
+        const component = shallow(<CreateGroupPage />);
 
         component.find('[name="name"]').at(0).simulate('change', nameEvent);
         expect(component.state().name).toBe(nameEvent.target.value);
     });
 
     it('should call "handleChange" and set state after change title form', () => {
-        const component = shallow(<CreateGroup />);
+        const component = shallow(<CreateGroupPage />);
 
         component.find('[name="title"]').at(0).simulate('change', titleEvent);
         expect(component.state().title).toBe(titleEvent.target.value);
@@ -36,7 +36,7 @@ describe('CreateGroupPage component', () => {
     it('should call "createGroup" after click "send" button', () => {
         const mockCreateGroup = jest.fn();
 
-        const component = shallow(<CreateGroup
+        const component = shallow(<CreateGroupPage
             actions={{...actions, createGroupRequest: mockCreateGroup}}
         />);
         const expectedCraeteGroup = {

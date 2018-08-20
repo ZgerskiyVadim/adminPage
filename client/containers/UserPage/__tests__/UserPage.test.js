@@ -1,6 +1,6 @@
 import React from 'react';
 import { shallow, mount } from 'enzyme';
-import {User} from '../index';
+import {UserPage} from '../index';
 import * as groupsActions from '../../../actions/action_creators/groups';
 import * as usersActions from '../../../actions/action_creators/users';
 import LoadingSpinner from '../../../components/LoadingSpinner';
@@ -58,7 +58,7 @@ describe('User component', () => {
 
     it('render User component', () => {
 
-        const component = shallow(<User
+        const component = shallow(<UserPage
             match={match}
             user={user}
             actions={actions}
@@ -75,7 +75,7 @@ describe('User component', () => {
 
     it('show table if user have groups', () => {
 
-        const component = shallow(<User
+        const component = shallow(<UserPage
             match={match}
             user={user}
             groups={groups}
@@ -89,7 +89,7 @@ describe('User component', () => {
 
     it('show loading spinner', () => {
 
-        const component = shallow(<User
+        const component = shallow(<UserPage
             match={match}
             user={user}
             actions={actions}
@@ -106,7 +106,7 @@ describe('User component', () => {
         const mockUserRequest = jest.fn();
         const mockJoiningGroup = jest.fn();
 
-        const component = mount(<User
+        const component = mount(<UserPage
             match={match}
             user={user}
             actions={{...actions, getUserRequest: mockUserRequest, startJoiningGroup: mockJoiningGroup}}
@@ -120,7 +120,7 @@ describe('User component', () => {
     it('should call "searchGroups" after onChange form in SearchInput component', () => {
         const mockUserRequest = jest.fn();
         const mockEvent = {target: {value: 'search'}};
-        const component = shallow(<User
+        const component = shallow(<UserPage
             match={match}
             user={user}
             actions={{...actions, getUserRequest: mockUserRequest}}
@@ -134,7 +134,7 @@ describe('User component', () => {
 
     it('should call "goToGroup" after click on user', () => {
 
-        const component = shallow(<User
+        const component = shallow(<UserPage
             match={match}
             user={user}
             groups={groups}
@@ -149,7 +149,7 @@ describe('User component', () => {
 
     it('should call "showForms" after click button "update"', () => {
         event.stopPropagation = jest.fn();
-        const component = shallow(<User
+        const component = shallow(<UserPage
             match={match}
             user={user}
             actions={actions}
@@ -164,7 +164,7 @@ describe('User component', () => {
 
     it('should call "updateUser" after click button "save"', () => {
         const mockUpdateRequest = jest.fn();
-        const component = shallow(<User
+        const component = shallow(<UserPage
             match={match}
             user={user}
             actions={{...actions, updateUserRequest: mockUpdateRequest}}
@@ -200,7 +200,7 @@ describe('User component', () => {
 
     it('should call "startJoiningGroup" after click button "join group"', () => {
         const mockStartJoiningGroup = jest.fn();
-        const component = shallow(<User
+        const component = shallow(<UserPage
             match={match}
             user={user}
             actions={{...actions, startJoiningGroup: mockStartJoiningGroup}}
@@ -219,7 +219,7 @@ describe('User component', () => {
 
     it('should call "joinGroup" after click button for group "join group"', () => {
         const mockJoinGroup = jest.fn();
-        const component = shallow(<User
+        const component = shallow(<UserPage
             match={match}
             user={user}
             actions={{...actions, joinGroup: mockJoinGroup}}
@@ -246,7 +246,7 @@ describe('User component', () => {
     it('should call "leaveGroup" after click button for group "leave group"', () => {
         const mockleaveGroupRequest = jest.fn();
         event.stopPropagation = jest.fn();
-        const component = shallow(<User
+        const component = shallow(<UserPage
             match={match}
             user={user}
             actions={{...actions, leaveGroupRequest: mockleaveGroupRequest}}
@@ -272,7 +272,7 @@ describe('User component', () => {
     });
 
     it('should call "handleChange" and set state after change username form', () => {
-        const component = shallow(<User
+        const component = shallow(<UserPage
             user={user}
             match={match}
             actions={actions}
@@ -284,7 +284,7 @@ describe('User component', () => {
     });
 
     it('should call "handleChange" and set state after change firstName form', () => {
-        const component = shallow(<User
+        const component = shallow(<UserPage
             user={user}
             match={match}
             actions={actions}
@@ -295,7 +295,7 @@ describe('User component', () => {
     });
 
     it('should call "handleChange" and set state after change lastName form', () => {
-        const component = shallow(<User
+        const component = shallow(<UserPage
             user={user}
             match={match}
             actions={actions}
@@ -306,7 +306,7 @@ describe('User component', () => {
     });
 
     it('should call "handleChange" and set state after change email form', () => {
-        const component = shallow(<User
+        const component = shallow(<UserPage
             user={user}
             match={match}
             actions={actions}
@@ -317,7 +317,7 @@ describe('User component', () => {
     });
 
     it('should call "handleChange" and set state after change password form', () => {
-        const component = shallow(<User
+        const component = shallow(<UserPage
             user={user}
             match={match}
             actions={actions}
@@ -329,7 +329,7 @@ describe('User component', () => {
 
     it('should load more groups for user', () => {
         const mockUserRequest = jest.fn();
-        const component = shallow(<User
+        const component = shallow(<UserPage
             match={match}
             user={user}
             groups={groups}

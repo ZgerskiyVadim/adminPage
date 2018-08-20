@@ -1,6 +1,6 @@
 import React from 'react';
 import { shallow, mount } from 'enzyme';
-import {Group} from '../index';
+import {GroupPage} from '../index';
 import * as actions from '../../../actions/action_creators/groups';
 import LoadingSpinner from '../../../components/LoadingSpinner';
 import ModalWindow from '../../../components/ModalWindow';
@@ -49,7 +49,7 @@ describe('Group component', () => {
 
     it('render Group component', () => {
 
-        const component = shallow(<Group
+        const component = shallow(<GroupPage
             match={match}
             group={group}
             actions={actions}
@@ -68,7 +68,7 @@ describe('Group component', () => {
 
     it('show table if have users in group', () => {
 
-        const component = shallow(<Group
+        const component = shallow(<GroupPage
             match={match}
             group={group}
             users={users}
@@ -81,7 +81,7 @@ describe('Group component', () => {
 
     it('show loading spinner', () => {
 
-        const component = shallow(<Group
+        const component = shallow(<GroupPage
             match={match}
             group={group}
             actions={actions}
@@ -97,7 +97,7 @@ describe('Group component', () => {
     it('should call fetch when mounted', () => {
         const mockGroupRequest = jest.fn();
 
-        const component = mount(<Group
+        const component = mount(<GroupPage
             match={match}
             group={group}
             actions={{...actions, getGroupRequest: mockGroupRequest}}
@@ -110,7 +110,7 @@ describe('Group component', () => {
     it('should call "searchGroups" after onChange form in SearchInput component', () => {
         const mockGroupRequest = jest.fn();
         const mockEvent = {target: {value: 'search'}};
-        const component = shallow(<Group
+        const component = shallow(<GroupPage
             match={match}
             group={group}
             actions={{...actions, getGroupRequest: mockGroupRequest}}
@@ -124,7 +124,7 @@ describe('Group component', () => {
 
     it('should call "goToUser" after click on user', () => {
 
-        const component = shallow(<Group
+        const component = shallow(<GroupPage
             match={match}
             group={group}
             users={users}
@@ -139,7 +139,7 @@ describe('Group component', () => {
 
     it('should call "showForms" after click button "update"', () => {
         event.stopPropagation = jest.fn();
-        const component = shallow(<Group
+        const component = shallow(<GroupPage
             match={match}
             group={group}
             actions={actions}
@@ -153,7 +153,7 @@ describe('Group component', () => {
 
     it('should call "updateGroup" after click "save" button with correct parameters', () => {
         const mockUpdateRequest = jest.fn();
-        const component = shallow(<Group
+        const component = shallow(<GroupPage
             match={match}
             group={group}
             actions={{...actions, updateGroupRequest: mockUpdateRequest}}
@@ -182,7 +182,7 @@ describe('Group component', () => {
 
     it('should call "showModal" after click button "remove user"', () => {
         event.stopPropagation = jest.fn();
-        const component = shallow(<Group
+        const component = shallow(<GroupPage
             match={match}
             group={group}
             actions={actions}
@@ -198,7 +198,7 @@ describe('Group component', () => {
     });
 
     it('should call "closeModal" after closeModal in ModalWindow component', () => {
-        const component = shallow(<Group
+        const component = shallow(<GroupPage
             match={match}
             group={group}
             actions={actions}
@@ -217,7 +217,7 @@ describe('Group component', () => {
     it('should call "searchUsers" after onChange form in SearchInput component', () => {
         const mockGroupRequest = jest.fn();
         const mockEvent = {target: {value: 'search'}};
-        const component = shallow(<Group
+        const component = shallow(<GroupPage
             match={match}
             group={group}
             actions={{...actions, getGroupRequest: mockGroupRequest}}
@@ -235,7 +235,7 @@ describe('Group component', () => {
             userID: users[0]._id,
             groupID: match.params.id
         };
-        const component = shallow(<Group
+        const component = shallow(<GroupPage
             match={match}
             group={group}
             users={users}
@@ -250,7 +250,7 @@ describe('Group component', () => {
     });
 
     it('should call "handleChange" and set state after change name form', () => {
-        const component = shallow(<Group
+        const component = shallow(<GroupPage
             match={match}
             group={group}
             actions={actions}
@@ -261,7 +261,7 @@ describe('Group component', () => {
     });
 
     it('should call "handleChange" and set state after change title form', () => {
-        const component = shallow(<Group
+        const component = shallow(<GroupPage
             match={match}
             group={group}
             actions={actions}

@@ -1,6 +1,6 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import {Users} from '../index';
+import {UsersTablePage} from '../index';
 import * as actions from '../../../actions/action_creators/users';
 import LoadingSpinner from '../../../components/LoadingSpinner';
 import ModalWindow from "../../../components/ModalWindow";
@@ -33,7 +33,7 @@ describe('Users component', () => {
 
     it('render Users component', () => {
 
-        const component = shallow(<Users
+        const component = shallow(<UsersTablePage
             users={users}
             actions={actions}
         />);
@@ -53,7 +53,7 @@ describe('Users component', () => {
     it('should call fetch when mounted', () => {
         const mockUsersRequest = jest.fn();
 
-        const component = shallow(<Users
+        const component = shallow(<UsersTablePage
             users={users}
             actions={{...actions, getUsersRequest: mockUsersRequest}}
         />);
@@ -69,7 +69,7 @@ describe('Users component', () => {
     it('should call "searchUsers" after onChange form in SearchInput component', () => {
         const mockUsersRequest = jest.fn();
         const mockEvent = {target: {value: 'search'}};
-        const component = shallow(<Users
+        const component = shallow(<UsersTablePage
             users={users}
             actions={{...actions, getUsersRequest: mockUsersRequest}}
         />);
@@ -83,7 +83,7 @@ describe('Users component', () => {
     it('should call "remove" after click "remove" button in User component and click "yes" in ModalWindow component', () => {
         const mockRemoveUserRequest = jest.fn();
         const expectedRemovedUser = user._id;
-        const component = shallow(<Users
+        const component = shallow(<UsersTablePage
             users={users}
             actions={{...actions, removeUserRequest: mockRemoveUserRequest}}
         />);
@@ -96,7 +96,7 @@ describe('Users component', () => {
     });
 
     it('should call "showModal" after click "remove" button in User component', () => {
-        const component = shallow(<Users
+        const component = shallow(<UsersTablePage
             users={users}
             actions={actions}
         />);
@@ -108,7 +108,7 @@ describe('Users component', () => {
     });
 
     it('should call "closeModal" after click "close" button in ModalWindow component', () => {
-        const component = shallow(<Users
+        const component = shallow(<UsersTablePage
             users={users}
             actions={actions}
         />);
@@ -128,7 +128,7 @@ describe('Users component', () => {
             id: user._id,
             username: 'new username'
         };
-        const component = shallow(<Users
+        const component = shallow(<UsersTablePage
             users={users}
             actions={{...actions, updateUserRequest: mockUpdateUserRequest}}
         />);
@@ -144,7 +144,7 @@ describe('Users component', () => {
 
     it('should load more users on page', () => {
         const mockUsersRequest = jest.fn();
-        const component = shallow(<Users
+        const component = shallow(<UsersTablePage
             users={users}
             actions={{...actions, getUsersRequest: mockUsersRequest}}
         />);
@@ -164,7 +164,7 @@ describe('Users component', () => {
                 _id: 1
             }
         };
-        const component = shallow(<Users
+        const component = shallow(<UsersTablePage
             users={users}
             actions={actions}
             isJoiningGroup={true}

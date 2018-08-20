@@ -8,7 +8,7 @@ import * as usersActionCreators from '../../actions/action_creators/users';
 import formsOperations from '../../services/formsOperations';
 import LoadingSpinner from '../../components/LoadingSpinner';
 
-export class CreateUser extends Component {
+export class CreateUserPage extends Component {
     constructor(props) {
         super(props);
 
@@ -57,12 +57,12 @@ export class CreateUser extends Component {
     }
 }
 
-CreateUser.defaultProps = {
+CreateUserPage.defaultProps = {
     createUser: {},
     loading: false
 };
 
-CreateUser.propTypes = {
+CreateUserPage.propTypes = {
     createUser: PropTypes.object.isRequired,
     loading: PropTypes.bool.isRequired
 };
@@ -78,4 +78,4 @@ const mapDispatchToProps = (dispatch) => ({
     }, dispatch)
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(CreateUser);
+export default connect(mapStateToProps, mapDispatchToProps)(CreateUserPage);

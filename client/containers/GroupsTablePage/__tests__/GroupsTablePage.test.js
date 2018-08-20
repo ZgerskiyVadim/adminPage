@@ -1,6 +1,6 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import {Groups} from '../index';
+import {GroupsTablePage} from '../index';
 import * as actions from '../../../actions/action_creators/groups';
 import LoadingSpinner from '../../../components/LoadingSpinner';
 import ModalWindow from "../../../components/ModalWindow";
@@ -49,7 +49,7 @@ describe('Groups component', () => {
 
     it('render Groups component', () => {
 
-        const component = shallow(<Groups
+        const component = shallow(<GroupsTablePage
             groups={groups}
             actions={actions}
         />);
@@ -69,7 +69,7 @@ describe('Groups component', () => {
     it('should call fetch when mounted', () => {
         const mockGroupsRequest = jest.fn();
 
-        const component = shallow(<Groups
+        const component = shallow(<GroupsTablePage
             groups={groups}
             actions={{...actions, getGroupsRequest: mockGroupsRequest}}
         />);
@@ -84,7 +84,7 @@ describe('Groups component', () => {
 
     it('show loading spinner', () => {
 
-        const component = shallow(<Groups
+        const component = shallow(<GroupsTablePage
             groups={groups}
             actions={actions}
             loading={true}
@@ -99,7 +99,7 @@ describe('Groups component', () => {
     it('should call "searchGroups" after onChange form in SearchInput component', () => {
         const mockGroupsRequest = jest.fn();
         const mockEvent = {target: {value: 'search'}};
-        const component = shallow(<Groups
+        const component = shallow(<GroupsTablePage
             groups={groups}
             actions={{...actions, getGroupsRequest: mockGroupsRequest}}
         />);
@@ -113,7 +113,7 @@ describe('Groups component', () => {
     it('should call "remove" after click "remove" button in User component and click "yes" in ModalWindow component', () => {
         const mockRemoveGroupRequest = jest.fn();
         const expectedRemovedGroup = group._id;
-        const component = shallow(<Groups
+        const component = shallow(<GroupsTablePage
             groups={groups}
             actions={{...actions, removeGroupRequest: mockRemoveGroupRequest}}
         />);
@@ -126,7 +126,7 @@ describe('Groups component', () => {
     });
 
     it('should call "showModal" after click "remove" button in Group component', () => {
-        const component = shallow(<Groups
+        const component = shallow(<GroupsTablePage
             groups={groups}
             actions={actions}
         />);
@@ -138,7 +138,7 @@ describe('Groups component', () => {
     });
 
     it('should call "closeModal" after click "close" button in ModalWindow component', () => {
-        const component = shallow(<Groups
+        const component = shallow(<GroupsTablePage
             groups={groups}
             actions={actions}
         />);
@@ -156,7 +156,7 @@ describe('Groups component', () => {
             id: group._id,
             name: 'new name'
         };
-        const component = shallow(<Groups
+        const component = shallow(<GroupsTablePage
             groups={groups}
             actions={{...actions, updateGroupRequest: mockUpdateGroupRequest}}
         />);
@@ -172,7 +172,7 @@ describe('Groups component', () => {
 
     it('should call "cancelJoinGroup" after click "cancel join group" button in SearchInput component', () => {
         const mockCancelJoinGroup = jest.fn();
-        const component = shallow(<Groups
+        const component = shallow(<GroupsTablePage
             groups={groups}
             user={user}
             actions={{...actions, cancelJoinGroup: mockCancelJoinGroup}}
@@ -193,7 +193,7 @@ describe('Groups component', () => {
             userID:user.data._id,
             groupID: group._id
         };
-        const component = shallow(<Groups
+        const component = shallow(<GroupsTablePage
             groups={groups}
             user={user}
             actions={{...actions, joinGroup: mockJoinGroup}}
@@ -215,7 +215,7 @@ describe('Groups component', () => {
             userID:user.data._id,
             groupID: group._id
         };
-        const component = shallow(<Groups
+        const component = shallow(<GroupsTablePage
             groups={groups}
             user={user}
             actions={{...actions, leaveGroupRequest: mockLeaveGroupRequest}}
@@ -233,7 +233,7 @@ describe('Groups component', () => {
 
     it('should load more groups on page', () => {
         const mockGroupsRequest = jest.fn();
-        const component = shallow(<Groups
+        const component = shallow(<GroupsTablePage
             groups={groups}
             actions={{...actions, getGroupsRequest: mockGroupsRequest}}
         />);
@@ -249,7 +249,7 @@ describe('Groups component', () => {
     });
 
     it('should show "join group" button if user joining groups', () => {
-        const component = shallow(<Groups
+        const component = shallow(<GroupsTablePage
             groups={groups}
             actions={actions}
             isJoiningGroup={true}

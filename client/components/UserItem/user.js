@@ -6,7 +6,7 @@ import classNames from "classnames";
 import formsOperations from '../../services/formsOperations';
 import redirectOnPage from '../../services/redirectOnPage';
 
-export class User extends Component {
+export class UserItem extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -99,10 +99,10 @@ export class User extends Component {
     }
 }
 
-User.propTypes = {
+UserItem.propTypes = {
     user: PropTypes.object.isRequired,
     update: PropTypes.func,
     showModal: PropTypes.func
 };
 
-export default withRouter(User);
+export default withRouter(UserItem);

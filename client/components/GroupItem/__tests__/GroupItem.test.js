@@ -1,6 +1,6 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import {Group} from '../group';
+import {GroupItem} from '../group';
 import history from '../../../services/history';
 import {
     nameEvent,
@@ -35,7 +35,7 @@ describe('GroupItem component', () => {
 
     it('render GroupItem component', () => {
 
-        const component = shallow(<Group group={group}/>);
+        const component = shallow(<GroupItem group={group}/>);
 
         expect(component.find('.groups--cursor').length).toBe(1);
 
@@ -46,7 +46,7 @@ describe('GroupItem component', () => {
     });
 
     it('should call "goToGroup" after click component', () => {
-        const component = shallow(<Group group={group} />);
+        const component = shallow(<GroupItem group={group} />);
         const groupItem = component.find('.groups--cursor').at(0);
 
         expect(history.location.pathname).toBe(`/`);
@@ -56,21 +56,21 @@ describe('GroupItem component', () => {
     });
 
     it('should call "handleChange" and set state after change name form', () => {
-        const component = shallow(<Group group={group} />);
+        const component = shallow(<GroupItem group={group} />);
 
         component.find('[name="name"]').at(0).simulate('change', nameEvent);
         expect(component.state().name).toBe(nameEvent.target.value);
     });
 
     it('should call "handleChange" and set state after change title form', () => {
-        const component = shallow(<Group group={group} />);
+        const component = shallow(<GroupItem group={group} />);
 
         component.find('[name="title"]').at(0).simulate('change', titleEvent);
         expect(component.state().title).toBe(titleEvent.target.value);
     });
 
     it('should call "handleClick" after click on form', () => {
-        const component = shallow(<Group group={group}/>);
+        const component = shallow(<GroupItem group={group}/>);
 
         const spy = jest.spyOn(component.instance(), 'handleClick');
         component.instance().forceUpdate();
@@ -82,7 +82,7 @@ describe('GroupItem component', () => {
     });
 
     it('should call "showForms" after click button "update"', () => {
-        const component = shallow(<Group group={group}/>);
+        const component = shallow(<GroupItem group={group}/>);
         const showFormsButton = component.find('.btn-outline-primary').at(0);
 
         expect(component.state().showForm).toBe(false);
@@ -97,7 +97,7 @@ describe('GroupItem component', () => {
             title: titleEvent.target.value,
         };
         const update = jest.fn();
-            const component = shallow(<Group
+            const component = shallow(<GroupItem
                 group={group}
                 update={update}
             />);
@@ -121,7 +121,7 @@ describe('GroupItem component', () => {
         const expectedRemoveUserID = group._id;
         const expectedRemoveUserEvent = event;
         const showModal = jest.fn();
-        const component = shallow(<Group
+        const component = shallow(<GroupItem
             group={group}
             showModal={showModal}
         />);
@@ -139,7 +139,7 @@ describe('GroupItem component', () => {
             userID: user._id,
             groupID: group._id
         };
-        const component = shallow(<Group
+        const component = shallow(<GroupItem
             group={group}
             userID={user._id}
             joinGroup={joinGroup}
@@ -157,7 +157,7 @@ describe('GroupItem component', () => {
             userID: user._id,
             groupID: group._id
         };
-        const component = shallow(<Group
+        const component = shallow(<GroupItem
             group={group}
             userID={user._id}
             leaveGroup={leaveGroup}
@@ -170,7 +170,7 @@ describe('GroupItem component', () => {
     });
 
     it('should hide "remove" and "update" and show "join group" buttons if user joining groups', () => {
-        const component = shallow(<Group
+        const component = shallow(<GroupItem
             group={group}
             userJoinedGroup={false} // if false show "join group" button, else show "leave group" button
             isJoiningGroup={true}

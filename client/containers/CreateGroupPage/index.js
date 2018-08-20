@@ -8,7 +8,7 @@ import * as groupsActionCreators from '../../actions/action_creators/groups';
 import formsOperations from '../../services/formsOperations';
 import LoadingSpinner from '../../components/LoadingSpinner';
 
-export class CreateGroup extends Component {
+export class CreateGroupPage extends Component {
     constructor(props) {
         super(props);
 
@@ -48,12 +48,12 @@ export class CreateGroup extends Component {
     }
 }
 
-CreateGroup.defaultProps = {
+CreateGroupPage.defaultProps = {
     createGroup: {},
     loading: false
 };
 
-CreateGroup.propTypes = {
+CreateGroupPage.propTypes = {
     createGroup: PropTypes.object.isRequired,
     loading: PropTypes.bool.isRequired
 };
@@ -69,4 +69,4 @@ const mapDispatchToProps = (dispatch) => ({
     }, dispatch)
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(CreateGroup);
+export default connect(mapStateToProps, mapDispatchToProps)(CreateGroupPage);
