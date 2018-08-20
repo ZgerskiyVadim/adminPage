@@ -19,6 +19,8 @@ class AuthenticationService {
             .catch(error => {
                 if(error.response && error.response.status === 401) {
                     showToastrMessage.error('Not found');
+                } else {
+                    showToastrMessage.error(error);
                 }
             })
     }
