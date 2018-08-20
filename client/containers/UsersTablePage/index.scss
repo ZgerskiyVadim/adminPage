@@ -1,12 +1,20 @@
 .users {
-    width: 90%;
-    margin: 0 auto;
+    margin: 0 4em;
 }
 .users--margin-right {
     margin-right: 1em;
 }
 .users__table {
     margin-top: 2em;
+    th {
+        vertical-align: baseline;
+        h5 {
+            margin: 0.2em 0;
+        }
+    }
+    td {
+        vertical-align: baseline;
+    }
 }
 .users__buttons {
     display: flex;
@@ -23,4 +31,15 @@
 }
 .users--hide-remove {
     visibility: hidden;
+}
+.users__create-user {
+    cursor: pointer;
+    color: #fff;
+    background-color: #007bff;
+    border-color: #007bff;
+    &:hover {
+        color: #007bff;
+        background-color: #fff;
+        border-color: #007bff;
+    }
 }

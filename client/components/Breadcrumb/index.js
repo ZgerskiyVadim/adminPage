@@ -3,7 +3,6 @@ import { withRouter } from 'react-router';
 import classNames from 'classnames';
 import './index.scss';
 import redirectOnPage from '../../services/redirectOnPage';
-import Links from '../Links';
 
 export class Breadcrumb extends PureComponent {
     constructor(props) {
@@ -40,9 +39,6 @@ export class Breadcrumb extends PureComponent {
     };
 
     render() {
-        const countOfBreadcrumbs = this.locationPath().length;
-        const lastBreadCrumb = this.locationPath()[countOfBreadcrumbs - 1];
-
         return (
             <div>
                 <nav className="breadcrumb-root" aria-label="breadcrumb">
@@ -60,7 +56,6 @@ export class Breadcrumb extends PureComponent {
                         }
                     </ol>
                 </nav>
-                <Links lastBreadCrumb={lastBreadCrumb}/>
             </div>
         );
     }

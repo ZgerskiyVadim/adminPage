@@ -13,6 +13,7 @@ import LoadingSpinner from '../../components/LoadingSpinner';
 import ModalWindow from '../../components/ModalWindow';
 import SearchComponent from '../../components/SearchInput';
 import showToastrMessage from "../../services/showToastrMessage";
+import redirectOnPage from "../../services/redirectOnPage";
 import {isEqualProps} from "../../services/isEqualProps";
 
 export class UsersTablePage extends Component {
@@ -35,6 +36,7 @@ export class UsersTablePage extends Component {
         this.remove = this.remove.bind(this);
         this.showModal = this.showModal.bind(this);
         this.closeModal = this.closeModal.bind(this);
+        this.goToCreateUserPage = this.goToCreateUserPage.bind(this);
     }
 
     loadMore() {
@@ -103,6 +105,10 @@ export class UsersTablePage extends Component {
         })
     };
 
+    goToCreateUserPage() {
+        redirectOnPage.path('create-user');
+    }
+
     render() {
         const {isLoadMore, showModal, userID} = this.state;
         const {loading} = this.props;
@@ -110,6 +116,7 @@ export class UsersTablePage extends Component {
 
         return (
             <div className='users'>
+                <button onClick={this.goToCreateUserPage} className='users__create-user btn btn-outline-primary'>Add new +</button>
                 <SearchComponent search={this.searchUsers}/>
                 <table className={classNames('users__table table table-hover', marginBottom)}>
                     <thead className='thead-dark'>

@@ -16,7 +16,11 @@ class AuthenticationService {
                 redirectOnPage.path('/users');
                 showToastrMessage.success('Successfully logged!');
             })
-            .catch(error => showToastrMessage.error(error))
+            .catch(error => {
+                if(error.response && error.response.status === 401) {
+                    showToastrMessage.error('Not found');
+                }
+            })
     }
 
     logout() {

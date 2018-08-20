@@ -40,6 +40,7 @@ export class GroupsTablePage extends Component {
         this.remove = this.remove.bind(this);
         this.showModal = this.showModal.bind(this);
         this.closeModal = this.closeModal.bind(this);
+        this.goToCreateGroupPage = this.goToCreateGroupPage.bind(this);
     }
 
     loadMore() {
@@ -132,6 +133,10 @@ export class GroupsTablePage extends Component {
         })
     };
 
+    goToCreateGroupPage() {
+        redirectOnPage.path('/create-group');
+    }
+
     render() {
         const {isJoiningGroup, groups, user, loading} = this.props;
         const {isLoadMore, showModal, groupID} = this.state;
@@ -141,6 +146,7 @@ export class GroupsTablePage extends Component {
 
         return (
             <div className='groups'>
+                <button onClick={this.goToCreateGroupPage} className='groups__create-group btn btn-outline-primary'>Add new +</button>
                 <SearchComponent
                     search={this.searchGroups}
                     handleButtonClick={this.cancelJoinGroup}

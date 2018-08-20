@@ -2,6 +2,7 @@ import React, {PureComponent} from 'react';
 import {Link} from 'react-router-dom';
 import {connect} from "react-redux";
 import { withRouter } from 'react-router';
+import Links from '../Links';
 
 import './index.scss';
 import classNames from 'classnames';
@@ -23,6 +24,7 @@ export class Header extends PureComponent {
         return (
             <div>
                 <nav className="navbar navbar-expand-sm bg-dark navbar-dark">
+                    <Links isAuthenticated={isAuthenticated}/>
                     <Link to='/' className={classNames("navbar-brand", {'header--hide': isAuthenticated})}>Login</Link>
                     <span onClick={this.logout} className={classNames("navbar-brand", {'header--hide': !isAuthenticated})}>Logout</span>
                 </nav>

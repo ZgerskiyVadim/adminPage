@@ -1,11 +1,29 @@
 .login {
-  margin: 2em 0 0 2em;
+  margin: 2em 0 0;
+  h2 {
+    display: flex;
+    justify-content: center;
+  }
 }
 .login--row {
   display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
   margin-top: 2em;
 }
 .login__send {
-  margin-left: 1em;
+  margin: 2em 0 0 1em;
   align-self: center;
+  color: #fff;
+  background-color: #007bff;
+  border-color: #007bff;
+  &:hover {
+    color: #007bff;
+    background-color: #fff;
+    border-color: #007bff;
+  }
+}
+input[name="username"] {
+  margin-bottom: 1em;
 }

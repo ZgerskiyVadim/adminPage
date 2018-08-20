@@ -1,10 +1,13 @@
 .links--row {
   display: flex;
   justify-content: center;
-  margin-bottom: 2em;
+  margin-left: 3em;
   .link {
     cursor: pointer;
     color: #0061c2;
+    .nav-link {
+      background-color: transparent;
+    }
   }
   .link--margin-right {
     margin-right: 1em;

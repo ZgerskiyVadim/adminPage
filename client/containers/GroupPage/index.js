@@ -184,7 +184,7 @@ export class GroupPage extends Component {
                                     <td>
                                         <h5>{user.email}</h5>
                                     </td>
-                                    <td>
+                                    <td className='buttons-field'>
                                         <button onClick={(event) => this.showModal(user._id, event)} className='group__remove-user btn btn-outline-danger'>remove user</button>
                                     </td>
                                 </tr>

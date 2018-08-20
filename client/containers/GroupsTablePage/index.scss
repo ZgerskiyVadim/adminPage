@@ -1,12 +1,20 @@
 .groups {
-  width: 90%;
-  margin: 0 auto;
+  margin: 0 4em;
 }
 .groups--margin-right {
   margin-right: 1em;
 }
 .groups__table {
   margin-top: 2em;
+  th {
+    vertical-align: baseline;
+    h5 {
+      margin: 0.2em 0;
+    }
+  }
+  td {
+    vertical-align: baseline;
+  }
 }
 .groups__buttons {
   display: flex;
@@ -20,4 +28,15 @@
 }
 .groups--cursor {
   cursor: pointer;
+}
+.groups__create-group {
+  cursor: pointer;
+  color: #fff;
+  background-color: #007bff;
+  border-color: #007bff;
+  &:hover {
+    color: #007bff;
+    background-color: #fff;
+    border-color: #007bff;
+  }
 }

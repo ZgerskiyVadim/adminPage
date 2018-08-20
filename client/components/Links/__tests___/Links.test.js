@@ -16,24 +16,6 @@ describe('Links component', () => {
         expect(component.find('.nav-item').length).toBe(2);
     });
 
-    it('should show active link users for location path "users"', () => {
-        const component = shallow(<Links lastBreadCrumb={ {path: 'users'} } />);
-        const usersLink = component.find('.link-users');
-        const groupsLink = component.find('.link-groups');
-
-        expect(usersLink.hasClass('active')).toBe(true);
-        expect(groupsLink.hasClass('active')).toBe(false);
-    });
-
-    it('should show active link groups for location path "groups"', () => {
-        const component = shallow(<Links lastBreadCrumb={ {path: 'groups'} } />);
-        const usersLink = component.find('.link-users');
-        const groupsLink = component.find('.link-groups');
-
-        expect(groupsLink.hasClass('active')).toBe(true);
-        expect(usersLink.hasClass('active')).toBe(false);
-    });
-
     it('should call "goToUsersPage" after click on link users', () => {
         const component = shallow(<Links />);
 

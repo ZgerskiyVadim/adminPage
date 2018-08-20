@@ -29,9 +29,9 @@ class LoginPage extends Component {
                 <h2>User login</h2>
                 <div className='login--row'>
                     <div className='col-md-6'>
-                        <h3>username</h3>
+                        <h5>Username</h5>
                         <input onChange={this.handleChange} value={username} name='username' className='form-control' type="text"/>
-                        <h3>password</h3>
+                        <h5>Password</h5>
                         <input onChange={this.handleChange} value={password} name='password' className='form-control' type="password"/>
                     </div>
 

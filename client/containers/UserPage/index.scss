@@ -13,8 +13,10 @@
   margin-right: 1em;
 }
 .user__groups-table {
-  width: 90%;
-  margin: 0 auto;
+  margin: 0 4em;
+  .buttons-field {
+    text-align: right;
+  }
 }
 .user__leave-group {
   margin-left: 1em;

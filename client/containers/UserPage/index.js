@@ -193,7 +193,7 @@ export class UserPage extends Component {
                                     <td>
                                         <h5>{group.users.length}</h5>
                                     </td>
-                                    <td>
+                                    <td className='buttons-field'>
                                         <button onClick={(event) => this.leaveGroup(group._id, event)} className={classNames('user__leave-group btn btn-outline-danger', {'user--hide': group.isLeftGroup})}>leave group</button>
                                         <button onClick={(event) => this.joinGroup(group._id, event)} className={classNames('user__join-group btn btn-outline-info', {'user--hide': !group.isLeftGroup})}>join group</button>
                                     </td>
