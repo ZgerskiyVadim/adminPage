@@ -16,10 +16,10 @@ export class User extends Component {
             lastName: '',
             email: '',
             password: '',
-            id: ''
+            id: this.props.user._id
         };
 
-        this.showForms = formsOperations.showForms.bind(this, this.props.user._id);
+        this.showForms = this.showForms.bind(this);
         this.handleChange = formsOperations.handleChange.bind(this);
         this.goToUser = this.goToUser.bind(this);
         this.handleClick = this.handleClick.bind(this);
@@ -36,11 +36,19 @@ export class User extends Component {
         event.stopPropagation();
     };
 
+    showForms(event) {
+        event.stopPropagation();
+        this.setState({
+            showForm: true
+        });
+    }
+
     sendOptionsUpdate(event) {
         event.stopPropagation();
-        this.setState({showForm: false});
-        const options = formsOperations.getValidOptions(this.state);
-        this.props.update(options)
+        this.setState({showForm: false}, () => {
+            const options = formsOperations.getValidOptions(this.state);
+            this.props.update(options);
+        })
     };
 
     remove(id, event) {

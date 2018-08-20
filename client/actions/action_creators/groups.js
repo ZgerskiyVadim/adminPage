@@ -58,7 +58,7 @@ export function cancelJoinGroup(data) {
     }
 }
 
-export function removeUserRequest(data) {
+export function removeUserFromGroupRequest(data) {
     return {
         type: REMOVE_USER_FROM_GROUP_PENDING,
         payload: data

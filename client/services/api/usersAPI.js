@@ -17,8 +17,9 @@ import axios from 'axios/index';
             .then(user => user.data);
     };
 
-    export const updateUser = (options) => {
-        const {id, username, firstName, lastName, email, password} = options;
+    export const updateUser = (state) => {
+        const {username, firstName, lastName, email, password} = state;
+        const id = state.id || state.options.id;
         return axios.patch(`/api/users/${id}`, {username, firstName, lastName, email, password})
             .then(users => users.data);
     };

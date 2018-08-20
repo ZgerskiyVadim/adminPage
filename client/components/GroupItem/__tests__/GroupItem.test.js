@@ -2,6 +2,19 @@ import React from 'react';
 import { shallow } from 'enzyme';
 import {Group} from '../group';
 import history from '../../../services/history';
+import {
+    nameEvent,
+    titleEvent
+} from "./data";
+
+const user = {
+    username: 'username',
+    firstName: 'firstName',
+    lastName: 'lastName',
+    email: 'email',
+    password: 'password',
+    _id: 1
+};
 
 const group = {
     users: [1, 2],
@@ -42,21 +55,21 @@ describe('GroupItem component', () => {
 
     });
 
-    it('should call "handleChange" after change form', () => {
+    it('should call "handleChange" and set state after change name form', () => {
+        const component = shallow(<Group group={group} />);
 
-        const component = shallow(<Group group={group}/>);
+        component.find('[name="name"]').at(0).simulate('change', nameEvent);
+        expect(component.state().name).toBe(nameEvent.target.value);
+    });
 
-        const spy = jest.spyOn(component.instance(), 'handleChange');
-        component.instance().forceUpdate();
+    it('should call "handleChange" and set state after change title form', () => {
+        const component = shallow(<Group group={group} />);
 
-        component.find('[name="name"]').at(0).simulate('change', event);
-        component.find('[name="title"]').at(0).simulate('change', event);
-
-        expect(spy).toHaveBeenCalledTimes(2);
+        component.find('[name="title"]').at(0).simulate('change', titleEvent);
+        expect(component.state().title).toBe(titleEvent.target.value);
     });
 
     it('should call "handleClick" after click on form', () => {
-        event.stopPropagation = jest.fn();
         const component = shallow(<Group group={group}/>);
 
         const spy = jest.spyOn(component.instance(), 'handleClick');
@@ -66,111 +79,94 @@ describe('GroupItem component', () => {
         component.find('[name="title"]').at(0).simulate('click', event);
 
         expect(spy).toHaveBeenCalledTimes(2);
-        expect(event.stopPropagation).toHaveBeenCalledTimes(2);
     });
 
-    it('should call "goToGroup" after click component', () => {
-
+    it('should call "showForms" after click button "update"', () => {
         const component = shallow(<Group group={group}/>);
+        const showFormsButton = component.find('.btn-outline-primary').at(0);
 
-        const spy = jest.spyOn(component.instance(), 'goToGroup');
-        component.instance().forceUpdate();
+        expect(component.state().showForm).toBe(false);
+        showFormsButton.simulate('click', event);
+        expect(component.state().showForm).toBe(true);
+    });
 
-        component.find('.groups--cursor').at(0).simulate('click', event);
+    it('should call "update" after click "save" button with correct parameters', () => {
+        const expectedUpdatedGroup = {
+            id: group._id,
+            name: nameEvent.target.value,
+            title: titleEvent.target.value,
+        };
+        const update = jest.fn();
+            const component = shallow(<Group
+                group={group}
+                update={update}
+            />);
+        const showFormsButton = component.find('.btn-outline-primary').at(0);
+        const updateButton = component.find('.btn-outline-primary').at(1);
 
-        expect(spy).toHaveBeenCalledTimes(1);
+        showFormsButton.simulate('click', event);
+        expect(component.state().showForm).toBe(true);
+
+        component.find('[name="name"]').at(0).simulate('change', nameEvent);
+        component.find('[name="title"]').at(0).simulate('change', titleEvent);
+
+        updateButton.simulate('click', event);
+        expect(component.state().showForm).toBe(false);
+
+        const [call = []] = update.mock.calls;
+        expect(call).toEqual([expectedUpdatedGroup]);
     });
 
     it('should call "remove" after click button "remove"', () => {
+        const expectedRemoveUserID = group._id;
+        const expectedRemoveUserEvent = event;
         const showModal = jest.fn();
         const component = shallow(<Group
             group={group}
             showModal={showModal}
         />);
+        const removeUserButton = component.find('.btn-outline-danger').at(0);
 
-        const spy = jest.spyOn(component.instance(), 'remove');
-        component.instance().forceUpdate();
+        removeUserButton.simulate('click', event);
 
-        component.find('.btn-outline-danger').at(0).simulate('click', event);
-
-        expect(spy).toHaveBeenCalledTimes(1);
-        expect(showModal).toHaveBeenCalledTimes(1);
-    });
-
-    it('should call "sendOptionsUpdate" after click button "save"', () => {
-        event.stopPropagation = jest.fn();
-        const update = jest.fn();
-        const component = shallow(<Group
-            group={group}
-            update={update}
-        />);
-
-        const spy = jest.spyOn(component.instance(), 'sendOptionsUpdate');
-        component.instance().forceUpdate();
-
-        component.find('.btn-outline-primary').at(0).simulate('click', event);
-        expect(component.state().showForm).toBe(true);
-        component.find('.btn-outline-primary').at(1).simulate('click', event);
-        expect(component.state().showForm).toBe(false);
-
-        expect(spy).toHaveBeenCalledTimes(1);
-        expect(update).toHaveBeenCalledTimes(1);
-        expect(event.stopPropagation).toHaveBeenCalledTimes(2);
-    });
-
-    it('should call "showForms" after click button "update"', () => {
-        event.stopPropagation = jest.fn();
-        const component = shallow(<Group group={group}/>);
-
-        const spy = jest.spyOn(component.instance(), 'showForms');
-        component.instance().forceUpdate();
-
-        component.find('.btn-outline-primary').at(0).simulate('click', event);
-        expect(component.state().id).toBe(group._id);
-        expect(component.state().showForm).toBe(true);
-
-        expect(spy).toHaveBeenCalledTimes(1);
-        expect(event.stopPropagation).toHaveBeenCalledTimes(1);
+        const [call = []] = showModal.mock.calls;
+        expect(call).toEqual([expectedRemoveUserID, expectedRemoveUserEvent]);
     });
 
     it('should call "sendOptionsJoinGroup" after click button "join group"', () => {
-        event.stopPropagation = jest.fn();
         const joinGroup = jest.fn();
+        const expectedUserJoinGroup = {
+            userID: user._id,
+            groupID: group._id
+        };
         const component = shallow(<Group
             group={group}
+            userID={user._id}
             joinGroup={joinGroup}
         />);
 
-        component.setState({ userID: group._id });
-
-        const spy = jest.spyOn(component.instance(), 'sendOptionsJoinGroup');
-        component.instance().forceUpdate();
-
         component.find('.btn-outline-info').at(0).simulate('click', event);
 
-        expect(spy).toHaveBeenCalledTimes(1);
-        expect(joinGroup).toHaveBeenCalledTimes(1);
-        expect(event.stopPropagation).toHaveBeenCalledTimes(1);
+        const [call = []] = joinGroup.mock.calls;
+        expect(call).toEqual([expectedUserJoinGroup]);
     });
 
     it('should call "sendOptionsLeaveGroup" after click button "leave group"', () => {
-        event.stopPropagation = jest.fn();
         const leaveGroup = jest.fn();
+        const expectedUserLeaveGroup = {
+            userID: user._id,
+            groupID: group._id
+        };
         const component = shallow(<Group
             group={group}
+            userID={user._id}
             leaveGroup={leaveGroup}
         />);
 
-        component.setState({ userID: group._id });
-
-        const spy = jest.spyOn(component.instance(), 'sendOptionsLeaveGroup');
-        component.instance().forceUpdate();
-
         component.find('.btn-outline-danger').at(1).simulate('click', event);
 
-        expect(spy).toHaveBeenCalledTimes(1);
-        expect(leaveGroup).toHaveBeenCalledTimes(1);
-        expect(event.stopPropagation).toHaveBeenCalledTimes(1);
+        const [call = []] = leaveGroup.mock.calls;
+        expect(call).toEqual([expectedUserLeaveGroup]);
     });
 
     it('should hide "remove" and "update" and show "join group" buttons if user joining groups', () => {

@@ -237,14 +237,14 @@ describe('Groups component', () => {
             groups={groups}
             actions={{...actions, getGroupsRequest: mockGroupsRequest}}
         />);
-        const mockGetGroups = {
-            limit: component.state().options.limit,
-            searchBy: component.state().options.searchBy
-        };
+        component.setState({
+            options: {
+                limit: 1
+            }
+        });
         component.instance().loadMore();
 
-        const [call = []] = mockGroupsRequest.mock.calls;
-        expect(call).toEqual([mockGetGroups]);
+        expect(mockGroupsRequest).toHaveBeenCalledTimes(2);
 
     });
 

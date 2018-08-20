@@ -17,8 +17,9 @@ import axios from 'axios/index';
             .then(group => group.data);
     };
 
-    export const updateGroup = (options) => {
-        const {id, name, title} = options;
+    export const updateGroup = (state) => {
+        const {name, title} = state;
+        const id = state.id || state.options.id;
         return axios.patch(`/api/groups/${id}`, {name, title})
             .then(groups => groups.data);
     };

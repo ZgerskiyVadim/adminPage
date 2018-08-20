@@ -148,15 +148,14 @@ describe('Users component', () => {
             users={users}
             actions={{...actions, getUsersRequest: mockUsersRequest}}
         />);
-        const mockGetUsers = {
-            limit: component.state().options.limit,
-            searchBy: component.state().options.searchBy
-        };
+        component.setState({
+            options: {
+                limit: 1
+            }
+        });
         component.instance().loadMore();
 
-        const [call = []] = mockUsersRequest.mock.calls;
-        expect(call).toEqual([mockGetUsers]);
-
+        expect(mockUsersRequest).toHaveBeenCalledTimes(2);
     });
 
     it('should hide "remove" button if user joining groups', () => {

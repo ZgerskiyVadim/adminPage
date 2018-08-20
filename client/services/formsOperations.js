@@ -8,14 +8,6 @@ class FormsOperations {
         });
     }
 
-    showForms(id, event) {
-        event.stopPropagation();
-        this.setState({
-            id,
-            showForm: true
-        });
-    }
-
     getValidOptions(state) {
         const options = {};
         for (const prop in state) {

@@ -35,7 +35,7 @@ export class Group extends Component {
         };
 
         this.loadMore = this.loadMore.bind(this);
-        this.showForms = formsOperations.showForms.bind(this);
+        this.showForms = this.showForms.bind(this);
         this.handleChange = formsOperations.handleChange.bind(this);
         this.goToUser = this.goToUser.bind(this);
         this.searchUsers = this.searchUsers.bind(this);
@@ -82,11 +82,19 @@ export class Group extends Component {
         searchOperation.getItems.call(this, event, getGroupRequest);
     };
 
+    showForms(event) {
+        event.stopPropagation();
+        this.setState({
+            showForm: true
+        });
+    }
+
     updateGroup(event) {
         event.preventDefault();
-        this.setState({showForm: false});
-        const options = formsOperations.getValidOptions(this.state);
-        this.props.actions.updateGroupRequest(options);
+        this.setState({showForm: false}, () => {
+            const options = formsOperations.getValidOptions(this.state);
+            this.props.actions.updateGroupRequest(options);
+        });
     };
 
     removeUser(id) {
@@ -94,7 +102,7 @@ export class Group extends Component {
             groupID: this.state.options.id,
             userID: id
         };
-        this.props.actions.removeUserRequest(options);
+        this.props.actions.removeUserFromGroupRequest(options);
     };
 
     showModal(id, event) {
@@ -131,7 +139,7 @@ export class Group extends Component {
                         <input onChange={this.handleChange} value={state.title} className={classNames('form-control', hiddenForm)} name='title' type="text"/>
                     </div>
 
-                    <button onClick={(event) => this.showForms(options.id, event)} className={classNames('btn btn-outline-primary', shownForm)}>Update</button>
+                    <button onClick={this.showForms} className={classNames('btn btn-outline-primary', shownForm)}>Update</button>
                     <button onClick={this.updateGroup} className={classNames('btn btn-outline-primary', hiddenForm)}>Save</button>
                 </div>
 

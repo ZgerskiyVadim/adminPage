@@ -97,9 +97,10 @@ describe('User component', () => {
 
     it('should call "showForms" after click button "update"', () => {
         const component = shallow(<User user={user}/>);
+        const showFormsButton = component.find('.btn-outline-primary').at(0);
 
         expect(component.state().showForm).toBe(false);
-        component.find('.btn-outline-primary').at(0).simulate('click', event);
+        showFormsButton.simulate('click', event);
         expect(component.state().showForm).toBe(true);
     });
 
