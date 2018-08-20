@@ -20,71 +20,95 @@ const params = {
 
 describe('Groups API service', () => {
 
-    it('should build correct request for create group', async (done) => {
+    it('should build correct request for create group', (done) => {
         axios.post = () => Promise.resolve({ data });
         const axiosCreate = jest.spyOn(axios, 'post');
 
-        const createdGroup = await create(data);
-        expect(axiosCreate).toHaveBeenCalledTimes(1);
-        expect(createdGroup).toBe(data);
-        done();
+        create(data).then(result => {
+            const [[url, params]] = axiosCreate.mock.calls;
+            expect(result.data).toEqual(data);
+            expect(axiosCreate).toHaveBeenCalledTimes(1);
+            expect(url).toBe('/api/groups');
+            expect(params).toEqual(data);
+            done();
+        }).catch(done);
     });
 
-    it('should build correct request for get groups', async (done) => {
+    it('should build correct request for get groups', (done) => {
         axios.get = () => Promise.resolve({ data: params });
         const axiosGetGroups = jest.spyOn(axios, 'get');
 
-        const gotGroups = await getGroups(params);
-        expect(axiosGetGroups).toHaveBeenCalledTimes(1);
-        expect(gotGroups).toBe(params);
-        done();
+        getGroups(params).then(result => {
+            const [[url, params]] = axiosGetGroups.mock.calls;
+            expect(result.data).toEqual(params.params);
+            expect(axiosGetGroups).toHaveBeenCalledTimes(1);
+            expect(url).toBe('/api/groups');
+            expect(params).toEqual(params);
+            done();
+        }).catch(done);
     });
 
-    it('should build correct request for get group', async (done) => {
+    it('should build correct request for get group', (done) => {
         const options = {...params, id: 1};
-        axios.get = () => Promise.resolve({ data: options });
+        axios.get = () => Promise.resolve({ data: params });
         const axiosGetGroup = jest.spyOn(axios, 'get');
 
-        const gotGroup = await getGroup(params);
-        expect(axiosGetGroup).toHaveBeenCalledTimes(1);
-        expect(gotGroup).toBe(options);
-        done();
+        getGroup(options).then(result => {
+            const [[url, params]] = axiosGetGroup.mock.calls;
+            expect(result.data).toEqual(params.params);
+            expect(axiosGetGroup).toHaveBeenCalledTimes(1);
+            expect(url).toBe(`/api/groups/${options.id}`);
+            expect(params).toEqual(params);
+            done();
+        }).catch(done);
     });
 
-    it('should build correct request for update group', async (done) => {
+    it('should build correct request for update group', (done) => {
         const options = {...data, id: 1};
-        axios.patch = () => Promise.resolve({ data: options });
+        axios.patch = () => Promise.resolve({ data });
         const axiosUpdateGroup = jest.spyOn(axios, 'patch');
 
-        const updatedGroup = await updateGroup(options);
-        expect(axiosUpdateGroup).toHaveBeenCalledTimes(1);
-        expect(updatedGroup).toBe(options);
-        done();
+        updateGroup(options).then(result => {
+            const [[url, params]] = axiosUpdateGroup.mock.calls;
+            expect(result.data).toEqual(params);
+            expect(axiosUpdateGroup).toHaveBeenCalledTimes(1);
+            expect(url).toBe(`/api/groups/${options.id}`);
+            expect(params).toEqual(params);
+            done();
+        }).catch(done);
     });
 
-    it('should build correct request for remove user from group', async (done) => {
+    it('should build correct request for remove user from group', (done) => {
         const options = {
             userID: 1,
             groupID: 1
         };
-        axios.patch = () => Promise.resolve({ data: options });
+        const expectedParams = {userID: 1};
+
+        axios.patch = () => Promise.resolve({ data: expectedParams });
         const axiosRemoveUserFromGroup = jest.spyOn(axios, 'patch');
 
-        const removedUserFromGroup = await removeUserFromGroup(options);
-        expect(axiosRemoveUserFromGroup).toHaveBeenCalledTimes(1);
-        expect(removedUserFromGroup).toBe(options);
-        done();
+        removeUserFromGroup(options).then(result => {
+            const [[url, params]] = axiosRemoveUserFromGroup.mock.calls;
+            expect(result.data).toEqual(params);
+            expect(axiosRemoveUserFromGroup).toHaveBeenCalledTimes(1);
+            expect(url).toBe(`/api/groups/remove-user/${options.groupID}`);
+            expect(params).toEqual(params);
+            done();
+        }).catch(done);
     });
 
-    it('should build correct request for delete group', async (done) => {
+    it('should build correct request for delete group', (done) => {
         const id = 1;
-        axios.delete = () => Promise.resolve({ data: id });
+        axios.delete = () => Promise.resolve();
         const axiosRemoveGroup = jest.spyOn(axios, 'delete');
 
-        const removedGroup = await removeGroup(id);
-        expect(axiosRemoveGroup).toHaveBeenCalledTimes(1);
-        expect(removedGroup).toBe(id);
-        done();
+        removeGroup(id).then(() => {
+            const [[url]] = axiosRemoveGroup.mock.calls;
+            expect(axiosRemoveGroup).toHaveBeenCalledTimes(1);
+            expect(url).toBe(`/api/groups/${id}`);
+            done();
+        }).catch(done);
     });
 
 });

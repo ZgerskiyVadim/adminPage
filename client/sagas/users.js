@@ -29,7 +29,7 @@ import {
 function* createUser(action) {
     try {
         const user = yield call(usersAPI.create, action.payload);
-        yield put({type: USER_CREATED_SUCCESS, payload: user});
+        yield put({type: USER_CREATED_SUCCESS, payload: user.data});
     } catch (error) {
         yield put({type: CREATE_USER_FAIL, payload: error});
     }
@@ -38,7 +38,7 @@ function* createUser(action) {
 function* getUsers(action) {
     try {
         const users = yield call(usersAPI.getUsers, action.payload);
-        yield put({type: GET_USERS_SUCCESS, payload: users});
+        yield put({type: GET_USERS_SUCCESS, payload: users.data});
     } catch (error) {
         yield put({type: GET_USERS_FAIL, payload: error});
     }
@@ -46,8 +46,8 @@ function* getUsers(action) {
 
 function* removeUser(action) {
     try {
-        const id = yield call(usersAPI.removeUser, action.payload);
-        yield put({type: REMOVE_USER_SUCCESS, payload: id});
+        const userID = yield call(usersAPI.removeUser, action.payload);
+        yield put({type: REMOVE_USER_SUCCESS, payload: userID.data});
     } catch (error) {
         yield put({type: REMOVE_USER_FAIL, payload: error});
     }
@@ -56,7 +56,7 @@ function* removeUser(action) {
 function* getUser(action) {
     try {
         const user = yield call(usersAPI.getUser, action.payload);
-        yield put({type: GET_USER_SUCCESS, payload: user});
+        yield put({type: GET_USER_SUCCESS, payload: user.data});
     } catch (error) {
         yield put({type: GET_USER_FAIL, payload: error});
     }
@@ -65,7 +65,7 @@ function* getUser(action) {
 function* updateUser(action) {
     try {
         const user = yield call(usersAPI.updateUser, action.payload);
-        yield put({type: UPDATE_USER_SUCCESS, payload: user});
+        yield put({type: UPDATE_USER_SUCCESS, payload: user.data});
     } catch (error) {
         yield put({type: UPDATE_USER_FAIL, payload: error});
     }
@@ -74,8 +74,8 @@ function* updateUser(action) {
 function* addUserInGroup(action) {
     try {
         const updated = yield call(usersAPI.addUserInGroup, action.payload);
-        yield put({type: UPDATE_GROUP_SUCCESS, payload: updated.group});
-        yield put({type: USER_JOIN_GROUP_SUCCESS, payload: updated});
+        yield put({type: UPDATE_GROUP_SUCCESS, payload: updated.data.group});
+        yield put({type: USER_JOIN_GROUP_SUCCESS, payload: updated.data});
     } catch (error) {
         yield put({type: UPDATE_GROUP_FAIL, payload: error});
         yield put({type: USER_JOIN_GROUP_FAIL, payload: error});
@@ -85,8 +85,8 @@ function* addUserInGroup(action) {
 function* leaveGroup(action) {
     try {
         const updated = yield call(usersAPI.leaveGroup, action.payload);
-        yield put({type: UPDATE_GROUP_SUCCESS, payload: updated.group});
-        yield put({type: USER_LEAVE_GROUP_SUCCESS, payload: updated});
+        yield put({type: UPDATE_GROUP_SUCCESS, payload: updated.data.group});
+        yield put({type: USER_LEAVE_GROUP_SUCCESS, payload: updated.data});
     } catch (error) {
         yield put({type: USER_LEAVE_GROUP_FAIL, payload: error});
         yield put({type: UPDATE_GROUP_FAIL, payload: error});

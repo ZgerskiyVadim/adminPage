@@ -23,7 +23,7 @@ import {
 function* createGroup(action) {
     try {
         const group = yield call(groupsAPI.create, action.payload);
-        yield put({type: GROUP_CREATED_SUCCESS, payload: group});
+        yield put({type: GROUP_CREATED_SUCCESS, payload: group.data});
     } catch (error) {
         yield put({type: CREATE_GROUP_FAIL, payload: error});
     }
@@ -32,7 +32,7 @@ function* createGroup(action) {
 function* getGroups(action) {
     try {
         const groups = yield call(groupsAPI.getGroups, action.payload);
-        yield put({type: GET_GROUPS_SUCCESS, payload: groups});
+        yield put({type: GET_GROUPS_SUCCESS, payload: groups.data});
     } catch (error) {
         yield put({type: GET_GROUPS_FAIL, payload: error});
     }
@@ -40,8 +40,8 @@ function* getGroups(action) {
 
 function* removeGroup(action) {
     try {
-        const id = yield call(groupsAPI.removeGroup, action.payload);
-        yield put({type: REMOVE_GROUP_SUCCESS, payload: id});
+        const groupID = yield call(groupsAPI.removeGroup, action.payload);
+        yield put({type: REMOVE_GROUP_SUCCESS, payload: groupID.data});
     } catch (error) {
         yield put({type: REMOVE_GROUP_FAIL, payload: error});
     }
@@ -50,7 +50,7 @@ function* removeGroup(action) {
 function* getGroup(action) {
     try {
         const group = yield call(groupsAPI.getGroup, action.payload);
-        yield put({type: GET_GROUP_SUCCESS, payload: group});
+        yield put({type: GET_GROUP_SUCCESS, payload: group.data});
     } catch (error) {
         yield put({type: GET_GROUP_FAIL, payload: error});
     }
@@ -59,7 +59,7 @@ function* getGroup(action) {
 function* updateGroup(action) {
     try {
         const group = yield call(groupsAPI.updateGroup, action.payload);
-        yield put({type: UPDATE_GROUP_SUCCESS, payload: group});
+        yield put({type: UPDATE_GROUP_SUCCESS, payload: group.data});
     } catch (error) {
         yield put({type: UPDATE_GROUP_FAIL, payload: error});
     }
@@ -68,7 +68,7 @@ function* updateGroup(action) {
 function* removeUserFromGroup(action) {
     try {
         const updated = yield call(groupsAPI.removeUserFromGroup, action.payload);
-        yield put({type: UPDATE_GROUP_SUCCESS, payload: updated.group});
+        yield put({type: UPDATE_GROUP_SUCCESS, payload: updated.data.group});
     } catch (error) {
         yield put({type: UPDATE_GROUP_FAIL, payload: error});
     }
