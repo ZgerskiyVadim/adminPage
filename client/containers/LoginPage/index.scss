@@ -3,6 +3,7 @@
   h2 {
     display: flex;
     justify-content: center;
+    font-size: 1.5em;
   }
   input[name="username"] {
     margin-bottom: 1em;
@@ -14,8 +15,16 @@
   justify-content: center;
   align-items: center;
   margin-top: 2em;
+  div {
+    max-width: 15%;
+    min-width: 15%;
+    h5 {
+      font-size: 1em;
+    }
+  }
 }
 .login__send {
+  width: 6em;
   margin: 2em 0 0 1em;
   align-self: center;
   color: #fff;

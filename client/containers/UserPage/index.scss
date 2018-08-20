@@ -24,6 +24,9 @@
 }
 .user--margin-right {
   margin-right: 1em;
+  input {
+    margin-bottom: 1em;
+  }
 }
 .user__groups-table {
   margin: 0 4em;
