@@ -11,6 +11,9 @@ import {
     GET_GROUP_SUCCESS,
     GET_GROUP_FAIL,
     GET_GROUP_PENDING,
+    GROUP_CREATED_SUCCESS,
+    GROUP_CREATE_PENDING,
+    CREATE_GROUP_FAIL
 } from "../../../actions";
 
 export const UPLOAD_GROUP = {
@@ -76,7 +79,6 @@ export const actionsReducer = {
             payload: 'Error Message',
         },
     },
-
     removeGroup: {
         pending: {
             type: REMOVE_GROUP_PENDING
@@ -87,6 +89,19 @@ export const actionsReducer = {
         },
         fail: {
             type: REMOVE_GROUP_FAIL,
+            payload: 'Error Message',
+        },
+    },
+    createGroup: {
+        pending: {
+            type: GROUP_CREATE_PENDING
+        },
+        success: {
+            type: GROUP_CREATED_SUCCESS,
+            payload: UPDATE_GROUP_DATA
+        },
+        fail: {
+            type: CREATE_GROUP_FAIL,
             payload: 'Error Message',
         },
     },

@@ -11,17 +11,29 @@ import {
     GET_USER_SUCCESS,
     GET_USER_PENDING,
     GET_USER_FAIL,
+    USER_CREATED_SUCCESS,
+    USER_CREATE_PENDING,
+    CREATE_USER_FAIL,
+    IS_USER_WANT_JOIN_GROUP,
+    USER_JOIN_GROUP_PENDING,
+    USER_JOIN_GROUP_SUCCESS,
+    USER_JOIN_GROUP_FAIL,
+    USER_LEAVE_GROUP_PENDING,
+    USER_LEAVE_GROUP_SUCCESS,
+    USER_LEAVE_GROUP_FAIL
 } from "../../../actions";
 
 
 export const UPLOAD_USER = {
-    username: 'username',
-    firstName: 'firstName',
-    lastName: 'lastName',
-    email: 'test@email.com',
-    password: 'password',
-    groups: [],
-    _id: 1
+    data: {
+        username: 'username',
+        firstName: 'firstName',
+        lastName: 'lastName',
+        email: 'test@email.com',
+        password: 'password',
+        _id: 1,
+        groups: [{_id: 1}, {_id: 2}],
+    }
 };
 
 export const UPLOAD_USERS = [
@@ -95,6 +107,55 @@ export const actionsReducer = {
         fail: {
             type: REMOVE_USER_FAIL,
             payload: 'Error Message',
+        },
+    },
+    createUser: {
+        pending: {
+            type: USER_CREATE_PENDING
+        },
+        success: {
+            type: USER_CREATED_SUCCESS,
+            payload: UPDATE_USER_DATA
+        },
+        fail: {
+            type: CREATE_USER_FAIL,
+            payload: 'Error Message',
+        },
+    },
+    userJoinGroup: {
+        pending: {
+            type: USER_JOIN_GROUP_PENDING
+        },
+        success: {
+            type: USER_JOIN_GROUP_SUCCESS,
+            payload: UPDATE_USER_DATA
+        },
+        fail: {
+            type: USER_JOIN_GROUP_FAIL,
+            payload: 'Error Message',
+        },
+    },
+    userLeaveGroup: {
+        pending: {
+            type: USER_LEAVE_GROUP_PENDING
+        },
+        success: {
+            type: USER_LEAVE_GROUP_SUCCESS,
+            payload: {
+                group: {
+                    _id: 1
+                }
+            }
+        },
+        fail: {
+            type: USER_LEAVE_GROUP_FAIL,
+            payload: 'Error Message',
+        },
+    },
+    userIsJoiningGroups: {
+        success: {
+            type: IS_USER_WANT_JOIN_GROUP,
+            payload: true
         },
     },
 };

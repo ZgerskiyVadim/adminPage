@@ -17,7 +17,10 @@ import {
     IS_USER_WANT_JOIN_GROUP,
     USER_JOIN_GROUP_FAIL,
     USER_LEAVE_GROUP_SUCCESS,
-    USER_JOIN_GROUP_PENDING
+    USER_JOIN_GROUP_PENDING,
+    USER_CREATE_PENDING,
+    USER_CREATED_SUCCESS,
+    CREATE_USER_FAIL
 } from '../actions';
 
 export const initialState = {
@@ -26,7 +29,8 @@ export const initialState = {
     updatedUser: {data: {}, loading: false, error: null},
     removedUser: {data: {}, loading: false, error: null},
     userJoinedGroup: {data: {}, loading: false, error: null},
-    userLeftGroup: {data: {}, loading: false, error: null}
+    userLeftGroup: {data: {}, loading: false, error: null},
+    createdUser: {data: {}, loading: false, error: null}
 };
 
 export function Users(state = initialState, action) {
@@ -248,6 +252,37 @@ export function Users(state = initialState, action) {
                 user: {
                     ...state.user,
                     isJoiningGroup: action.payload
+                }
+            };
+
+        case USER_CREATE_PENDING:
+            return {
+                ...state,
+                createdUser: {
+                    ...state.createdUser,
+                    loading: true,
+                    error: null
+                }
+            };
+
+        case USER_CREATED_SUCCESS:
+            return {
+                ...state,
+                createdUser: {
+                    ...state.createdUser,
+                    data: action.payload,
+                    loading: false,
+                    error: null
+                }
+            };
+
+        case CREATE_USER_FAIL:
+            return {
+                ...state,
+                createdUser: {
+                    ...state.createdUser,
+                    loading: false,
+                    error: action.payload || 'Create user failed'
                 }
             };
 
