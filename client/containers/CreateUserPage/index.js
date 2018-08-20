@@ -8,7 +8,7 @@ import * as usersActionCreators from '../../actions/action_creators/users';
 import formsOperations from '../../services/formsOperations';
 import LoadingSpinner from '../../components/LoadingSpinner';
 
-class CreateUser extends Component {
+export class CreateUser extends Component {
     constructor(props) {
         super(props);
 

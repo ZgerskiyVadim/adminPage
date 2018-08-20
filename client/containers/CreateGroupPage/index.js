@@ -8,7 +8,7 @@ import * as groupsActionCreators from '../../actions/action_creators/groups';
 import formsOperations from '../../services/formsOperations';
 import LoadingSpinner from '../../components/LoadingSpinner';
 
-class CreateGroup extends Component {
+export class CreateGroup extends Component {
     constructor(props) {
         super(props);
 
