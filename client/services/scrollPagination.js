@@ -9,8 +9,8 @@ class ScrollPagination {
                     limit: limit + loadNext
                 }
             }, () => {
-                const {searchBy, limit} = this.state.options;
-                const options = {searchBy, limit};
+                const {searchBy, limit, id} = this.state.options;
+                const options = id ? {searchBy, limit, id}: {searchBy, limit};
                 getItemsRequest(options)
             });
         }

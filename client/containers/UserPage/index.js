@@ -49,8 +49,8 @@ export class User extends Component {
     componentDidMount() {
         const isJoiningGroup = false;
         this.props.actions.startJoiningGroup(isJoiningGroup);
-        const {searchBy, limit} = this.state.options;
-        const options = {searchBy, limit};
+        const {searchBy, limit, id} = this.state.options;
+        const options = {searchBy, limit, id};
         this.props.actions.getUserRequest(options);
         window.addEventListener('scroll', this.loadMore);
     }

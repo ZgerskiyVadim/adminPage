@@ -5,7 +5,9 @@ import {
     UPLOAD_USERS,
     UPLOAD_USER,
     UPDATE_USER_DATA,
-    REMOVE_USER_DATA
+    REMOVE_USER_DATA,
+    EXPECTED_JOIN_GROUP,
+    EXPECTED_LEFT_GROUP
 } from './fixture';
 
 describe('Users reducer:', () => {
@@ -88,19 +90,21 @@ describe('Users reducer:', () => {
             expect(result.user.isJoiningGroup).toBe(true);
         });
 
-        // it('should handle USER_JOIN_GROUP', () => {
-        //     const result = Users(initialState, actionsReducer.userJoinGroup.success);
-        //     expect(result.userJoinedGroup.loading).toBe(false);
-        //     expect(result.userJoinedGroup.error).toBe(null);
-        //     expect(result.userJoinedGroup.data).toEqual(UPDATE_USER_DATA);
-        // });
+        it('should handle USER_JOIN_GROUP', () => {
+            let result = Users(initialState, actionsReducer.uploadUser.success);
+            result = Users(result, actionsReducer.userJoinGroup.success);
+            expect(result.userJoinedGroup.loading).toBe(false);
+            expect(result.userJoinedGroup.error).toBe(null);
+            expect(result.user.data).toEqual(EXPECTED_JOIN_GROUP);
+        });
 
-        // it('should handle USER_LEAVE_GROUP', () => {
-        //     const result = Users(initialState, actionsReducer.userLeaveGroup.success);
-        //     expect(result.userLeftGroup.loading).toBe(false);
-        //     expect(result.userLeftGroup.error).toBe(null);
-        //     expect(result.userLeftGroup.data).toEqual(UPDATE_USER_DATA);
-        // });
+        it('should handle USER_LEAVE_GROUP', () => {
+            let result = Users(initialState, actionsReducer.uploadUser.success);
+            result = Users(result, actionsReducer.userLeaveGroup.success);
+            expect(result.userLeftGroup.loading).toBe(false);
+            expect(result.userLeftGroup.error).toBe(null);
+            expect(result.user.data).toEqual(EXPECTED_LEFT_GROUP);
+        });
 
         it('should handle CREATE_USER', () => {
             const result = Users(initialState, actionsReducer.createUser.success);

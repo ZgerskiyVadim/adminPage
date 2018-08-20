@@ -25,15 +25,13 @@ import {
 
 
 export const UPLOAD_USER = {
-    data: {
-        username: 'username',
-        firstName: 'firstName',
-        lastName: 'lastName',
-        email: 'test@email.com',
-        password: 'password',
-        _id: 1,
-        groups: [{_id: 1}, {_id: 2}],
-    }
+    username: 'username',
+    firstName: 'firstName',
+    lastName: 'lastName',
+    email: 'test@email.com',
+    password: 'password',
+    _id: 1,
+    groups: [{_id: 1}, {_id: 2}]
 };
 
 export const UPLOAD_USERS = [
@@ -47,6 +45,20 @@ export const UPDATE_USER_DATA = {
     email: 'test@email.com',
     password: 'password',
     _id: 1
+};
+
+export const JOIN_GROUP_DATA = {
+    group: {
+        _id: 1
+    }
+};
+
+export const EXPECTED_JOIN_GROUP = {
+    groups: [{...UPLOAD_USER.groups[0], isLeftGroup: false}, {...UPLOAD_USER.groups[1]}]
+};
+
+export const EXPECTED_LEFT_GROUP = {
+    groups: [{...UPLOAD_USER.groups[0], isLeftGroup: true}, {...UPLOAD_USER.groups[1]}]
 };
 
 export const REMOVE_USER_DATA = {
@@ -128,7 +140,7 @@ export const actionsReducer = {
         },
         success: {
             type: USER_JOIN_GROUP_SUCCESS,
-            payload: UPDATE_USER_DATA
+            payload: JOIN_GROUP_DATA
         },
         fail: {
             type: USER_JOIN_GROUP_FAIL,

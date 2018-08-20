@@ -194,7 +194,7 @@ export function Users(state = initialState, action) {
                     ...state.userJoinedGroup,
                     data: action.payload.user,
                     loading: false,
-                    error: false
+                    error: null
                 },
             };
 
@@ -232,7 +232,7 @@ export function Users(state = initialState, action) {
                     ...state.userLeftGroup,
                     data: action.payload.user,
                     loading: false,
-                    error: false
+                    error: null
                 },
             };
 
