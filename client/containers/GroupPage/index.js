@@ -133,9 +133,9 @@ export class GroupPage extends Component {
                 <h3 className='group-header'>GROUP</h3>
                 <div className='group__info'>
                     <div className='group--margin-right'>
-                        <h4>name: {name}</h4>
+                        <h4>name: <span>{name}</span></h4>
                         <input onChange={this.handleChange} value={state.name} className={classNames('form-control', hiddenForm)} name='name' type="text"/>
-                        <h4>title: {title}</h4>
+                        <h4>title: <span>{title}</span></h4>
                         <input onChange={this.handleChange} value={state.title} className={classNames('form-control', hiddenForm)} name='title' type="text"/>
                     </div>
 
