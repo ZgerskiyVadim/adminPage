@@ -17,7 +17,8 @@ class LoginPage extends Component {
         this.login = this.login.bind(this);
     }
 
-    login() {
+    login(event) {
+        event.preventDefault();
         authenticationService.login(this.state);
     };
 
@@ -27,16 +28,16 @@ class LoginPage extends Component {
         return (
             <div className='login'>
                 <h2>User login</h2>
-                <div className='login--row'>
+                <form className='login--row'>
                     <div className='col-md-6'>
-                        <h5>Username</h5>
-                        <input onChange={this.handleChange} value={username} name='username' className='form-control' type="text"/>
-                        <h5>Password</h5>
-                        <input onChange={this.handleChange} value={password} name='password' className='form-control' type="password"/>
+                        <label htmlFor='login-username'>Username</label>
+                        <input onChange={this.handleChange} value={username} id='login-username' name='username' className='form-control' type="text"/>
+                        <label htmlFor="login-password">Password</label>
+                        <input onChange={this.handleChange} value={password} id='login-password' name='password' className='form-control' type="password"/>
                     </div>
 
-                    <button onClick={this.login} className='login__send btn btn-outline-primary'>Send</button>
-                </div>
+                    <button onClick={this.login} className='login__send btn btn-outline-primary' type='submit'>Send</button>
+                </form>
             </div>
         );
     }

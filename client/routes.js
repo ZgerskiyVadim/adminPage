@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Route, Switch } from 'react-router-dom';
 import PrivateRoute from './components/PrivateRoute';
+import LoggedRedirectOnUsers from './components/LoggedRedirectOnUsers';
 import Groups from './containers/GroupsTablePage';
 import GroupPage from './containers/GroupPage';
 import Users from './containers/UsersTablePage';
@@ -16,7 +17,7 @@ export default class Routes extends Component {
     render() {
         return (
             <Switch>
-                <Route exact path="/" component={LoginPage}/>
+                <LoggedRedirectOnUsers exact path="/" component={LoginPage}/>
                 <Route exact path="/create" component={CreatePage}/>
                 <PrivateRoute exact path="/users" component={Users}/>
                 <PrivateRoute path="/users/:id" component={UserPage}/>
