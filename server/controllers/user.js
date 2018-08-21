@@ -20,22 +20,6 @@ class UserController extends CommonCrudOperations{
     }
 }
 
-const userController = new UserController();
-
-export const getUsers = userController.getAll();
-
-export const getUserByID = userController.getByID();
-
-export const createUser = userController.create();
-
-export const updateUser = userController.update();
-
-export const removeUser = userController.remove();
-
-export const removeUserFromGroup = userController.removeUserFromGroup();
-
-export const addUserInGroup = userController.addUserInGroup();
-
 export const login = (req, done) => {
     done(null, {message: 'User logged-in'})
 };
@@ -43,3 +27,5 @@ export const login = (req, done) => {
 export const logout = (done) => {
     done({message: 'User is logout'});
 };
+
+export default new UserController();

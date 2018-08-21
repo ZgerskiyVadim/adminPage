@@ -1,20 +1,20 @@
 import express from 'express';
 const router = express.Router();
-import * as userCtrl from '../controllers/user';
+import userCtrl from '../controllers/user';
 import {handleResponse} from '../services/handleResponse';
 
-router.get('/users/', handleResponse(userCtrl.getUsers));
+router.get('/users/', handleResponse(userCtrl.getAll()));
 
-router.get('/users/:id', handleResponse(userCtrl.getUserByID));
+router.get('/users/:id', handleResponse(userCtrl.getByID()));
 
-router.post('/users/', handleResponse(userCtrl.createUser));
+router.post('/users/', handleResponse(userCtrl.create()));
 
-router.patch('/users/:id', handleResponse(userCtrl.updateUser));
+router.patch('/users/:id', handleResponse(userCtrl.update()));
 
-router.patch('/users/follow/group', handleResponse(userCtrl.addUserInGroup));
+router.patch('/users/follow/group', handleResponse(userCtrl.addUserInGroup()));
 
-router.patch('/users/leave-group/:id', handleResponse(userCtrl.removeUserFromGroup));
+router.patch('/users/leave-group/:id', handleResponse(userCtrl.removeUserFromGroup()));
 
-router.delete('/users/:id', handleResponse(userCtrl.removeUser));
+router.delete('/users/:id', handleResponse(userCtrl.remove()));
 
 export default router;

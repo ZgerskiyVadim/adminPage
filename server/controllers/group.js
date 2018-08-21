@@ -19,16 +19,4 @@ class GroupController extends CommonCrudOperations{
     }
 }
 
-const groupController =  new GroupController();
-
-export const getGroups = groupController.getAll();
-
-export const getGroupByID = groupController.getByID();
-
-export const createGroup = groupController.create();
-
-export const updateGroup = groupController.update();
-
-export const removeGroup = groupController.remove();
-
-export const removeUserFromGroup = groupController.removeUserFromGroup();
+export default new GroupController();

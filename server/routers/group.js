@@ -1,18 +1,18 @@
 import express from 'express';
 const router = express.Router();
-import * as groupCtrl from '../controllers/group';
+import groupCtrl from '../controllers/group';
 import {handleResponse} from '../services/handleResponse';
 
-router.get('/groups/', handleResponse(groupCtrl.getGroups));
+router.get('/groups/', handleResponse(groupCtrl.getAll()));
 
-router.get('/groups/:id', handleResponse(groupCtrl.getGroupByID));
+router.get('/groups/:id', handleResponse(groupCtrl.getByID()));
 
-router.post('/groups/', handleResponse(groupCtrl.createGroup));
+router.post('/groups/', handleResponse(groupCtrl.create()));
 
-router.patch('/groups/remove-user/:id', handleResponse(groupCtrl.removeUserFromGroup));
+router.patch('/groups/:id', handleResponse(groupCtrl.update()));
 
-router.patch('/groups/:id', handleResponse(groupCtrl.updateGroup));
+router.patch('/groups/remove-user/:id', handleResponse(groupCtrl.removeUserFromGroup()));
 
-router.delete('/groups/:id', handleResponse(groupCtrl.removeGroup));
+router.delete('/groups/:id', handleResponse(groupCtrl.remove()));
 
 export default router;
