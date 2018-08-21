@@ -67,8 +67,10 @@ export class UserItem extends Component {
 
         return (
             <tbody>
-            <form id={'users-form' + (index + 1)} />
             <tr onClick={this.goToUser} className='users--cursor'>
+                <td style={{display: 'none'}}>
+                    <form id={'users-form' + (index + 1)} />
+                </td>
                 <th>{index + 1}</th>
                 <td>
                     <label htmlFor={'users-username' + (index + 1)}>{username}</label>

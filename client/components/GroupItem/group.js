@@ -82,8 +82,10 @@ export class GroupItem extends Component {
 
         return (
             <tbody>
-            <form id={'groups-form' + (index + 1)} />
             <tr onClick={this.goToGroup} className='groups--cursor'>
+                <td style={{display: 'none'}}>
+                    <form id={'groups-form' + (index + 1)} />
+                </td>
                 <th>{index + 1}</th>
                 <td>
                     <label htmlFor={'groups-name' + (index + 1)}>{name}</label>
