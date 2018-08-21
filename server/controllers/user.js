@@ -1,6 +1,6 @@
 import User from '../models/user';
 import Group from '../models/group';
-import {CommonCrudOperations} from '../services/commonCrudOperations';
+import {CommonCrudOperations} from './commonCrudOperations';
 
 class UserController extends CommonCrudOperations{
     constructor() {

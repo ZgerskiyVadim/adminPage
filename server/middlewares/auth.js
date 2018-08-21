@@ -10,9 +10,7 @@ passport.use(new LocalStrategy(
             if (!user) return done(null, false);
             user.comparePassword(password, function (err, isMatch) {
                 if (err) return done(err);
-                isMatch ?
-                    done(null, user) :
-                    done(null, false);
+                done(null, isMatch && user)
             });
         });
     }
