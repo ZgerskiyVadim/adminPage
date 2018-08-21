@@ -7,8 +7,9 @@ import './index.scss';
 import * as groupsActionCreators from '../../actions/action_creators/groups';
 import formsOperations from '../../services/formsOperations';
 import LoadingSpinner from '../../components/LoadingSpinner';
-import {isEqualProps} from "../../services/isEqualProps";
+import isEqual from "lodash.isequal";
 import showToastrMessage from "../../services/showToastrMessage";
+import redirectOnPage from "../../services/redirectOnPage";
 
 export class CreateGroupPage extends Component {
     constructor(props) {
@@ -25,13 +26,16 @@ export class CreateGroupPage extends Component {
     componentWillReceiveProps(nextProps) {
         const error = nextProps.createGroup.error;
 
-        !isEqualProps(this.props.createGroup.data, nextProps.createGroup.data) && showToastrMessage.success();
+        if (!isEqual(this.props.createGroup.data, nextProps.createGroup.data)) {
+            showToastrMessage.success();
+            redirectOnPage.path('/groups');
+        }
         error && showToastrMessage.error(error);
     }
 
     createGroup(event) {
         event.preventDefault();
-        this.props.actions.createGroupRequest(this.state)
+        this.props.actions.createGroupRequest(this.state);
     };
 
     render() {
@@ -41,16 +45,16 @@ export class CreateGroupPage extends Component {
         return (
             <div className='create-group'>
                 <h4>Create Group</h4>
-                <div className='create-group--row'>
+                <form className='create-group--row'>
                     <div className='col-md-6'>
-                        <h5>name</h5>
-                        <input onChange={this.handleChange} value={name} name='name' className='form-control' type="text"/>
-                        <h5>title</h5>
-                        <input onChange={this.handleChange} value={title} name='title' className='form-control' type="text"/>
+                        <label htmlFor='create-name'>name</label>
+                        <input onChange={this.handleChange} value={name} name='name' id='create-name' className='form-control' type="text"/>
+                        <label htmlFor='create-title'>title</label>
+                        <input onChange={this.handleChange} value={title} name='title' id='create-title' className='form-control' type="text"/>
                     </div>
 
-                    <button onClick={this.createGroup} className='create-group__send btn btn-outline-primary'>Send</button>
-                </div>
+                    <button onClick={this.createGroup} className='create-group__send btn btn-outline-primary' type='subnit'>Send</button>
+                </form>
                 <LoadingSpinner loading={loading}/>
             </div>
         );

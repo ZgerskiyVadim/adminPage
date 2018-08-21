@@ -117,6 +117,9 @@ export function Users(state = initialState, action) {
                     ...state.users,
                     data: state.users.data.map(user => (user._id === action.payload._id) ? action.payload : user)
                 },
+                user: {
+                    data: action.payload
+                },
                 updatedUser: {
                     ...state.updatedUser,
                     data: action.payload,

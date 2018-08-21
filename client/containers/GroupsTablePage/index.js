@@ -15,7 +15,7 @@ import LoadingSpinner from '../../components/LoadingSpinner';
 import ModalWindow from '../../components/ModalWindow';
 import SearchComponent from '../../components/SearchInput';
 import showToastrMessage from "../../services/showToastrMessage";
-import {isEqualProps} from "../../services/isEqualProps";
+import isEqual from "lodash.isequal";
 
 export class GroupsTablePage extends Component {
     constructor(props) {
@@ -63,8 +63,8 @@ export class GroupsTablePage extends Component {
     componentWillReceiveProps(nextProps) {
         const error = nextProps.groups.error || nextProps.updatedGroup.error || nextProps.removedGroup.error || nextProps.userJoinedGroup.error || nextProps.userLeftGroup.error;
 
-        !isEqualProps(this.props.updatedGroup.data, nextProps.updatedGroup.data) && showToastrMessage.success();
-        !isEqualProps(this.props.removedGroup.data, nextProps.removedGroup.data) && showToastrMessage.success('Group is removed');
+        !isEqual(this.props.updatedGroup.data, nextProps.updatedGroup.data) && showToastrMessage.success();
+        !isEqual(this.props.removedGroup.data, nextProps.removedGroup.data) && showToastrMessage.success('Group is removed');
         error && showToastrMessage.error(error);
     }
 

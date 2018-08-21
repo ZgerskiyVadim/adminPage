@@ -11,7 +11,8 @@ const groupSchema = new Schema({
             message: 'Provided name is invalid.'
         }},
     title: {type: String, required: true, minlength: 6, maxlength: 20},
-    users: [{type: Schema.Types.ObjectId, ref: 'User'}]
+    users: [{type: Schema.Types.ObjectId, ref: 'User'}],
+    date: { type: Date, default: Date.now }
 });
 
 export default mongoose.model('Group', groupSchema);

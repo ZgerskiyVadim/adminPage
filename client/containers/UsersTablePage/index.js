@@ -14,7 +14,7 @@ import ModalWindow from '../../components/ModalWindow';
 import SearchComponent from '../../components/SearchInput';
 import showToastrMessage from "../../services/showToastrMessage";
 import redirectOnPage from "../../services/redirectOnPage";
-import {isEqualProps} from "../../services/isEqualProps";
+import isEqual from "lodash.isequal";
 
 export class UsersTablePage extends Component {
     constructor(props) {
@@ -59,8 +59,8 @@ export class UsersTablePage extends Component {
     componentWillReceiveProps(nextProps) {
         const error = nextProps.users.error || nextProps.updatedUser.error || nextProps.removedUser.error;
 
-        !isEqualProps(this.props.updatedUser.data, nextProps.updatedUser.data) && showToastrMessage.success('User is updated');
-        !isEqualProps(this.props.removedUser.data, nextProps.removedUser.data) && showToastrMessage.success('User is removed');
+        !isEqual(this.props.updatedUser.data, nextProps.updatedUser.data) && showToastrMessage.success('User is updated');
+        !isEqual(this.props.removedUser.data, nextProps.removedUser.data) && showToastrMessage.success('User is removed');
         error && showToastrMessage.error(error);
     }
 

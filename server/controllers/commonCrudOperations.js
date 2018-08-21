@@ -13,6 +13,7 @@ export class CommonCrudOperations {
             Model
                 .find({'$or': getSearchFields(searchBy, searchFields)}, null, {skip: Number(skip), limit: Number(limit)})
                 .populate(pathPopulate)
+                .sort({date: -1})
                 .exec((err, data) => err ? done(err) : done(null, data));
         }
     };

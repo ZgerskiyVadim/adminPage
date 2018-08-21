@@ -7,8 +7,9 @@ import './index.scss';
 import * as usersActionCreators from '../../actions/action_creators/users';
 import formsOperations from '../../services/formsOperations';
 import LoadingSpinner from '../../components/LoadingSpinner';
-import {isEqualProps} from "../../services/isEqualProps";
+import isEqual from "lodash.isequal";
 import showToastrMessage from "../../services/showToastrMessage";
+import redirectOnPage from "../../services/redirectOnPage";
 
 export class CreateUserPage extends Component {
     constructor(props) {
@@ -28,7 +29,10 @@ export class CreateUserPage extends Component {
     componentWillReceiveProps(nextProps) {
         const error = nextProps.createUser.error;
 
-        !isEqualProps(this.props.createUser.data, nextProps.createUser.data) && showToastrMessage.success();
+        if (!isEqual(this.props.createUser.data, nextProps.createUser.data)) {
+            showToastrMessage.success();
+            redirectOnPage.path('/groups');
+        }
         error && showToastrMessage.error(error);
     }
 
@@ -44,22 +48,22 @@ export class CreateUserPage extends Component {
         return (
             <div className='create-user'>
                 <h4>Create User</h4>
-                <div className='create-user--row'>
+                <form className='create-user--row'>
                     <div className='col-md-6'>
-                        <h5>username</h5>
-                        <input onChange={this.handleChange} value={username} name='username' className='form-control' type="text"/>
-                        <h5>firstName</h5>
-                        <input onChange={this.handleChange} value={firstName} name='firstName' className='form-control' type="text"/>
-                        <h5>lastName</h5>
-                        <input onChange={this.handleChange} value={lastName} name='lastName' className='form-control' type="text"/>
-                        <h5>email</h5>
-                        <input onChange={this.handleChange} value={email} name='email' className='form-control' type="text"/>
-                        <h5>password</h5>
-                        <input onChange={this.handleChange} value={password} name='password' className='form-control' type="password"/>
+                        <label htmlFor='create-username'>username</label>
+                        <input onChange={this.handleChange} value={username} name='username' id='create-username' className='form-control' type="text"/>
+                        <label htmlFor='create-firstName'>firstName</label>
+                        <input onChange={this.handleChange} value={firstName} name='firstName' id='create-firstName' className='form-control' type="text"/>
+                        <label htmlFor='create-lastName'>lastName</label>
+                        <input onChange={this.handleChange} value={lastName} name='lastName' id='create-lastName' className='form-control' type="text"/>
+                        <label htmlFor='create-email'>email</label>
+                        <input onChange={this.handleChange} value={email} name='email' id='create-email' className='form-control' type="text"/>
+                        <label htmlFor='create-password'>password</label>
+                        <input onChange={this.handleChange} value={password} name='password' id='create-password' className='form-control' type="password"/>
                     </div>
 
-                    <button onClick={this.createUser} className='create-user__send btn btn-outline-primary'>Send</button>
-                </div>
+                    <button onClick={this.createUser} className='create-user__send btn btn-outline-primary' type='submit'>Send</button>
+                </form>
                 <LoadingSpinner loading={loading}/>
             </div>
         );

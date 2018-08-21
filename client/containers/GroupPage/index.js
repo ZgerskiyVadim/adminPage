@@ -14,7 +14,7 @@ import LoadingSpinner from '../../components/LoadingSpinner';
 import ModalWindow from '../../components/ModalWindow';
 import SearchComponent from '../../components/SearchInput';
 import showToastrMessage from "../../services/showToastrMessage";
-import {isEqualProps} from "../../services/isEqualProps";
+import isEqual from "lodash.isequal";
 
 export class GroupPage extends Component {
     constructor(props) {
@@ -55,9 +55,16 @@ export class GroupPage extends Component {
     }
 
     componentWillReceiveProps(nextProps) {
+        if (this.props.group !== nextProps.group && nextProps.group.data.name) {
+            const {name, title} = nextProps.group.data;
+            this.setState({
+                name,
+                title
+            })
+        }
         const error = nextProps.group.error || nextProps.updatedGroup.error;
 
-        !isEqualProps(this.props.updatedGroup.data, nextProps.updatedGroup.data) && showToastrMessage.success();
+        !isEqual(this.props.updatedGroup.data, nextProps.updatedGroup.data) && showToastrMessage.success();
         error && showToastrMessage.error(error);
     }
 
@@ -131,19 +138,19 @@ export class GroupPage extends Component {
         return (
             <div className='group'>
                 <h3 className='group-header'>GROUP</h3>
-                <div className='group__info'>
-                    <div className='group--margin-right'>
-                        <h4>name: <span>{name}</span></h4>
-                        <input onChange={this.handleChange} value={state.name} className={classNames('form-control', hiddenForm)} name='name' type="text"/>
-                        <h4>title: <span>{title}</span></h4>
-                        <input onChange={this.handleChange} value={state.title} className={classNames('form-control', hiddenForm)} name='title' type="text"/>
+                <form className='group__info'>
+                    <div className='group__info__forms group--margin-right'>
+                        <label htmlFor='group-name'>name: <span>{name}</span></label>
+                        <input onChange={this.handleChange} value={state.name} className={classNames('form-control', hiddenForm)} name='name' id='group-name' type="text"/>
+                        <label htmlFor='group-title'>title: <span>{title}</span></label>
+                        <input onChange={this.handleChange} value={state.title} className={classNames('form-control', hiddenForm)} name='title' id='group-title' type="text"/>
                     </div>
 
                     <div className='group__info__buttons'>
-                        <button onClick={this.showForms} className={classNames('btn btn-outline-primary', shownForm)}>Update</button>
-                        <button onClick={this.updateGroup} className={classNames('btn btn-outline-primary', hiddenForm)}>Save</button>
+                        <button onClick={this.showForms} className={classNames('btn btn-outline-primary', shownForm)} type="button">Update</button>
+                        <button onClick={this.updateGroup} className={classNames('btn btn-outline-primary', hiddenForm)} type="submit">Save</button>
                     </div>
-                </div>
+                </form>
 
                 <div className={classNames('group__users-table', isUsers)}>
                     <SearchComponent search={this.searchUsers}/>
@@ -186,7 +193,7 @@ export class GroupPage extends Component {
                                         <h5>{user.email}</h5>
                                     </td>
                                     <td className='buttons-field'>
-                                        <button onClick={(event) => this.showModal(user._id, event)} className='group__remove-user btn btn-outline-danger'>remove user</button>
+                                        <button onClick={(event) => this.showModal(user._id, event)} className='group__remove-user btn btn-outline-danger' type='button'>remove user</button>
                                     </td>
                                 </tr>
                                 </tbody>

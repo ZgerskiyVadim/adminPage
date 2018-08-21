@@ -10,11 +10,15 @@
   flex-direction: column;
   align-items: flex-start;
   margin: 0 0 1em 5em;
-  h4 {
-    font-size: 1.2em;
-    color: #777777;
-    span {
-      color: #212529;
+  .user__info__forms {
+    display: flex;
+    flex-direction: column;
+    label {
+      font-size: 1.2em;
+      color: #777777;
+      span {
+        color: #212529;
+      }
     }
   }
   .user__info__buttons {

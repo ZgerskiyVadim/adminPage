@@ -14,7 +14,7 @@ import redirectOnPage from '../../services/redirectOnPage';
 import LoadingSpinner from '../../components/LoadingSpinner';
 import SearchComponent from '../../components/SearchInput';
 import showToastrMessage from "../../services/showToastrMessage";
-import {isEqualProps} from "../../services/isEqualProps";
+import isEqual from "lodash.isequal";
 
 export class UserPage extends Component {
     constructor(props) {
@@ -60,9 +60,18 @@ export class UserPage extends Component {
     }
 
     componentWillReceiveProps(nextProps) {
+        if (this.props.user !== nextProps.user && nextProps.user.data.username) {
+            const {username, firstName, lastName, email} = nextProps.user.data;
+            this.setState({
+                username,
+                firstName,
+                lastName,
+                email
+            })
+        }
         const error = nextProps.user.error || nextProps.updatedUser.error || nextProps.userJoinedGroup.error || nextProps.userLeftGroup.error;
 
-        !isEqualProps(this.props.updatedUser.data, nextProps.updatedUser.data) && showToastrMessage.success('User is updated');
+        !isEqual(this.props.updatedUser.data, nextProps.updatedUser.data) && showToastrMessage.success('User is updated');
         error && showToastrMessage.error(error);
     }
 
@@ -87,8 +96,7 @@ export class UserPage extends Component {
         searchOperation.getItems.call(this, event, getUserRequest);
     };
 
-    showForms(event) {
-        event.stopPropagation();
+    showForms() {
         this.setState({
             showForm: true
         });
@@ -140,25 +148,25 @@ export class UserPage extends Component {
         return (
             <div className='user'>
                 <h3 className='user-header'>USER</h3>
-                <div className='user__info'>
-                    <div className='user--margin-right'>
-                        <h4>Username: <span>{username}</span></h4>
-                        <input onChange={this.handleChange} value={state.username} className={classNames('form-control', hiddenForm)} name='username' type="text"/>
-                        <h4>FirstName: <span>{firstName}</span></h4>
-                        <input onChange={this.handleChange} value={state.firstName} className={classNames('form-control', hiddenForm)} name='firstName' type="text"/>
-                        <h4>LastName: <span>{lastName}</span></h4>
-                        <input onChange={this.handleChange} value={state.lastName} className={classNames('form-control', hiddenForm)} name='lastName' type="text"/>
-                        <h4>Email: <span>{email}</span></h4>
-                        <input onChange={this.handleChange} value={state.email} className={classNames('form-control', hiddenForm)} name='email' type="text"/>
-                        <h4>Password: <span>****</span></h4>
-                        <input onChange={this.handleChange} value={state.password} className={classNames('form-control', hiddenForm)} name='password' type="password"/>
+                <form className='user__info'>
+                    <div className='user__info__forms user--margin-right'>
+                        <label htmlFor='user-username'>Username: <span>{username}</span></label>
+                        <input onChange={this.handleChange} value={state.username} className={classNames('form-control', hiddenForm)} name='username' id='user-username' type="text"/>
+                        <label htmlFor='user-firstName'>FirstName: <span>{firstName}</span></label>
+                        <input onChange={this.handleChange} value={state.firstName} className={classNames('form-control', hiddenForm)} name='firstName' id='user-firstName' type="text"/>
+                        <label htmlFor='user-lastName'>LastName: <span>{lastName}</span></label>
+                        <input onChange={this.handleChange} value={state.lastName} className={classNames('form-control', hiddenForm)} name='lastName' id='user-lastName' type="text"/>
+                        <label htmlFor='user-email'>Email: <span>{email}</span></label>
+                        <input onChange={this.handleChange} value={state.email} className={classNames('form-control', hiddenForm)} name='email' id='user-email' type="text"/>
+                        <label htmlFor='user-password'>Password: <span>****</span></label>
+                        <input onChange={this.handleChange} value={state.password} className={classNames('form-control', hiddenForm)} name='password' id='user-password' type="password"/>
                     </div>
                     <div className='user__info__buttons'>
-                        <button onClick={this.showForms} className={shownForm}>Update</button>
-                        <button onClick={this.updateUser} className={classNames('user--margin-right btn btn-outline-primary', hiddenForm)}>Save</button>
-                        <button onClick={this.startJoiningGroup} className='btn btn-outline-info'>Join group</button>
+                        <button onClick={this.showForms} className={shownForm} type='button'>Update</button>
+                        <button onClick={this.updateUser} className={classNames('user--margin-right btn btn-outline-primary', hiddenForm)} type="submit">Save</button>
+                        <button onClick={this.startJoiningGroup} className='btn btn-outline-info' type='button'>Join group</button>
                     </div>
-                </div>
+                </form>
 
                 <div className={classNames('user__groups-table', isGroups)}>
                     <SearchComponent search={this.searchGroups}/>
@@ -195,8 +203,8 @@ export class UserPage extends Component {
                                         <h5>{group.users.length}</h5>
                                     </td>
                                     <td className='buttons-field'>
-                                        <button onClick={(event) => this.leaveGroup(group._id, event)} className={classNames('user__leave-group btn btn-outline-danger', {'user--hide': group.isLeftGroup})}>leave group</button>
-                                        <button onClick={(event) => this.joinGroup(group._id, event)} className={classNames('user__join-group btn btn-outline-info', {'user--hide': !group.isLeftGroup})}>join group</button>
+                                        <button onClick={(event) => this.leaveGroup(group._id, event)} className={classNames('user__leave-group btn btn-outline-danger', {'user--hide': group.isLeftGroup})} type='button'>leave group</button>
+                                        <button onClick={(event) => this.joinGroup(group._id, event)} className={classNames('user__join-group btn btn-outline-info', {'user--hide': !group.isLeftGroup})} type='button'>join group</button>
                                     </td>
                                 </tr>
                                 </tbody>
