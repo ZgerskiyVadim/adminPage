@@ -1,32 +1,40 @@
 import User from '../models/user';
 import Group from '../models/group';
-import commonCrudOperations from '../services/commonCrudOperations';
+import {CommonCrudOperations} from '../services/commonCrudOperations';
 
-const options = {
-    Model: User,
-    pathPopulate: 'groups',
-    searchFields: 'users'
-};
+class UserController extends CommonCrudOperations{
+    constructor() {
+        super();
+        this.options = {
+            Model: User,
+            pathPopulate: 'groups',
+            searchFields: 'users'
+        };
 
-const optionsRemove = {
-    Model: User,
-    ModelUpdate: Group,
-    pathUpdate: 'users'
-};
+        this.optionsRemove = {
+            Model: User,
+            ModelUpdate: Group,
+            pathUpdate: 'users'
+        };
 
-export const getUsers = commonCrudOperations.getAll(options);
+    }
+}
 
-export const getUserByID = commonCrudOperations.getByID({...options, searchFields: 'groups'});
+const userController = new UserController();
 
-export const createUser = commonCrudOperations.create(options.Model);
+export const getUsers = userController.getAll();
 
-export const updateUser = commonCrudOperations.update(options);
+export const getUserByID = userController.getByID();
 
-export const removeUser = commonCrudOperations.remove(optionsRemove);
+export const createUser = userController.create();
 
-export const removeUserFromGroup = commonCrudOperations.removeUserFromGroup();
+export const updateUser = userController.update();
 
-export const addUserInGroup = commonCrudOperations.addUserInGroup();
+export const removeUser = userController.remove();
+
+export const removeUserFromGroup = userController.removeUserFromGroup();
+
+export const addUserInGroup = userController.addUserInGroup();
 
 export const login = (req, done) => {
     done(null, {message: 'User logged-in'})

@@ -3,9 +3,10 @@ import createError from './createError';
 import User from '../models/user';
 import Group from '../models/group';
 
-class CommonCrudOperations {
+export class CommonCrudOperations {
 
-    getAll({Model, pathPopulate, searchFields}) {
+    getAll() {
+        const {Model, pathPopulate, searchFields} = this.options;
         return (req, done) => {
             const { skip, limit, searchBy } = req.query;
 
@@ -16,7 +17,9 @@ class CommonCrudOperations {
         }
     };
 
-    getByID({Model, pathPopulate, searchFields}) {
+    getByID() {
+        const {Model, pathPopulate} = this.options;
+        const searchFields = pathPopulate;
         return (req, done) => {
             const {skip, limit, searchBy} = req.query;
 
@@ -35,11 +38,13 @@ class CommonCrudOperations {
         }
     };
 
-    create(Model) {
+    create() {
+        const {Model} = this.options;
         return (req, done) => Model.create(req.body, (err, data) => err ? done(err) : done(null, data, 201));
     };
 
-    update({Model, pathPopulate}) {
+    update() {
+        const {Model, pathPopulate} = this.options;
         return (req, done) => {
 
             Model.findOneAndUpdate({_id: req.params.id}, req.body, {runValidators: true, new: true})
@@ -52,7 +57,8 @@ class CommonCrudOperations {
         }
     };
 
-    remove({Model, ModelUpdate, pathUpdate}) {
+    remove() {
+        const {Model, ModelUpdate, pathUpdate} = this.optionsRemove;
         return (req, done) => {
 
             async.waterfall(
@@ -133,8 +139,6 @@ class CommonCrudOperations {
         }
     };
 }
-
-export default new CommonCrudOperations();
 
 function getSearchFields(searchBy, fieldsBy) {
     searchBy = searchBy ? searchBy : '';

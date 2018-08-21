@@ -1,27 +1,34 @@
 import Group from '../models/group';
 import User from '../models/user';
-import commonCrudOperations from '../services/commonCrudOperations';
+import {CommonCrudOperations} from '../services/commonCrudOperations';
 
-const options = {
-    Model: Group,
-    pathPopulate: 'users',
-    searchFields: 'groups'
-};
+class GroupController extends CommonCrudOperations{
+    constructor() {
+        super();
+        this.options = {
+            Model: Group,
+            pathPopulate: 'users',
+            searchFields: 'groups'
+        };
 
-const optionsRemove = {
-    Model: Group,
-    ModelUpdate: User,
-    pathUpdate: 'groups'
-};
+        this.optionsRemove = {
+            Model: Group,
+            ModelUpdate: User,
+            pathUpdate: 'groups'
+        };
+    }
+}
 
-export const getGroups = commonCrudOperations.getAll(options);
+const groupController =  new GroupController();
 
-export const getGroupByID = commonCrudOperations.getByID({...options, searchFields: 'users'});
+export const getGroups = groupController.getAll();
 
-export const createGroup = commonCrudOperations.create(options.Model);
+export const getGroupByID = groupController.getByID();
 
-export const updateGroup = commonCrudOperations.update(options);
+export const createGroup = groupController.create();
 
-export const removeGroup = commonCrudOperations.remove(optionsRemove);
+export const updateGroup = groupController.update();
 
-export const removeUserFromGroup = commonCrudOperations.removeUserFromGroup();
+export const removeGroup = groupController.remove();
+
+export const removeUserFromGroup = groupController.removeUserFromGroup();
