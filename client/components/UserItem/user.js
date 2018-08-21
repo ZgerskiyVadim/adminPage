@@ -9,12 +9,14 @@ import redirectOnPage from '../../services/redirectOnPage';
 export class UserItem extends Component {
     constructor(props) {
         super(props);
+
+        const {username, firstName, lastName, email} = this.props.user;
         this.state = {
             showForm: false,
-            username: '',
-            firstName: '',
-            lastName: '',
-            email: '',
+            username,
+            firstName,
+            lastName,
+            email,
             password: '',
             id: this.props.user._id
         };
@@ -29,7 +31,7 @@ export class UserItem extends Component {
 
     goToUser() {
         const {_id} = this.props.user;
-        redirectOnPage.path(`/users/${_id}`);
+        !this.state.showForm && redirectOnPage.path(`/users/${_id}`);
     };
 
     handleClick(event) {
@@ -43,8 +45,7 @@ export class UserItem extends Component {
         });
     }
 
-    sendOptionsUpdate(event) {
-        event.stopPropagation();
+    sendOptionsUpdate() {
         this.setState({showForm: false}, () => {
             const options = formsOperations.getValidOptions(this.state);
             this.props.update(options);
@@ -66,32 +67,33 @@ export class UserItem extends Component {
 
         return (
             <tbody>
+            <form id={'users-form' + (index + 1)} />
             <tr onClick={this.goToUser} className='users--cursor'>
                 <th>{index + 1}</th>
                 <td>
-                    <h5>{username}</h5>
-                    <input onChange={this.handleChange} onClick={this.handleClick} value={state.username} className={classNames('form-control', hiddenForm)} name='username' type="text"/>
+                    <label htmlFor={'users-username' + (index + 1)}>{username}</label>
+                    <input onChange={this.handleChange} onClick={this.handleClick} value={state.username} className={classNames('form-control', hiddenForm)} name='username' id={'users-username' + (index + 1)} form={'users-form' + (index + 1)} type="text"/>
                 </td>
                 <td>
-                    <h5>{firstName}</h5>
-                    <input onChange={this.handleChange} onClick={this.handleClick} value={state.firstName} className={classNames('form-control', hiddenForm)} name='firstName' type="text"/>
+                    <label htmlFor={'users-firstName' + (index + 1)}>{firstName}</label>
+                    <input onChange={this.handleChange} onClick={this.handleClick} value={state.firstName} className={classNames('form-control', hiddenForm)} name='firstName' id={'users-firstName' + (index + 1)} form={'users-form' + (index + 1)} type="text"/>
                 </td>
                 <td>
-                    <h5>{lastName}</h5>
-                    <input onChange={this.handleChange} onClick={this.handleClick} value={state.lastName} className={classNames('form-control', hiddenForm)} name='lastName' type="text"/>
+                    <label htmlFor={'users-lastName' + (index + 1)}>{lastName}</label>
+                    <input onChange={this.handleChange} onClick={this.handleClick} value={state.lastName} className={classNames('form-control', hiddenForm)} name='lastName' id={'users-lastName' + (index + 1)} form={'users-form' + (index + 1)} type="text"/>
                 </td>
                 <td>
-                    <h5>{email}</h5>
-                    <input onChange={this.handleChange} onClick={this.handleClick} value={state.email} className={classNames('form-control', hiddenForm)} name='email' type="text"/>
+                    <label htmlFor={'users-email' + (index + 1)}>{email}</label>
+                    <input onChange={this.handleChange} onClick={this.handleClick} value={state.email} className={classNames('form-control', hiddenForm)} name='email' id={'users-email' + (index + 1)} form={'users-form' + (index + 1)} type="text"/>
                 </td>
                 <td>
-                    <h5>****</h5>
-                    <input onChange={this.handleChange} onClick={this.handleClick} value={state.password} className={classNames('form-control', hiddenForm)} name='password' type="password"/>
+                    <label htmlFor={'users-password' + (index + 1)}>****</label>
+                    <input onChange={this.handleChange} onClick={this.handleClick} value={state.password} className={classNames('form-control', hiddenForm)} name='password' id={'users-password' + (index + 1)} form={'users-form' + (index + 1)} type="password"/>
                 </td>
                 <td className='users__buttons'>
-                    <button onClick={this.showForms} className={classNames('users--margin-right btn btn-outline-primary', shownForm)}>Update</button>
-                    <button onClick={this.sendOptionsUpdate} className={classNames('users--margin-right btn btn-outline-primary', hiddenForm)}>Save</button>
-                    <button onClick={(event) => this.remove(_id, event)} className={classNames('btn btn-outline-danger', isJoiningUser)}>Remove</button>
+                    <button onClick={this.showForms} className={classNames('users--margin-right btn btn-outline-primary', shownForm)} type='button'>Update</button>
+                    <button onClick={this.sendOptionsUpdate} className={classNames('users--margin-right btn btn-outline-primary', hiddenForm)} type='submit' form={'users-form' + (index + 1)}>Save</button>
+                    <button onClick={(event) => this.remove(_id, event)} className={classNames('btn btn-outline-danger', isJoiningUser)} type='button'>Remove</button>
                 </td>
             </tr>
             </tbody>

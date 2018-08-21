@@ -9,10 +9,12 @@ import redirectOnPage from '../../services/redirectOnPage';
 export class GroupItem extends Component {
     constructor(props) {
         super(props);
+
+        const {name, title} = this.props.group;
         this.state = {
             showForm: false,
-            name: '',
-            title: '',
+            name,
+            title,
             id: this.props.group._id,
             userID: this.props.userID ? this.props.userID : null
         };
@@ -29,7 +31,7 @@ export class GroupItem extends Component {
 
     goToGroup() {
         const {_id} = this.props.group;
-        redirectOnPage.path(`/groups/${_id}`);
+        !this.state.showForm && redirectOnPage.path(`/groups/${_id}`);
     };
 
     handleClick(event) {
@@ -80,25 +82,26 @@ export class GroupItem extends Component {
 
         return (
             <tbody>
+            <form id={'groups-form' + (index + 1)} />
             <tr onClick={this.goToGroup} className='groups--cursor'>
                 <th>{index + 1}</th>
                 <td>
-                    <h5>{name}</h5>
-                    <input onChange={this.handleChange} onClick={this.handleClick} value={state.name} className={classNames('form-control', hiddenForm)} name='name' type="text"/>
+                    <label htmlFor={'groups-name' + (index + 1)}>{name}</label>
+                    <input onChange={this.handleChange} onClick={this.handleClick} value={state.name} className={classNames('form-control', hiddenForm)} name='name' id={'groups-name' + (index + 1)} form={'groups-form' + (index + 1)} type="text"/>
                 </td>
                 <td>
-                    <h5>{title}</h5>
-                    <input onChange={this.handleChange} onClick={this.handleClick} value={state.title} className={classNames('form-control', hiddenForm)} name='title' type="text"/>
+                    <label htmlFor={'groups-title' + (index + 1)}>{title}</label>
+                    <input onChange={this.handleChange} onClick={this.handleClick} value={state.title} className={classNames('form-control', hiddenForm)} name='title' id={'groups-title' + (index + 1)} form={'groups-form' + (index + 1)} type="text"/>
                 </td>
                 <td>
                     <h5>{users.length}</h5>
                 </td>
                 <td className='groups__buttons'>
-                    <button onClick={this.showForms} className={classNames('groups__update groups--margin-right btn btn-outline-primary', shownForm, notJoiningGroup)}>Update</button>
-                    <button onClick={this.sendOptionsUpdate} className={classNames('groups--margin-right btn btn-outline-primary', hiddenForm)}>Save</button>
-                    <button onClick={(event) => this.remove(_id, event)} className={classNames('groups__remove btn btn-outline-danger', notJoiningGroup)}>Remove</button>
-                    <button onClick={(event) => this.sendOptionsJoinGroup(_id, event)} className={classNames('btn btn-outline-info', userAlreadyInGroup)}>Join group</button>
-                    <button onClick={(event) => this.sendOptionsLeaveGroup(_id, event)} className={classNames('btn btn-outline-danger', userNotInGroup)}>Leave group</button>
+                    <button onClick={this.showForms} className={classNames('groups__update groups--margin-right btn btn-outline-primary', shownForm, notJoiningGroup)} type='button'>Update</button>
+                    <button onClick={this.sendOptionsUpdate} className={classNames('groups--margin-right btn btn-outline-primary', hiddenForm)} type='submit' form={'groups-form' + (index + 1)}>Save</button>
+                    <button onClick={(event) => this.remove(_id, event)} className={classNames('groups__remove btn btn-outline-danger', notJoiningGroup)} type='button'>Remove</button>
+                    <button onClick={(event) => this.sendOptionsJoinGroup(_id, event)} className={classNames('btn btn-outline-info', userAlreadyInGroup)} type='button'>Join group</button>
+                    <button onClick={(event) => this.sendOptionsLeaveGroup(_id, event)} className={classNames('btn btn-outline-danger', userNotInGroup)} type='button'>Leave group</button>
                 </td>
             </tr>
             </tbody>

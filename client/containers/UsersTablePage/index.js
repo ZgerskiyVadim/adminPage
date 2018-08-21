@@ -122,22 +122,22 @@ export class UsersTablePage extends Component {
                     <thead className='thead-dark'>
                     <tr>
                         <th>
-                            <h5>#</h5>
+                            <span>#</span>
                         </th>
                         <th>
-                            <h5>username</h5>
+                            <span>Username</span>
                         </th>
                         <th>
-                            <h5>firstName</h5>
+                            <span>FirstName</span>
                         </th>
                         <th>
-                            <h5>lastName</h5>
+                            <span>LastName</span>
                         </th>
                         <th>
-                            <h5>email</h5>
+                            <span>Email</span>
                         </th>
                         <th>
-                            <h5>password</h5>
+                            <span>Password</span>
                         </th>
                         <th/>
                     </tr>

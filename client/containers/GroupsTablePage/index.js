@@ -156,16 +156,16 @@ export class GroupsTablePage extends Component {
                     <thead className='thead-dark'>
                     <tr>
                         <th>
-                            <h5>#</h5>
+                            <span>#</span>
                         </th>
                         <th>
-                            <h5>name</h5>
+                            <span>Name</span>
                         </th>
                         <th>
-                            <h5>title</h5>
+                            <span>Title</span>
                         </th>
                         <th>
-                            <h5>users</h5>
+                            <span>Users</span>
                         </th>
                         <th/>
                     </tr>
