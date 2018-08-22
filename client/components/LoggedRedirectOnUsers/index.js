@@ -6,7 +6,7 @@ const LoggedRedirectOnUsers = ({ component: Component, ...rest }) => (
     <Route
         {...rest}
         render={props =>
-            authenticationService.isHaveSessionCookie() ? (
+            authenticationService.isHaveSession() ? (
                 <Redirect
                     to={{
                         pathname: "/users",

@@ -6,7 +6,7 @@ import localStorageOperations from './localStorageOperations';
 
 class AuthenticationService {
 
-    isHaveSessionCookie() {
+    isHaveSession() {
         return getCookie(config.sessionName) && localStorageOperations.getItem('user');
     }
 

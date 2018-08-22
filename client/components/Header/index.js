@@ -19,7 +19,7 @@ export class Header extends PureComponent {
     }
 
     render() {
-        const isAuthenticated = authenticationService.isHaveSessionCookie();
+        const isAuthenticated = authenticationService.isHaveSession();
 
         return (
             <div>

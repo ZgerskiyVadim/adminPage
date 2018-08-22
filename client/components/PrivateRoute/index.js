@@ -6,7 +6,7 @@ const PrivateRoute = ({ component: Component, ...rest }) => (
     <Route
         {...rest}
         render={props =>
-            authenticationService.isHaveSessionCookie() ? (
+            authenticationService.isHaveSession() ? (
                 <Component {...props} />
             ) : (
                 <Redirect
