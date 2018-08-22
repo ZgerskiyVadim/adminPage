@@ -1,9 +1,8 @@
 import mongoose from 'mongoose';
-import bluebird from 'bluebird';
 import config from '../../config';
 import log from './logger';
 
-mongoose.Promise = bluebird;
+mongoose.Promise = Promise;
 mongoose.connect(config.dbName, {useMongoClient: true});
 const db = mongoose.connection;
 
