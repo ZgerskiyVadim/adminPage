@@ -30,7 +30,10 @@ describe('Group controller', () => {
                     cookie = result.headers['set-cookie'];
                     expect(result.statusCode).toBe(200);
                     expect(err).toBe(null);
-                    expect(result.body.message).toEqual('User logged-in');
+                    expect(result.body.username).toBe(fakeUsers[1].username);
+                    expect(result.body.firstName).toBe(fakeUsers[1].firstName);
+                    expect(result.body.lastName).toBe(fakeUsers[1].lastName);
+                    expect(result.body.email).toBe(fakeUsers[1].email);
                     done();
                 });
         });

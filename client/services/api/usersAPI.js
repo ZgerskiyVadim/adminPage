@@ -4,6 +4,10 @@ import axios from 'axios/index';
         return axios.post('/api/users', options)
     };
 
+    export const login = (options) => {
+        return axios.post('/auth/login', options)
+    };
+
     export const getUsers = (options) => {
         const { searchBy, limit} = options;
         return axios.get('/api/users', {params: {searchBy, limit}})

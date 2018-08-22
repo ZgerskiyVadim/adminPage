@@ -5,12 +5,20 @@ import {
     IS_USER_WANT_JOIN_GROUP,
     USER_LEAVE_GROUP_PENDING,
     USER_CREATE_PENDING,
-    GET_USER_PENDING
+    GET_USER_PENDING,
+    USER_LOGIN_PENDING
 } from '../index';
 
 export function createUserRequest(data) {
     return {
         type: USER_CREATE_PENDING,
+        payload: data
+    }
+}
+
+export function userLoginRequest(data) {
+    return {
+        type: USER_LOGIN_PENDING,
         payload: data
     }
 }

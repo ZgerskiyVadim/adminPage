@@ -13,6 +13,7 @@ import LoadingSpinner from '../../components/LoadingSpinner';
 import ModalWindow from '../../components/ModalWindow';
 import SearchComponent from '../../components/SearchInput';
 import showToastrMessage from "../../services/showToastrMessage";
+import localStorageOperations from "../../services/localStorageOperations";
 import redirectOnPage from "../../services/redirectOnPage";
 import isEqual from "lodash.isequal";
 
@@ -71,10 +72,15 @@ export class UsersTablePage extends Component {
     }
 
     getUsers() {
+        const loggedUser = localStorageOperations.getItem('user');
         if (this.props.isJoiningGroup) {
-            return this.props.users.data.map(user => user._id === this.props.user.data._id ? {...user, isJoining: true} : {...user, isJoining: false}); //Hide remove button for joining user
+            return this.props.users.data.map(user => (user._id === this.props.user.data._id) || (loggedUser && user._id === loggedUser._id)
+                ? {...user, hideRemoveButton: true}
+                : {...user, hideRemoveButton: false}); //Hide remove button for joining user
         } else {
-            return this.props.users.data;
+            return this.props.users.data.map(user => (loggedUser && user._id ===  loggedUser._id)
+                ? {...user, hideRemoveButton: true}
+                : {...user, hideRemoveButton: false}); //Hide remove button for logged user
         }
     }
 
@@ -148,7 +154,7 @@ export class UsersTablePage extends Component {
                                 user={user}
                                 index={index}
                                 key={user._id}
-                                isJoining={user.isJoining}
+                                hideRemoveButton={user.hideRemoveButton}
                                 update={this.updateUser}
                                 showModal={this.showModal}
                             />)
@@ -188,6 +194,7 @@ const mapStateToProps = (state) => ({
     updatedUser: state.Users.updatedUser,
     removedUser: state.Users.removedUser,
     user: state.Users.user,
+    loggedUser: state.Users.loggedUser,
     isJoiningGroup: state.Users.user.isJoiningGroup,
     loading: state.Users.users.loading || state.Users.updatedUser.loading || state.Users.removedUser.loading
 });

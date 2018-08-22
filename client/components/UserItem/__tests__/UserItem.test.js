@@ -156,7 +156,7 @@ describe('User component', () => {
     it('should hide "remove" button if user joining groups', () => {
         const component = shallow(<UserItem
             user={user}
-            isJoining={true}
+            hideRemoveButton={true}
         />);
         const removeHiddenButton = component.find('.users--hide-remove');
 

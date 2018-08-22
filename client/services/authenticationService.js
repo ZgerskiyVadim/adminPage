@@ -2,34 +2,20 @@ import axios from 'axios';
 import config from '../../config';
 import redirectOnPage from './redirectOnPage';
 import showToastrMessage from './showToastrMessage';
+import localStorageOperations from './localStorageOperations';
 
 class AuthenticationService {
 
     isHaveSessionCookie() {
-        return getCookie(config.sessionName);
-    }
-
-    login(options) {
-        const {username, password} = options;
-        axios.post('/auth/login', {username, password})
-            .then(() => {
-                redirectOnPage.path('/users');
-                showToastrMessage.success('Successfully logged!');
-            })
-            .catch(error => {
-                if(error.response && error.response.status === 401) {
-                    showToastrMessage.error('Not found');
-                } else if (error.response && error.response.status === 400) {
-                    showToastrMessage.error('Username and password required');
-                } else {
-                    showToastrMessage.error(error);
-                }
-            })
+        return getCookie(config.sessionName) && localStorageOperations.getItem('user');
     }
 
     logout() {
         axios.get('/auth/logout')
-            .then(() =>  redirectOnPage.path('/'))
+            .then(() =>  {
+                localStorageOperations.remove('user');
+                redirectOnPage.path('/');
+            })
             .catch(error => showToastrMessage.error(error))
     }
 }

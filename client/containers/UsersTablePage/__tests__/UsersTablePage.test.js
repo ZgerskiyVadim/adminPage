@@ -172,8 +172,8 @@ describe('Users component', () => {
         />);
 
         const userComponent = component.find(User);
-        expect(userComponent.at(0).props().isJoining).toBe(true);
-        expect(userComponent.at(1).props().isJoining).toBe(false);
+        expect(userComponent.at(0).props().hideRemoveButton).toBe(true);
+        expect(userComponent.at(1).props().hideRemoveButton).toBe(false);
     })
 
 });

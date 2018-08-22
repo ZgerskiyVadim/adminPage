@@ -20,7 +20,10 @@ import {
     USER_JOIN_GROUP_FAIL,
     USER_LEAVE_GROUP_PENDING,
     USER_LEAVE_GROUP_SUCCESS,
-    USER_LEAVE_GROUP_FAIL
+    USER_LEAVE_GROUP_FAIL,
+    USER_LOGIN_PENDING,
+    USER_LOGIN_SUCCESS,
+    USER_LOGIN_FAIL
 } from "../../../actions";
 
 
@@ -131,6 +134,19 @@ export const actionsReducer = {
         },
         fail: {
             type: CREATE_USER_FAIL,
+            payload: 'Error Message',
+        },
+    },
+    loginUser: {
+        pending: {
+            type: USER_LOGIN_PENDING
+        },
+        success: {
+            type: USER_LOGIN_SUCCESS,
+            payload: UPLOAD_USER
+        },
+        fail: {
+            type: USER_LOGIN_FAIL,
             payload: 'Error Message',
         },
     },

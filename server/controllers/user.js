@@ -21,7 +21,7 @@ class UserController extends CommonCrudOperations{
 }
 
 export const login = (req, done) => {
-    done(null, {message: 'User logged-in'})
+    done(null, req.user)
 };
 
 export const logout = (done) => {

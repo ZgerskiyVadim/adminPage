@@ -23,7 +23,10 @@ import {
     UPDATE_USER_FAIL,
     USER_LEAVE_GROUP_FAIL,
     GET_USERS_FAIL,
-    REMOVE_USER_FAIL
+    REMOVE_USER_FAIL,
+    USER_LOGIN_PENDING,
+    USER_LOGIN_SUCCESS,
+    USER_LOGIN_FAIL
 } from '../actions';
 
 function* createUser(action) {
@@ -32,6 +35,15 @@ function* createUser(action) {
         yield put({type: USER_CREATED_SUCCESS, payload: user.data});
     } catch (error) {
         yield put({type: CREATE_USER_FAIL, payload: error});
+    }
+}
+
+function* userLogin(action) {
+    try {
+        const user = yield call(usersAPI.login, action.payload);
+        yield put({type: USER_LOGIN_SUCCESS, payload: user.data});
+    } catch (error) {
+        yield put({type: USER_LOGIN_FAIL, payload: error});
     }
 }
 
@@ -97,6 +109,7 @@ function* leaveGroup(action) {
 export default function* usersSaga() {
     yield all([
         takeEvery(USER_CREATE_PENDING, createUser),
+        takeEvery(USER_LOGIN_PENDING, userLogin),
         takeEvery(GET_USERS_PENDING, getUsers),
         takeEvery(REMOVE_USER_PENDING, removeUser),
         takeEvery(GET_USER_PENDING, getUser),

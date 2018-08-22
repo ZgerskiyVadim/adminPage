@@ -58,12 +58,12 @@ export class UserItem extends Component {
 
     render() {
         const {username, firstName, lastName, email, _id} = this.props.user;
-        const { isJoining, index } = this.props;
+        const { hideRemoveButton, index } = this.props;
         const {showForm, ...state} = this.state;
 
         const hiddenForm = classNames({'users--hide': !showForm});
         const shownForm = classNames({'users--hide': showForm});
-        const isJoiningUser = classNames({'users--hide-remove': isJoining});
+        const isHideRemoveButton = classNames({'users--hide-remove': hideRemoveButton});
 
         return (
             <tbody>
@@ -95,7 +95,7 @@ export class UserItem extends Component {
                 <td className='users__buttons'>
                     <button onClick={this.showForms} className={classNames('users--margin-right btn btn-outline-primary', shownForm)} type='button'>Update</button>
                     <button onClick={this.sendOptionsUpdate} className={classNames('users--margin-right btn btn-outline-primary', hiddenForm)} type='submit' form={'users-form' + (index + 1)}>Save</button>
-                    <button onClick={(event) => this.remove(_id, event)} className={classNames('btn btn-outline-danger', isJoiningUser)} type='button'>Remove</button>
+                    <button onClick={(event) => this.remove(_id, event)} className={classNames('btn btn-outline-danger', isHideRemoveButton)} type='button'>Remove</button>
                 </td>
             </tr>
             </tbody>

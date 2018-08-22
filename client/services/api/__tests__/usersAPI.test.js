@@ -1,6 +1,7 @@
 import axios from 'axios/index';
 import {
     create,
+    login,
     getUsers,
     getUser,
     updateUser,
@@ -33,6 +34,20 @@ describe('Users API service', () => {
             expect(result.data).toEqual(data);
             expect(axiosCreate).toHaveBeenCalledTimes(1);
             expect(url).toBe('/api/users');
+            expect(params).toEqual(data);
+            done();
+        }).catch(done);
+    });
+
+    it('should build correct request for user login', (done) => {
+        axios.post = () => Promise.resolve({ data });
+        const axiosLogin = jest.spyOn(axios, 'post');
+
+        login(data).then(result => {
+            const [[url, params]] = axiosLogin.mock.calls;
+            expect(result.data).toEqual(data);
+            expect(axiosLogin).toHaveBeenCalledTimes(1);
+            expect(url).toBe('/auth/login');
             expect(params).toEqual(data);
             done();
         }).catch(done);

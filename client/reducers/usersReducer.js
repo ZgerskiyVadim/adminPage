@@ -20,7 +20,10 @@ import {
     USER_JOIN_GROUP_PENDING,
     USER_CREATE_PENDING,
     USER_CREATED_SUCCESS,
-    CREATE_USER_FAIL
+    CREATE_USER_FAIL,
+    USER_LOGIN_PENDING,
+    USER_LOGIN_SUCCESS,
+    USER_LOGIN_FAIL
 } from '../actions';
 
 export const initialState = {
@@ -30,7 +33,8 @@ export const initialState = {
     removedUser: {data: {}, loading: false, error: null},
     userJoinedGroup: {data: {}, loading: false, error: null},
     userLeftGroup: {data: {}, loading: false, error: null},
-    createdUser: {data: {}, loading: false, error: null}
+    createdUser: {data: {}, loading: false, error: null},
+    loggedUser: {data: {}, loading: false, error: null}
 };
 
 export function Users(state = initialState, action) {
@@ -286,6 +290,39 @@ export function Users(state = initialState, action) {
                     ...state.createdUser,
                     loading: false,
                     error: action.payload || 'Create user failed'
+                }
+            };
+
+        case USER_LOGIN_PENDING:
+            return {
+                ...state,
+                loggedUser: {
+                    ...state.loggedUser,
+                    data: {},
+                    loading: true,
+                    error: null
+                }
+            };
+
+        case USER_LOGIN_SUCCESS:
+            return {
+                ...state,
+                loggedUser: {
+                    ...state.loggedUser,
+                    data: action.payload,
+                    loading: false,
+                    error: null
+                }
+            };
+
+        case USER_LOGIN_FAIL:
+            return {
+                ...state,
+                loggedUser: {
+                    ...state.loggedUser,
+                    data: {},
+                    loading: false,
+                    error: action.payload || 'Login user failed'
                 }
             };
 

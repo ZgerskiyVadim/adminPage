@@ -5,7 +5,8 @@ import {
     IS_USER_WANT_JOIN_GROUP,
     USER_LEAVE_GROUP_PENDING,
     USER_CREATE_PENDING,
-    GET_USER_PENDING
+    GET_USER_PENDING,
+    USER_LOGIN_PENDING
 } from '../../index';
 
 import * as actions from '../users';
@@ -29,6 +30,14 @@ describe('User actions', () => {
             password: 'password'
         };
         expect(actions.createUserRequest(data)).toEqual(expectedValue(data, USER_CREATE_PENDING))
+    });
+
+    it('should get action "userLoginRequest"', () => {
+        const data = {
+            username: 'username',
+            password: 'password'
+        };
+        expect(actions.userLoginRequest(data)).toEqual(expectedValue(data, USER_LOGIN_PENDING))
     });
 
     it('should get action "getUserRequest"', () => {

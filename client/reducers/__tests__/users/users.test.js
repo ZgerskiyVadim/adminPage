@@ -24,6 +24,12 @@ describe('Users reducer:', () => {
             expect(result.user.error).toBe(null);
         });
 
+        it('should handle LOGIN_USER', () => {
+            const result = Users(initialState, actionsReducer.loginUser.pending);
+            expect(result.loggedUser.loading).toBe(true);
+            expect(result.loggedUser.error).toBe(null);
+        });
+
         it('should handle UPDATE_USER', () => {
             const result = Users(initialState, actionsReducer.updateUser.pending);
             expect(result.updatedUser.loading).toBe(true);
@@ -68,6 +74,13 @@ describe('Users reducer:', () => {
             expect(result.user.loading).toBe(false);
             expect(result.user.error).toBe(null);
             expect(result.user.data).toEqual(UPLOAD_USER);
+        });
+
+        it('should handle LOGIN_USER', () => {
+            const result = Users(initialState, actionsReducer.loginUser.success);
+            expect(result.loggedUser.loading).toBe(false);
+            expect(result.loggedUser.error).toBe(null);
+            expect(result.loggedUser.data).toEqual(UPLOAD_USER);
         });
 
         it('should handle UPDATE_USER', () => {
@@ -125,6 +138,12 @@ describe('Users reducer:', () => {
             const result = Users(initialState, actionsReducer.uploadUser.fail);
             expect(result.user.loading).toBe(false);
             expect(result.user.error).toBe('Error Message');
+        });
+
+        it('should handle LOGIN_USER', () => {
+            const result = Users(initialState, actionsReducer.loginUser.fail);
+            expect(result.loggedUser.loading).toBe(false);
+            expect(result.loggedUser.error).toBe('Error Message');
         });
 
         it('should handle UPDATE_USER', () => {
