@@ -7,27 +7,27 @@ import Group from '../group';
 const Schema = mongoose.Schema;
 
 const userSchema = new Schema({
-    username: {type: String, required: true, unique: true, minlength: 4, maxlength: 20,
+    username: {type: String, required: true, unique: true, minlength: [4, 'Username must be at least 4 characters.'], maxlength: [20, 'Username must be less than 20 characters.'],
         validate: {
             validator: validator.username,
-            message: 'Provided username is invalid.'
+            message: 'Username is invalid. Valid characters "." "," "-"'
         }},
-    firstName: {type: String, required: true, minlength: 2, maxlength: 20,
+    firstName: {type: String, required: true, minlength: [2, 'First name must be at least 2 characters.'], maxlength: [20, 'First name must be less than 20 characters.'],
         validate: {
             validator: validator.firstName,
-            message: 'Provided firstName is invalid.'
+            message: 'First name is invalid. Only string. Valid characters "-"'
         }},
-    lastName: {type: String, required: true, minlength: 2, maxlength: 20,
+    lastName: {type: String, required: true, minlength: [2, 'Last name must be at least 2 characters.'], maxlength: [20, 'Last name must be less than 20 characters.'],
         validate: {
             validator: validator.lastName,
-            message: 'Provided lastName is invalid.'
+            message: 'Last name is invalid. Only string. Without symbols'
         }},
-    email: {type: String, required: true, unique: true, minlength: 3, maxlength: 30,
+    email: {type: String, required: true, unique: true, minlength: [3, 'Email must be at least 3 characters.'], maxlength: [30, 'Email must be less than 30 characters.'],
         validate: {
             validator: validator.email,
-            message: 'Provided email is invalid.'
+            message: 'Email is invalid.'
         }},
-    password: {type: String, required: true, minlength: 4},
+    password: {type: String, required: true, minlength: [4, 'Password must be at least 4 characters.']},
     groups: [{type: Schema.Types.ObjectId, ref: 'Group'}],
     date: { type: Date, default: Date.now }
 });
