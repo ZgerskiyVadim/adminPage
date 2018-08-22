@@ -15,6 +15,7 @@ import LoadingSpinner from '../../components/LoadingSpinner';
 import SearchComponent from '../../components/SearchInput';
 import showToastrMessage from "../../services/showToastrMessage";
 import isEqual from "lodash.isequal";
+import localStorageOperations from "../../services/localStorageOperations";
 
 export class UserPage extends Component {
     constructor(props) {
@@ -71,7 +72,11 @@ export class UserPage extends Component {
         }
         const error = nextProps.user.error || nextProps.updatedUser.error || nextProps.userJoinedGroup.error || nextProps.userLeftGroup.error;
 
-        !isEqual(this.props.updatedUser.data, nextProps.updatedUser.data) && showToastrMessage.success('User is updated');
+        if (!isEqual(this.props.updatedUser.data, nextProps.updatedUser.data)) {
+            const loggedUser = localStorageOperations.getItem('user');
+            loggedUser && nextProps.updatedUser.data._id === loggedUser._id && localStorageOperations.setItem('user', nextProps.updatedUser.data);
+            showToastrMessage.success('User is updated');
+        }
         error && showToastrMessage.error(error);
     }
 

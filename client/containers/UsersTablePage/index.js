@@ -60,7 +60,11 @@ export class UsersTablePage extends Component {
     componentWillReceiveProps(nextProps) {
         const error = nextProps.users.error || nextProps.updatedUser.error || nextProps.removedUser.error;
 
-        !isEqual(this.props.updatedUser.data, nextProps.updatedUser.data) && showToastrMessage.success('User is updated');
+        if (!isEqual(this.props.updatedUser.data, nextProps.updatedUser.data)) {
+            const loggedUser = localStorageOperations.getItem('user');
+            loggedUser && nextProps.updatedUser.data._id === loggedUser._id && localStorageOperations.setItem('user', nextProps.updatedUser.data);
+            showToastrMessage.success('User is updated');
+        }
         !isEqual(this.props.removedUser.data, nextProps.removedUser.data) && showToastrMessage.success('User is removed');
         error && showToastrMessage.error(error);
     }
@@ -75,12 +79,12 @@ export class UsersTablePage extends Component {
         const loggedUser = localStorageOperations.getItem('user');
         if (this.props.isJoiningGroup) {
             return this.props.users.data.map(user => (user._id === this.props.user.data._id) || (loggedUser && user._id === loggedUser._id)
-                ? {...user, hideRemoveButton: true}
-                : {...user, hideRemoveButton: false}); //Hide remove button for joining user
+                ? {...user, hideRemoveButton: true}  //Hide remove button for joining user
+                : {...user, hideRemoveButton: false});
         } else {
             return this.props.users.data.map(user => (loggedUser && user._id ===  loggedUser._id)
-                ? {...user, hideRemoveButton: true}
-                : {...user, hideRemoveButton: false}); //Hide remove button for logged user
+                ? {...user, hideRemoveButton: true}  //Hide remove button for logged user
+                : {...user, hideRemoveButton: false});
         }
     }
 
