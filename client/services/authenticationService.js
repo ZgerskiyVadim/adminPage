@@ -19,6 +19,8 @@ class AuthenticationService {
             .catch(error => {
                 if(error.response && error.response.status === 401) {
                     showToastrMessage.error('Not found');
+                } else if (error.response && error.response.status === 400) {
+                    showToastrMessage.error('Username and password required');
                 } else {
                     showToastrMessage.error(error);
                 }
