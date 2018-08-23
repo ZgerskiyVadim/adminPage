@@ -1,0 +1,27 @@
+body {
+    background-color: #fff8f0;
+}
+.btn-outline-primary {
+    cursor: pointer;
+    color: #fff;
+    background-color: #5a7bff;
+    border-color: #5a7bff;
+}
+
+.btn-outline-primary:hover {
+    color: #5a7bff;
+    background-color: #fff;
+    border-color: #5a7bff;
+}
+
+.btn-outline-danger {
+    color: #fff;
+    background-color: #ff6450;
+    border-color: #ff6450;
+}
+
+.btn-outline-danger:hover {
+    color: #ff6450;
+    background-color: #fff;
+    border-color: #ff6450;
+}
