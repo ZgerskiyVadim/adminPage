@@ -3,6 +3,11 @@ import { withRouter } from 'react-router';
 import classNames from 'classnames';
 import './index.scss';
 import redirectOnPage from '../../services/redirectOnPage';
+import {bindActionCreators} from "redux";
+import * as usersActionCreators from "../../actions/action_creators/users";
+import PropTypes from "prop-types";
+import {connect} from "react-redux";
+import {CreateUserPage} from "../../containers/CreateUserPage";
 
 export class Breadcrumb extends PureComponent {
     constructor(props) {
@@ -23,12 +28,13 @@ export class Breadcrumb extends PureComponent {
     }
 
     getLocations(locationPath) {
+        const {username, _id} = this.props.user.data;
         return locationPath.split('/')
             .filter(locationPath => !!locationPath)
-            .map(path => {
+            .map(pathName => {
                 return {
-                    path,
-                    location: locationPath.substr(0, locationPath.indexOf(path)) + path
+                    pathName: pathName === _id ? username : pathName,
+                    location: locationPath.substr(0, locationPath.indexOf(pathName)) + pathName
                 };
             });
     }
@@ -49,7 +55,7 @@ export class Breadcrumb extends PureComponent {
                                     <li onClick={() => this.goToPath(breadcrumb)}
                                         className={classNames('breadcrumb-item', {'breadcrumb--cursor breadcrumb--blue': !breadcrumb.islastPath, 'active': breadcrumb.islastPath})}
                                         key={index}>
-                                        {breadcrumb.path}
+                                        {breadcrumb.pathName}
                                     </li>
                                 );
                             })
@@ -60,4 +66,23 @@ export class Breadcrumb extends PureComponent {
         );
     }
 }
-export default withRouter(Breadcrumb);
+
+CreateUserPage.defaultProps = {
+    user: {}
+};
+
+CreateUserPage.propTypes = {
+    user: PropTypes.object.isRequired
+};
+
+const mapStateToProps = (state) => ({
+    user: state.Users.user
+});
+
+const mapDispatchToProps = (dispatch) => ({
+    actions: bindActionCreators({
+        ...usersActionCreators
+    }, dispatch)
+});
+
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Breadcrumb));

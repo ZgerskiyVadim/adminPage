@@ -7,11 +7,21 @@ let location = {
     pathname: '/'
 };
 
+const user = {
+    data: {
+        username: 'username',
+        _id: '1'
+    }
+};
+
 describe('Breadcrumb component', () => {
 
     it('render Breadcrumb component', () => {
 
-        const component = shallow(<Breadcrumb location={location} />);
+        const component = shallow(<Breadcrumb
+            location={location}
+            user={user}
+        />);
 
         expect(component.find('.breadcrumb-root').length).toBe(1);
 
@@ -24,7 +34,10 @@ describe('Breadcrumb component', () => {
     it('show new breadcrumb after go to another page', () => {
         location.pathname = '/users';
 
-        const component = shallow(<Breadcrumb location={location} />);
+        const component = shallow(<Breadcrumb
+            location={location}
+            user={user}
+        />);
 
         expect(component.find('.breadcrumb-root').length).toBe(1);
 
@@ -41,7 +54,10 @@ describe('Breadcrumb component', () => {
             location: '/users',
             islastPath: false
         };
-        const component = shallow(<Breadcrumb location={location} />);
+        const component = shallow(<Breadcrumb
+            location={location}
+            user={user}
+        />);
 
         component.instance().goToPath(breadcrumb);
         expect(history.location.pathname).toBe(`/users`);
@@ -51,6 +67,19 @@ describe('Breadcrumb component', () => {
         component.find('.breadcrumb-item').at(0).simulate('click');
 
         expect(spyGoToPath).toHaveBeenCalledTimes(1);
+    });
+
+    it('show breadcrumb username after go to user page', () => {
+        let location = {
+            pathname: '/users/1'
+        };
+
+        const component = shallow(<Breadcrumb
+            location={location}
+            user={user}
+        />);
+
+        expect(component.find('.breadcrumb-item').at(1).text()).toBe(user.data.username);
     });
 
 });
