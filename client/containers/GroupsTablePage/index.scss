@@ -16,6 +16,7 @@
 .groups__buttons {
   display: flex;
   justify-content: flex-end;
+  border-top: none !important;
 }
 .groups--margin-bottom {
   margin-bottom: 5em;

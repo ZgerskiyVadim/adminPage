@@ -3,8 +3,13 @@
   align-items: baseline;
 }
 .navbar-brand {
-  cursor: pointer;
+  display: flex;
+  align-items: baseline;
   margin: 0 2.5em 0 auto;
+  cursor: pointer;
+  i {
+    margin-right: 0.5em;
+  }
 }
 .header--hide {
   display: none;

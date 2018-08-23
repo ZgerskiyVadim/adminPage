@@ -16,6 +16,7 @@
 .users__buttons {
     display: flex;
     justify-content: flex-end;
+    border-top: none !important;
 }
 .users--cursor {
     cursor: pointer;

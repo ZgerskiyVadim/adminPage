@@ -25,8 +25,14 @@ export class Header extends PureComponent {
             <div>
                 <nav className="navbar navbar-expand-sm bg-dark navbar-dark">
                     <Links isAuthenticated={isAuthenticated}/>
-                    <Link to='/' className={classNames("navbar-brand", {'header--hide': isAuthenticated})}>Login</Link>
-                    <span onClick={this.logout} className={classNames("navbar-brand", {'header--hide': !isAuthenticated})}>Logout</span>
+                    <Link to='/' className={classNames("navbar-brand", {'header--hide': isAuthenticated})}>
+                        <i className="fa fa-sign-in" />
+                        Login
+                    </Link>
+                    <span onClick={this.logout} className={classNames("navbar-brand", {'header--hide': !isAuthenticated})}>
+                        <i className="fa fa-sign-out" />
+                        Logout
+                    </span>
                 </nav>
             </div>
         );
