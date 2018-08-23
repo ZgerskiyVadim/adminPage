@@ -72,11 +72,7 @@ export class UserPage extends Component {
         }
         const error = nextProps.user.error || nextProps.updatedUser.error || nextProps.userJoinedGroup.error || nextProps.userLeftGroup.error;
 
-        if (!isEqual(this.props.updatedUser.data, nextProps.updatedUser.data)) {
-            const loggedUser = localStorageOperations.getItem('user');
-            loggedUser && nextProps.updatedUser.data._id === loggedUser._id && localStorageOperations.setItem('user', nextProps.updatedUser.data);
-            showToastrMessage.success('User is updated');
-        }
+        !isEqual(this.props.updatedUser.data, nextProps.updatedUser.data) && showToastrMessage.success('User is updated');
         error && showToastrMessage.error(error);
     }
 

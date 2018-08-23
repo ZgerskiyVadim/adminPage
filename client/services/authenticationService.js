@@ -7,13 +7,32 @@ import localStorageOperations from './localStorageOperations';
 class AuthenticationService {
 
     isHaveSession() {
-        return getCookie(config.sessionName) && localStorageOperations.getItem('user');
+        return getCookie(config.sessionName) && localStorageOperations.getItem('userID');
+    }
+
+    login(options) {
+        const {username, password} = options;
+        axios.post('/auth/login', {username, password})
+            .then((user) => {
+                localStorageOperations.setItem('userID', user.data._id);
+                redirectOnPage.path('/users');
+                showToastrMessage.success('Successfully logged!');
+            })
+            .catch(error => {
+                if(error.response && error.response.status === 401) {
+                    showToastrMessage.error('Not found');
+                } else if (error.response && error.response.status === 400) {
+                    showToastrMessage.error('Username and password required');
+                } else {
+                    showToastrMessage.error(error);
+                }
+            })
     }
 
     logout() {
         axios.get('/auth/logout')
             .then(() =>  {
-                localStorageOperations.remove('user');
+                localStorageOperations.remove('userID');
                 redirectOnPage.path('/');
             })
             .catch(error => showToastrMessage.error(error))

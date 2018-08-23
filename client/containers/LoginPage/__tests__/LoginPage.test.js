@@ -1,8 +1,8 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 import {LoginPage} from '../index';
-import * as actions from '../../../actions/action_creators/users';
 import {usernameEvent, passwordEvent} from "./data";
+import authenticationService from '../../../services/authenticationService';
 
 describe('LoginPage component', () => {
 
@@ -38,10 +38,8 @@ describe('LoginPage component', () => {
     });
 
     it('call "login" after click button "send" in LoginPage component', () => {
-        const mockLoginUser = jest.fn();
-        const component = shallow(<LoginPage
-            actions={{...actions, userLoginRequest: mockLoginUser}}
-        />);
+        authenticationService.login = jest.fn();
+        const component = shallow(<LoginPage/>);
         const expectedLoginUser = {
             username: usernameEvent.target.value,
             password: passwordEvent.target.value
@@ -55,31 +53,8 @@ describe('LoginPage component', () => {
 
         component.find('.login__send').simulate('click', event);
 
-        const [call = []] = mockLoginUser.mock.calls;
+        const [call = []] = authenticationService.login.mock.calls;
         expect(call).toEqual([expectedLoginUser]);
     });
-
-    it('call "handle error" after call this func in LoginPage component', () => {
-        const component = shallow(<LoginPage />);
-        let error = {
-            message: 'Some error'
-        };
-        component.instance().handleError(error);
-
-        error = {
-            response: {
-                status: 401
-            }
-        };
-        component.instance().handleError(error);
-
-        error = {
-            response: {
-                status: 400
-            }
-        };
-
-        component.instance().handleError(error);
-    })
 
 });
