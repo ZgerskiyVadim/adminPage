@@ -75,7 +75,7 @@ export class CommonCrudOperations {
                     }
                 ],
                 (err, data) => err ? done(err) : done(null, data)
-        );
+            );
         }
     };
 
@@ -136,7 +136,7 @@ export class CommonCrudOperations {
                     }
                 ],
                 (err, user, group) => err ? done(err) : done(null, {user, group})
-        );
+            );
         }
     };
 }
