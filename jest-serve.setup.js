@@ -9,19 +9,16 @@ import Group from "./server/models/group";
 
 
 global.json = function(verb, url, cookie) {
-    if (cookie) {
-        return request(app)
+    return cookie ?
+        request(app)
             [verb](url)
             .set('Content-Type', 'application/json')
             .set('Accept', 'application/json')
-            .set('cookie', cookie);
-    } else {
-        return request(app)
+            .set('cookie', cookie) :
+        request(app)
             [verb](url)
             .set('Content-Type', 'application/json')
             .set('Accept', 'application/json');
-    }
-
 };
 
 global.connectDB = function(done) {
