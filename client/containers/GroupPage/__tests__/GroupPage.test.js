@@ -6,6 +6,8 @@ import LoadingSpinner from '../../../components/LoadingSpinner';
 import ModalWindow from '../../../components/ModalWindow';
 import SearchInput from "../../../components/SearchInput";
 import history from "../../../services/history";
+import showToastrMessage from "../../../services/showToastrMessage";
+
 import {
     nameEvent,
     titleEvent
@@ -269,6 +271,88 @@ describe('Group component', () => {
 
         component.find('[name="title"]').at(0).simulate('change', titleEvent);
         expect(component.state().title).toBe(titleEvent.target.value);
+    });
+
+    it('should show error message after load group with error', () => {
+        showToastrMessage.error = jest.fn();
+        const expectedError = true;
+
+        const component = shallow(<GroupPage
+            match={match}
+            group={group}
+            users={users}
+            actions={actions}
+        />);
+
+        component.setProps({
+            group: {
+                data: group.data,
+                error: true,
+            }
+        });
+
+        const [call = []] = showToastrMessage.error.mock.calls;
+        expect(call).toEqual([expectedError]);
+    });
+
+    it('should show error message after update group with error', () => {
+        showToastrMessage.error = jest.fn();
+        const expectedError = true;
+
+        const component = shallow(<GroupPage
+            match={match}
+            group={group}
+            users={users}
+            actions={actions}
+        />);
+
+        component.setProps({
+            updatedGroup: {
+                data: group.data,
+                error: true,
+            }
+        });
+
+        const [call = []] = showToastrMessage.error.mock.calls;
+        expect(call).toEqual([expectedError]);
+    });
+
+    it('should call "removeEventListener"', () => {
+        window.removeEventListener = jest.fn();
+
+        const component = shallow(<GroupPage
+            match={match}
+            group={group}
+            users={users}
+            actions={actions}
+        />);
+
+        component.instance().componentWillUnmount();
+
+        expect(window.removeEventListener).toHaveBeenCalledTimes(1);
+    });
+
+    it('should call "getGroupRequest"', () => {
+        const mockGroupRequest = jest.fn();
+
+        const component = shallow(<GroupPage
+            match={match}
+            group={group}
+            users={users}
+            actions={{...actions, getGroupRequest: mockGroupRequest}}
+        />);
+
+        const expectedGroupRequest = {
+            "id": match.params.id,
+            "limit": 10,
+            "loadNext": 10,
+            "searchBy": ""
+        };
+
+        component.instance().loadMore();
+
+        const [call = []] = mockGroupRequest.mock.calls;
+        expect(call).toEqual([expectedGroupRequest]);
     });
 
 });

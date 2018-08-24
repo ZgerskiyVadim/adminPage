@@ -2,6 +2,8 @@ import React from 'react';
 import { shallow } from 'enzyme';
 import {CreateGroupPage} from '../index';
 import * as actions from '../../../actions/action_creators/groups';
+import showToastrMessage from '../../../services/showToastrMessage';
+import history from "../../../services/history";
 import {nameEvent, titleEvent} from "./data";
 
 const event = {
@@ -51,6 +53,39 @@ describe('CreateGroupPage component', () => {
 
         const [call = []] = mockCreateGroup.mock.calls;
         expect(call).toEqual([expectedCraeteGroup]);
+    });
+
+    it('should show error message in CreateGroupPage component', () => {
+        showToastrMessage.error = jest.fn();
+        const expectedError = true;
+
+        const component = shallow(<CreateGroupPage />);
+
+        component.setProps({
+            createGroup: {
+                error: true
+            }
+        });
+
+        const [call = []] = showToastrMessage.error.mock.calls;
+        expect(call).toEqual([expectedError]);
+    });
+
+    it('should show success message and redirect to "groups" page', () => {
+        showToastrMessage.success = jest.fn();
+        const component = shallow(<CreateGroupPage />);
+
+        component.setProps({
+            createGroup: {
+                data: {
+                    name: 'new name',
+                    title: ' new title'
+                }
+            }
+        });
+
+        expect(showToastrMessage.success).toHaveBeenCalledTimes(1);
+        expect(history.location.pathname).toBe(`/groups`);
     });
 
 });

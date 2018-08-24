@@ -31,7 +31,7 @@ export class CreateUserPage extends Component {
 
         if (!isEqual(this.props.createUser.data, nextProps.createUser.data)) {
             showToastrMessage.success();
-            redirectOnPage.path('/groups');
+            redirectOnPage.path('/users');
         }
         error && showToastrMessage.error(error);
     }

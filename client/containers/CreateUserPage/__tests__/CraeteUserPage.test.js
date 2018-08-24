@@ -2,6 +2,8 @@ import React from 'react';
 import { shallow } from 'enzyme';
 import {CreateUserPage} from '../index';
 import * as actions from '../../../actions/action_creators/users';
+import history from "../../../services/history";
+import showToastrMessage from "../../../services/showToastrMessage";
 import {
     emailEvent,
     firstNameEvent,
@@ -85,6 +87,39 @@ describe('CreateGroupPage component', () => {
 
         const [call = []] = mockCreateUser.mock.calls;
         expect(call).toEqual([expectedCraeteUser]);
+    });
+
+    it('should show error message in CreateUserPage component', () => {
+        showToastrMessage.error = jest.fn();
+        const expectedError = true;
+
+        const component = shallow(<CreateUserPage />);
+
+        component.setProps({
+            createUser: {
+                error: true
+            }
+        });
+
+        const [call = []] = showToastrMessage.error.mock.calls;
+        expect(call).toEqual([expectedError]);
+    });
+
+    it('should show success message and redirect to "groups" page', () => {
+        showToastrMessage.success = jest.fn();
+        const component = shallow(<CreateUserPage />);
+
+        component.setProps({
+            createUser: {
+                data: {
+                    name: 'new name',
+                    title: ' new title'
+                }
+            }
+        });
+
+        expect(showToastrMessage.success).toHaveBeenCalledTimes(1);
+        expect(history.location.pathname).toBe(`/users`);
     });
 
 });

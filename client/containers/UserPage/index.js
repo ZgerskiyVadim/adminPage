@@ -15,7 +15,6 @@ import LoadingSpinner from '../../components/LoadingSpinner';
 import SearchComponent from '../../components/SearchInput';
 import showToastrMessage from "../../services/showToastrMessage";
 import isEqual from "lodash.isequal";
-import localStorageOperations from "../../services/localStorageOperations";
 
 export class UserPage extends Component {
     constructor(props) {
