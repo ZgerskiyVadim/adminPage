@@ -8,7 +8,8 @@ router.post('/login', passport.authenticate('local'), handleResponse(userCtrl.lo
 
 router.get('/logout', (req, res) => (
     userCtrl.logout((data) => {
-        res.clearCookie(config.sessionName)
+        res
+            .clearCookie(config.sessionName)
             .status(200)
             .json(data);
     })
