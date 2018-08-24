@@ -37,3 +37,9 @@ body {
     background-color: #fff;
     border-color: #17a2b8;
 }
+.border-primary {
+    border-color: #5a7bff !important;
+    &:hover {
+        color: #5a7bff !important;
+    }
+}
