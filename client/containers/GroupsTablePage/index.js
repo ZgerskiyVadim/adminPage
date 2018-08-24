@@ -10,7 +10,7 @@ import * as usersActionCreators from '../../actions/action_creators/users';
 import scrollPagination from '../../services/scrollPagination';
 import searchOperation from '../../services/searchOperation';
 import redirectOnPage from '../../services/redirectOnPage';
-import Group from '../../components/GroupItem/group';
+import Group from '../../components/GroupItem/index';
 import LoadingSpinner from '../../components/LoadingSpinner';
 import ModalWindow from '../../components/ModalWindow';
 import SearchComponent from '../../components/SearchInput';

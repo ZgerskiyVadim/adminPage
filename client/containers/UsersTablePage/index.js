@@ -8,7 +8,7 @@ import './index.scss';
 import * as usersActionCreators from '../../actions/action_creators/users';
 import scrollPagination from '../../services/scrollPagination';
 import searchOperation from '../../services/searchOperation';
-import User from '../../components/UserItem/user';
+import User from '../../components/UserItem/index';
 import LoadingSpinner from '../../components/LoadingSpinner';
 import ModalWindow from '../../components/ModalWindow';
 import SearchComponent from '../../components/SearchInput';

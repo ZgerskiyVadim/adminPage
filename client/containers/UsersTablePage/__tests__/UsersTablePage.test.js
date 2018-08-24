@@ -5,7 +5,7 @@ import * as actions from '../../../actions/action_creators/users';
 import LoadingSpinner from '../../../components/LoadingSpinner';
 import ModalWindow from "../../../components/ModalWindow";
 import SearchInput from "../../../components/SearchInput";
-import User from '../../../components/UserItem/user';
+import User from '../../../components/UserItem/index';
 
 const user = {
     username: 'username',

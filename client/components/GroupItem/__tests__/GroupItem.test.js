@@ -1,6 +1,6 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import {GroupItem} from '../group';
+import {GroupItem} from '../index';
 import history from '../../../services/history';
 import {
     nameEvent,

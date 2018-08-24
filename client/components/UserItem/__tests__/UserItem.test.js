@@ -1,6 +1,6 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import {UserItem} from '../user';
+import {UserItem} from '../index';
 import {usernameEvent, firstNameEvent, lastNameEvent, emailEvent, passwordEvent} from './data';
 import history from '../../../services/history';
 

@@ -5,7 +5,7 @@ import * as actions from '../../../actions/action_creators/groups';
 import LoadingSpinner from '../../../components/LoadingSpinner';
 import ModalWindow from "../../../components/ModalWindow";
 import SearchInput from "../../../components/SearchInput";
-import Group from '../../../components/GroupItem/group';
+import Group from '../../../components/GroupItem/index';
 import history from '../../../services/history';
 
 const user = {
