@@ -57,90 +57,6 @@ describe('User controller', () => {
         });
     });
 
-    describe('GET', () => {
-
-        it('should get users', done => {
-            json('get', '/api/users', cookie).end(function (err, result) {
-                if (err) throw err;
-
-                expect(result.statusCode).toBe(200);
-                expect(err).toBe(null);
-                expect(result.body.length).toEqual(fakeUsers.length);
-                done();
-            });
-        });
-
-        it('should get 2 users', done => {
-            json('get', '/api/users', cookie)
-                .query({
-                    limit: 2
-                })
-                .end(function(err, result) {
-                    if (err) throw err;
-
-                    expect(result.statusCode).toBe(200);
-                    expect(err).toBe(null);
-                    expect(result.body.length).toEqual(2);
-                    done();
-                });
-        });
-
-        it('should find user by user identifier', done => {
-            const id = fakeUsers[1]._id;
-
-            json('get', `/api/users/${id}`, cookie).end(function(err, result) {
-                if (err) throw err;
-
-                expect(result.statusCode).toBe(200);
-                expect(err).toBe(null);
-                expect(result.body.username).toEqual(fakeUsers[1].username);
-                expect(result.body.firstName).toEqual(fakeUsers[1].firstName);
-                expect(result.body.lastName).toEqual(fakeUsers[1].lastName);
-                expect(result.body.email).toEqual(fakeUsers[1].email);
-                expect(result.body._id).toEqual(fakeUsers[1]._id.toString());
-                done();
-            });
-        });
-
-        it('should return error if pass wrong cookie', done => {
-            const fakeCookie = new ObjectId.Types.ObjectId();
-
-            json('get', '/api/users', fakeCookie).end(function (err, result) {
-                if (err) throw err;
-
-                expect(result.statusCode).toBe(401);
-                expect(err).toBe(null);
-                expect(result.body.message).toEqual('Please login');
-                done();
-            });
-        });
-
-        it('should return error if does exist cookie', done => {
-
-            json('get', '/api/users').end(function (err, result) {
-                if (err) throw err;
-
-                expect(result.statusCode).toBe(401);
-                expect(err).toBe(null);
-                expect(result.body.message).toEqual('Please login');
-                done();
-            });
-        });
-
-        it('should return error if does not exist user', done => {
-            const fakeId = new ObjectId.Types.ObjectId();
-
-            json('get', `/api/users/${fakeId}`, cookie).end(function(err, result) {
-                if (err) throw err;
-
-                expect(result.statusCode).toBe(404);
-                expect(err).toBe(null);
-                expect(result.body.message).toEqual('Not found!');
-                done();
-            });
-        });
-    });
-
     describe('PATCH', () => {
         it('should update user', done => {
             const updates = { username: 'updated-name' };
@@ -346,6 +262,101 @@ describe('User controller', () => {
             });
         });
 
+    });
+
+    describe('GET', () => {
+
+        it('should get users', done => {
+            json('get', '/api/users', cookie).end(function (err, result) {
+                if (err) throw err;
+
+                expect(result.statusCode).toBe(200);
+                expect(err).toBe(null);
+                expect(result.body.length).toEqual(fakeUsers.length);
+                done();
+            });
+        });
+
+        it('should get 2 users', done => {
+            json('get', '/api/users', cookie)
+                .query({
+                    limit: 2
+                })
+                .end(function(err, result) {
+                    if (err) throw err;
+
+                    expect(result.statusCode).toBe(200);
+                    expect(err).toBe(null);
+                    expect(result.body.length).toEqual(2);
+                    done();
+                });
+        });
+
+        it('should find user by user identifier', done => {
+            const id = fakeUsers[1]._id;
+
+            json('get', `/api/users/${id}`, cookie).end(function(err, result) {
+                if (err) throw err;
+
+                expect(result.statusCode).toBe(200);
+                expect(err).toBe(null);
+                expect(result.body.username).toEqual(fakeUsers[1].username);
+                expect(result.body.firstName).toEqual(fakeUsers[1].firstName);
+                expect(result.body.lastName).toEqual(fakeUsers[1].lastName);
+                expect(result.body.email).toEqual(fakeUsers[1].email);
+                expect(result.body._id).toEqual(fakeUsers[1]._id.toString());
+                done();
+            });
+        });
+
+        it('should return error if pass wrong cookie', done => {
+            const fakeCookie = new ObjectId.Types.ObjectId();
+
+            json('get', '/api/users', fakeCookie).end(function (err, result) {
+                if (err) throw err;
+
+                expect(result.statusCode).toBe(401);
+                expect(err).toBe(null);
+                expect(result.body.message).toEqual('Please login');
+                done();
+            });
+        });
+
+        it('should return error if does exist cookie', done => {
+
+            json('get', '/api/users').end(function (err, result) {
+                if (err) throw err;
+
+                expect(result.statusCode).toBe(401);
+                expect(err).toBe(null);
+                expect(result.body.message).toEqual('Please login');
+                done();
+            });
+        });
+
+        it('should return error if does not exist user', done => {
+            const fakeId = new ObjectId.Types.ObjectId();
+
+            json('get', `/api/users/${fakeId}`, cookie).end(function(err, result) {
+                if (err) throw err;
+
+                expect(result.statusCode).toBe(404);
+                expect(err).toBe(null);
+                expect(result.body.message).toEqual('Not found!');
+                done();
+            });
+        });
+
+        it('should logout', done => {
+            json('get', '/auth/logout', cookie).end(function (err, result) {
+                if (err) throw err;
+
+                expect(result.statusCode).toBe(200);
+                expect(err).toBe(null);
+                expect(result.body.message).toBe('User is logout');
+                done();
+            });
+        });
     });
 
 });
