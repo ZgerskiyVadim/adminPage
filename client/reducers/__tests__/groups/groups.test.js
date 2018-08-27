@@ -6,7 +6,7 @@ import {
     UPLOAD_GROUP,
     UPDATE_GROUP_DATA,
     REMOVE_GROUP_DATA
-} from './fixture';
+} from './data';
 
 describe('Groups reducer:', () => {
     describe('Pending cases:', () => {

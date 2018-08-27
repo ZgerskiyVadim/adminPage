@@ -8,7 +8,7 @@ import {
     REMOVE_USER_DATA,
     EXPECTED_JOIN_GROUP,
     EXPECTED_LEFT_GROUP
-} from './fixture';
+} from './data';
 
 describe('Users reducer:', () => {
     describe('Pending cases:', () => {
