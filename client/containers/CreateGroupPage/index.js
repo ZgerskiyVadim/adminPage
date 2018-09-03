@@ -45,8 +45,8 @@ export class CreateGroupPage extends Component {
         return (
             <div className='create-group'>
                 <h4>Create Group</h4>
-                <form className='create-group--row'>
-                    <div className='col-md-6'>
+                <form className='create-group--row col-md-4'>
+                    <div>
                         <label htmlFor='create-name'>name</label>
                         <input onChange={this.handleChange} value={name} name='name' id='create-name' className='form-control' type="text"/>
                         <label htmlFor='create-title'>title</label>

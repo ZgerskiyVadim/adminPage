@@ -11,6 +11,9 @@
     }
     td {
         vertical-align: baseline;
+        label {
+            cursor: pointer;
+        }
     }
 }
 .users__buttons {

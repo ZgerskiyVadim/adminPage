@@ -48,8 +48,8 @@ export class CreateUserPage extends Component {
         return (
             <div className='create-user'>
                 <h4>Create User</h4>
-                <form className='create-user--row'>
-                    <div className='col-md-6'>
+                <form className='create-user--row col-md-4'>
+                    <div>
                         <label htmlFor='create-username'>username</label>
                         <input onChange={this.handleChange} value={username} name='username' id='create-username' className='form-control' type="text"/>
                         <label htmlFor='create-firstName'>firstName</label>
