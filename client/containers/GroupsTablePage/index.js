@@ -84,7 +84,7 @@ export class GroupsTablePage extends Component {
         }
     }
 
-    groupsShowIsUserJoined() {
+    showIsUserJoinedInGroup() {
         return this.props.groups.data.map(group => {
             for (let i = 0; i < group.users.length; i++ ) {
                 const userID = group.users[i]._id;
@@ -186,7 +186,7 @@ export class GroupsTablePage extends Component {
                     {
                         isJoiningGroup ?
 
-                            this.groupsShowIsUserJoined().map((group, index) =>
+                            this.showIsUserJoinedInGroup().map((group, index) =>
                                 <Group
                                     key={group._id}
                                     group={group}
