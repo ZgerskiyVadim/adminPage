@@ -11,4 +11,10 @@ describe('createError service:', () => {
         expect(error.message).toEqual(message);
     });
 
+    it('should handle error without arguments', () => {
+        const error = createError();
+        expect(error.status).toEqual(500);
+        expect(error.message).toEqual('Server Error');
+    });
+
 });
