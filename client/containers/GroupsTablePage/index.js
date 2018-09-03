@@ -69,9 +69,16 @@ export class GroupsTablePage extends Component {
     }
 
     componentDidUpdate(prevProps) {
-        const currentCountUsers = this.props.groups.data.length;
-        const prevCountUsers = prevProps.groups.data.length;
-        scrollPagination.checkRemovedItems.call(this, prevCountUsers, currentCountUsers);
+        const currentCountGroups = this.props.groups.data.length;
+        const prevCountGroups = prevProps.groups.data.length;
+        if (currentCountGroups < prevCountGroups) {
+            this.setState({
+                options: {
+                    ...this.state.options,
+                    limit: currentCountGroups
+                }
+            });
+        }
     }
 
     groupsShowIsUserJoined() {

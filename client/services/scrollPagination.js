@@ -1,4 +1,5 @@
 class ScrollPagination {
+
     loadMore(lengthOfItems, getItemsRequest) {
         const {limit, loadNext} = this.state.options;
 
@@ -16,16 +17,6 @@ class ScrollPagination {
         }
     }
 
-    checkRemovedItems(prevCount, currentCount) {
-        if (currentCount < prevCount) {
-            this.setState({
-                options: {
-                    ...this.state.options,
-                    limit: currentCount
-                }
-            }, () => this.loadMore);
-        }
-    }
 }
 
 export default new ScrollPagination;

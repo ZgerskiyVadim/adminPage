@@ -75,12 +75,6 @@ export class UserPage extends Component {
         error && showToastrMessage.error(error);
     }
 
-    componentDidUpdate(prevProps) {
-        const currentCountUsers = this.props.groups.length;
-        const prevCountUsers = prevProps.groups.length;
-        scrollPagination.checkRemovedItems.call(this, prevCountUsers, currentCountUsers);
-    }
-
     loadMore() {
         const lengthOfGroups = this.props.groups.length;
         const {getUserRequest} = this.props.actions;

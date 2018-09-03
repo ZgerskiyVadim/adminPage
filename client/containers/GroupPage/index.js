@@ -71,7 +71,14 @@ export class GroupPage extends Component {
     componentDidUpdate(prevProps) {
         const currentCountUsers = this.props.users.length;
         const prevCountUsers = prevProps.users.length;
-        scrollPagination.checkRemovedItems.call(this, prevCountUsers, currentCountUsers);
+        if (currentCountUsers < prevCountUsers) {
+            this.setState({
+                options: {
+                    ...this.state.options,
+                    limit: currentCountUsers
+                }
+            });
+        }
     }
 
     loadMore() {
