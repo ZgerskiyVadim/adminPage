@@ -8,25 +8,34 @@ body {
     color: $white;
     background-color: $dodgerBlue;
     border-color: $dodgerBlue;
-}
-
-.btn-outline-primary:hover {
-    color: $dodgerBlue;
-    background-color: $white;
-    border-color: $dodgerBlue;
+    &:hover {
+        color: $dodgerBlue;
+        background-color: $white;
+        border-color: $dodgerBlue;
+    }
+    &:active {
+        color: $white !important;
+        background-color: $dodgerBlue !important;
+        border-color: $dodgerBlue !important;
+    }
 }
 
 .btn-outline-danger {
     color: $white;
     background-color: $persimmon;
     border-color: $persimmon;
+    &:hover {
+        color: $persimmon;
+        background-color: $white;
+        border-color: $persimmon;
+    }
+    &:active {
+        color: $white !important;
+        background-color: $persimmon !important;
+        border-color: $persimmon !important;
+    }
 }
 
-.btn-outline-danger:hover {
-    color: $persimmon;
-    background-color: $white;
-    border-color: $persimmon;
-}
 
 .btn-outline-info {
     color: $white;
