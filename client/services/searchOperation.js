@@ -2,6 +2,7 @@ class SearchOperation {
 
     getItems(event, getItemsRequest) {
         const {value} = event.target;
+
         this.setState({
                 options: {
                     ...this.state.options,

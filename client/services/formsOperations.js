@@ -10,9 +10,11 @@ class FormsOperations {
 
     getValidOptions(state) {
         const options = {};
+
         for (const prop in state) {
             state[prop] ? options[prop] = state[prop] : null
         }
+
         return options;
     }
 }

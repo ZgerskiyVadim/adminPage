@@ -12,6 +12,7 @@ class AuthenticationService {
 
     login(options) {
         const {username, password} = options;
+
         axios.post('/auth/login', {username, password})
             .then((user) => {
                 localStorageOperations.setItem('userID', user.data._id);
@@ -43,6 +44,7 @@ function getCookie(name) {
     const matches = document.cookie.match(new RegExp(
         "(?:^|; )" + name.replace(/([\.$?*|{}\(\)\[\]\\\/\+^])/g, '\\$1') + "=([^;]*)"
     ));
+
     return matches ? !!decodeURIComponent(matches[1]) : undefined;
 }
 
