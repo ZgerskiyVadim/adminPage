@@ -1,7 +1,9 @@
+@import '../../variables';
+
 .notFound {
   display: flex;
   margin: 3em 0 0 2em;
-  color: darkred;
+  color: $darkred;
   h1 {
     margin: 0 auto;
   }
