@@ -78,6 +78,7 @@ export class UserPage extends Component {
     loadMore() {
         const lengthOfGroups = this.props.groups.length;
         const {getUserRequest} = this.props.actions;
+
         scrollPagination.loadMore.call(this, lengthOfGroups, getUserRequest);
     }
 
@@ -108,6 +109,7 @@ export class UserPage extends Component {
     startJoiningGroup(event) {
         event.stopPropagation();
         const isJoiningGroup = true;
+
         this.props.actions.startJoiningGroup(isJoiningGroup);
         redirectOnPage.path('/groups');
     };
@@ -118,6 +120,7 @@ export class UserPage extends Component {
             userID: this.state.options.id,
             groupID: id
         };
+
         this.props.actions.joinGroup(options);
     };
 
@@ -127,6 +130,7 @@ export class UserPage extends Component {
             userID: this.state.options.id,
             groupID: id
         };
+
         this.props.actions.leaveGroupRequest(options);
     };
 

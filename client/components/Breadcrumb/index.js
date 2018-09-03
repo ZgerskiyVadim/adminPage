@@ -20,15 +20,18 @@ export class Breadcrumb extends PureComponent {
         const locationPath = this.props.location.pathname;
 
         const locations = this.getLocations(locationPath);
+
         if (locations.length) {
             const lastPath = locations.length - 1;
             locations[lastPath].islastPath = true;
         }
+
         return locations;
     }
 
     getLocations(locationPath) {
         const {username, _id} = this.props.user.data;
+
         return locationPath.split('/')
             .filter(locationPath => !!locationPath)
             .map(pathName => {
@@ -41,6 +44,7 @@ export class Breadcrumb extends PureComponent {
 
     goToPath(breadcrumb) {
         const {location, islastPath} = breadcrumb;
+
         !islastPath && redirectOnPage.path(location);
     };
 

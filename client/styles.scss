@@ -3,6 +3,7 @@
 body {
     background-color: $bodyBackgroundBridalHeath;
 }
+
 .btn-outline-primary {
     cursor: pointer;
     color: $white;
@@ -36,18 +37,17 @@ body {
     }
 }
 
-
 .btn-outline-info {
     color: $white;
     background-color: $easternBlue;
     border-color: $easternBlue;
+    &:hover {
+        color: $easternBlue;
+        background-color: $white;
+        border-color: $easternBlue;
+    }
 }
 
-.btn-outline-info:hover {
-    color: $easternBlue;
-    background-color: $white;
-    border-color: $easternBlue;
-}
 .border-primary {
     border-color: $dodgerBlue !important;
     &:hover {

@@ -71,6 +71,7 @@ export class GroupPage extends Component {
     componentDidUpdate(prevProps) {
         const currentCountUsers = this.props.users.length;
         const prevCountUsers = prevProps.users.length;
+
         if (currentCountUsers < prevCountUsers) {
             this.setState({
                 options: {
@@ -116,6 +117,7 @@ export class GroupPage extends Component {
             groupID: this.state.options.id,
             userID: id
         };
+
         this.props.actions.removeUserFromGroupRequest(options);
     };
 

@@ -17,8 +17,8 @@ import {
 } from '../actions';
 
 export const initialState = {
-    groups: {data: [], loading: false, error: null},
-    group: {data: {}, loading: false, error: null},
+    groups:       {data: [], loading: false, error: null},
+    group:        {data: {}, loading: false, error: null},
     updatedGroup: {data: {}, loading: false, error: null},
     removedGroup: {data: {}, loading: false, error: null},
     createdGroup: {data: {}, loading: false, error: null}

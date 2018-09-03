@@ -46,12 +46,14 @@ export class GroupsTablePage extends Component {
     loadMore() {
         const lengthOfGroups = this.props.groups.data.length;
         const {getGroupsRequest} = this.props.actions;
+
         scrollPagination.loadMore.call(this, lengthOfGroups, getGroupsRequest);
     }
 
     componentDidMount() {
         const {searchBy, limit} = this.state.options;
         const options = {searchBy, limit};
+
         this.props.actions.getGroupsRequest(options);
         window.addEventListener('scroll', this.loadMore)
     }
@@ -71,6 +73,7 @@ export class GroupsTablePage extends Component {
     componentDidUpdate(prevProps) {
         const currentCountGroups = this.props.groups.data.length;
         const prevCountGroups = prevProps.groups.data.length;
+
         if (currentCountGroups < prevCountGroups) {
             this.setState({
                 options: {
@@ -94,6 +97,7 @@ export class GroupsTablePage extends Component {
                     };
                 }
             }
+
             return {
                 ...group,
                 userJoinedGroup: false

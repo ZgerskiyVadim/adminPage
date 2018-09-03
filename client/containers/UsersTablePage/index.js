@@ -68,6 +68,7 @@ export class UsersTablePage extends Component {
     componentDidUpdate(prevProps) {
         const currentCountUsers = this.props.users.data.length;
         const prevCountUsers = prevProps.users.data.length;
+
         if (currentCountUsers < prevCountUsers) {
             this.setState({
                 options: {

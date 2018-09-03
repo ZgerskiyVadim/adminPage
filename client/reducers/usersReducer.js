@@ -27,14 +27,14 @@ import {
 } from '../actions';
 
 export const initialState = {
-    users: {data: [], loading: false, error: null},
-    user: {data: {}, loading: false, error: null, isJoiningGroup: false},
-    updatedUser: {data: {}, loading: false, error: null},
-    removedUser: {data: {}, loading: false, error: null},
+    users:           {data: [], loading: false, error: null},
+    user:            {data: {}, loading: false, error: null, isJoiningGroup: false},
+    updatedUser:     {data: {}, loading: false, error: null},
+    removedUser:     {data: {}, loading: false, error: null},
     userJoinedGroup: {data: {}, loading: false, error: null},
-    userLeftGroup: {data: {}, loading: false, error: null},
-    createdUser: {data: {}, loading: false, error: null},
-    loggedUser: {data: {}, loading: false, error: null}
+    userLeftGroup:   {data: {}, loading: false, error: null},
+    createdUser:     {data: {}, loading: false, error: null},
+    loggedUser:      {data: {}, loading: false, error: null}
 };
 
 export function Users(state = initialState, action) {

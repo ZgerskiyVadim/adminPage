@@ -56,12 +56,14 @@ export class GroupItem extends Component {
     sendOptionsJoinGroup(groupID, event) {
         event.stopPropagation();
         const userID = this.state.userID;
+
         userID && this.props.joinGroup({userID, groupID});
     };
 
     sendOptionsLeaveGroup(groupID, event) {
         event.stopPropagation();
         const userID = this.state.userID;
+
         userID && this.props.leaveGroup({userID, groupID});
     };
 
