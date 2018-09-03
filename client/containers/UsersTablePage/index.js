@@ -81,6 +81,7 @@ export class UsersTablePage extends Component {
 
     getUsers() {
         const loggedUserID = localStorageOperations.getItem('userID');
+
         if (this.props.isJoiningGroup) {
             return this.props.users.data.map(user => (user._id === this.props.user.data._id) || (loggedUserID && user._id === loggedUserID)
                 ? {...user, hideRemoveButton: true}  //Hide remove button for joining user in groups and logged user
@@ -94,6 +95,7 @@ export class UsersTablePage extends Component {
 
     searchUsers(event) {
         const {getUsersRequest} = this.props.actions;
+
         searchOperation.getItems.call(this, event, getUsersRequest);
     };
 
