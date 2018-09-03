@@ -1,10 +1,12 @@
+@import '../../variables';
+
 .links--row {
   display: flex;
   justify-content: center;
   margin-left: 3em;
   .link {
     cursor: pointer;
-    color: #0061c2;
+    color: $dodgerBlue;
     .nav-link {
       background-color: transparent;
     }

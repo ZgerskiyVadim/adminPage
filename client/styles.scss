@@ -1,45 +1,47 @@
+@import './variables.scss';
+
 body {
-    background-color: #fff8f0;
+    background-color: $mainBackgroundBridalHeath;
 }
 .btn-outline-primary {
     cursor: pointer;
-    color: #fff;
-    background-color: #5a7bff;
-    border-color: #5a7bff;
+    color: $white;
+    background-color: $dodgerBlue;
+    border-color: $dodgerBlue;
 }
 
 .btn-outline-primary:hover {
-    color: #5a7bff;
-    background-color: #fff;
-    border-color: #5a7bff;
+    color: $dodgerBlue;
+    background-color: $white;
+    border-color: $dodgerBlue;
 }
 
 .btn-outline-danger {
-    color: #fff;
-    background-color: #ff6450;
-    border-color: #ff6450;
+    color: $white;
+    background-color: $persimmon;
+    border-color: $persimmon;
 }
 
 .btn-outline-danger:hover {
-    color: #ff6450;
-    background-color: #fff;
-    border-color: #ff6450;
+    color: $persimmon;
+    background-color: $white;
+    border-color: $persimmon;
 }
 
 .btn-outline-info {
-    color: #fff;
-    background-color: #17a2b8;
-    border-color: #17a2b8;
+    color: $white;
+    background-color: $easternBlue;
+    border-color: $easternBlue;
 }
 
 .btn-outline-info:hover {
-    color: #17a2b8;
-    background-color: #fff;
-    border-color: #17a2b8;
+    color: $easternBlue;
+    background-color: $white;
+    border-color: $easternBlue;
 }
 .border-primary {
-    border-color: #5a7bff !important;
+    border-color: $dodgerBlue !important;
     &:hover {
-        color: #5a7bff !important;
+        color: $dodgerBlue !important;
     }
 }
