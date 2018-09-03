@@ -63,9 +63,9 @@ export class GroupsTablePage extends Component {
     componentWillReceiveProps(nextProps) {
         const error = nextProps.groups.error || nextProps.updatedGroup.error || nextProps.removedGroup.error || nextProps.userJoinedGroup.error || nextProps.userLeftGroup.error;
 
+        error && showToastrMessage.error(error);
         !isEqual(this.props.updatedGroup.data, nextProps.updatedGroup.data) && showToastrMessage.success();
         !isEqual(this.props.removedGroup.data, nextProps.removedGroup.data) && showToastrMessage.success('Group is removed');
-        error && showToastrMessage.error(error);
     }
 
     componentDidUpdate(prevProps) {
@@ -84,8 +84,10 @@ export class GroupsTablePage extends Component {
     groupsShowIsUserJoined() {
         return this.props.groups.data.map(group => {
             for (let i = 0; i < group.users.length; i++ ) {
-                const userID = group.users[i]._id ? group.users[i]._id : group.users[i];
-                if (userID === this.props.user.data._id) {
+                const userID = group.users[i]._id;
+                const joiningUserID = this.props.user.data._id;
+
+                if (joiningUserID === userID) {
                     return {
                         ...group,
                         userJoinedGroup: true

@@ -64,8 +64,8 @@ export class GroupPage extends Component {
         }
         const error = nextProps.group.error || nextProps.updatedGroup.error;
 
-        !isEqual(this.props.updatedGroup.data, nextProps.updatedGroup.data) && showToastrMessage.success();
         error && showToastrMessage.error(error);
+        !isEqual(this.props.updatedGroup.data, nextProps.updatedGroup.data) && showToastrMessage.success();
     }
 
     componentDidUpdate(prevProps) {

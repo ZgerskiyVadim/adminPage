@@ -26,11 +26,11 @@ export class CreateGroupPage extends Component {
     componentWillReceiveProps(nextProps) {
         const error = nextProps.createGroup.error;
 
+        error && showToastrMessage.error(error);
         if (!isEqual(this.props.createGroup.data, nextProps.createGroup.data)) {
             showToastrMessage.success();
             redirectOnPage.path('/groups');
         }
-        error && showToastrMessage.error(error);
     }
 
     createGroup(event) {

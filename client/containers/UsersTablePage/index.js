@@ -60,9 +60,9 @@ export class UsersTablePage extends Component {
     componentWillReceiveProps(nextProps) {
         const error = nextProps.users.error || nextProps.updatedUser.error || nextProps.removedUser.error;
 
+        error && showToastrMessage.error(error);
         !isEqual(this.props.updatedUser.data, nextProps.updatedUser.data) && showToastrMessage.success('User is updated');
         !isEqual(this.props.removedUser.data, nextProps.removedUser.data) && showToastrMessage.success('User is removed');
-        error && showToastrMessage.error(error);
     }
 
     componentDidUpdate(prevProps) {

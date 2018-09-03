@@ -29,11 +29,11 @@ export class CreateUserPage extends Component {
     componentWillReceiveProps(nextProps) {
         const error = nextProps.createUser.error;
 
+        error && showToastrMessage.error(error);
         if (!isEqual(this.props.createUser.data, nextProps.createUser.data)) {
             showToastrMessage.success();
             redirectOnPage.path('/users');
         }
-        error && showToastrMessage.error(error);
     }
 
     createUser(event) {
