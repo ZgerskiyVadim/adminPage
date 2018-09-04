@@ -19,6 +19,7 @@ import isEqual from "lodash.isequal";
 export class UserPage extends Component {
     constructor(props) {
         super(props);
+
         this.state = {
             showForm: false,
             username: '',
@@ -47,10 +48,12 @@ export class UserPage extends Component {
     }
 
     componentDidMount() {
-        const isJoiningGroup = false;
-        this.props.actions.startJoiningGroup(isJoiningGroup);
         const {searchBy, limit, id} = this.state.options;
         const options = {searchBy, limit, id};
+        const isJoiningGroup = false;
+
+        this.props.actions.startJoiningGroup(isJoiningGroup);
+
         this.props.actions.getUserRequest(options);
         window.addEventListener('scroll', this.loadMore);
     }
@@ -69,6 +72,7 @@ export class UserPage extends Component {
                 email
             })
         }
+
         const error = nextProps.user.error || nextProps.updatedUser.error || nextProps.userJoinedGroup.error || nextProps.userLeftGroup.error;
 
         error && showToastrMessage.error(error);
@@ -88,6 +92,7 @@ export class UserPage extends Component {
 
     searchGroups(event) {
         const {getUserRequest} = this.props.actions;
+
         searchOperation.getItems.call(this, event, getUserRequest);
     };
 

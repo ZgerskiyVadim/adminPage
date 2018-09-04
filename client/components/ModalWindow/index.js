@@ -21,6 +21,7 @@ class ModalWindow extends PureComponent {
 
     removeItem() {
         const {remove, closeModal} = this.props;
+
         remove();
         closeModal();
     };

@@ -11,6 +11,7 @@ export class UserItem extends Component {
         super(props);
 
         const {username, firstName, lastName, email} = this.props.user;
+
         this.state = {
             showForm: false,
             username,
@@ -31,6 +32,7 @@ export class UserItem extends Component {
 
     goToUser() {
         const {_id} = this.props.user;
+
         !this.state.showForm && redirectOnPage.path(`/users/${_id}`);
     };
 

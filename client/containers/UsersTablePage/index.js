@@ -20,6 +20,7 @@ import isEqual from "lodash.isequal";
 export class UsersTablePage extends Component {
     constructor(props) {
         super(props);
+
         this.state = {
             options: {
                 limit: 20,
@@ -43,12 +44,14 @@ export class UsersTablePage extends Component {
     loadMore() {
         const lengthOfUsers = this.props.users.data.length;
         const {getUsersRequest} = this.props.actions;
+
         scrollPagination.loadMore.call(this, lengthOfUsers, getUsersRequest);
     }
 
     componentDidMount() {
         const {searchBy, limit} = this.state.options;
         const options = {searchBy, limit};
+
         this.props.actions.getUsersRequest(options);
         window.addEventListener('scroll', this.loadMore)
     }

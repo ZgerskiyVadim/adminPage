@@ -20,6 +20,7 @@ import isEqual from "lodash.isequal";
 export class GroupsTablePage extends Component {
     constructor(props) {
         super(props);
+
         this.state = {
             options: {
                 limit: 20,

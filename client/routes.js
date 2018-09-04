@@ -7,8 +7,8 @@ import GroupPage from './containers/GroupPage';
 import UsersTablePage from './containers/UsersTablePage';
 import UserPage from './containers/UserPage';
 import LoginPage from './containers/LoginPage';
-import CreateUser from './containers/CreateUserPage';
-import CreateGroup from './containers/CreateGroupPage';
+import CreateUserPage from './containers/CreateUserPage';
+import CreateGroupPage from './containers/CreateGroupPage';
 import NotFoundPage from './containers/NotFoundPage';
 
 
@@ -21,8 +21,8 @@ export default class Routes extends Component {
                 <PrivateRoute path="/users/:id" component={UserPage}/>
                 <PrivateRoute exact path="/groups" component={GroupsTablePage}/>
                 <PrivateRoute path="/groups/:id" component={GroupPage}/>
-                <PrivateRoute exact path="/create-user" component={CreateUser}/>
-                <PrivateRoute exact path="/create-group" component={CreateGroup}/>
+                <PrivateRoute exact path="/create-user" component={CreateUserPage}/>
+                <PrivateRoute exact path="/create-group" component={CreateGroupPage}/>
                 <Route path="*" component={NotFoundPage} />
             </Switch>
         );

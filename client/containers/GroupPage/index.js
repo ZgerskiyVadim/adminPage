@@ -19,6 +19,7 @@ import isEqual from "lodash.isequal";
 export class GroupPage extends Component {
     constructor(props) {
         super(props);
+
         this.state = {
             showForm: false,
             name: '',
@@ -62,6 +63,7 @@ export class GroupPage extends Component {
                 title
             })
         }
+
         const error = nextProps.group.error || nextProps.updatedGroup.error;
 
         error && showToastrMessage.error(error);
@@ -80,6 +82,7 @@ export class GroupPage extends Component {
     loadMore() {
         const lengthOfUsers = this.props.users.length;
         const {getGroupRequest} = this.props.actions;
+
         scrollPagination.loadMore.call(this, lengthOfUsers, getGroupRequest);
     }
 
@@ -89,6 +92,7 @@ export class GroupPage extends Component {
 
     searchUsers(event) {
         const {getGroupRequest} = this.props.actions;
+
         searchOperation.getItems.call(this, event, getGroupRequest);
     };
 
