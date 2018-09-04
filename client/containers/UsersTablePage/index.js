@@ -124,15 +124,14 @@ export class UsersTablePage extends Component {
     }
 
     render() {
-        const {isLoadMore, showModal, userID} = this.state;
+        const {showModal, userID} = this.state;
         const {loading} = this.props;
-        const marginBottom = classNames({'users--margin-bottom': !isLoadMore});
 
         return (
             <div className='users'>
                 <button onClick={this.goToCreateUserPage} className='users__create-user btn btn-outline-primary'>Add new +</button>
                 <SearchComponent search={this.searchUsers}/>
-                <table className={classNames('users__table table table-hover', marginBottom)}>
+                <table className='users__table table table-hover'>
                     <thead className='thead-dark'>
                     <tr>
                         <th>

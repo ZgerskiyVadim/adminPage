@@ -86,22 +86,13 @@ export class GroupsTablePage extends Component {
 
             const joiningUserInGroup = group.users.filter(user => user._id === joiningUserID);
 
-            if (joiningUserInGroup.length) {
-                return {
-                    ...group,
-                    userJoinedGroup: true
-                }
-            }
-
-            return {
-                ...group,
-                userJoinedGroup: false
-            };
+            return joiningUserInGroup.length ? {...group, userJoinedGroup: true} : {...group, userJoinedGroup: false};
         });
     }
 
     searchGroups(event) {
         const {getGroupsRequest} = this.props.actions;
+
         searchOperation.getItems.call(this, event, getGroupsRequest);
     };
 
@@ -115,8 +106,10 @@ export class GroupsTablePage extends Component {
 
     cancelJoinGroup() {
         const isJoiningGroups = false;
+        const {_id} = this.props.user.data;
+
         this.props.actions.cancelJoinGroup(isJoiningGroups);
-        redirectOnPage.path(`/users/${this.props.user.data._id}`);
+        redirectOnPage.path(`/users/${_id}`);
     };
 
     updateGroup(options) {
@@ -147,10 +140,9 @@ export class GroupsTablePage extends Component {
 
     render() {
         const {isJoiningGroup, groups, user, loading} = this.props;
-        const {isLoadMore, showModal, groupID} = this.state;
+        const {showModal, groupID} = this.state;
 
         const isJoinGroup = classNames({'groups--hide': !isJoiningGroup});
-        const marginBottom = classNames({'groups--margin-bottom': !isLoadMore});
 
         return (
             <div className='groups'>
@@ -160,7 +152,7 @@ export class GroupsTablePage extends Component {
                     handleButtonClick={this.cancelJoinGroup}
                     style={classNames('btn btn-outline-danger', isJoinGroup)}
                 />
-                <table className={classNames('groups__table table table-hover', marginBottom)}>
+                <table className='groups__table table table-hover'>
                     <thead className='thead-dark'>
                     <tr>
                         <th>
