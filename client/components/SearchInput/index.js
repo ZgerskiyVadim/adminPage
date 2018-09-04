@@ -6,9 +6,7 @@ const SearchComponent = ({search, style, handleButtonClick}) => (
         <h3>Search</h3>
         <input onChange={search} className='form-control col-md-2' type="text"/>
         {
-            handleButtonClick ?
-                <button onClick={handleButtonClick} className={style}>Cancel join group</button> :
-                null
+            handleButtonClick && <button onClick={handleButtonClick} className={style}>Cancel join group</button>
         }
     </div>
 );

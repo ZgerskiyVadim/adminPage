@@ -6,7 +6,6 @@ import GroupsTablePage from './containers/GroupsTablePage';
 import GroupPage from './containers/GroupPage';
 import UsersTablePage from './containers/UsersTablePage';
 import UserPage from './containers/UserPage';
-import CreatePage from './containers/CreatePage';
 import LoginPage from './containers/LoginPage';
 import CreateUser from './containers/CreateUserPage';
 import CreateGroup from './containers/CreateGroupPage';
@@ -18,7 +17,6 @@ export default class Routes extends Component {
         return (
             <Switch>
                 <LoggedRedirectOnUsersPage exact path="/" component={LoginPage}/>
-                <Route exact path="/create" component={CreatePage}/>
                 <PrivateRoute exact path="/users" component={UsersTablePage}/>
                 <PrivateRoute path="/users/:id" component={UserPage}/>
                 <PrivateRoute exact path="/groups" component={GroupsTablePage}/>
