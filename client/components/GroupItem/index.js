@@ -11,6 +11,7 @@ export class GroupItem extends Component {
         super(props);
 
         const {name, title} = this.props.group;
+
         this.state = {
             showForm: false,
             name,
@@ -31,6 +32,7 @@ export class GroupItem extends Component {
 
     goToGroup() {
         const {_id} = this.props.group;
+
         !this.state.showForm && redirectOnPage.path(`/groups/${_id}`);
     };
 
