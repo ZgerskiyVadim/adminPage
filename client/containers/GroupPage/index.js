@@ -65,20 +65,15 @@ export class GroupPage extends Component {
         const error = nextProps.group.error || nextProps.updatedGroup.error;
 
         error && showToastrMessage.error(error);
-        !isEqual(this.props.updatedGroup.data, nextProps.updatedGroup.data) && showToastrMessage.success();
-    }
-
-    componentDidUpdate(prevProps) {
-        const currentCountUsers = this.props.users.length;
-        const prevCountUsers = prevProps.users.length;
-
-        if (currentCountUsers < prevCountUsers) {
+        if (!isEqual(this.props.updatedGroup.data, nextProps.updatedGroup.data)) {
+            const countOfUsers = nextProps.users.length;
             this.setState({
                 options: {
                     ...this.state.options,
-                    limit: currentCountUsers
+                    limit: countOfUsers
                 }
             });
+            showToastrMessage.success();
         }
     }
 

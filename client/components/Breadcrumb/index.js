@@ -16,7 +16,7 @@ export class Breadcrumb extends PureComponent {
         this.goToPath = this.goToPath.bind(this);
     }
 
-    locationPath() {
+    locationsPath() {
         const locationPath = this.props.location.pathname;
 
         const locations = this.getLocations(locationPath);
@@ -54,7 +54,7 @@ export class Breadcrumb extends PureComponent {
                 <nav className="breadcrumb-root" aria-label="breadcrumb">
                     <ol className="breadcrumb">
                         {
-                            this.locationPath().map((breadcrumb, index) => {
+                            this.locationsPath().map((breadcrumb, index) => {
                                 return (
                                     <li onClick={() => this.goToPath(breadcrumb)}
                                         className={classNames('breadcrumb-item', {'breadcrumb--cursor breadcrumb--blue': !breadcrumb.islastPath, 'active': breadcrumb.islastPath})}

@@ -67,34 +67,28 @@ export class GroupsTablePage extends Component {
 
         error && showToastrMessage.error(error);
         !isEqual(this.props.updatedGroup.data, nextProps.updatedGroup.data) && showToastrMessage.success();
-        !isEqual(this.props.removedGroup.data, nextProps.removedGroup.data) && showToastrMessage.success('Group is removed');
-    }
-
-    componentDidUpdate(prevProps) {
-        const currentCountGroups = this.props.groups.data.length;
-        const prevCountGroups = prevProps.groups.data.length;
-
-        if (currentCountGroups < prevCountGroups) {
+        if (!isEqual(this.props.removedGroup.data, nextProps.removedGroup.data)) {
+            const countOfGroups = nextProps.groups.data.length;
             this.setState({
                 options: {
                     ...this.state.options,
-                    limit: currentCountGroups
+                    limit: countOfGroups
                 }
             });
+            showToastrMessage.success('Group is removed');
         }
     }
 
     showIsUserJoinedInGroup() {
         return this.props.groups.data.map(group => {
-            for (let i = 0; i < group.users.length; i++ ) {
-                const userID = group.users[i]._id;
-                const joiningUserID = this.props.user.data._id;
+            const joiningUserID = this.props.user.data._id;
 
-                if (joiningUserID === userID) {
-                    return {
-                        ...group,
-                        userJoinedGroup: true
-                    };
+            const joiningUserInGroup = group.users.filter(user => user._id === joiningUserID);
+
+            if (joiningUserInGroup.length) {
+                return {
+                    ...group,
+                    userJoinedGroup: true
                 }
             }
 

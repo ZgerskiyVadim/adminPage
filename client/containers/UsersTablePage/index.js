@@ -62,20 +62,15 @@ export class UsersTablePage extends Component {
 
         error && showToastrMessage.error(error);
         !isEqual(this.props.updatedUser.data, nextProps.updatedUser.data) && showToastrMessage.success('User is updated');
-        !isEqual(this.props.removedUser.data, nextProps.removedUser.data) && showToastrMessage.success('User is removed');
-    }
-
-    componentDidUpdate(prevProps) {
-        const currentCountUsers = this.props.users.data.length;
-        const prevCountUsers = prevProps.users.data.length;
-
-        if (currentCountUsers < prevCountUsers) {
+        if (!isEqual(this.props.removedUser.data, nextProps.removedUser.data)) {
+            const countOfUsers = nextProps.users.data.length;
             this.setState({
                 options: {
                     ...this.state.options,
-                    limit: currentCountUsers
+                    limit: countOfUsers
                 }
             });
+            showToastrMessage.success('User is removed');
         }
     }
 
