@@ -84,9 +84,9 @@ export class GroupsTablePage extends Component {
         return this.props.groups.data.map(group => {
             const joiningUserID = this.props.user.data._id;
 
-            const joiningUserInGroup = group.users.filter(user => user._id === joiningUserID);
+            const userJoinedGroup = group.users.filter(user => user._id === joiningUserID);
 
-            return joiningUserInGroup.length ? {...group, userJoinedGroup: true} : {...group, userJoinedGroup: false};
+            return userJoinedGroup.length ? {...group, userJoinedGroup: true} : {...group, userJoinedGroup: false};
         });
     }
 
