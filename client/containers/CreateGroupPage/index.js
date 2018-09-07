@@ -54,7 +54,7 @@ export class CreateGroupPage extends Component {
                         <input onChange={this.handleChange} value={title} name='title' id='create-title' className='form-control' type="text"/>
                     </div>
 
-                    <button onClick={this.createGroup} className='create-group__send btn btn-outline-primary' type='subnit'>Send</button>
+                    <button onClick={this.createGroup} className='create-group__send btn btn-outline-primary' type='submit'>Send</button>
                 </form>
                 <LoadingSpinner loading={loading}/>
             </div>
